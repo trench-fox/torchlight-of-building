@@ -16,9 +16,7 @@ const isValidCritRatingModType = (
   return CRIT_RATING_MOD_TYPES.includes(value as CritRatingModType);
 };
 
-const parseDmgPct = (
-  input: string
-): AffixOfType<"DmgPct"> | undefined => {
+const parseDmgPct = (input: string): AffixOfType<"DmgPct"> | undefined => {
   // Regex to parse: +9% [additional] [fire] damage
   const pattern =
     /^([+-])?(\d+(?:\.\d+)?)% (?:(additional) )?(?:(\w+) )?damage$/i;
@@ -33,14 +31,12 @@ const parseDmgPct = (
   const damageTypeWord = match[4];
 
   const value = parseFloat(percentageStr) / 100;
-
   const addn = hasAdditional;
 
   let modType: DmgModType = "global";
-  if (damageTypeWord) {
-    const lowerDamageType = damageTypeWord.toLowerCase();
-    if (isValidDmgModType(lowerDamageType)) {
-      modType = lowerDamageType;
+  if (damageTypeWord !== undefined) {
+    if (isValidDmgModType(damageTypeWord)) {
+      modType = damageTypeWord;
     } else {
       return undefined;
     }
@@ -73,10 +69,9 @@ const parseCritRatingPct = (
   const value = parseFloat(percentageStr) / 100;
 
   let modType: CritRatingModType = "global";
-  if (modTypeWord) {
-    const lowerModType = modTypeWord.toLowerCase();
-    if (isValidCritRatingModType(lowerModType)) {
-      modType = lowerModType;
+  if (modTypeWord !== undefined) {
+    if (isValidCritRatingModType(modTypeWord)) {
+      modType = modTypeWord;
     } else {
       return undefined;
     }
