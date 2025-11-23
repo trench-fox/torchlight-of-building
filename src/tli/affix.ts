@@ -145,6 +145,51 @@ export type Affix =
       src?: string;
     }
   | {
+      type: "AttackBlockChancePct";
+      value: number;
+      src?: string;
+    }
+  | {
+      type: "SpellBlockChancePct";
+      value: number;
+      src?: string;
+    }
+  | {
+      type: "MaxLifePct";
+      value: number;
+      src?: string;
+    }
+  | {
+      type: "MaxEnergyShieldPct";
+      value: number;
+      src?: string;
+    }
+  | {
+      type: "ArmorPct";
+      value: number;
+      src?: string;
+    }
+  | {
+      type: "EvasionPct";
+      value: number;
+      src?: string;
+    }
+  | {
+      type: "LifeRegainPct";
+      value: number;
+      src?: string;
+    }
+  | {
+      type: "EnergyShieldRegainPct";
+      value: number;
+      src?: string;
+    }
+  | {
+      type: "MultistrikeChancePct";
+      value: number;
+      src?: string;
+    }
+  | {
       type: "CoreTalent";
       name:
         | "Last Stand"

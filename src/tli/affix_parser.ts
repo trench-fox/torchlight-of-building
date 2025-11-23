@@ -180,6 +180,223 @@ const parseMinionAspdAndCspdPct = (
   };
 };
 
+const parseAttackBlockChancePct = (
+  input: string
+): AffixOfType<"AttackBlockChancePct"> | undefined => {
+  // Regex to parse: +4% Attack Block Chance
+  const pattern = /^([+-])?(\d+(?:\.\d+)?)% attack block chance$/i;
+  const match = input.match(pattern);
+
+  if (!match) {
+    return undefined;
+  }
+
+  const value = parseFloat(match[2]) / 100;
+  return { type: "AttackBlockChancePct", value };
+};
+
+const parseSpellBlockChancePct = (
+  input: string
+): AffixOfType<"SpellBlockChancePct"> | undefined => {
+  // Regex to parse: +4% Spell Block Chance
+  const pattern = /^([+-])?(\d+(?:\.\d+)?)% spell block chance$/i;
+  const match = input.match(pattern);
+
+  if (!match) {
+    return undefined;
+  }
+
+  const value = parseFloat(match[2]) / 100;
+  return { type: "SpellBlockChancePct", value };
+};
+
+const parseMaxLifePct = (
+  input: string
+): AffixOfType<"MaxLifePct"> | undefined => {
+  // Regex to parse: +3% Max Life
+  const pattern = /^([+-])?(\d+(?:\.\d+)?)% max life$/i;
+  const match = input.match(pattern);
+
+  if (!match) {
+    return undefined;
+  }
+
+  const value = parseFloat(match[2]) / 100;
+  return { type: "MaxLifePct", value };
+};
+
+const parseMaxEnergyShieldPct = (
+  input: string
+): AffixOfType<"MaxEnergyShieldPct"> | undefined => {
+  // Regex to parse: +3% Max Energy Shield
+  const pattern = /^([+-])?(\d+(?:\.\d+)?)% max energy shield$/i;
+  const match = input.match(pattern);
+
+  if (!match) {
+    return undefined;
+  }
+
+  const value = parseFloat(match[2]) / 100;
+  return { type: "MaxEnergyShieldPct", value };
+};
+
+const parseArmorPct = (
+  input: string
+): AffixOfType<"ArmorPct"> | undefined => {
+  // Regex to parse: +5% Armor
+  const pattern = /^([+-])?(\d+(?:\.\d+)?)% armor$/i;
+  const match = input.match(pattern);
+
+  if (!match) {
+    return undefined;
+  }
+
+  const value = parseFloat(match[2]) / 100;
+  return { type: "ArmorPct", value };
+};
+
+const parseEvasionPct = (
+  input: string
+): AffixOfType<"EvasionPct"> | undefined => {
+  // Regex to parse: +5% Evasion
+  const pattern = /^([+-])?(\d+(?:\.\d+)?)% evasion$/i;
+  const match = input.match(pattern);
+
+  if (!match) {
+    return undefined;
+  }
+
+  const value = parseFloat(match[2]) / 100;
+  return { type: "EvasionPct", value };
+};
+
+const parseLifeRegainPct = (
+  input: string
+): AffixOfType<"LifeRegainPct"> | undefined => {
+  // Regex to parse: 1.5% Life Regain
+  const pattern = /^([+-])?(\d+(?:\.\d+)?)% life regain$/i;
+  const match = input.match(pattern);
+
+  if (!match) {
+    return undefined;
+  }
+
+  const value = parseFloat(match[2]) / 100;
+  return { type: "LifeRegainPct", value };
+};
+
+const parseEnergyShieldRegainPct = (
+  input: string
+): AffixOfType<"EnergyShieldRegainPct"> | undefined => {
+  // Regex to parse: 1.5% Energy Shield Regain
+  const pattern = /^([+-])?(\d+(?:\.\d+)?)% energy shield regain$/i;
+  const match = input.match(pattern);
+
+  if (!match) {
+    return undefined;
+  }
+
+  const value = parseFloat(match[2]) / 100;
+  return { type: "EnergyShieldRegainPct", value };
+};
+
+const parseMultistrikeChancePct = (
+  input: string
+): AffixOfType<"MultistrikeChancePct"> | undefined => {
+  // Regex to parse: +32% chance to Multistrike
+  const pattern = /^([+-])?(\d+(?:\.\d+)?)% chance to multistrike$/i;
+  const match = input.match(pattern);
+
+  if (!match) {
+    return undefined;
+  }
+
+  const value = parseFloat(match[2]) / 100;
+  return { type: "MultistrikeChancePct", value };
+};
+
+const parseStr = (input: string): AffixOfType<"Str"> | undefined => {
+  // Regex to parse: +6 Strength
+  const pattern = /^([+-])?(\d+(?:\.\d+)?) strength$/i;
+  const match = input.match(pattern);
+
+  if (!match) {
+    return undefined;
+  }
+
+  const value = parseFloat(match[2]);
+  return { type: "Str", value };
+};
+
+const parseDex = (input: string): AffixOfType<"Dex"> | undefined => {
+  // Regex to parse: +6 Dexterity
+  const pattern = /^([+-])?(\d+(?:\.\d+)?) dexterity$/i;
+  const match = input.match(pattern);
+
+  if (!match) {
+    return undefined;
+  }
+
+  const value = parseFloat(match[2]);
+  return { type: "Dex", value };
+};
+
+const parseStrPct = (input: string): AffixOfType<"StrPct"> | undefined => {
+  // Regex to parse: +4% Strength
+  const pattern = /^([+-])?(\d+(?:\.\d+)?)% strength$/i;
+  const match = input.match(pattern);
+
+  if (!match) {
+    return undefined;
+  }
+
+  const value = parseFloat(match[2]) / 100;
+  return { type: "StrPct", value };
+};
+
+const parseDexPct = (input: string): AffixOfType<"DexPct"> | undefined => {
+  // Regex to parse: +4% Dexterity
+  const pattern = /^([+-])?(\d+(?:\.\d+)?)% dexterity$/i;
+  const match = input.match(pattern);
+
+  if (!match) {
+    return undefined;
+  }
+
+  const value = parseFloat(match[2]) / 100;
+  return { type: "DexPct", value };
+};
+
+const parseFervorEff = (
+  input: string
+): AffixOfType<"FervorEff"> | undefined => {
+  // Regex to parse: +4% Fervor effect
+  const pattern = /^([+-])?(\d+(?:\.\d+)?)% fervor effect$/i;
+  const match = input.match(pattern);
+
+  if (!match) {
+    return undefined;
+  }
+
+  const value = parseFloat(match[2]) / 100;
+  return { type: "FervorEff", value };
+};
+
+const parseSteepStrikeChance = (
+  input: string
+): AffixOfType<"SteepStrikeChance"> | undefined => {
+  // Regex to parse: +12% Steep Strike chance
+  const pattern = /^([+-])?(\d+(?:\.\d+)?)% steep strike chance$/i;
+  const match = input.match(pattern);
+
+  if (!match) {
+    return undefined;
+  }
+
+  const value = parseFloat(match[2]) / 100;
+  return { type: "SteepStrikeChance", value };
+};
+
 export const parseAffix = (input: string): ParseResult => {
   const normalized = input.trim().toLowerCase();
 
@@ -191,6 +408,27 @@ export const parseAffix = (input: string): ParseResult => {
     parseAspdAndCspdPct,
     parseAspdPct,
     parseCspdPct,
+    // Block chance parsers
+    parseAttackBlockChancePct,
+    parseSpellBlockChancePct,
+    // Defense parsers
+    parseMaxLifePct,
+    parseMaxEnergyShieldPct,
+    parseArmorPct,
+    parseEvasionPct,
+    // Regain parsers (must come before flat stat parsers to avoid conflicts)
+    parseEnergyShieldRegainPct, // Must come before parseLifeRegainPct
+    parseLifeRegainPct,
+    // Flat stats (must come before percentage stats)
+    parseStr,
+    parseDex,
+    // Percentage stats
+    parseStrPct,
+    parseDexPct,
+    parseFervorEff,
+    // Mechanic parsers
+    parseSteepStrikeChance,
+    parseMultistrikeChancePct,
     // Add more parsers here as they're implemented
     // parseCritDmgPct,
     // etc.

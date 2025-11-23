@@ -141,3 +141,123 @@ test("parse basic minion attack and cast speed", () => {
     addn: false,
   });
 });
+
+test("parse attack block chance", () => {
+  const result = parseAffix("+4% Attack Block Chance");
+  expect(result).toEqual({
+    type: "AttackBlockChancePct",
+    value: 0.04,
+  });
+});
+
+test("parse spell block chance", () => {
+  const result = parseAffix("+4% Spell Block Chance");
+  expect(result).toEqual({
+    type: "SpellBlockChancePct",
+    value: 0.04,
+  });
+});
+
+test("parse max life", () => {
+  const result = parseAffix("+3% Max Life");
+  expect(result).toEqual({
+    type: "MaxLifePct",
+    value: 0.03,
+  });
+});
+
+test("parse max energy shield", () => {
+  const result = parseAffix("+3% Max Energy Shield");
+  expect(result).toEqual({
+    type: "MaxEnergyShieldPct",
+    value: 0.03,
+  });
+});
+
+test("parse armor", () => {
+  const result = parseAffix("+5% Armor");
+  expect(result).toEqual({
+    type: "ArmorPct",
+    value: 0.05,
+  });
+});
+
+test("parse evasion", () => {
+  const result = parseAffix("+5% Evasion");
+  expect(result).toEqual({
+    type: "EvasionPct",
+    value: 0.05,
+  });
+});
+
+test("parse life regain", () => {
+  const result = parseAffix("1.5% Life Regain");
+  expect(result).toEqual({
+    type: "LifeRegainPct",
+    value: 0.015,
+  });
+});
+
+test("parse energy shield regain", () => {
+  const result = parseAffix("1.5% Energy Shield Regain");
+  expect(result).toEqual({
+    type: "EnergyShieldRegainPct",
+    value: 0.015,
+  });
+});
+
+test("parse multistrike chance", () => {
+  const result = parseAffix("+32% chance to Multistrike");
+  expect(result).toEqual({
+    type: "MultistrikeChancePct",
+    value: 0.32,
+  });
+});
+
+test("parse flat strength", () => {
+  const result = parseAffix("+6 Strength");
+  expect(result).toEqual({
+    type: "Str",
+    value: 6,
+  });
+});
+
+test("parse flat dexterity", () => {
+  const result = parseAffix("+6 Dexterity");
+  expect(result).toEqual({
+    type: "Dex",
+    value: 6,
+  });
+});
+
+test("parse percentage strength", () => {
+  const result = parseAffix("+4% Strength");
+  expect(result).toEqual({
+    type: "StrPct",
+    value: 0.04,
+  });
+});
+
+test("parse percentage dexterity", () => {
+  const result = parseAffix("+4% Dexterity");
+  expect(result).toEqual({
+    type: "DexPct",
+    value: 0.04,
+  });
+});
+
+test("parse fervor effect", () => {
+  const result = parseAffix("+4% Fervor effect");
+  expect(result).toEqual({
+    type: "FervorEff",
+    value: 0.04,
+  });
+});
+
+test("parse steep strike chance", () => {
+  const result = parseAffix("+12% Steep Strike chance");
+  expect(result).toEqual({
+    type: "SteepStrikeChance",
+    value: 0.12,
+  });
+});
