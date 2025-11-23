@@ -1,4 +1,5 @@
 * more affix parsers
+* more mods
 * affix range parsers for crafting
 * talent page
   * tlidb scraper

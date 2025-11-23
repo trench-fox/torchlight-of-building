@@ -86,12 +86,35 @@ const parseCritRatingPct = (
   };
 };
 
+const parseAspdPct = (input: string): AffixOfType<"AspdPct"> | undefined => {
+  // Regex to parse: +6% [additional] attack speed
+  const pattern = /^([+-])?(\d+(?:\.\d+)?)% (?:(additional) )?attack speed$/i;
+  const match = input.match(pattern);
+
+  if (!match) {
+    return undefined;
+  }
+
+  const percentageStr = match[2];
+  const hasAdditional = match[3] !== undefined;
+
+  const value = parseFloat(percentageStr) / 100;
+  const addn = hasAdditional;
+
+  return {
+    type: "AspdPct",
+    value,
+    addn,
+  };
+};
+
 export const parseAffix = (input: string): ParseResult => {
-  const normalized = input.trim();
+  const normalized = input.trim().toLowerCase();
 
   const parsers = [
     parseDmgPct,
     parseCritRatingPct,
+    parseAspdPct,
     // Add more parsers here as they're implemented
     // parseCritDmgPct,
     // etc.

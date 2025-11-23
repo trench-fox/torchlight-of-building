@@ -51,9 +51,9 @@ test("parse decimal damage", () => {
   });
 });
 
-test("return undefined for invalid damage type", () => {
+test("return unrecognized for invalid damage type", () => {
   const result = parseAffix("+10% invalid damage");
-  expect(result).toBeUndefined();
+  expect(result).toBe("unrecognized");
 });
 
 test("parse global critical strike rating", () => {
@@ -83,7 +83,34 @@ test("parse crit rating with decimal percentage", () => {
   });
 });
 
-test("return undefined for invalid crit rating mod type", () => {
+test("return unrecognized for invalid crit rating mod type", () => {
   const result = parseAffix("+10% Fire Critical Strike Rating");
-  expect(result).toBeUndefined();
+  expect(result).toBe("unrecognized");
+});
+
+test("parse basic attack speed", () => {
+  const result = parseAffix("+6% attack speed");
+  expect(result).toEqual({
+    type: "AspdPct",
+    value: 0.06,
+    addn: false,
+  });
+});
+
+test("parse additional attack speed", () => {
+  const result = parseAffix("+6% additional attack speed");
+  expect(result).toEqual({
+    type: "AspdPct",
+    value: 0.06,
+    addn: true,
+  });
+});
+
+test("parse attack speed with decimal percentage", () => {
+  const result = parseAffix("+12.5% attack speed");
+  expect(result).toEqual({
+    type: "AspdPct",
+    value: 0.125,
+    addn: false,
+  });
 });
