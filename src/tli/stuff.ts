@@ -2,6 +2,7 @@ import * as R from "remeda";
 import { match } from "ts-pattern";
 import * as Mod from "./mod";
 import { DmgModType } from "./constants";
+import { Affix } from "./core";
 
 let dummy40Armor = 0.11;
 let dummy85Armor = 0.44;
@@ -66,12 +67,12 @@ const emptyDamageRange = (): DmgRange => {
 };
 
 export interface TalentPage {
-  affixes: Mod.Mod[];
-  coreTalents: Mod.Mod[];
+  affixes: Affix[];
+  coreTalents: Affix[];
 }
 
 export interface DivinitySlate {
-  affixes: Mod.Mod[];
+  affixes: Affix[];
 }
 
 export interface DivinityPage {
@@ -96,7 +97,7 @@ export interface Gear {
     | "ring"
     | "sword"
     | "shield";
-  affixes: Mod.Mod[];
+  affixes: Affix[];
 }
 
 export interface GearPage {
@@ -116,7 +117,7 @@ export interface Loadout {
   equipmentPage: GearPage;
   talentPage: TalentPage;
   divinityPage: DivinityPage;
-  customConfiguration: Mod.Mod[];
+  customConfiguration: Affix[];
 }
 
 const calculateInc = (bonuses: number[]) => {
@@ -135,22 +136,28 @@ const calculateAddn = (bonuses: number[]) => {
   );
 };
 
+const collectModsFromAffixes = (affixes: Affix[]): Mod.Mod[] => {
+  return affixes?.map((a) => a.mods).flat() || [];
+};
+
 export const collectMods = (loadout: Loadout): Mod.Mod[] => {
   return [
-    ...loadout.divinityPage.slates.map((s) => s.affixes).flat(),
-    ...loadout.talentPage.affixes,
-    ...loadout.talentPage.coreTalents,
-    ...(loadout.equipmentPage.helmet?.affixes || []),
-    ...(loadout.equipmentPage.chest?.affixes || []),
-    ...(loadout.equipmentPage.neck?.affixes || []),
-    ...(loadout.equipmentPage.gloves?.affixes || []),
-    ...(loadout.equipmentPage.belt?.affixes || []),
-    ...(loadout.equipmentPage.boots?.affixes || []),
-    ...(loadout.equipmentPage.leftRing?.affixes || []),
-    ...(loadout.equipmentPage.rightRing?.affixes || []),
-    ...(loadout.equipmentPage.mainHand?.affixes || []),
-    ...(loadout.equipmentPage.offHand?.affixes || []),
-    ...loadout.customConfiguration,
+    ...collectModsFromAffixes(
+      loadout.divinityPage.slates.flatMap((s) => s.affixes)
+    ),
+    ...collectModsFromAffixes(loadout.talentPage.affixes),
+    ...collectModsFromAffixes(loadout.talentPage.coreTalents),
+    ...collectModsFromAffixes(loadout.equipmentPage.helmet?.affixes || []),
+    ...collectModsFromAffixes(loadout.equipmentPage.chest?.affixes || []),
+    ...collectModsFromAffixes(loadout.equipmentPage.neck?.affixes || []),
+    ...collectModsFromAffixes(loadout.equipmentPage.gloves?.affixes || []),
+    ...collectModsFromAffixes(loadout.equipmentPage.belt?.affixes || []),
+    ...collectModsFromAffixes(loadout.equipmentPage.boots?.affixes || []),
+    ...collectModsFromAffixes(loadout.equipmentPage.leftRing?.affixes || []),
+    ...collectModsFromAffixes(loadout.equipmentPage.rightRing?.affixes || []),
+    ...collectModsFromAffixes(loadout.equipmentPage.mainHand?.affixes || []),
+    ...collectModsFromAffixes(loadout.equipmentPage.offHand?.affixes || []),
+    ...collectModsFromAffixes(loadout.customConfiguration),
   ];
 };
 
@@ -210,7 +217,8 @@ const calculateGearDmg = (loadout: Loadout, allMods: Mod.Mod[]): GearDmg => {
   if (mainhand === undefined) {
     return emptyGearDmg();
   }
-  let basePhysDmg = findAffix(mainhand.affixes, "GearBasePhysFlatDmg");
+  let mainhandMods = mainhand.affixes.map((a) => a.mods).flat();
+  let basePhysDmg = findAffix(mainhandMods, "GearBasePhysFlatDmg");
   if (basePhysDmg === undefined) {
     return emptyGearDmg();
   }
@@ -225,10 +233,7 @@ const calculateGearDmg = (loadout: Loadout, allMods: Mod.Mod[]): GearDmg => {
   phys.max += basePhysDmg.value;
   let physBonusPct = 0;
 
-  let gearEleMinusPhysDmg = findAffix(
-    mainhand.affixes,
-    "GearPlusEleMinusPhysDmg"
-  );
+  let gearEleMinusPhysDmg = findAffix(mainhandMods, "GearPlusEleMinusPhysDmg");
   if (gearEleMinusPhysDmg !== undefined) {
     physBonusPct -= 1;
 
@@ -242,12 +247,12 @@ const calculateGearDmg = (loadout: Loadout, allMods: Mod.Mod[]): GearDmg => {
     fire.max += max;
   }
 
-  let gearPhysDmgPct = findAffix(mainhand.affixes, "GearPhysDmgPct");
+  let gearPhysDmgPct = findAffix(mainhandMods, "GearPhysDmgPct");
   if (gearPhysDmgPct !== undefined) {
     physBonusPct += gearPhysDmgPct.value;
   }
 
-  filterAffix(mainhand.affixes, "FlatGearDmg").forEach((a) => {
+  filterAffix(mainhandMods, "FlatGearDmg").forEach((a) => {
     match(a.modType)
       .with("physical", () => {
         phys = addDR(phys, a.value);

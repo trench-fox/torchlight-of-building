@@ -27,7 +27,7 @@ test("calculate offense very basic", () => {
     equipmentPage: {
       mainHand: {
         gearType: "sword",
-        affixes: [{ type: "GearBasePhysFlatDmg", value: 100 }],
+        affixes: [{ mods: [{ type: "GearBasePhysFlatDmg", value: 100 }] }],
       },
     },
     talentPage: {
@@ -38,12 +38,17 @@ test("calculate offense very basic", () => {
       slates: [],
     },
     customConfiguration: [
-      { type: "DmgPct", value: 1, modType: "global", addn: false },
+      { mods: [{ type: "DmgPct", value: 1, modType: "global", addn: false }] },
     ],
   };
 
   let mods = collectMods(loadout);
-  let res = calculateOffense(loadout, mods, "[Test] Simple Attack", defaultConfiguration);
+  let res = calculateOffense(
+    loadout,
+    mods,
+    "[Test] Simple Attack",
+    defaultConfiguration
+  );
 
   // base * bonusdmg * crit * skill bonus
   // 100 * 2 * 1.025
@@ -55,7 +60,7 @@ test("calculate offense multiple inc dmg", () => {
     equipmentPage: {
       mainHand: {
         gearType: "sword",
-        affixes: [{ type: "GearBasePhysFlatDmg", value: 100 }],
+        affixes: [{ mods: [{ type: "GearBasePhysFlatDmg", value: 100 }] }],
       },
     },
     talentPage: {
@@ -66,13 +71,22 @@ test("calculate offense multiple inc dmg", () => {
       slates: [],
     },
     customConfiguration: [
-      { type: "DmgPct", value: 0.5, modType: "global", addn: false }, // +50% increased
-      { type: "DmgPct", value: 0.3, modType: "global", addn: false }, // +30% increased
+      {
+        mods: [{ type: "DmgPct", value: 0.5, modType: "global", addn: false }],
+      }, // +50% increased
+      {
+        mods: [{ type: "DmgPct", value: 0.3, modType: "global", addn: false }],
+      }, // +30% increased
     ],
   };
 
   let mods = collectMods(loadout);
-  let res = calculateOffense(loadout, mods, "[Test] Simple Attack", defaultConfiguration);
+  let res = calculateOffense(
+    loadout,
+    mods,
+    "[Test] Simple Attack",
+    defaultConfiguration
+  );
 
   // base * (1 + sum of increased) * crit
   // 100 * (1 + 0.5 + 0.3) = 180
@@ -85,7 +99,7 @@ test("calculate offense multiple addn dmg", () => {
     equipmentPage: {
       mainHand: {
         gearType: "sword",
-        affixes: [{ type: "GearBasePhysFlatDmg", value: 100 }],
+        affixes: [{ mods: [{ type: "GearBasePhysFlatDmg", value: 100 }] }],
       },
     },
     talentPage: {
@@ -96,13 +110,18 @@ test("calculate offense multiple addn dmg", () => {
       slates: [],
     },
     customConfiguration: [
-      { type: "DmgPct", value: 0.5, modType: "global", addn: true }, // +50% more
-      { type: "DmgPct", value: 0.2, modType: "global", addn: true }, // +20% more
+      { mods: [{ type: "DmgPct", value: 0.5, modType: "global", addn: true }] }, // +50% more
+      { mods: [{ type: "DmgPct", value: 0.2, modType: "global", addn: true }] }, // +20% more
     ],
   };
 
   let mods = collectMods(loadout);
-  let res = calculateOffense(loadout, mods, "[Test] Simple Attack", defaultConfiguration);
+  let res = calculateOffense(
+    loadout,
+    mods,
+    "[Test] Simple Attack",
+    defaultConfiguration
+  );
 
   // base * (1 + more1) * (1 + more2) * crit
   // 100 * 1.5 * 1.2 = 180
@@ -116,7 +135,7 @@ test("calculate offense multiple mix inc and addn dmg", () => {
     equipmentPage: {
       mainHand: {
         gearType: "sword",
-        affixes: [{ type: "GearBasePhysFlatDmg", value: 100 }],
+        affixes: [{ mods: [{ type: "GearBasePhysFlatDmg", value: 100 }] }],
       },
     },
     talentPage: {
@@ -127,14 +146,23 @@ test("calculate offense multiple mix inc and addn dmg", () => {
       slates: [],
     },
     customConfiguration: [
-      { type: "DmgPct", value: 0.5, modType: "global", addn: false }, // +50% increased
-      { type: "DmgPct", value: 0.3, modType: "global", addn: false }, // +30% increased
-      { type: "DmgPct", value: 0.2, modType: "global", addn: true }, // +20% more
+      {
+        mods: [{ type: "DmgPct", value: 0.5, modType: "global", addn: false }],
+      }, // +50% increased
+      {
+        mods: [{ type: "DmgPct", value: 0.3, modType: "global", addn: false }],
+      }, // +30% increased
+      { mods: [{ type: "DmgPct", value: 0.2, modType: "global", addn: true }] }, // +20% more
     ],
   };
 
   let mods = collectMods(loadout);
-  let res = calculateOffense(loadout, mods, "[Test] Simple Attack", defaultConfiguration);
+  let res = calculateOffense(
+    loadout,
+    mods,
+    "[Test] Simple Attack",
+    defaultConfiguration
+  );
 
   // base * (1 + sum of increased) * (1 + more) * crit
   // 100 * (1 + 0.5 + 0.3) * 1.2 = 100 * 1.8 * 1.2 = 216
@@ -148,7 +176,7 @@ test("calculate offense atk dmg mod", () => {
     equipmentPage: {
       mainHand: {
         gearType: "sword",
-        affixes: [{ type: "GearBasePhysFlatDmg", value: 100 }],
+        affixes: [{ mods: [{ type: "GearBasePhysFlatDmg", value: 100 }] }],
       },
     },
     talentPage: {
@@ -159,12 +187,19 @@ test("calculate offense atk dmg mod", () => {
       slates: [],
     },
     customConfiguration: [
-      { type: "DmgPct", value: 0.5, modType: "attack", addn: false }, // +50% increased attack damage
+      {
+        mods: [{ type: "DmgPct", value: 0.5, modType: "attack", addn: false }],
+      }, // +50% increased attack damage
     ],
   };
 
   let mods = collectMods(loadout);
-  let res = calculateOffense(loadout, mods, "[Test] Simple Attack", defaultConfiguration);
+  let res = calculateOffense(
+    loadout,
+    mods,
+    "[Test] Simple Attack",
+    defaultConfiguration
+  );
 
   // [Test] Simple Attack has "Attack" tag, so attack modifiers apply
   // 100 * (1 + 0.5) = 150
@@ -177,7 +212,7 @@ test("calculate offense spell dmg mod doesn't affect attack skill", () => {
     equipmentPage: {
       mainHand: {
         gearType: "sword",
-        affixes: [{ type: "GearBasePhysFlatDmg", value: 100 }],
+        affixes: [{ mods: [{ type: "GearBasePhysFlatDmg", value: 100 }] }],
       },
     },
     talentPage: {
@@ -188,12 +223,17 @@ test("calculate offense spell dmg mod doesn't affect attack skill", () => {
       slates: [],
     },
     customConfiguration: [
-      { type: "DmgPct", value: 0.5, modType: "spell", addn: false }, // +50% increased spell damage
+      { mods: [{ type: "DmgPct", value: 0.5, modType: "spell", addn: false }] }, // +50% increased spell damage
     ],
   };
 
   let mods = collectMods(loadout);
-  let res = calculateOffense(loadout, mods, "[Test] Simple Attack", defaultConfiguration);
+  let res = calculateOffense(
+    loadout,
+    mods,
+    "[Test] Simple Attack",
+    defaultConfiguration
+  );
 
   // [Test] Simple Attack has "Attack" tag, NOT "Spell" tag
   // So spell modifiers don't apply - only base damage
@@ -208,8 +248,12 @@ test("calculate offense elemental damage", () => {
       mainHand: {
         gearType: "sword",
         affixes: [
-          { type: "GearBasePhysFlatDmg", value: 100 },
-          { type: "GearPlusEleMinusPhysDmg", value: { min: 50, max: 50 } },
+          { mods: [{ type: "GearBasePhysFlatDmg", value: 100 }] },
+          {
+            mods: [
+              { type: "GearPlusEleMinusPhysDmg", value: { min: 50, max: 50 } },
+            ],
+          },
         ],
       },
     },
@@ -221,12 +265,21 @@ test("calculate offense elemental damage", () => {
       slates: [],
     },
     customConfiguration: [
-      { type: "DmgPct", value: 0.5, modType: "elemental", addn: false }, // +50% elemental
+      {
+        mods: [
+          { type: "DmgPct", value: 0.5, modType: "elemental", addn: false },
+        ],
+      }, // +50% elemental
     ],
   };
 
   let mods = collectMods(loadout);
-  let res = calculateOffense(loadout, mods, "[Test] Simple Attack", defaultConfiguration);
+  let res = calculateOffense(
+    loadout,
+    mods,
+    "[Test] Simple Attack",
+    defaultConfiguration
+  );
 
   // GearPlusEleMinusPhysDmg removes all physical damage and adds elemental
   // Physical: 100 * (1 - 1) = 0 (removed by conversion)
@@ -243,8 +296,16 @@ test("calculate offense cold damage", () => {
       mainHand: {
         gearType: "sword",
         affixes: [
-          { type: "GearBasePhysFlatDmg", value: 100 },
-          { type: "FlatGearDmg", value: { min: 30, max: 30 }, modType: "cold" },
+          { mods: [{ type: "GearBasePhysFlatDmg", value: 100 }] },
+          {
+            mods: [
+              {
+                type: "FlatGearDmg",
+                value: { min: 30, max: 30 },
+                modType: "cold",
+              },
+            ],
+          },
         ],
       },
     },
@@ -256,12 +317,17 @@ test("calculate offense cold damage", () => {
       slates: [],
     },
     customConfiguration: [
-      { type: "DmgPct", value: 0.8, modType: "cold", addn: false }, // +80% cold damage
+      { mods: [{ type: "DmgPct", value: 0.8, modType: "cold", addn: false }] }, // +80% cold damage
     ],
   };
 
   let mods = collectMods(loadout);
-  let res = calculateOffense(loadout, mods, "[Test] Simple Attack", defaultConfiguration);
+  let res = calculateOffense(
+    loadout,
+    mods,
+    "[Test] Simple Attack",
+    defaultConfiguration
+  );
 
   // Physical: 100 (no bonuses)
   // Cold: 30 * 1.8 (cold bonus) = 54
@@ -277,14 +343,22 @@ test("calculate offense affixes from equipment, talents, and divinities combine"
       mainHand: {
         gearType: "sword",
         affixes: [
-          { type: "GearBasePhysFlatDmg", value: 100 },
-          { type: "DmgPct", value: 0.2, modType: "global", addn: false }, // +20% from weapon
+          { mods: [{ type: "GearBasePhysFlatDmg", value: 100 }] },
+          {
+            mods: [
+              { type: "DmgPct", value: 0.2, modType: "global", addn: false },
+            ],
+          }, // +20% from weapon
         ],
       },
     },
     talentPage: {
       affixes: [
-        { type: "DmgPct", value: 0.3, modType: "global", addn: false }, // +30% from talent
+        {
+          mods: [
+            { type: "DmgPct", value: 0.3, modType: "global", addn: false },
+          ],
+        }, // +30% from talent
       ],
       coreTalents: [],
     },
@@ -292,7 +366,11 @@ test("calculate offense affixes from equipment, talents, and divinities combine"
       slates: [
         {
           affixes: [
-            { type: "DmgPct", value: 0.1, modType: "global", addn: false }, // +10% from divinity
+            {
+              mods: [
+                { type: "DmgPct", value: 0.1, modType: "global", addn: false },
+              ],
+            }, // +10% from divinity
           ],
         },
       ],
@@ -301,7 +379,12 @@ test("calculate offense affixes from equipment, talents, and divinities combine"
   };
 
   let mods = collectMods(loadout);
-  let res = calculateOffense(loadout, mods, "[Test] Simple Attack", defaultConfiguration);
+  let res = calculateOffense(
+    loadout,
+    mods,
+    "[Test] Simple Attack",
+    defaultConfiguration
+  );
 
   // All affixes from equipment, talents, and divinities are collected
   // Total damage bonus: 20% + 30% + 10% = 60%
@@ -316,7 +399,7 @@ test("calculate offense with fervor enabled default points", () => {
     equipmentPage: {
       mainHand: {
         gearType: "sword",
-        affixes: [{ type: "GearBasePhysFlatDmg", value: 100 }],
+        affixes: [{ mods: [{ type: "GearBasePhysFlatDmg", value: 100 }] }],
       },
     },
     talentPage: {
@@ -337,7 +420,12 @@ test("calculate offense with fervor enabled default points", () => {
   };
 
   let mods = collectMods(loadout);
-  let res = calculateOffense(loadout, mods, "[Test] Simple Attack", configuration);
+  let res = calculateOffense(
+    loadout,
+    mods,
+    "[Test] Simple Attack",
+    configuration
+  );
 
   // Base damage: 100
   // Fervor: 100 points * 2% = 200% increased crit rating
@@ -354,7 +442,7 @@ test("calculate offense with fervor enabled custom points", () => {
     equipmentPage: {
       mainHand: {
         gearType: "sword",
-        affixes: [{ type: "GearBasePhysFlatDmg", value: 100 }],
+        affixes: [{ mods: [{ type: "GearBasePhysFlatDmg", value: 100 }] }],
       },
     },
     talentPage: {
@@ -375,7 +463,12 @@ test("calculate offense with fervor enabled custom points", () => {
   };
 
   let mods = collectMods(loadout);
-  let res = calculateOffense(loadout, mods, "[Test] Simple Attack", configuration);
+  let res = calculateOffense(
+    loadout,
+    mods,
+    "[Test] Simple Attack",
+    configuration
+  );
 
   // Base damage: 100
   // Fervor: 50 points * 2% = 100% increased crit rating
@@ -383,7 +476,7 @@ test("calculate offense with fervor enabled custom points", () => {
   // Crit damage: 1.5 (default)
   // AvgHitWithCrit: 100 * 0.10 * 1.5 + 100 * 0.90 = 15 + 90 = 105
   expect(res?.avgHit).toBeCloseTo(100);
-  expect(res?.critChance).toBeCloseTo(0.10);
+  expect(res?.critChance).toBeCloseTo(0.1);
   expect(res?.avgHitWithCrit).toBeCloseTo(105);
 });
 
@@ -392,7 +485,7 @@ test("calculate offense with fervor disabled", () => {
     equipmentPage: {
       mainHand: {
         gearType: "sword",
-        affixes: [{ type: "GearBasePhysFlatDmg", value: 100 }],
+        affixes: [{ mods: [{ type: "GearBasePhysFlatDmg", value: 100 }] }],
       },
     },
     talentPage: {
@@ -413,7 +506,12 @@ test("calculate offense with fervor disabled", () => {
   };
 
   let mods = collectMods(loadout);
-  let res = calculateOffense(loadout, mods, "[Test] Simple Attack", configuration);
+  let res = calculateOffense(
+    loadout,
+    mods,
+    "[Test] Simple Attack",
+    configuration
+  );
 
   // Fervor disabled, so no bonus despite having 100 points
   // Crit chance: 0.05 * (1 + 0) = 0.05 (5%)
@@ -430,8 +528,8 @@ test("calculate offense with fervor and other crit rating affixes", () => {
       mainHand: {
         gearType: "sword",
         affixes: [
-          { type: "GearBasePhysFlatDmg", value: 100 },
-          { type: "CritRatingPct", value: 0.5, modType: "global" }, // +50% crit rating
+          { mods: [{ type: "GearBasePhysFlatDmg", value: 100 }] },
+          { mods: [{ type: "CritRatingPct", value: 0.5, modType: "global" }] }, // +50% crit rating
         ],
       },
     },
@@ -453,7 +551,12 @@ test("calculate offense with fervor and other crit rating affixes", () => {
   };
 
   let mods = collectMods(loadout);
-  let res = calculateOffense(loadout, mods, "[Test] Simple Attack", configuration);
+  let res = calculateOffense(
+    loadout,
+    mods,
+    "[Test] Simple Attack",
+    configuration
+  );
 
   // Base damage: 100
   // Crit rating from gear: +50%
@@ -463,7 +566,7 @@ test("calculate offense with fervor and other crit rating affixes", () => {
   // Crit damage: 1.5 (default)
   // AvgHitWithCrit: 100 * 0.10 * 1.5 + 100 * 0.90 = 15 + 90 = 105
   expect(res?.avgHit).toBeCloseTo(100);
-  expect(res?.critChance).toBeCloseTo(0.10);
+  expect(res?.critChance).toBeCloseTo(0.1);
   expect(res?.avgHitWithCrit).toBeCloseTo(105);
 });
 
@@ -473,8 +576,8 @@ test("calculate offense with fervor and single FervorEff modifier", () => {
       mainHand: {
         gearType: "sword",
         affixes: [
-          { type: "GearBasePhysFlatDmg", value: 100 },
-          { type: "FervorEff", value: 0.5 }, // +50% fervor effectiveness
+          { mods: [{ type: "GearBasePhysFlatDmg", value: 100 }] },
+          { mods: [{ type: "FervorEff", value: 0.5 }] }, // +50% fervor effectiveness
         ],
       },
     },
@@ -496,7 +599,12 @@ test("calculate offense with fervor and single FervorEff modifier", () => {
   };
 
   let mods = collectMods(loadout);
-  let res = calculateOffense(loadout, mods, "[Test] Simple Attack", configuration);
+  let res = calculateOffense(
+    loadout,
+    mods,
+    "[Test] Simple Attack",
+    configuration
+  );
 
   // Base damage: 100
   // Fervor: 100 points * 2% * (1 + 0.5) = 100 * 0.02 * 1.5 = 3.0 (300% increased crit rating)
@@ -504,7 +612,7 @@ test("calculate offense with fervor and single FervorEff modifier", () => {
   // Crit damage: 1.5 (default)
   // AvgHitWithCrit: 100 * 0.20 * 1.5 + 100 * 0.80 = 30 + 80 = 110
   expect(res?.avgHit).toBeCloseTo(100);
-  expect(res?.critChance).toBeCloseTo(0.20);
+  expect(res?.critChance).toBeCloseTo(0.2);
   expect(res?.avgHitWithCrit).toBeCloseTo(110);
 });
 
@@ -514,14 +622,14 @@ test("calculate offense with fervor and multiple FervorEff modifiers stacking", 
       mainHand: {
         gearType: "sword",
         affixes: [
-          { type: "GearBasePhysFlatDmg", value: 100 },
-          { type: "FervorEff", value: 0.1 }, // +10% fervor effectiveness
+          { mods: [{ type: "GearBasePhysFlatDmg", value: 100 }] },
+          { mods: [{ type: "FervorEff", value: 0.1 }] }, // +10% fervor effectiveness
         ],
       },
     },
     talentPage: {
       affixes: [
-        { type: "FervorEff", value: 0.1 }, // +10% fervor effectiveness
+        { mods: [{ type: "FervorEff", value: 0.1 }] }, // +10% fervor effectiveness
       ],
       coreTalents: [],
     },
@@ -539,7 +647,12 @@ test("calculate offense with fervor and multiple FervorEff modifiers stacking", 
   };
 
   let mods = collectMods(loadout);
-  let res = calculateOffense(loadout, mods, "[Test] Simple Attack", configuration);
+  let res = calculateOffense(
+    loadout,
+    mods,
+    "[Test] Simple Attack",
+    configuration
+  );
 
   // Base damage: 100
   // FervorEff total: 0.1 + 0.1 = 0.2 (20% total)
@@ -558,8 +671,8 @@ test("calculate offense with fervor and FervorEff with custom fervor points", ()
       mainHand: {
         gearType: "sword",
         affixes: [
-          { type: "GearBasePhysFlatDmg", value: 100 },
-          { type: "FervorEff", value: 1.0 }, // +100% fervor effectiveness (doubles it)
+          { mods: [{ type: "GearBasePhysFlatDmg", value: 100 }] },
+          { mods: [{ type: "FervorEff", value: 1.0 }] }, // +100% fervor effectiveness (doubles it)
         ],
       },
     },
@@ -581,7 +694,12 @@ test("calculate offense with fervor and FervorEff with custom fervor points", ()
   };
 
   let mods = collectMods(loadout);
-  let res = calculateOffense(loadout, mods, "[Test] Simple Attack", configuration);
+  let res = calculateOffense(
+    loadout,
+    mods,
+    "[Test] Simple Attack",
+    configuration
+  );
 
   // Base damage: 100
   // Fervor: 50 points * 2% * (1 + 1.0) = 50 * 0.02 * 2.0 = 2.0 (200% increased crit rating)
@@ -599,8 +717,8 @@ test("calculate offense with FervorEff but fervor disabled", () => {
       mainHand: {
         gearType: "sword",
         affixes: [
-          { type: "GearBasePhysFlatDmg", value: 100 },
-          { type: "FervorEff", value: 0.5 }, // +50% fervor effectiveness
+          { mods: [{ type: "GearBasePhysFlatDmg", value: 100 }] },
+          { mods: [{ type: "FervorEff", value: 0.5 }] }, // +50% fervor effectiveness
         ],
       },
     },
@@ -622,7 +740,12 @@ test("calculate offense with FervorEff but fervor disabled", () => {
   };
 
   let mods = collectMods(loadout);
-  let res = calculateOffense(loadout, mods, "[Test] Simple Attack", configuration);
+  let res = calculateOffense(
+    loadout,
+    mods,
+    "[Test] Simple Attack",
+    configuration
+  );
 
   // FervorEff has no effect when fervor is disabled
   // Crit chance: 0.05 * (1 + 0) = 0.05 (5%)
@@ -639,8 +762,8 @@ test("calculate offense with CritDmgPerFervor single affix", () => {
       mainHand: {
         gearType: "sword",
         affixes: [
-          { type: "GearBasePhysFlatDmg", value: 100 },
-          { type: "CritDmgPerFervor", value: 0.005 }, // +0.5% crit dmg per fervor point
+          { mods: [{ type: "GearBasePhysFlatDmg", value: 100 }] },
+          { mods: [{ type: "CritDmgPerFervor", value: 0.005 }] }, // +0.5% crit dmg per fervor point
         ],
       },
     },
@@ -662,7 +785,12 @@ test("calculate offense with CritDmgPerFervor single affix", () => {
   };
 
   let mods = collectMods(loadout);
-  let res = calculateOffense(loadout, mods, "[Test] Simple Attack", configuration);
+  let res = calculateOffense(
+    loadout,
+    mods,
+    "[Test] Simple Attack",
+    configuration
+  );
 
   // Base damage: 100
   // Fervor: 100 points * 2% = 200% increased crit rating
@@ -682,14 +810,14 @@ test("calculate offense with multiple CritDmgPerFervor affixes stacking", () => 
       mainHand: {
         gearType: "sword",
         affixes: [
-          { type: "GearBasePhysFlatDmg", value: 100 },
-          { type: "CritDmgPerFervor", value: 0.005 }, // +0.5% per point
+          { mods: [{ type: "GearBasePhysFlatDmg", value: 100 }] },
+          { mods: [{ type: "CritDmgPerFervor", value: 0.005 }] }, // +0.5% per point
         ],
       },
     },
     talentPage: {
       affixes: [
-        { type: "CritDmgPerFervor", value: 0.003 }, // +0.3% per point
+        { mods: [{ type: "CritDmgPerFervor", value: 0.003 }] }, // +0.3% per point
       ],
       coreTalents: [],
     },
@@ -707,7 +835,12 @@ test("calculate offense with multiple CritDmgPerFervor affixes stacking", () => 
   };
 
   let mods = collectMods(loadout);
-  let res = calculateOffense(loadout, mods, "[Test] Simple Attack", configuration);
+  let res = calculateOffense(
+    loadout,
+    mods,
+    "[Test] Simple Attack",
+    configuration
+  );
 
   // Base damage: 100
   // Fervor: 100 points * 2% = 200% increased crit rating
@@ -727,8 +860,8 @@ test("calculate offense with CritDmgPerFervor with custom fervor points", () => 
       mainHand: {
         gearType: "sword",
         affixes: [
-          { type: "GearBasePhysFlatDmg", value: 100 },
-          { type: "CritDmgPerFervor", value: 0.01 }, // +1% crit dmg per fervor point
+          { mods: [{ type: "GearBasePhysFlatDmg", value: 100 }] },
+          { mods: [{ type: "CritDmgPerFervor", value: 0.01 }] }, // +1% crit dmg per fervor point
         ],
       },
     },
@@ -750,7 +883,12 @@ test("calculate offense with CritDmgPerFervor with custom fervor points", () => 
   };
 
   let mods = collectMods(loadout);
-  let res = calculateOffense(loadout, mods, "[Test] Simple Attack", configuration);
+  let res = calculateOffense(
+    loadout,
+    mods,
+    "[Test] Simple Attack",
+    configuration
+  );
 
   // Base damage: 100
   // Fervor: 50 points * 2% = 100% increased crit rating
@@ -759,7 +897,7 @@ test("calculate offense with CritDmgPerFervor with custom fervor points", () => 
   // Crit damage: 1.5 * (1 + 0.5) = 2.25
   // AvgHitWithCrit: 100 * 0.10 * 2.25 + 100 * 0.90 = 22.5 + 90 = 112.5
   expect(res?.avgHit).toBeCloseTo(100);
-  expect(res?.critChance).toBeCloseTo(0.10);
+  expect(res?.critChance).toBeCloseTo(0.1);
   expect(res?.critDmgMult).toBeCloseTo(2.25);
   expect(res?.avgHitWithCrit).toBeCloseTo(112.5);
 });
@@ -770,8 +908,8 @@ test("calculate offense with CritDmgPerFervor but fervor disabled", () => {
       mainHand: {
         gearType: "sword",
         affixes: [
-          { type: "GearBasePhysFlatDmg", value: 100 },
-          { type: "CritDmgPerFervor", value: 0.005 }, // +0.5% per point
+          { mods: [{ type: "GearBasePhysFlatDmg", value: 100 }] },
+          { mods: [{ type: "CritDmgPerFervor", value: 0.005 }] }, // +0.5% per point
         ],
       },
     },
@@ -793,7 +931,12 @@ test("calculate offense with CritDmgPerFervor but fervor disabled", () => {
   };
 
   let mods = collectMods(loadout);
-  let res = calculateOffense(loadout, mods, "[Test] Simple Attack", configuration);
+  let res = calculateOffense(
+    loadout,
+    mods,
+    "[Test] Simple Attack",
+    configuration
+  );
 
   // CritDmgPerFervor has no effect when fervor is disabled
   // Crit chance: 0.05 (5%, no fervor bonus)
@@ -811,9 +954,18 @@ test("calculate offense with CritDmgPerFervor and other crit damage modifiers", 
       mainHand: {
         gearType: "sword",
         affixes: [
-          { type: "GearBasePhysFlatDmg", value: 100 },
-          { type: "CritDmgPerFervor", value: 0.005 }, // +0.5% per point
-          { type: "CritDmgPct", value: 0.3, modType: "global", addn: false }, // +30% increased
+          { mods: [{ type: "GearBasePhysFlatDmg", value: 100 }] },
+          { mods: [{ type: "CritDmgPerFervor", value: 0.005 }] }, // +0.5% per point
+          {
+            mods: [
+              {
+                type: "CritDmgPct",
+                value: 0.3,
+                modType: "global",
+                addn: false,
+              },
+            ],
+          }, // +30% increased
         ],
       },
     },
@@ -835,7 +987,12 @@ test("calculate offense with CritDmgPerFervor and other crit damage modifiers", 
   };
 
   let mods = collectMods(loadout);
-  let res = calculateOffense(loadout, mods, "[Test] Simple Attack", configuration);
+  let res = calculateOffense(
+    loadout,
+    mods,
+    "[Test] Simple Attack",
+    configuration
+  );
 
   // Base damage: 100
   // Fervor: 100 points * 2% = 200% increased crit rating
