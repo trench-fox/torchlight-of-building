@@ -1,9 +1,9 @@
 import { Mod } from "./mod";
 
 export interface Affix {
-    mods: Mod[]
-    maxDivinity?: number
-    src?: string
+  mods: Mod[];
+  maxDivinity?: number;
+  src?: string;
 }
 
 export interface DmgRange {
@@ -64,4 +64,35 @@ export interface Loadout {
   talentPage: TalentPage;
   divinityPage: DivinityPage;
   customConfiguration: Affix[];
+}
+
+export interface RawGear {
+  gearType:
+    | "helmet"
+    | "chest"
+    | "neck"
+    | "gloves"
+    | "belt"
+    | "boots"
+    | "ring"
+    | "sword"
+    | "shield";
+  affixes: string[];
+}
+
+export interface RawGearPage {
+  helmet?: Gear;
+  chest?: Gear;
+  neck?: Gear;
+  gloves?: Gear;
+  belt?: Gear;
+  boots?: Gear;
+  leftRing?: Gear;
+  rightRing?: Gear;
+  mainHand?: Gear;
+  offHand?: Gear;
+}
+
+export interface RawLoadout {
+  equipmentPage: RawGearPage;
 }
