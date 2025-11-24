@@ -4,6 +4,7 @@ export interface Affix {
   mods: Mod[];
   maxDivinity?: number;
   src?: string;
+  raw?: string;
 }
 
 export interface DmgRange {
