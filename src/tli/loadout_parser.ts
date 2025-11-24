@@ -9,11 +9,13 @@ import {
   RawTalentTree,
   TalentPage,
 } from "./core";
+import { Mod } from "./mod";
 import { parseMod } from "./mod_parser";
 import { readFileSync } from "fs";
 import { join } from "path";
 
 // Map of tree names to their JSON filenames
+// See data/ directory
 const TREE_NAME_TO_FILE: Record<string, string> = {
   Alchemist: "alchemist_tree.json",
   Arcanist: "arcanist_tree.json",
@@ -47,7 +49,6 @@ const TREE_NAME_TO_FILE: Record<string, string> = {
   Warrior: "warrior_tree.json",
 };
 
-// TypeScript interface for the talent tree JSON structure
 interface TalentTreeNode {
   nodeType: "micro" | "medium" | "legendary";
   rawAffix: string;
@@ -68,10 +69,8 @@ interface TalentTreeData {
 }
 
 const parseAffixString = (affixString: string): Affix => {
-  // Split by newline to handle multi-line affixes
   const lines = affixString.split("\n").map((line) => line.trim());
 
-  // Parse each line as a separate mod
   const mods = lines
     .filter((line) => line.length > 0) // Skip empty lines
     .map((line) => parseMod(line))
@@ -119,30 +118,17 @@ const parseTalentTree = (rawTree: RawTalentTree): Affix[] => {
       );
     }
 
-    // Parse the node's affix string
     const baseAffix = parseAffixString(node.rawAffix);
 
-    // Multiply mod values by the number of allocated points
-    const scaledMods = baseAffix.mods.map((mod) => {
-      // Handle different mod types that have scalable values
-      if (mod.type === "CoreTalent") {
-        // CoreTalent mods don't have numeric values to scale
-        return mod;
-      } else if (mod.type === "FlatGearDmg") {
-        // FlatGearDmg has a DmgRange value
-        return {
-          ...mod,
-          value: {
-            min: mod.value.min * allocatedNode.points,
-            max: mod.value.max * allocatedNode.points,
-          },
-        };
-      } else {
-        // All other mods have a numeric value property
+    const scaledMods: Mod[] = baseAffix.mods.map((mod) => {
+      // Only mods with easily scalable values can possibly be allocated multiple points
+      if ("value" in mod && typeof mod.value === "number") {
         return {
           ...mod,
           value: mod.value * allocatedNode.points,
-        };
+        } as Mod;
+      } else {
+        return mod;
       }
     });
 
@@ -160,7 +146,6 @@ const parseTalentTree = (rawTree: RawTalentTree): Affix[] => {
 };
 
 const parseTalentPage = (rawTalentPage: RawTalentPage): TalentPage => {
-  // Parse all four talent trees and combine their affixes
   const allAffixes = [
     ...parseTalentTree(rawTalentPage.tree1),
     ...parseTalentTree(rawTalentPage.tree2),
