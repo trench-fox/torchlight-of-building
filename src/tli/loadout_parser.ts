@@ -36,7 +36,7 @@ export const parse_loadout = (rawLoadout: RawLoadout): Loadout => {
 
   return {
     equipmentPage: gearPage,
-    talentPage: { affixes: [], coreTalents: [] },
+    talentPage: { affixes: [] },
     divinityPage: { slates: [] },
     customConfiguration: [],
   };
