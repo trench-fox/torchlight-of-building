@@ -61,4 +61,4 @@ console.log(warriorTree.nodes.length); // Number of nodes
 - `TalentNodeData` - [src/tli/core.ts](../core.ts)
 - `TreeName` - [src/tli/talent_tree_types.ts](../talent_tree_types.ts)
 
-See [docs/data-models.md](../../../docs/data-models.md#talent-tree-data) for complete documentation.
+See [.claude/docs/data-models.md](../../../.claude/docs/data-models.md#talent-tree-data) for complete documentation.

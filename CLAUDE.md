@@ -33,4 +33,4 @@ RawLoadout (UI, strings) → parseMod() → Loadout (typed Mods) → calculateOf
 
 ## Detailed Docs
 
-See [docs/](docs/) for implementation details only when needed.
+See [.claude/docs/](.claude/docs/) for implementation details only when needed.
