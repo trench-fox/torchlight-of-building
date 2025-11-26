@@ -19,7 +19,7 @@ interface CraftingAffix {
  * - En-dashes (–) to hyphens (-)
  */
 const parseAffixText = (
-  td: cheerio.Cheerio<cheerio.Element>,
+  td: cheerio.Cheerio<any>,
   $: cheerio.CheerioAPI,
 ): string => {
   // Clone the element to avoid modifying the original
