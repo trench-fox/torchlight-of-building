@@ -1,6 +1,19 @@
 # CLAUDE.md
 
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+
 Next.js 16 + React 19 + TypeScript character build planner for Torchlight Infinite.
+
+## Commands
+
+```bash
+pnpm dev          # Development server (http://localhost:3000)
+pnpm build        # Production build
+pnpm test         # Run all tests
+pnpm test <file>  # Run single test file
+pnpm typecheck    # TypeScript type checking
+pnpm lint         # ESLint
+```
 
 ## Architecture
 
@@ -8,7 +21,7 @@ Next.js 16 + React 19 + TypeScript character build planner for Torchlight Infini
 - **Calculation Engine** ([src/tli/offense.ts](src/tli/offense.ts)) - DPS/stat calculations
 - **Mod Parser** ([src/tli/mod_parser.ts](src/tli/mod_parser.ts)) - String → typed Mod conversion
 - **Data Models** ([src/tli/core.ts](src/tli/core.ts), [src/tli/mod.ts](src/tli/mod.ts)) - Type definitions
-- **Gear Affixes** ([src/tli/gear_affix_data/](src/tli/gear_affix_data/)) - 5,625 typed gear affixes
+- **Gear Affixes** ([src/data/gear_affix/](src/data/gear_affix/)) - Generated typed gear affixes
 
 ## Key Conventions
 
@@ -23,8 +36,6 @@ Next.js 16 + React 19 + TypeScript character build planner for Torchlight Infini
 ```
 RawLoadout (UI, strings) → parseMod() → Loadout (typed Mods) → calculateOffense() → Results
 ```
-
-**Testing:** Use existing test files, run with `pnpm test <file>`
 
 ## Common Tasks
 
