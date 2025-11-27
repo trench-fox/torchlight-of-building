@@ -26,12 +26,7 @@ export const saveDebugModeToStorage = (enabled: boolean): void => {
 
 export const createEmptyLoadout = (): RawLoadout => ({
   equipmentPage: {},
-  talentPage: {
-    tree1: { name: "Warrior", allocatedNodes: [] },
-    tree2: { name: "Warrior", allocatedNodes: [] },
-    tree3: { name: "Warrior", allocatedNodes: [] },
-    tree4: { name: "Warrior", allocatedNodes: [] },
-  },
+  talentPage: {},
   skillPage: {
     skills: [],
   },

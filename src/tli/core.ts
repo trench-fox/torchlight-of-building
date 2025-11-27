@@ -81,10 +81,10 @@ export interface RawTalentTree {
 }
 
 export interface RawTalentPage {
-  tree1: RawTalentTree;
-  tree2: RawTalentTree;
-  tree3: RawTalentTree;
-  tree4: RawTalentTree;
+  tree1?: RawTalentTree;
+  tree2?: RawTalentTree;
+  tree3?: RawTalentTree;
+  tree4?: RawTalentTree;
 }
 
 export interface TalentNodeData {

@@ -147,10 +147,10 @@ const parseTalentTree = (rawTree: RawTalentTree): Affix[] => {
 
 const parseTalentPage = (rawTalentPage: RawTalentPage): TalentPage => {
   const allAffixes = [
-    ...parseTalentTree(rawTalentPage.tree1),
-    ...parseTalentTree(rawTalentPage.tree2),
-    ...parseTalentTree(rawTalentPage.tree3),
-    ...parseTalentTree(rawTalentPage.tree4),
+    ...(rawTalentPage.tree1 ? parseTalentTree(rawTalentPage.tree1) : []),
+    ...(rawTalentPage.tree2 ? parseTalentTree(rawTalentPage.tree2) : []),
+    ...(rawTalentPage.tree3 ? parseTalentTree(rawTalentPage.tree3) : []),
+    ...(rawTalentPage.tree4 ? parseTalentTree(rawTalentPage.tree4) : []),
   ];
 
   return {

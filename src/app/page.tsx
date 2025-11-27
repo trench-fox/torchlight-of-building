@@ -75,7 +75,12 @@ export default function Home() {
     if (activePage !== "talents") return;
 
     const loadTree = async (slot: TreeSlot) => {
-      const treeName = loadout.talentPage[slot].name;
+      const tree = loadout.talentPage[slot];
+      if (!tree) {
+        setTreeData((prev) => ({ ...prev, [slot]: null }));
+        return;
+      }
+      const treeName = tree.name;
       try {
         const data = await loadTalentTree(treeName as TreeName);
         setTreeData((prev) => ({ ...prev, [slot]: data }));
@@ -90,10 +95,10 @@ export default function Home() {
     loadTree("tree4");
   }, [
     activePage,
-    loadout.talentPage.tree1.name,
-    loadout.talentPage.tree2.name,
-    loadout.talentPage.tree3.name,
-    loadout.talentPage.tree4.name,
+    loadout.talentPage.tree1?.name,
+    loadout.talentPage.tree2?.name,
+    loadout.talentPage.tree3?.name,
+    loadout.talentPage.tree4?.name,
   ]);
 
   const prefixAffixes = useMemo(
@@ -264,7 +269,19 @@ export default function Home() {
 
   // Talent page handlers
   const handleTreeChange = (slot: TreeSlot, newTreeName: string) => {
-    if (loadout.talentPage[slot].allocatedNodes.length > 0) return;
+    const currentTree = loadout.talentPage[slot];
+    if (currentTree && currentTree.allocatedNodes.length > 0) return;
+
+    // Allow clearing the tree
+    if (newTreeName === "") {
+      setLoadout((prev) => {
+        const newTalentPage = { ...prev.talentPage };
+        delete newTalentPage[slot];
+        return { ...prev, talentPage: newTalentPage };
+      });
+      return;
+    }
+
     if (slot !== "tree1" && isGodGoddessTree(newTreeName)) return;
 
     setLoadout((prev) => ({
@@ -277,13 +294,14 @@ export default function Home() {
   };
 
   const handleResetTree = (slot: TreeSlot) => {
-    if (loadout.talentPage[slot].allocatedNodes.length === 0) return;
+    const currentTree = loadout.talentPage[slot];
+    if (!currentTree || currentTree.allocatedNodes.length === 0) return;
     if (confirm("Reset all points in this tree? This cannot be undone.")) {
       setLoadout((prev) => ({
         ...prev,
         talentPage: {
           ...prev.talentPage,
-          [slot]: { ...prev.talentPage[slot], allocatedNodes: [] },
+          [slot]: { ...prev.talentPage[slot]!, allocatedNodes: [] },
         },
       }));
     }
@@ -292,6 +310,7 @@ export default function Home() {
   const handleAllocate = (slot: TreeSlot, x: number, y: number) => {
     setLoadout((prev) => {
       const tree = prev.talentPage[slot];
+      if (!tree) return prev;
       const existing = tree.allocatedNodes.find((n) => n.x === x && n.y === y);
       const nodeData = treeData[slot]?.nodes.find(
         (n) => n.position.x === x && n.position.y === y
@@ -322,6 +341,7 @@ export default function Home() {
   const handleDeallocate = (slot: TreeSlot, x: number, y: number) => {
     setLoadout((prev) => {
       const tree = prev.talentPage[slot];
+      if (!tree) return prev;
       const existing = tree.allocatedNodes.find((n) => n.x === x && n.y === y);
       if (!existing) return prev;
 
@@ -574,9 +594,10 @@ export default function Home() {
               </h2>
               <div className="grid grid-cols-4 gap-2">
                 {(["tree1", "tree2", "tree3", "tree4"] as const).map((slot) => {
-                  const totalPoints = loadout.talentPage[
-                    slot
-                  ].allocatedNodes.reduce((sum, node) => sum + node.points, 0);
+                  const tree = loadout.talentPage[slot];
+                  const totalPoints = tree
+                    ? tree.allocatedNodes.reduce((sum, node) => sum + node.points, 0)
+                    : 0;
 
                   return (
                     <button
@@ -597,7 +618,7 @@ export default function Home() {
                           : `Slot ${slot.slice(-1)}`}
                       </div>
                       <div className="text-sm mt-1 truncate">
-                        {loadout.talentPage[slot].name.replace(/_/g, " ")}
+                        {tree ? tree.name.replace(/_/g, " ") : "None"}
                       </div>
                       <div className="text-xs mt-1">{totalPoints} points</div>
                     </button>
@@ -616,15 +637,16 @@ export default function Home() {
               </label>
               <div className="flex gap-2">
                 <select
-                  value={loadout.talentPage[activeTreeSlot].name}
+                  value={loadout.talentPage[activeTreeSlot]?.name ?? ""}
                   onChange={(e) =>
                     handleTreeChange(activeTreeSlot, e.target.value)
                   }
                   disabled={
-                    loadout.talentPage[activeTreeSlot].allocatedNodes.length > 0
+                    (loadout.talentPage[activeTreeSlot]?.allocatedNodes.length ?? 0) > 0
                   }
                   className="flex-1 px-4 py-2 border border-zinc-300 dark:border-zinc-600 rounded-lg bg-white dark:bg-zinc-700 text-zinc-900 dark:text-zinc-100 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
+                  <option value="">None</option>
                   {activeTreeSlot === "tree1" && (
                     <optgroup label="God/Goddess Trees">
                       {GOD_GODDESS_TREES.map((tree) => (
@@ -646,8 +668,7 @@ export default function Home() {
                 <button
                   onClick={() => handleResetTree(activeTreeSlot)}
                   disabled={
-                    loadout.talentPage[activeTreeSlot].allocatedNodes.length ===
-                    0
+                    (loadout.talentPage[activeTreeSlot]?.allocatedNodes.length ?? 0) === 0
                   }
                   className="px-4 py-2 bg-red-600 text-white rounded-lg font-medium hover:bg-red-700 transition-colors disabled:bg-zinc-400 disabled:cursor-not-allowed"
                 >
@@ -657,7 +678,11 @@ export default function Home() {
             </div>
 
             {/* Talent Grid */}
-            {treeData[activeTreeSlot] ? (
+            {!loadout.talentPage[activeTreeSlot] ? (
+              <div className="text-center py-12 text-zinc-500 dark:text-zinc-400">
+                Select a tree to view
+              </div>
+            ) : treeData[activeTreeSlot] ? (
               <div className="bg-white dark:bg-zinc-800 rounded-lg p-6 shadow">
                 <h2 className="text-xl font-semibold mb-4 text-zinc-800 dark:text-zinc-200">
                   {treeData[activeTreeSlot]!.name.replace(/_/g, " ")} Tree
@@ -678,7 +703,7 @@ export default function Home() {
                 <TalentGrid
                   treeData={treeData[activeTreeSlot]!}
                   allocatedNodes={
-                    loadout.talentPage[activeTreeSlot].allocatedNodes
+                    loadout.talentPage[activeTreeSlot]!.allocatedNodes
                   }
                   onAllocate={(x, y) => handleAllocate(activeTreeSlot, x, y)}
                   onDeallocate={(x, y) =>
