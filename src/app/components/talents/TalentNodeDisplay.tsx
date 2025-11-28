@@ -26,12 +26,12 @@ export const TalentNodeDisplay: React.FC<TalentNodeDisplayProps> = ({
         relative w-20 h-20 rounded-lg border-2 transition-all
         ${
           isFullyAllocated
-            ? "border-green-500 bg-green-50 dark:bg-green-900/20"
+            ? "border-green-500 bg-green-500/15"
             : allocated > 0
-              ? "border-blue-500 bg-blue-50 dark:bg-blue-900/20"
+              ? "border-amber-500 bg-amber-500/10"
               : isLocked
-                ? "border-zinc-300 dark:border-zinc-600 bg-zinc-100 dark:bg-zinc-800 opacity-50"
-                : "border-zinc-400 dark:border-zinc-500 bg-white dark:bg-zinc-700 hover:border-blue-400"
+                ? "border-zinc-800 bg-zinc-800 opacity-50"
+                : "border-zinc-700 bg-zinc-800 hover:border-amber-500"
         }
       `}
       title={`${
@@ -68,8 +68,8 @@ export const TalentNodeDisplay: React.FC<TalentNodeDisplayProps> = ({
             w-5 h-5 rounded-full text-white text-xs font-bold
             ${
               canAllocate
-                ? "bg-green-600 hover:bg-green-700"
-                : "bg-zinc-400 dark:bg-zinc-600 cursor-not-allowed"
+                ? "bg-green-500 hover:bg-green-600"
+                : "bg-zinc-700 text-zinc-500 cursor-not-allowed"
             }
           `}
         >
@@ -82,8 +82,8 @@ export const TalentNodeDisplay: React.FC<TalentNodeDisplayProps> = ({
             w-5 h-5 rounded-full text-white text-xs font-bold
             ${
               canDeallocate
-                ? "bg-red-600 hover:bg-red-700"
-                : "bg-zinc-400 dark:bg-zinc-600 cursor-not-allowed"
+                ? "bg-red-500 hover:bg-red-600"
+                : "bg-zinc-700 text-zinc-500 cursor-not-allowed"
             }
           `}
         >

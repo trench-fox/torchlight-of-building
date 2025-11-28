@@ -10,13 +10,13 @@ export const PageTabs: React.FC<PageTabsProps> = ({
   setActivePage,
 }) => {
   return (
-    <div className="mb-8 flex gap-4 border-b border-zinc-300 dark:border-zinc-700">
+    <div className="mb-8 flex gap-4 border-b border-zinc-800">
       <button
         onClick={() => setActivePage("equipment")}
         className={`px-6 py-3 font-medium transition-colors ${
           activePage === "equipment"
-            ? "border-b-2 border-blue-600 text-blue-600"
-            : "text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100"
+            ? "border-b-2 border-amber-500 text-amber-500"
+            : "text-zinc-400 hover:text-zinc-50"
         }`}
       >
         Equipment
@@ -25,8 +25,8 @@ export const PageTabs: React.FC<PageTabsProps> = ({
         onClick={() => setActivePage("talents")}
         className={`px-6 py-3 font-medium transition-colors ${
           activePage === "talents"
-            ? "border-b-2 border-blue-600 text-blue-600"
-            : "text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100"
+            ? "border-b-2 border-amber-500 text-amber-500"
+            : "text-zinc-400 hover:text-zinc-50"
         }`}
       >
         Talents
@@ -35,8 +35,8 @@ export const PageTabs: React.FC<PageTabsProps> = ({
         onClick={() => setActivePage("skills")}
         className={`px-6 py-3 font-medium transition-colors ${
           activePage === "skills"
-            ? "border-b-2 border-blue-600 text-blue-600"
-            : "text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100"
+            ? "border-b-2 border-amber-500 text-amber-500"
+            : "text-zinc-400 hover:text-zinc-50"
         }`}
       >
         Skills

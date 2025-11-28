@@ -51,7 +51,7 @@ export const SkillSlot: React.FC<SkillSlotProps> = ({
   );
 
   return (
-    <div className="bg-white dark:bg-zinc-800 rounded-lg shadow">
+    <div className="bg-zinc-900 rounded-lg border border-zinc-700">
       <div className="p-4 flex items-center justify-between">
         <div className="flex items-center gap-3">
           <input
@@ -59,23 +59,23 @@ export const SkillSlot: React.FC<SkillSlotProps> = ({
             checked={skill.enabled}
             onChange={onToggle}
             disabled={!hasSkill}
-            className="w-5 h-5 disabled:opacity-50"
+            className="w-5 h-5 disabled:opacity-50 accent-amber-500"
           />
-          <span className="text-xs text-zinc-500 dark:text-zinc-400 w-16">
+          <span className="text-xs text-zinc-500 w-16">
             {slotLabel}
           </span>
           <select
-            className={`flex-1 bg-white dark:bg-zinc-700 border border-zinc-300 dark:border-zinc-600 rounded px-2 py-1 text-sm ${
+            className={`flex-1 bg-zinc-800 border border-zinc-700 rounded px-2 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500/30 focus:border-amber-500 ${
               hasSkill
                 ? skill.enabled
-                  ? "text-zinc-900 dark:text-zinc-100"
-                  : "text-zinc-500 dark:text-zinc-500"
-                : "text-zinc-400 dark:text-zinc-500"
+                  ? "text-zinc-50"
+                  : "text-zinc-500"
+                : "text-zinc-500"
             }`}
             value={skill.skillName ?? ""}
             onChange={(e) => onSkillChange(e.target.value || undefined)}
           >
-            <option value="" className="text-zinc-400 dark:text-zinc-500">
+            <option value="" className="text-zinc-500">
               &lt;Empty slot&gt;
             </option>
             {filteredSkills.map((s) => (
@@ -89,7 +89,7 @@ export const SkillSlot: React.FC<SkillSlotProps> = ({
           {hasSkill && (
             <button
               onClick={() => setExpanded(!expanded)}
-              className="px-3 py-1 bg-zinc-200 dark:bg-zinc-600 hover:bg-zinc-300 dark:hover:bg-zinc-500 rounded text-sm text-zinc-700 dark:text-zinc-200"
+              className="px-3 py-1 bg-zinc-800 border border-zinc-700 hover:bg-zinc-700 hover:border-amber-500 rounded text-sm text-zinc-400"
             >
               {expanded ? "Hide" : "Supports"} ({supportCount}/5)
             </button>
@@ -98,11 +98,11 @@ export const SkillSlot: React.FC<SkillSlotProps> = ({
       </div>
 
       {expanded && hasSkill && (
-        <div className="px-4 pb-4 border-t border-zinc-200 dark:border-zinc-700 pt-3">
+        <div className="px-4 pb-4 border-t border-zinc-800 pt-3">
           <div className="space-y-2">
             {SUPPORT_SKILL_KEYS.map((key, index) => (
               <div key={key} className="flex items-center gap-2">
-                <span className="text-xs text-zinc-500 dark:text-zinc-400 w-6">
+                <span className="text-xs text-zinc-500 w-6">
                   {index + 1}.
                 </span>
                 <SupportSkillSelector

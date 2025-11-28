@@ -27,13 +27,13 @@ export const EquipmentSlotDropdown: React.FC<EquipmentSlotDropdownProps> = ({
 
   return (
     <div className="flex items-center gap-3 py-2">
-      <label className="w-24 font-medium text-zinc-700 dark:text-zinc-300 text-sm">
+      <label className="w-24 font-medium text-zinc-400 text-sm">
         {label}:
       </label>
       <select
         value={selectedItemId || ""}
         onChange={(e) => onSelectItem(slot, e.target.value || null)}
-        className="flex-1 px-3 py-2 border border-zinc-300 dark:border-zinc-600 rounded bg-white dark:bg-zinc-700 text-zinc-900 dark:text-zinc-100 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+        className="flex-1 px-3 py-2 border border-zinc-700 rounded bg-zinc-800 text-zinc-50 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500/30 focus:border-amber-500"
       >
         <option value="">-- None --</option>
         {compatibleItems.map((item) => (

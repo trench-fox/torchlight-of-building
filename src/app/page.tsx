@@ -500,10 +500,10 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen bg-zinc-50 dark:bg-zinc-900 p-8">
+    <div className="min-h-screen bg-zinc-950 p-6">
       <div className="max-w-6xl mx-auto">
         <div className="flex justify-between items-center mb-8">
-          <h1 className="text-3xl font-bold text-zinc-900 dark:text-zinc-50">
+          <h1 className="text-3xl font-bold text-zinc-50">
             TLI Character Build Planner
           </h1>
 
@@ -513,13 +513,13 @@ export default function Home() {
               px-3 py-1 rounded-lg text-sm font-medium transition-colors
               ${
                 debugMode
-                  ? "bg-yellow-600 text-white hover:bg-yellow-700"
-                  : "bg-zinc-200 dark:bg-zinc-700 text-zinc-700 dark:text-zinc-300 hover:bg-zinc-300 dark:hover:bg-zinc-600"
+                  ? "bg-amber-400 text-zinc-950 hover:bg-amber-500"
+                  : "bg-zinc-800 text-zinc-400 border border-zinc-700 hover:bg-zinc-700"
               }
             `}
             title="Toggle Debug Mode"
           >
-            {debugMode ? "🐛 Debug ON" : "🐛 Debug"}
+            {debugMode ? "Debug ON" : "Debug"}
           </button>
         </div>
 
@@ -529,8 +529,8 @@ export default function Home() {
         {activePage === "equipment" && (
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {/* Left Column: Equipment Slots */}
-            <div className="bg-white dark:bg-zinc-800 rounded-lg p-6 shadow">
-              <h2 className="text-xl font-semibold mb-4 text-zinc-800 dark:text-zinc-200">
+            <div className="bg-zinc-900 rounded-lg p-6 border border-zinc-700">
+              <h2 className="text-xl font-semibold mb-4 text-zinc-50">
                 Equipment Slots
               </h2>
               <div className="space-y-1">
@@ -550,20 +550,20 @@ export default function Home() {
             {/* Right Column: Crafting + Inventory */}
             <div className="space-y-6">
               {/* Crafting UI */}
-              <div className="bg-white dark:bg-zinc-800 rounded-lg p-6 shadow">
-                <h2 className="text-xl font-semibold mb-4 text-zinc-800 dark:text-zinc-200">
+              <div className="bg-zinc-900 rounded-lg p-6 border border-zinc-700">
+                <h2 className="text-xl font-semibold mb-4 text-zinc-50">
                   Craft New Item
                 </h2>
 
                 {/* Equipment Type Selector */}
                 <div className="mb-6">
-                  <label className="block text-sm font-medium mb-2 text-zinc-800 dark:text-zinc-200">
+                  <label className="block text-sm font-medium mb-2 text-zinc-50">
                     Equipment Type
                   </label>
                   <select
                     value={selectedEquipmentType || ""}
                     onChange={handleEquipmentTypeChange}
-                    className="w-full px-4 py-2 border border-zinc-300 dark:border-zinc-600 rounded-lg bg-white dark:bg-zinc-700 text-zinc-900 dark:text-zinc-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-4 py-2 border border-zinc-700 rounded-lg bg-zinc-800 text-zinc-50 focus:outline-none focus:ring-2 focus:ring-amber-500/30 focus:border-amber-500"
                   >
                     <option value="">Select equipment type...</option>
                     {getValidEquipmentTypes("mainHand")
@@ -589,7 +589,7 @@ export default function Home() {
                   <>
                     {/* Prefix Section */}
                     <div className="mb-6">
-                      <h3 className="text-lg font-semibold mb-3 text-zinc-800 dark:text-zinc-200">
+                      <h3 className="text-lg font-semibold mb-3 text-zinc-50">
                         Prefixes (3 max)
                       </h3>
                       <div className="space-y-4">
@@ -610,7 +610,7 @@ export default function Home() {
 
                     {/* Suffix Section */}
                     <div className="mb-6">
-                      <h3 className="text-lg font-semibold mb-3 text-zinc-800 dark:text-zinc-200">
+                      <h3 className="text-lg font-semibold mb-3 text-zinc-50">
                         Suffixes (3 max)
                       </h3>
                       <div className="space-y-4">
@@ -632,25 +632,25 @@ export default function Home() {
                     {/* Save to Inventory Button */}
                     <button
                       onClick={handleSaveToInventory}
-                      className="w-full px-4 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition-colors"
+                      className="w-full px-4 py-3 bg-amber-500 text-zinc-950 rounded-lg font-semibold hover:bg-amber-600 transition-colors"
                     >
                       Save to Inventory
                     </button>
                   </>
                 ) : (
-                  <p className="text-zinc-500 dark:text-zinc-400 italic text-center py-8">
+                  <p className="text-zinc-500 italic text-center py-8">
                     Select an equipment type to begin crafting
                   </p>
                 )}
               </div>
 
               {/* Inventory */}
-              <div className="bg-white dark:bg-zinc-800 rounded-lg p-6 shadow">
-                <h2 className="text-xl font-semibold mb-4 text-zinc-800 dark:text-zinc-200">
+              <div className="bg-zinc-900 rounded-lg p-6 border border-zinc-700">
+                <h2 className="text-xl font-semibold mb-4 text-zinc-50">
                   Inventory ({loadout.itemsList.length} items)
                 </h2>
                 {loadout.itemsList.length === 0 ? (
-                  <p className="text-zinc-500 dark:text-zinc-400 italic text-center py-4">
+                  <p className="text-zinc-500 italic text-center py-4">
                     No items in inventory. Craft items above to add them here.
                   </p>
                 ) : (
@@ -676,7 +676,7 @@ export default function Home() {
           <div>
             {/* Tree Slot Selector */}
             <div className="mb-6">
-              <h2 className="text-xl font-semibold mb-4 text-zinc-800 dark:text-zinc-200">
+              <h2 className="text-xl font-semibold mb-4 text-zinc-50">
                 Tree Slots
               </h2>
               <div className="grid grid-cols-4 gap-2">
@@ -694,11 +694,11 @@ export default function Home() {
                       key={slot}
                       onClick={() => setActiveTreeSlot(slot)}
                       className={`
-                        px-4 py-3 rounded-lg font-medium transition-colors
+                        px-4 py-3 rounded-lg font-medium transition-colors border
                         ${
                           activeTreeSlot === slot
-                            ? "bg-blue-600 text-white"
-                            : "bg-white dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-700"
+                            ? "bg-amber-500 text-zinc-950 border-amber-500"
+                            : "bg-zinc-900 text-zinc-400 border-zinc-700 hover:bg-zinc-800"
                         }
                       `}
                     >
@@ -718,8 +718,8 @@ export default function Home() {
             </div>
 
             {/* Tree Selection Dropdown with Reset Button */}
-            <div className="mb-6 bg-white dark:bg-zinc-800 rounded-lg p-4 shadow">
-              <label className="block text-sm font-medium mb-2 text-zinc-700 dark:text-zinc-300">
+            <div className="mb-6 bg-zinc-900 rounded-lg p-4 border border-zinc-700">
+              <label className="block text-sm font-medium mb-2 text-zinc-400">
                 Select Tree for{" "}
                 {activeTreeSlot === "tree1"
                   ? "Slot 1"
@@ -735,7 +735,7 @@ export default function Home() {
                     (loadout.talentPage[activeTreeSlot]?.allocatedNodes
                       .length ?? 0) > 0
                   }
-                  className="flex-1 px-4 py-2 border border-zinc-300 dark:border-zinc-600 rounded-lg bg-white dark:bg-zinc-700 text-zinc-900 dark:text-zinc-100 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="flex-1 px-4 py-2 border border-zinc-700 rounded-lg bg-zinc-800 text-zinc-50 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   <option value="">None</option>
                   {activeTreeSlot === "tree1" && (
@@ -762,7 +762,7 @@ export default function Home() {
                     (loadout.talentPage[activeTreeSlot]?.allocatedNodes
                       .length ?? 0) === 0
                   }
-                  className="px-4 py-2 bg-red-600 text-white rounded-lg font-medium hover:bg-red-700 transition-colors disabled:bg-zinc-400 disabled:cursor-not-allowed"
+                  className="px-4 py-2 bg-red-500 text-white rounded-lg font-medium hover:bg-red-600 transition-colors disabled:bg-zinc-700 disabled:text-zinc-500 disabled:cursor-not-allowed"
                 >
                   Reset
                 </button>
@@ -771,12 +771,12 @@ export default function Home() {
 
             {/* Talent Grid */}
             {!loadout.talentPage[activeTreeSlot] ? (
-              <div className="text-center py-12 text-zinc-500 dark:text-zinc-400">
+              <div className="text-center py-12 text-zinc-500">
                 Select a tree to view
               </div>
             ) : treeData[activeTreeSlot] ? (
-              <div className="bg-white dark:bg-zinc-800 rounded-lg p-6 shadow">
-                <h2 className="text-xl font-semibold mb-4 text-zinc-800 dark:text-zinc-200">
+              <div className="bg-zinc-900 rounded-lg p-6 border border-zinc-700">
+                <h2 className="text-xl font-semibold mb-4 text-zinc-50">
                   {treeData[activeTreeSlot]!.name.replace(/_/g, " ")} Tree
                 </h2>
 
@@ -785,7 +785,7 @@ export default function Home() {
                   {[0, 3, 6, 9, 12, 15, 18].map((points, idx) => (
                     <div
                       key={idx}
-                      className="text-center text-sm font-medium text-zinc-600 dark:text-zinc-400"
+                      className="text-center text-sm font-medium text-zinc-500"
                     >
                       {points} pts
                     </div>
@@ -804,7 +804,7 @@ export default function Home() {
                 />
               </div>
             ) : (
-              <div className="text-center py-12 text-zinc-500 dark:text-zinc-400">
+              <div className="text-center py-12 text-zinc-500">
                 Loading tree...
               </div>
             )}
@@ -816,7 +816,7 @@ export default function Home() {
           <div className="space-y-8">
             {/* Active Skills Section */}
             <div>
-              <h2 className="text-xl font-bold mb-4 text-zinc-800 dark:text-zinc-200">
+              <h2 className="text-xl font-bold mb-4 text-zinc-50">
                 Active Skills
               </h2>
 
@@ -842,7 +842,7 @@ export default function Home() {
 
             {/* Passive Skills Section */}
             <div>
-              <h2 className="text-xl font-bold mb-4 text-zinc-800 dark:text-zinc-200">
+              <h2 className="text-xl font-bold mb-4 text-zinc-50">
                 Passive Skills
               </h2>
 
@@ -872,19 +872,19 @@ export default function Home() {
         <div className="mt-8 flex gap-4">
           <button
             onClick={handleExport}
-            className="flex-1 px-6 py-3 bg-green-600 text-white rounded-lg font-semibold text-lg hover:bg-green-700 transition-colors"
+            className="flex-1 px-6 py-3 bg-green-500 text-white rounded-lg font-semibold text-lg hover:bg-green-600 transition-colors"
           >
             Export
           </button>
           <button
             onClick={() => setImportModalOpen(true)}
-            className="flex-1 px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold text-lg hover:bg-blue-700 transition-colors"
+            className="flex-1 px-6 py-3 bg-amber-500 text-zinc-950 rounded-lg font-semibold text-lg hover:bg-amber-600 transition-colors"
           >
             Import
           </button>
           <button
             onClick={handleReset}
-            className="px-6 py-3 bg-red-600 text-white rounded-lg font-semibold text-lg hover:bg-red-700 transition-colors"
+            className="px-6 py-3 bg-red-500 text-white rounded-lg font-semibold text-lg hover:bg-red-600 transition-colors"
           >
             Reset
           </button>

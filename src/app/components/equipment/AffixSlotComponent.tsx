@@ -29,12 +29,12 @@ export const AffixSlotComponent: React.FC<AffixSlotProps> = ({
     : "";
 
   return (
-    <div className="bg-zinc-50 dark:bg-zinc-700 p-4 rounded-lg">
+    <div className="bg-zinc-800 p-4 rounded-lg">
       {/* Affix Dropdown */}
       <select
         value={selection.affixIndex !== null ? selection.affixIndex : ""}
         onChange={(e) => onAffixSelect(slotIndex, e.target.value)}
-        className="w-full px-3 py-2 mb-3 border border-zinc-300 dark:border-zinc-600 rounded bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+        className="w-full px-3 py-2 mb-3 border border-zinc-700 rounded bg-zinc-900 text-zinc-50 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500/30 focus:border-amber-500"
       >
         <option value="">&lt;Select {affixType}&gt;</option>
         {affixes.map((affix, idx) => (
@@ -50,10 +50,10 @@ export const AffixSlotComponent: React.FC<AffixSlotProps> = ({
           {/* Quality Slider */}
           <div className="mb-3">
             <div className="flex justify-between items-center mb-1">
-              <label className="text-xs text-zinc-600 dark:text-zinc-400">
+              <label className="text-xs text-zinc-500">
                 Quality
               </label>
-              <span className="text-xs font-medium text-zinc-800 dark:text-zinc-200">
+              <span className="text-xs font-medium text-zinc-50">
                 {selection.percentage}%
               </span>
             </div>
@@ -63,16 +63,16 @@ export const AffixSlotComponent: React.FC<AffixSlotProps> = ({
               max="100"
               value={selection.percentage}
               onChange={(e) => onSliderChange(slotIndex, e.target.value)}
-              className="w-full h-2 bg-zinc-300 dark:bg-zinc-600 rounded-lg appearance-none cursor-pointer"
+              className="w-full"
             />
           </div>
 
           {/* Crafted Preview */}
-          <div className="bg-white dark:bg-zinc-800 p-3 rounded border border-zinc-200 dark:border-zinc-600">
-            <div className="text-sm font-medium text-blue-600 dark:text-blue-400 mb-1">
+          <div className="bg-zinc-900 p-3 rounded border border-zinc-700">
+            <div className="text-sm font-medium text-amber-400 mb-1">
               {craftedText}
             </div>
-            <div className="text-xs text-zinc-500 dark:text-zinc-400">
+            <div className="text-xs text-zinc-500">
               Tier {selectedAffix.tier}
               {selectedAffix.craftingPool && ` | ${selectedAffix.craftingPool}`}
             </div>
@@ -81,7 +81,7 @@ export const AffixSlotComponent: React.FC<AffixSlotProps> = ({
           {/* Clear Button */}
           <button
             onClick={() => onClear(slotIndex)}
-            className="mt-2 text-xs text-red-600 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300 font-medium"
+            className="mt-2 text-xs text-red-500 hover:text-red-400 font-medium"
           >
             Clear
           </button>

@@ -64,18 +64,18 @@ export const ImportModal: React.FC<ImportModalProps> = ({
       onClick={onClose}
     >
       {/* Backdrop */}
-      <div className="absolute inset-0 bg-black/50" />
+      <div className="absolute inset-0 bg-black/60" />
 
       {/* Modal Content */}
       <div
-        className="relative bg-white dark:bg-zinc-800 rounded-lg shadow-xl p-6 max-w-lg w-full mx-4"
+        className="relative bg-zinc-900 rounded-lg shadow-xl p-6 max-w-lg w-full mx-4 border border-zinc-700"
         onClick={(e) => e.stopPropagation()}
       >
-        <h2 className="text-xl font-semibold mb-4 text-zinc-900 dark:text-zinc-100">
+        <h2 className="text-xl font-semibold mb-4 text-zinc-50">
           Import Loadout
         </h2>
 
-        <p className="text-sm text-zinc-600 dark:text-zinc-400 mb-4">
+        <p className="text-sm text-zinc-400 mb-4">
           Paste a build code to load a saved build:
         </p>
 
@@ -87,7 +87,7 @@ export const ImportModal: React.FC<ImportModalProps> = ({
             setError(null);
           }}
           placeholder="Paste build code here..."
-          className="w-full h-24 p-3 bg-zinc-100 dark:bg-zinc-700 text-zinc-900 dark:text-zinc-100 rounded-lg border border-zinc-300 dark:border-zinc-600 focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none font-mono text-sm"
+          className="w-full h-24 p-3 bg-zinc-800 text-zinc-50 rounded-lg border border-zinc-700 focus:outline-none focus:ring-2 focus:ring-amber-500/30 focus:border-amber-500 resize-none font-mono text-sm placeholder:text-zinc-500"
           onKeyDown={(e) => {
             if (e.key === "Enter" && (e.metaKey || e.ctrlKey)) {
               handleImport();
@@ -97,20 +97,20 @@ export const ImportModal: React.FC<ImportModalProps> = ({
 
         {/* Error Message */}
         {error && (
-          <p className="text-sm text-red-600 dark:text-red-400 mt-2">{error}</p>
+          <p className="text-sm text-red-500 mt-2">{error}</p>
         )}
 
         {/* Buttons */}
         <div className="flex gap-3 mt-4">
           <button
             onClick={handleImport}
-            className="flex-1 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors"
+            className="flex-1 px-4 py-2 bg-amber-500 hover:bg-amber-600 text-zinc-950 rounded-lg font-medium transition-colors"
           >
             Import
           </button>
           <button
             onClick={onClose}
-            className="px-4 py-2 bg-zinc-200 dark:bg-zinc-600 hover:bg-zinc-300 dark:hover:bg-zinc-500 text-zinc-900 dark:text-zinc-100 rounded-lg font-medium transition-colors"
+            className="px-4 py-2 bg-zinc-800 border border-zinc-700 hover:bg-zinc-700 text-zinc-50 rounded-lg font-medium transition-colors"
           >
             Cancel
           </button>

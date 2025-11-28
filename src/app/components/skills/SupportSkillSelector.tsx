@@ -20,15 +20,15 @@ export const SupportSkillSelector: React.FC<SupportSkillSelectorProps> = ({
 
   return (
     <select
-      className={`w-full bg-white dark:bg-zinc-700 border border-zinc-300 dark:border-zinc-600 rounded px-2 py-1 text-sm ${
+      className={`w-full bg-zinc-800 border border-zinc-700 rounded px-2 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500/30 focus:border-amber-500 ${
         isEmpty
-          ? "text-zinc-400 dark:text-zinc-500"
-          : "text-zinc-900 dark:text-zinc-100"
+          ? "text-zinc-500"
+          : "text-zinc-50"
       }`}
       value={selectedSkill ?? ""}
       onChange={(e) => onChange(e.target.value || undefined)}
     >
-      <option value="" className="text-zinc-400 dark:text-zinc-500">
+      <option value="" className="text-zinc-500">
         &lt;Empty slot&gt;
       </option>
       {availableSkills.map((skill) => (
