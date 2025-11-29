@@ -1,23 +1,50 @@
 import * as cheerio from "cheerio";
-import { readFile, writeFile, mkdir } from "fs/promises";
+import { readFile, writeFile, readdir, mkdir } from "fs/promises";
 import { join } from "path";
 import { execSync } from "child_process";
 
-interface Pactspirit {
+export interface RawPactspiritRingDetails {
+  name: string;
+  affix: string;
+}
+
+interface RawPactspirit {
   type: string;
   rarity: string;
   name: string;
-  effect: string;
+  innerRing1: RawPactspiritRingDetails;
+  innerRing2: RawPactspiritRingDetails;
+  innerRing3: RawPactspiritRingDetails;
+  innerRing4: RawPactspiritRingDetails;
+  innerRing5: RawPactspiritRingDetails;
+  innerRing6: RawPactspiritRingDetails;
+  midRing1: RawPactspiritRingDetails;
+  midRing2: RawPactspiritRingDetails;
+  midRing3: RawPactspiritRingDetails;
+  effect1: string;
+  effect2: string;
+  effect3: string;
+  effect4: string;
+  effect5: string;
+  effect6: string;
 }
 
+const RARITIES = ["Magic", "Rare", "Legendary"] as const;
+
 const cleanEffectText = (html: string): string => {
+  // First, add newline placeholders between modifier divs
+  const NEWLINE_PLACEHOLDER = "\x00";
+  let text = html.replace(
+    /<\/div>\s*<div class="modifier">/gi,
+    NEWLINE_PLACEHOLDER,
+  );
+
   // Replace <br> tags with placeholder to preserve intentional line breaks
-  const BR_PLACEHOLDER = "\x00";
-  let text = html.replace(/<br\s*\/?>/gi, BR_PLACEHOLDER);
-  // Remove all other HTML tags
+  text = text.replace(/<br\s*\/?>/gi, NEWLINE_PLACEHOLDER);
+
+  // Remove all HTML tags
   text = text.replace(/<[^>]+>/g, "");
-  // Fix mojibake dash: UTF-8 en-dash bytes misinterpreted as Windows-1252
-  text = text.replace(/\u00e2\u20ac\u201c/g, "-");
+
   // Decode common HTML entities
   text = text
     .replace(/&lt;/g, "<")
@@ -26,58 +53,153 @@ const cleanEffectText = (html: string): string => {
     .replace(/&quot;/g, '"')
     .replace(/&#39;/g, "'")
     .replace(/&nbsp;/g, " ");
-  // Normalize all whitespace (including source newlines) to single spaces
-  text = text.replace(/\s+/g, " ");
-  // Restore intentional line breaks from <br> tags
-  text = text.replace(new RegExp(BR_PLACEHOLDER, "g"), "\n");
+
+  // Normalize whitespace (excluding our placeholder) to single spaces
+  text = text.replace(/[ \t]+/g, " ");
+
+  // Restore newlines from placeholders
+  text = text.replace(new RegExp(NEWLINE_PLACEHOLDER, "g"), "\n");
+
   // Clean up: trim each line and remove empty lines
   text = text
     .split("\n")
     .map((line) => line.trim())
     .filter((line) => line.length > 0)
     .join("\n");
+
   return text.trim();
 };
 
-const extractPactspiritData = (html: string): Pactspirit[] => {
-  const $ = cheerio.load(html);
-  const items: Pactspirit[] = [];
+const cleanAffixText = (html: string): string => {
+  // Remove all HTML tags but keep content
+  let text = html.replace(/<[^>]+>/g, "");
 
-  const rows = $('#pactspirit tbody tr[class*="thing"]');
-  console.log(`Found ${rows.length} pactspirit rows`);
+  // Decode common HTML entities
+  text = text
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&amp;/g, "&")
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'")
+    .replace(/&nbsp;/g, " ");
 
-  rows.each((_, row) => {
-    const tds = $(row).find("td");
+  // Normalize whitespace to single spaces
+  text = text.replace(/\s+/g, " ");
 
-    if (tds.length !== 4) {
-      console.warn(`Skipping row with ${tds.length} columns (expected 4)`);
-      return;
+  return text.trim();
+};
+
+const emptyRingDetails = (): RawPactspiritRingDetails => ({
+  name: "",
+  affix: "",
+});
+
+const extractPactspirit = (
+  $: cheerio.CheerioAPI,
+  filename: string,
+): RawPactspirit => {
+  // Name from filename: Red_Umbrella.html -> "Red Umbrella"
+  const name = filename.replace(/\.html$/, "").replace(/_/g, " ");
+
+  // Type and Rarity from spans
+  const spans = $("span.btn.btn-sm.btn-secondary.mb-1");
+  let type = "";
+  let rarity = "";
+
+  spans.each((_, span) => {
+    const text = $(span).text().trim();
+    if (RARITIES.includes(text as (typeof RARITIES)[number])) {
+      rarity = text;
+    } else if (!type) {
+      type = text;
     }
-
-    const item: Pactspirit = {
-      type: $(tds[0]).text().trim(),
-      rarity: $(tds[1]).text().trim(),
-      name: $(tds[2]).text().trim(),
-      effect: cleanEffectText($(tds[3]).html() || ""),
-    };
-
-    items.push(item);
   });
 
-  return items;
+  // Ring effects from flex-grow-1 ms-2 divs
+  const innerRings: RawPactspiritRingDetails[] = [];
+  const midRings: RawPactspiritRingDetails[] = [];
+
+  $("div.flex-grow-1.ms-2").each((_, ringDiv) => {
+    const divs = $(ringDiv).children("div");
+    if (divs.length >= 3) {
+      const ringName = $(divs[0]).text().trim();
+      const affixHtml = $(divs[1]).html() || "";
+      const affix = cleanAffixText(affixHtml);
+      const ringType = $(divs[2]).text().trim();
+
+      if (ringType === "Inner ring effect") {
+        innerRings.push({ name: ringName, affix });
+      } else if (ringType === "Mid ring effect") {
+        midRings.push({ name: ringName, affix });
+      }
+    }
+  });
+
+  // Effects from Upgrade Reward table
+  const effects: Record<string, string> = {};
+  const tableRows = $("table.table tbody tr");
+
+  tableRows.each((_, row) => {
+    const tds = $(row).find("td");
+    if (tds.length >= 2) {
+      const level = $(tds[0]).text().trim();
+      const effectHtml = $(tds[1]).html() || "";
+      effects[`effect${level}`] = cleanEffectText(effectHtml);
+    }
+  });
+
+  return {
+    type,
+    rarity,
+    name,
+    innerRing1: innerRings[0] || emptyRingDetails(),
+    innerRing2: innerRings[1] || emptyRingDetails(),
+    innerRing3: innerRings[2] || emptyRingDetails(),
+    innerRing4: innerRings[3] || emptyRingDetails(),
+    innerRing5: innerRings[4] || emptyRingDetails(),
+    innerRing6: innerRings[5] || emptyRingDetails(),
+    midRing1: midRings[0] || emptyRingDetails(),
+    midRing2: midRings[1] || emptyRingDetails(),
+    midRing3: midRings[2] || emptyRingDetails(),
+    effect1: effects["effect1"] || "",
+    effect2: effects["effect2"] || "",
+    effect3: effects["effect3"] || "",
+    effect4: effects["effect4"] || "",
+    effect5: effects["effect5"] || "",
+    effect6: effects["effect6"] || "",
+  };
 };
 
 const generateTypesFile = (): string => {
-  return `export interface Pactspirit {
+  return `export interface PactspiritRingDetails {
+  name: string
+  affix: string
+}
+
+export interface Pactspirit {
   type: string;
   rarity: string;
   name: string;
-  effect: string;
+  innerRing1: PactspiritRingDetails;
+  innerRing2: PactspiritRingDetails;
+  innerRing3: PactspiritRingDetails;
+  innerRing4: PactspiritRingDetails;
+  innerRing5: PactspiritRingDetails;
+  innerRing6: PactspiritRingDetails;
+  midRing1: PactspiritRingDetails;
+  midRing2: PactspiritRingDetails;
+  midRing3: PactspiritRingDetails;
+  effect1: string;
+  effect2: string;
+  effect3: string;
+  effect4: string;
+  effect5: string;
+  effect6: string;
 }
 `;
 };
 
-const generateDataFile = (items: Pactspirit[]): string => {
+const generateDataFile = (items: RawPactspirit[]): string => {
   return `import type { Pactspirit } from "./types";
 
 export const Pactspirits = ${JSON.stringify(items, null, 2)} as const satisfies readonly Pactspirit[];
@@ -93,15 +215,30 @@ export * from "./pactspirits";
 };
 
 const main = async (): Promise<void> => {
-  console.log("Reading HTML file...");
-  const htmlPath = join(process.cwd(), ".garbage", "codex.html");
-  const html = await readFile(htmlPath, "utf-8");
-
-  console.log("Extracting pactspirit data...");
-  const items = extractPactspiritData(html);
-  console.log(`Extracted ${items.length} pactspirits`);
-
+  const inputDir = join(process.cwd(), ".garbage", "tlidb", "pactspirits");
   const outDir = join(process.cwd(), "src", "data", "pactspirit");
+
+  console.log("Reading HTML files from:", inputDir);
+  const files = await readdir(inputDir);
+  const htmlFiles = files.filter((f) => f.endsWith(".html"));
+  console.log(`Found ${htmlFiles.length} HTML files`);
+
+  const pactspirits: RawPactspirit[] = [];
+
+  for (const filename of htmlFiles) {
+    const filepath = join(inputDir, filename);
+    const html = await readFile(filepath, "utf-8");
+    const $ = cheerio.load(html);
+
+    const pactspirit = extractPactspirit($, filename);
+    pactspirits.push(pactspirit);
+  }
+
+  // Sort by name for consistent output
+  pactspirits.sort((a, b) => a.name.localeCompare(b.name));
+
+  console.log(`Extracted ${pactspirits.length} pactspirits`);
+
   await mkdir(outDir, { recursive: true });
 
   const typesPath = join(outDir, "types.ts");
@@ -109,8 +246,8 @@ const main = async (): Promise<void> => {
   console.log(`Generated types.ts`);
 
   const dataPath = join(outDir, "pactspirits.ts");
-  await writeFile(dataPath, generateDataFile(items), "utf-8");
-  console.log(`Generated pactspirits.ts (${items.length} items)`);
+  await writeFile(dataPath, generateDataFile(pactspirits), "utf-8");
+  console.log(`Generated pactspirits.ts`);
 
   const indexPath = join(outDir, "index.ts");
   await writeFile(indexPath, generateIndexFile(), "utf-8");

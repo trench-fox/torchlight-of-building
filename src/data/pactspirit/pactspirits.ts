@@ -2,1077 +2,5064 @@ import type { Pactspirit } from "./types";
 
 export const Pactspirits = [
   {
-    type: "Drop",
-    rarity: "Legendary",
-    name: "Alice 1",
-    effect:
-      "All Member Services gain an additional effect: When settling Clockwork Ballet Games, there is a 33% chance to settle the rewards 1 additional time. This can only be triggered once (takes effect immediately after selecting Member Services and lasts for the duration of this game) All Member Services gain an additional effect: Each time after completing Operation Cogwheel, there is a 16% chance to get 1 additional Cogwheel Voucher (takes effect immediately after selecting Member Services and lasts for the duration of this game) Member Services refresh attempts +2",
-  },
-  {
-    type: "Drop",
-    rarity: "Legendary",
-    name: "Captain Shadow",
-    effect:
-      "Bosses defeated: 80% chance to drop 1-3 additional random Embers +16% additional Ember Drop Quantity +6% Drop Quantity",
-  },
-  {
-    type: "Drop",
-    rarity: "Legendary",
-    name: "Chalk Spirit",
-    effect:
-      "1.3% chance for defeated monsters to drop 1 additional set(s) of random Flame Fuel +20% additional Flame Fuel Drop Quantity +6% Drop Quantity",
-  },
-  {
-    type: "Drop",
-    rarity: "Legendary",
-    name: "Corgi Fighter No.32",
-    effect:
-      "+5% additional Drop Quantity The Star of Calamity boss has a 1.2% chance to drop an additional 1 Proof(s) of Star Hunter The Star of Calamity boss on the map has a 100% chance to replicate 1 times The Star of Calamity boss has a 0.45% chance to drop an additional Tidemaster's Exclusive Drop (Only effective in stages at Timemark 5 and above) The Star of Calamity boss has a 0.45% chance to drop an additional Lord of the Void Sea's Exclusive Drop (Only effective in stages at Timemark 5 and above) The Star of Calamity boss has a 0.45% chance to drop an additional the Law Bearer's Exclusive Drop (Only effective in stages at Timemark 5 and above) The Star of Calamity boss has a 0.45% chance to drop an additional Lone King of Aeterna's Exclusive Drop (Only effective in stages at Timemark 5 and above)",
-  },
-  {
-    type: "Drop",
-    rarity: "Legendary",
-    name: "Doro-Doro Dorothy",
-    effect:
-      "In Netherrealm stages, when a Compass drops, there is a 5% chance for a Doro-Doro Supply containing 5-10 Compasses to drop. There is a 34% chance for 1 additional Doro-Doro Supply to drop. +18% additional Compass Drop Quantity",
-  },
-  {
-    type: "Drop",
-    rarity: "Legendary",
-    name: "Eternity Summoner",
-    effect:
-      "60% chance to unlock 2 additional reward type(s) when the Dark Surge is initiated for the first time on a map 60% chance to unlock 1 additional reward type(s) when the Dark Surge is initiated for the first time on a map +6% Drop Quantity",
-  },
-  {
-    type: "Drop",
-    rarity: "Legendary",
-    name: "Fluffhead Hare",
-    effect:
-      "+5% additional Drop Quantity\n$+sp1$% chance for 2 additional Gladiator(s) to appear in the stage (Only effective in the Invincible Champion Season-exclusive gameplay)",
-  },
-  {
-    type: "Drop",
-    rarity: "Legendary",
-    name: "Heart-binding Rose",
-    effect: "",
-  },
-  {
-    type: "Drop",
-    rarity: "Legendary",
-    name: "Jestress",
-    effect:
-      "When opening a Chest of Destiny in Fateful Contest, there is a 38% chance to double the Chest of Destiny rewards (takes effect immediately after entering Fateful Contest) When entering the Tarot Path, there is a 100% chance to gain 1 additional Note of Arcana When opening a Chest of Destiny in Fateful Contest, doubled Chest of Destiny rewards have a 100% chance to be tripled instead (takes effect immediately after entering Fateful Contest)",
-  },
-  {
-    type: "Drop",
-    rarity: "Legendary",
-    name: "Key of Overrealm",
-    effect:
-      "All items dropped in the Overrealm have a 27% chance to be replicated 1 time. Upon triggering a replication, they have a 100% chance to be replicated 1 additional time",
-  },
-  {
-    type: "Drop",
-    rarity: "Legendary",
-    name: "Kong",
-    effect:
-      "Fluorescent Memories dropped have a 13% chance to be multiplied by 3 Fluorescent Memories dropped have a 20% chance to be multiplied by 2 +6% Drop Quantity",
-  },
-  {
-    type: "Drop",
-    rarity: "Legendary",
-    name: "Mistville Orphan",
-    effect:
-      "In each round of the Whispering Mist gameplay, additionally gain 3 chance(s) to refresh the items for free at the Mistville Trader (only takes effect if you are carrying this Pactspirit when you enter Mistville) When going to the Clock Tower, there is a 13% chance to skip the battle and enter the Misty Lake, gaining 3 Chests of Folklores at the same time When opening a Chest of Folklores, there is a 10% chance that 1 additional Chest of Folklores will appear (this can only be triggered once)",
-  },
-  {
-    type: "Drop",
-    rarity: "Legendary",
-    name: "Monument Knight",
-    effect:
-      "Every time the player completes the Candelabrum gameplay in the Ruins of Aeterna, there is a 21% chance to increase the number of reward spots in the Aeterna Map by 1, up to 15 extra spot(s). After the City of Aeterna is rebuilt, all additional reward spots will be randomly assigned in traversable areas of the Aeterna Map. There is a 16% chance for rewards to be doubled when the player enters the reward gameplay in the City of Aeterna",
-  },
-  {
-    type: "Drop",
-    rarity: "Legendary",
-    name: "Moonshadow Guide",
-    effect:
-      "When completing a raid or a trade, or settling an order, there is a 24% chance for all rewards to be replicated There is a 16% chance to +100% additional drop quantity during raids When returning from a trade, there is a 10% chance to bring back 1 laborer When starting a trade, there is a 16% chance to regain the invested resources and immediately settle the rewards When returning from a raid, there is a 10% chance to bring back 1 laborer",
-  },
-  {
-    type: "Drop",
-    rarity: "Legendary",
-    name: "Prof. SOURCE",
-    effect:
-      "28% chance for all reward units from Carjack or TOWER Co. Central Vault in a Netherrealm stage to be recoded by Prof. SOURCE when they appear, doubling their rewards (takes effect immediately after starting Carjack and lasts for the duration of the operation; must be carried at all times in TOWER Co. Central Vault) 100% chance for all doubled reward units from Carjack or TOWER Co. Central Vault in a Netherrealm stage to be tripled (takes effect immediately after starting Carjack and lasts for the duration of the operation; must be carried at all times in TOWER Co. Central Vault) After revealing a Bounty Order, gains 2 chance(s) to refresh Bounty Orders",
-  },
-  {
-    type: "Drop",
-    rarity: "Legendary",
-    name: "Rainbowpaint Owl",
-    effect:
-      "When the painting is completed, randomly transforms 2-5 Cells to Pactspirit Exclusive Cells that do not require combat and grant double rewards. There is a 100% chance that 2 additional Splendor Egg(s) of random color will appear when entering the Frozen Canvas map. In the Paint phase of each round, you gain 2 Brushstroke Effect refresh attempt(s). (Only takes effect if you are carrying this Pactspirit before starting a painting)",
-  },
-  {
-    type: "Drop",
-    rarity: "Legendary",
-    name: "Shepherd",
-    effect:
-      "While escaping from the Nightmare, whenever you remove Nightmare Roots, there is a 13% chance that all Dream Bubbles you have obtained will drop 1 additional time. Upon entering a Nightmare, there is a 100% chance to trigger 1 additional Sweet Dream Omen selection (this selection will not be accompanied by a Nightmare Omen) During each round of Twinightmare, gain 2 chance(s) to re-roll the current Dream Omens",
-  },
-  {
-    type: "Drop",
-    rarity: "Legendary",
-    name: "Starfish Chanter",
-    effect:
-      "27% chance to double the effect of the Seal Whisper revealed when defeating Void Pirates +8% additional Drop Quantity +6% Drop Quantity",
-  },
-  {
-    type: "Drop",
-    rarity: "Rare",
-    name: "Benign Bug",
-    effect:
-      "+8% Drop Quantity +9% additional Compass Drop Quantity +6% Drop Quantity",
-  },
-  {
-    type: "Drop",
-    rarity: "Rare",
-    name: "Benign Bug - Barbie Pink",
-    effect:
-      "When opening a Chest of Destiny in Fateful Contest, there is a 2% chance to double the Chest of Destiny rewards (takes effect immediately after entering Fateful Contest) +8% to Drop Quantity",
-  },
-  {
-    type: "Drop",
-    rarity: "Rare",
-    name: "Benign Bug - Merciless Silver",
-    effect:
-      "+8% to Drop Quantity When returning from a raid, there is a 5% chance to bring back 1 laborer When returning from a trade, there is a 5% chance to bring back 1 laborer",
-  },
-  {
-    type: "Drop",
-    rarity: "Rare",
-    name: "Cloudgatherer - Sky",
-    effect:
-      "+8% Drop Quantity +8% additional Ember Drop Quantity +6% Drop Quantity",
-  },
-  {
-    type: "Drop",
-    rarity: "Rare",
-    name: "Cloudgatherer - Sky's Dome",
-    effect:
-      "+8% Drop Quantity Fluorescent Memories dropped have a 10% chance to be multiplied by 2 +6% Drop Quantity",
-  },
-  {
-    type: "Drop",
-    rarity: "Rare",
-    name: "Cloudgatherer - Surging Gold",
-    effect:
-      "+8% Drop Quantity +10% additional Flame Fuel Drop Quantity +6% Drop Quantity",
-  },
-  {
-    type: "Drop",
-    rarity: "Rare",
-    name: "Dragon Plant",
-    effect:
-      "All Member Services gain an additional effect: Each time after completing Operation Cogwheel, there is a 8% chance to get 1 additional Cogwheel Voucher (takes effect immediately after selecting Member Services and lasts for the duration of this game) +8% to Drop Quantity",
-  },
-  {
-    type: "Drop",
-    rarity: "Rare",
-    name: "Dragon Plant - Lettuce",
-    effect:
-      "There is a 50% chance that 2 additional Splendor Egg(s) of random color will appear when entering the Frozen Canvas map. In the Paint phase of each round, you gain Brushstroke Effect refresh attempt(s). (Only takes effect if you are carrying this Pactspirit before starting a painting) +8% to Drop Quantity",
-  },
-  {
-    type: "Drop",
-    rarity: "Rare",
-    name: "First Mate of the Furious Sea - Silent Night",
-    effect:
-      "When opening a Chest of Folklores, there is a 5% chance that 1 additional Chest of Folklores will appear (this can only be triggered once) +8% to Drop Quantity",
-  },
-  {
-    type: "Drop",
-    rarity: "Rare",
-    name: "Hell Cavalry - Sea",
-    effect:
-      "+8% Drop Quantity +18% Divinity Stone Drop Quantity. +6% Drop Quantity",
-  },
-  {
-    type: "Drop",
-    rarity: "Rare",
-    name: "Letice",
-    effect:
-      "There is a 8% chance for rewards to be doubled when the player enters the reward gameplay in the City of Aeterna +8% to Drop Quantity",
-  },
-  {
-    type: "Drop",
-    rarity: "Rare",
-    name: "Letice - Frost",
-    effect:
-      "While escaping from the Nightmare, whenever you remove Nightmare Roots, there is a 3% chance that all Dream Bubbles you have obtained will drop 1 additional time. +8% to Drop Quantity",
-  },
-  {
-    type: "Drop",
-    rarity: "Rare",
-    name: "Plaintive Ball of Thread - Flower",
-    effect:
-      "+8% Drop Quantity 30% chance to unlock 1 additional reward type(s) when the Dark Surge is initiated for the first time on a map +6% Drop Quantity",
-  },
-  {
-    type: "Drop",
-    rarity: "Rare",
-    name: "Plaintive Ball of Thread - Frost",
-    effect: "+6% additional Gear Drop Quantity +6% Drop Quantity",
-  },
-  {
-    type: "Drop",
-    rarity: "Rare",
-    name: "Plaintive Ball of Thread - Gold Leaf",
-    effect: "+8% Drop Quantity +4% additional Drop Quantity +6% Drop Quantity",
-  },
-  {
-    type: "Drop",
-    rarity: "Rare",
-    name: "Shro-Shroom",
-    effect:
-      "2% chance for all reward units from Carjack or TOWER Co. Central Vault in a Netherrealm stage to be recoded by Prof. SOURCE when they appear, doubling their rewards (takes effect immediately after starting Carjack and lasts for the duration of the operation; must be carried at all times in TOWER Co. Central Vault) +8% to Drop Quantity",
-  },
-  {
-    type: "Drop",
-    rarity: "Rare",
-    name: "Shro-Shroom - Lurid Bolete",
-    effect:
-      "+8% Drop Quantity +6% Drop Quantity All items dropped in the Overrealm have a 2% chance to be replicated 1 time(s)",
-  },
-  {
-    type: "Drop",
-    rarity: "Magic",
-    name: "Feasting Samurai",
-    effect:
-      "All Member Services gain an additional effect: Each time after completing Operation Cogwheel, there is a 4% chance to get 1 additional Cogwheel Voucher (takes effect immediately after selecting Member Services and lasts for the duration of this game) +8% to Drop Quantity",
-  },
-  {
-    type: "Drop",
-    rarity: "Magic",
-    name: "Feasting Samurai - Mint",
-    effect:
-      "There is a 25% chance that 2 additional Splendor Egg(s) of random color will appear when entering the Frozen Canvas map. In the Paint phase of each round, you gain Brushstroke Effect refresh attempt(s). (Only takes effect if you are carrying this Pactspirit before starting a painting) +8% to Drop Quantity",
-  },
-  {
-    type: "Drop",
-    rarity: "Magic",
-    name: "Happy Chonky",
-    effect:
-      "+8% Drop Quantity +5% additional Flame Fuel Drop Quantity +6% Drop Quantity",
-  },
-  {
-    type: "Drop",
-    rarity: "Magic",
-    name: "Happy Chonky - Emerald",
-    effect: "+8% Drop Quantity +2% additional Drop Quantity +6% Drop Quantity",
-  },
-  {
-    type: "Drop",
-    rarity: "Magic",
-    name: "Happy Chonky - Sun",
-    effect: "+3% additional Gear Drop Quantity +6% Drop Quantity",
-  },
-  {
-    type: "Drop",
-    rarity: "Magic",
-    name: "Happy Chonky - Violet",
-    effect:
-      "When opening a Chest of Folklores, there is a 2.5% chance that 1 additional Chest of Folklores will appear (this can only be triggered once) +8% to Drop Quantity",
-  },
-  {
-    type: "Drop",
-    rarity: "Magic",
-    name: "Idling Weasel - Cherry Blossom",
-    effect:
-      "+8% Drop Quantity +4% additional Ember Drop Quantity +6% Drop Quantity",
-  },
-  {
-    type: "Drop",
-    rarity: "Magic",
-    name: "Idling Weasel - Sparkle",
-    effect:
-      "+8% Drop Quantity Fluorescent Memories dropped have a 5% chance to be multiplied by 2 +6% Drop Quantity",
-  },
-  {
-    type: "Drop",
-    rarity: "Magic",
-    name: "Luluri - Green Leaf",
-    effect:
-      "+8% Drop Quantity 16% chance to unlock 1 additional reward type(s) when the Dark Surge is initiated for the first time on a map +6% Drop Quantity",
-  },
-  {
-    type: "Drop",
-    rarity: "Magic",
-    name: "Lumidrake",
-    effect:
-      "1% chance for all reward units from Carjack or TOWER Co. Central Vault in a Netherrealm stage to be recoded by Prof. SOURCE when they appear, doubling their rewards (takes effect immediately after starting Carjack and lasts for the duration of the operation; must be carried at all times in TOWER Co. Central Vault) +8% to Drop Quantity",
-  },
-  {
-    type: "Drop",
-    rarity: "Magic",
-    name: "Lumidrake - Glow",
-    effect:
-      "+8% Drop Quantity +6% Drop Quantity All items dropped in the Overrealm have a 1% chance to be replicated 1 time(s)",
-  },
-  {
-    type: "Drop",
-    rarity: "Magic",
-    name: "Shocket",
-    effect:
-      "There is a 4% chance for rewards to be doubled when the player enters the reward gameplay in the City of Aeterna +8% to Drop Quantity",
-  },
-  {
-    type: "Drop",
-    rarity: "Magic",
-    name: "Shocket - Dark Night",
-    effect:
-      "While escaping from the Nightmare, whenever you remove Nightmare Roots, there is a 2% chance that all Dream Bubbles you have obtained will drop 1 additional time. +8% to Drop Quantity",
-  },
-  {
-    type: "Drop",
-    rarity: "Magic",
-    name: "Spiny Snail - Cloud",
-    effect:
-      "+8% Drop Quantity +10% Divinity Stone Drop Quantity. +6% Drop Quantity",
-  },
-  {
-    type: "Drop",
-    rarity: "Magic",
-    name: "Sprouting Grass",
-    effect:
-      "When opening a Chest of Destiny in Fateful Contest, there is a 1% chance to double the Chest of Destiny rewards (takes effect immediately after entering Fateful Contest) +8% to Drop Quantity",
-  },
-  {
-    type: "Drop",
-    rarity: "Magic",
-    name: "Sprouting Grass - Purple Sand",
-    effect:
-      "+8% Drop Quantity +5% additional Compass Drop Quantity +6% Drop Quantity",
-  },
-  {
-    type: "Drop",
-    rarity: "Magic",
-    name: "Sprouting Grass - White Porcelain",
-    effect:
-      "+8% to Drop Quantity When returning from a raid, there is a 2.5% chance to bring back 1 laborer When returning from a trade, there is a 2.5% chance to bring back 1 laborer",
-  },
-  {
-    type: "Attack",
-    rarity: "Legendary",
-    name: "Azure Gunslinger",
-    effect:
-      "Gains 1 stack of Pure Heart when using an Attack Mobility Skill When gaining Pure Heart, there is a 100% chance to gain 1 additional stack of Pure Heart -8% additional damage taken when Pure Heart is active +1 Max Pure Heart Stacks +100% Pure Heart Duration",
-  },
-  {
-    type: "Attack",
-    rarity: "Legendary",
-    name: "Backup Power",
-    effect:
-      "+45% Numbed Effect When inflicting Numbed, restores 3% Missing Life and Energy Shield. Interval: 0.2 s +30% Movement Speed if you have inflicted Numbed recently",
-  },
-  {
-    type: "Attack",
-    rarity: "Legendary",
-    name: "Captain Kitty of the Furious Sea",
-    effect:
-      "Immediately casts Warcry. +25% additional Warcry Skill Effect +22% Warcry Cooldown Recovery Speed +2 Max Warcry Skill Charges",
-  },
-  {
-    type: "Attack",
-    rarity: "Legendary",
-    name: "Flower Whisperer",
-    effect:
-      "+21% additional Projectile Skill Critical Strike Damage against Distant enemies\n+55 Attack Projectile Skill Critical Strike Rating against Distant enemies +140 Attack Projectile Skill Critical Strike Rating against Distant enemies +4% additional damage",
-  },
-  {
-    type: "Attack",
-    rarity: "Legendary",
-    name: "Fog Scorpion",
-    effect:
-      "+27% additional Attack Speed when only 1 enemies are Nearby\n+12% Movement Speed when at least 2 enemies are Nearby +30% Movement Speed when at least 2 enemies are Nearby +4% additional damage",
-  },
-  {
-    type: "Attack",
-    rarity: "Legendary",
-    name: "Iron Lion",
-    effect:
-      "Projectile Quantity +2 +8% additional Attack and Cast Speed when no enemies are in proximity +48% Knockback distance +14% Projectile Speed",
-  },
-  {
-    type: "Attack",
-    rarity: "Legendary",
-    name: "Poisoned Omen",
-    effect:
-      "You can cast 1 additional Curses 6.5% Movement Speed if you have cast a Curse Skill recently +16% additional damage against Cursed enemies +4% additional damage",
-  },
-  {
-    type: "Attack",
-    rarity: "Legendary",
-    name: "Raging Sands of Eternal Night",
-    effect:
-      "Attacks eliminate enemies under 20% Life on hit if you have Blocked recently +6% Block Ratio when there is a Boss Nearby +4% additional damage",
-  },
-  {
-    type: "Attack",
-    rarity: "Legendary",
-    name: "Red Umbrella",
-    effect:
-      "+26% chance for Attacks to inflict Paralysis on hit\n+14% additional Attack Damage dealt to Nearby enemies +12% additional Attack Damage dealt to Nearby enemies +4% additional damage",
-  },
-  {
-    type: "Attack",
-    rarity: "Legendary",
-    name: "Swaying Bonnie",
-    effect:
-      "Max Channeled Stacks +2 At max channeled stacks, +12% additional damage for Channeled Skills for 4 s For every 4 channeled stacks, inflicts Weaken on enemies within 20 m",
-  },
-  {
-    type: "Attack",
-    rarity: "Legendary",
-    name: "Valkyrie's Night Patrol",
-    effect:
-      "Gains 1 stack of Valkyrie's Hymn for every 2% Max Mana consumed +2 Max Valkyrie's Hymn Stacks +8% Elemental Damage for every stack of Valkyrie's Hymn Upon reaching Max Valkyrie's Hymn Stacks, +10% Elemental Resistance Penetration",
-  },
-  {
-    type: "Attack",
-    rarity: "Legendary",
-    name: "Witch Antelope of Lust",
-    effect:
-      "Inflicts Paralysis or Weaken on enemies within 10m in turn. Cooldown: 4 s For every type of crowd control effect the enemy has, you and your Minions deal +3% additional damage to them +4% additional damage",
-  },
-  {
-    type: "Attack",
-    rarity: "Rare",
-    name: "Benign Bug - Tolerant Green",
-    effect:
-      "+7% additional damage; +7% additional Minion Damage +28% Attack Damage +4% additional damage",
-  },
-  {
-    type: "Attack",
-    rarity: "Rare",
-    name: "Dragon Plant - Kale",
-    effect:
-      "+7% additional damage; +7% additional Minion Damage At max channeled stacks, +4% additional damage for Channeled Skills for 4 s +4% additional damage",
-  },
-  {
-    type: "Attack",
-    rarity: "Rare",
-    name: "Dragon Plant - Truffle",
-    effect:
-      "+7% additional damage; +7% additional Minion Damage +4% additional Attack and Cast Speed when no enemies are in proximity +4% additional damage",
-  },
-  {
-    type: "Attack",
-    rarity: "Rare",
-    name: "First Mate of the Furious Sea - Rock",
-    effect:
-      "+7% additional damage; +7% additional Minion Damage When inflicting Numbed, restores 1.5% Missing Life and Energy Shield. Interval: 0.4 s 7.5% Movement Speed if you have inflicted Numbed recently +4% additional damage",
-  },
-  {
-    type: "Attack",
-    rarity: "Rare",
-    name: "First Mate of the Furious Sea - Sky",
-    effect:
-      "+7% additional damage; +7% additional Minion Damage +11% Warcry Cooldown Recovery Speed +4% additional damage",
-  },
-  {
-    type: "Attack",
-    rarity: "Rare",
-    name: "Hell Cavalry - Twilight",
-    effect:
-      "+7% additional damage; +7% additional Minion Damage For every type of crowd control effect the enemy has, you and your Minions deal 1.6% additional damage to them +4% additional damage",
-  },
-  {
-    type: "Attack",
-    rarity: "Rare",
-    name: "Letice - Withered Leaf",
-    effect:
-      "+7% additional damage; +7% additional Minion Damage +3% Block Ratio when there is a Boss Nearby +4% additional damage",
-  },
-  {
-    type: "Attack",
-    rarity: "Rare",
-    name: "Plaintive Ball of Thread - Violet",
-    effect:
-      "+7% additional damage; +7% additional Minion Damage +15% Movement Speed when at least 2 enemies are Nearby +4% additional damage",
-  },
-  {
-    type: "Attack",
-    rarity: "Rare",
-    name: "Shro-Shroom - Boletus",
-    effect:
-      "+7% additional damage; +7% additional Minion Damage +28% Elemental Damage +4% additional damage",
-  },
-  {
-    type: "Attack",
-    rarity: "Rare",
-    name: "Traveling Lizard - Green Leaf",
-    effect:
-      "+7% additional damage; +7% additional Minion Damage +6% additional Attack Damage dealt to Nearby enemies +4% additional damage",
-  },
-  {
-    type: "Attack",
-    rarity: "Rare",
-    name: "Traveling Lizard - Violet",
-    effect:
-      "+7% additional damage; +7% additional Minion Damage +70 Attack Projectile Skill Critical Strike Rating against Distant enemies +4% additional damage",
-  },
-  {
-    type: "Attack",
-    rarity: "Rare",
-    name: "Winter Darer - Sky",
-    effect:
-      "+7% additional damage; +7% additional Minion Damage +8% additional damage against Cursed enemies +4% additional damage",
-  },
-  {
-    type: "Attack",
-    rarity: "Magic",
-    name: "Awooawoo - Blue Sky",
-    effect:
-      "+7% additional damage; +7% additional Minion Damage For every type of crowd control effect the enemy has, you and your Minions deal 0.8% additional damage to them +4% additional damage",
-  },
-  {
-    type: "Attack",
-    rarity: "Magic",
-    name: "Awooawoo - Drizzle",
-    effect:
-      "+7% additional damage; +7% additional Minion Damage +35 Attack Projectile Skill Critical Strike Rating against Distant enemies +4% additional damage",
-  },
-  {
-    type: "Attack",
-    rarity: "Magic",
-    name: "Awooawoo - Violet",
-    effect:
-      "+7% additional damage; +7% additional Minion Damage +3% additional Attack Damage dealt to Nearby enemies +4% additional damage",
-  },
-  {
-    type: "Attack",
-    rarity: "Magic",
-    name: "Feasting Samurai - Honey",
-    effect:
-      "+7% additional damage; +7% additional Minion Damage +2% additional Attack and Cast Speed when no enemies are in proximity +4% additional damage",
-  },
-  {
-    type: "Attack",
-    rarity: "Magic",
-    name: "Feasting Samurai - Orange",
-    effect:
-      "+7% additional damage; +7% additional Minion Damage At max channeled stacks, +2% additional damage for Channeled Skills for 4 s +4% additional damage",
-  },
-  {
-    type: "Attack",
-    rarity: "Magic",
-    name: "Idling Weasel - Sandstone",
-    effect:
-      "+7% additional damage; +7% additional Minion Damage When inflicting Numbed, restores 1.5% Missing Life and Energy Shield. Interval: 0.8 s 3.75% Movement Speed if you have inflicted Numbed recently +4% additional damage",
-  },
-  {
-    type: "Attack",
-    rarity: "Magic",
-    name: "Idling Weasel - Shallow sea",
-    effect:
-      "+7% additional damage; +7% additional Minion Damage +8% Movement Speed when at least 2 enemies are Nearby +4% additional damage",
-  },
-  {
-    type: "Attack",
-    rarity: "Magic",
-    name: "Luluri - Shallow Sea",
-    effect:
-      "+7% additional damage; +7% additional Minion Damage 5.5% Warcry Cooldown Recovery Speed +4% additional damage",
-  },
-  {
-    type: "Attack",
-    rarity: "Magic",
-    name: "Lumidrake - Fluorescence",
-    effect:
-      "+7% additional damage; +7% additional Minion Damage +14% Attack Damage +4% additional damage",
-  },
-  {
-    type: "Attack",
-    rarity: "Magic",
-    name: "Shocket - Green Leaf",
-    effect:
-      "+7% additional damage; +7% additional Minion Damage 1.6% Block Ratio when there is a Boss Nearby +4% additional damage",
-  },
-  {
-    type: "Attack",
-    rarity: "Magic",
-    name: "Spiny Snail - Flame",
-    effect:
-      "+7% additional damage; +7% additional Minion Damage +4% additional damage against Cursed enemies +4% additional damage",
-  },
-  {
-    type: "Attack",
-    rarity: "Magic",
-    name: "Sprouting Grass - Black Porcelain",
-    effect:
-      "+7% additional damage; +7% additional Minion Damage +14% Elemental Damage +4% additional damage",
-  },
-  {
-    type: "Cold",
-    rarity: "Legendary",
-    name: "Ice Puppet",
-    effect:
-      "Focus energy to create an ice prison Near yourself and the Pact Holder, which debuffs Frostbitten enemies inside every second and makes them take +13% additional Cold Damage, up to 4 stacks, for 6s.\nCooldown: 10s +12% additional Cold Damage +4% additional damage",
-  },
-  {
-    type: "Cold",
-    rarity: "Rare",
-    name: "Hell Cavalry - Crushed Ice",
-    effect:
-      "+7% additional damage; +7% additional Minion Damage +6% additional Cold Damage +4% additional damage",
-  },
-  {
-    type: "Cold",
-    rarity: "Magic",
-    name: "Awooawoo - White Mist",
-    effect:
-      "+7% additional damage; +7% additional Minion Damage +3% additional Cold Damage +4% additional damage",
-  },
-  {
-    type: "Erosion",
-    rarity: "Legendary",
-    name: "Portrait of a Fallen Saintess",
-    effect:
-      "Gains 1 stack of Repentance when gaining any Blessing +3 Max Repentance Stacks +3% Erosion Resistance per stack of Repentance",
-  },
-  {
-    type: "Erosion",
-    rarity: "Rare",
-    name: "Benign Bug - Ghost Light Yellow",
-    effect:
-      "+7% additional damage; +7% additional Minion Damage +28% Erosion Damage +4% additional damage",
-  },
-  {
-    type: "Erosion",
-    rarity: "Magic",
-    name: "Sprouting Grass - Green Porcelain",
-    effect:
-      "+7% additional damage; +7% additional Minion Damage +14% Erosion Damage +4% additional damage",
-  },
-  {
-    type: "Fire",
-    rarity: "Legendary",
-    name: "Melting Flames",
-    effect:
-      "Covers targets within a 5m radius with flames and debuffs enemies within the area.\nDebuff: + 35% additional Fire Damage taken by the enemy for 3s.\nCooldown: 5 s. +12% additional Fire Damage +4% additional damage",
-  },
-  {
-    type: "Fire",
-    rarity: "Rare",
-    name: "Winter Darer - Lava",
-    effect:
-      "+7% additional damage; +7% additional Minion Damage +6% additional Fire Damage +4% additional damage",
-  },
-  {
-    type: "Fire",
-    rarity: "Magic",
-    name: "Happy Chonky - Ember",
-    effect:
-      "+7% additional damage; +7% additional Minion Damage +3% additional Fire Damage +4% additional damage",
-  },
-  {
-    type: "Lightning",
-    rarity: "Legendary",
-    name: "Bitter Thunder",
-    effect:
-      "Bestows the surging power of lightning to the pact holder, granting + 19% additional Lightning Damage and + 20% additional Max Damage for 5s.\nCooldown: 10s. +12% additional Lightning Damage +4% additional damage",
-  },
-  {
-    type: "Lightning",
-    rarity: "Rare",
-    name: "Hell Cavalry - Muffled Thunder",
-    effect:
-      "+7% additional damage; +7% additional Minion Damage +6% additional Lightning Damage +4% additional damage",
-  },
-  {
-    type: "Lightning",
-    rarity: "Magic",
-    name: "Happy Chonky - Electrify",
-    effect:
-      "+7% additional damage; +7% additional Minion Damage +3% additional Lightning Damage +4% additional damage",
-  },
-  {
     type: "Persistent",
     rarity: "Legendary",
     name: "Abyssal King Soul",
-    effect:
-      "50% chance for Damage Over Time to spread to targets in Proximity +35% additional Reaping Cooldown Recovery Speed +20% Movement Speed if you have caused Reaping recently +4% additional damage",
-  },
-  {
-    type: "Persistent",
-    rarity: "Legendary",
-    name: "Crossroad Walker",
-    effect:
-      "+18% additional Ailment Damage against Cursed enemies\n+15% Curse effect +20% curse effect +4% additional damage",
-  },
-  {
-    type: "Persistent",
-    rarity: "Legendary",
-    name: "Fire Swordsman",
-    effect:
-      "Reaps 1 s of Damage Over Time when inflicting an Ailment. The effect has a 6 s cooldown against the same target\n+6% Reaping Duration for each recent Reaping, stacks up to 4 times +14% Reaping Duration for each Reap dealt, stacking up to 4 times. +4% additional damage",
-  },
-  {
-    type: "Persistent",
-    rarity: "Legendary",
-    name: "Firewing",
-    effect:
-      "+105% Affliction effect at Full Life.\n+14 Affliction inflicted per second on Full Life. +30 Affliction inflicted per second at Full Life. +4% additional damage",
-  },
-  {
-    type: "Persistent",
-    rarity: "Rare",
-    name: "Greedy Chestnut - Emerald",
-    effect:
-      "+7% additional damage; +7% additional Minion Damage +10% curse effect +4% additional damage",
-  },
-  {
-    type: "Persistent",
-    rarity: "Rare",
-    name: "Greedy Chestnut - Lotus Leaf",
-    effect:
-      "+7% additional damage; +7% additional Minion Damage +7% Reaping Duration for each Reap dealt, stacking up to 4 times. +4% additional damage",
-  },
-  {
-    type: "Persistent",
-    rarity: "Rare",
-    name: "Greedy Chestnut - Radiance",
-    effect:
-      "+7% additional damage; +7% additional Minion Damage +16 Affliction inflicted per second at Full Life. +4% additional damage",
-  },
-  {
-    type: "Persistent",
-    rarity: "Rare",
-    name: "Letice - Flame",
-    effect:
-      "+7% additional damage; +7% additional Minion Damage +10% Movement Speed if you have caused Reaping recently +4% additional damage",
+    innerRing1: {
+      name: "Reaping Cooldown I",
+      affix: "+5% Reaping Cooldown Recovery Speed",
+    },
+    innerRing2: {
+      name: "Reaping Cooldown I",
+      affix: "+5% Reaping Cooldown Recovery Speed",
+    },
+    innerRing3: {
+      name: "Damage Over Time I",
+      affix: "+12% Damage Over Time",
+    },
+    innerRing4: {
+      name: "Damage Over Time I",
+      affix: "+12% Damage Over Time",
+    },
+    innerRing5: {
+      name: "Damage Affliction I",
+      affix: "+10% Affliction Effect",
+    },
+    innerRing6: {
+      name: "Damage Affliction I",
+      affix: "+10% Affliction Effect",
+    },
+    midRing1: {
+      name: "Reaping Cooldown II",
+      affix: "+10% Reaping Cooldown Recovery Speed",
+    },
+    midRing2: {
+      name: "Damage Over Time II",
+      affix: "+24% Damage Over Time",
+    },
+    midRing3: {
+      name: "Damage Affliction II",
+      affix: "+20% Affliction Effect",
+    },
+    effect1:
+      "35% chance for Damage Over Time to spread to targets in Proximity\n+25% additional Reaping Cooldown Recovery Speed",
+    effect2:
+      "35% chance for Damage Over Time to spread to targets in Proximity\n+25% additional Reaping Cooldown Recovery Speed\n+2% additional damage",
+    effect3:
+      "35% chance for Damage Over Time to spread to targets in Proximity\n+25% additional Reaping Cooldown Recovery Speed\n+10% Movement Speed if you have caused Reaping recently\n+2% additional damage",
+    effect4:
+      "35% chance for Damage Over Time to spread to targets in Proximity\n+25% additional Reaping Cooldown Recovery Speed\n+10% Movement Speed if you have caused Reaping recently\n+4% additional damage",
+    effect5:
+      "35% chance for Damage Over Time to spread to targets in Proximity\n+25% additional Reaping Cooldown Recovery Speed\n+20% Movement Speed if you have caused Reaping recently\n+4% additional damage",
+    effect6:
+      "50% chance for Damage Over Time to spread to targets in Proximity\n+35% additional Reaping Cooldown Recovery Speed\n+20% Movement Speed if you have caused Reaping recently\n+4% additional damage",
   },
   {
     type: "Persistent",
     rarity: "Magic",
     name: "Awooawoo - Amber",
-    effect:
-      "+7% additional damage; +7% additional Minion Damage 3.6% Reaping Duration for each Reap dealt, stacking up to 4 times. +4% additional damage",
+    innerRing1: {
+      name: "Damage Over Time I",
+      affix: "+12% Damage Over Time",
+    },
+    innerRing2: {
+      name: "Damage Over Time I",
+      affix: "+12% Damage Over Time",
+    },
+    innerRing3: {
+      name: "Ailment Chance I",
+      affix: "+3.5% chance to cause Ailments",
+    },
+    innerRing4: {
+      name: "Ailment Chance I",
+      affix: "+3.5% chance to cause Ailments",
+    },
+    innerRing5: {
+      name: "Damage Affliction I",
+      affix: "+10% Affliction Effect",
+    },
+    innerRing6: {
+      name: "Damage Affliction I",
+      affix: "+10% Affliction Effect",
+    },
+    midRing1: {
+      name: "Damage II",
+      affix: "+24% damage +24% Minion Damage",
+    },
+    midRing2: {
+      name: "Damage II",
+      affix: "+24% damage +24% Minion Damage",
+    },
+    midRing3: {
+      name: "Damage II",
+      affix: "+24% damage +24% Minion Damage",
+    },
+    effect1: "+5% additional damage; +5% additional Minion Damage",
+    effect2:
+      "+5% additional damage; +5% additional Minion Damage\n+2% additional damage",
+    effect3:
+      "+5% additional damage; +5% additional Minion Damage\n1.8% Reaping Duration for each Reap dealt, stacking up to 4 times.\n+2% additional damage",
+    effect4:
+      "+5% additional damage; +5% additional Minion Damage\n1.8% Reaping Duration for each Reap dealt, stacking up to 4 times.\n+4% additional damage",
+    effect5:
+      "+5% additional damage; +5% additional Minion Damage\n3.6% Reaping Duration for each Reap dealt, stacking up to 4 times.\n+4% additional damage",
+    effect6:
+      "+7% additional damage; +7% additional Minion Damage\n3.6% Reaping Duration for each Reap dealt, stacking up to 4 times.\n+4% additional damage",
   },
   {
-    type: "Persistent",
+    type: "Attack",
     rarity: "Magic",
-    name: "Idling Weasel - Abyss",
-    effect:
-      "+7% additional damage; +7% additional Minion Damage +5% curse effect +4% additional damage",
+    name: "Awooawoo - Blue Sky",
+    innerRing1: {
+      name: "Damage I",
+      affix: "+12% damage +12% Minion Damage",
+    },
+    innerRing2: {
+      name: "Damage I",
+      affix: "+12% damage +12% Minion Damage",
+    },
+    innerRing3: {
+      name: "Erosion Resistance I",
+      affix: "+6% Erosion Resistance",
+    },
+    innerRing4: {
+      name: "Erosion Resistance I",
+      affix: "+6% Erosion Resistance",
+    },
+    innerRing5: {
+      name: "Crowd Control Effects II",
+      affix: "+5% crowd control effects",
+    },
+    innerRing6: {
+      name: "Crowd Control Effects II",
+      affix: "+5% crowd control effects",
+    },
+    midRing1: {
+      name: "Damage II",
+      affix: "+24% damage +24% Minion Damage",
+    },
+    midRing2: {
+      name: "Damage II",
+      affix: "+24% damage +24% Minion Damage",
+    },
+    midRing3: {
+      name: "Damage II",
+      affix: "+24% damage +24% Minion Damage",
+    },
+    effect1: "+5% additional damage; +5% additional Minion Damage",
+    effect2:
+      "+5% additional damage; +5% additional Minion Damage\n+2% additional damage",
+    effect3:
+      "+5% additional damage; +5% additional Minion Damage\nFor every type of crowd control effect the enemy has, you and your Minions deal 0.4% additional damage to them\n+2% additional damage",
+    effect4:
+      "+5% additional damage; +5% additional Minion Damage\nFor every type of crowd control effect the enemy has, you and your Minions deal 0.4% additional damage to them\n+4% additional damage",
+    effect5:
+      "+5% additional damage; +5% additional Minion Damage\nFor every type of crowd control effect the enemy has, you and your Minions deal 0.8% additional damage to them\n+4% additional damage",
+    effect6:
+      "+7% additional damage; +7% additional Minion Damage\nFor every type of crowd control effect the enemy has, you and your Minions deal 0.8% additional damage to them\n+4% additional damage",
   },
   {
-    type: "Persistent",
+    type: "Attack",
     rarity: "Magic",
-    name: "Luluri - Golden Leaf",
-    effect:
-      "+7% additional damage; +7% additional Minion Damage +8 Affliction inflicted per second at Full Life. +4% additional damage",
+    name: "Awooawoo - Drizzle",
+    innerRing1: {
+      name: "Projectile Damage I",
+      affix: "+14% Projectile Damage",
+    },
+    innerRing2: {
+      name: "Projectile Damage I",
+      affix: "+14% Projectile Damage",
+    },
+    innerRing3: {
+      name: "Projectile Speed I",
+      affix: "+6% Projectile Speed",
+    },
+    innerRing4: {
+      name: "Projectile Speed I",
+      affix: "+6% Projectile Speed",
+    },
+    innerRing5: {
+      name: "Multistrike I",
+      affix: "+22% Attack Critical Strike Rating",
+    },
+    innerRing6: {
+      name: "Multistrike I",
+      affix: "+22% Attack Critical Strike Rating",
+    },
+    midRing1: {
+      name: "Damage II",
+      affix: "+24% damage +24% Minion Damage",
+    },
+    midRing2: {
+      name: "Damage II",
+      affix: "+24% damage +24% Minion Damage",
+    },
+    midRing3: {
+      name: "Damage II",
+      affix: "+24% damage +24% Minion Damage",
+    },
+    effect1: "+5% additional damage; +5% additional Minion Damage",
+    effect2:
+      "+5% additional damage; +5% additional Minion Damage\n+2% additional damage",
+    effect3:
+      "+5% additional damage; +5% additional Minion Damage\n17.5 Attack Projectile Skill Critical Strike Rating against Distant enemies\n+2% additional damage",
+    effect4:
+      "+5% additional damage; +5% additional Minion Damage\n17.5 Attack Projectile Skill Critical Strike Rating against Distant enemies\n+4% additional damage",
+    effect5:
+      "+5% additional damage; +5% additional Minion Damage\n+35 Attack Projectile Skill Critical Strike Rating against Distant enemies\n+4% additional damage",
+    effect6:
+      "+7% additional damage; +7% additional Minion Damage\n+35 Attack Projectile Skill Critical Strike Rating against Distant enemies\n+4% additional damage",
   },
   {
-    type: "Persistent",
+    type: "Attack",
     rarity: "Magic",
-    name: "Shocket - Violet",
-    effect:
-      "+7% additional damage; +7% additional Minion Damage +5% Movement Speed if you have caused Reaping recently +4% additional damage",
+    name: "Awooawoo - Violet",
+    innerRing1: {
+      name: "Attack Damage I",
+      affix: "+12% Attack Damage",
+    },
+    innerRing2: {
+      name: "Attack Damage I",
+      affix: "+12% Attack Damage",
+    },
+    innerRing3: {
+      name: "Attack Critical Strike I",
+      affix: "+22% Attack Critical Strike Rating",
+    },
+    innerRing4: {
+      name: "Attack Critical Strike I",
+      affix: "+22% Attack Critical Strike Rating",
+    },
+    innerRing5: {
+      name: "Attack Speed I",
+      affix: "+4% Attack Speed",
+    },
+    innerRing6: {
+      name: "Attack Speed I",
+      affix: "+4% Attack Speed",
+    },
+    midRing1: {
+      name: "Damage II",
+      affix: "+24% damage +24% Minion Damage",
+    },
+    midRing2: {
+      name: "Damage II",
+      affix: "+24% damage +24% Minion Damage",
+    },
+    midRing3: {
+      name: "Damage II",
+      affix: "+24% damage +24% Minion Damage",
+    },
+    effect1: "+5% additional damage; +5% additional Minion Damage",
+    effect2:
+      "+5% additional damage; +5% additional Minion Damage\n+2% additional damage",
+    effect3:
+      "+5% additional damage; +5% additional Minion Damage\n1.5% additional Attack Damage dealt to Nearby enemies\n+2% additional damage",
+    effect4:
+      "+5% additional damage; +5% additional Minion Damage\n1.5% additional Attack Damage dealt to Nearby enemies\n+4% additional damage",
+    effect5:
+      "+5% additional damage; +5% additional Minion Damage\n+3% additional Attack Damage dealt to Nearby enemies\n+4% additional damage",
+    effect6:
+      "+7% additional damage; +7% additional Minion Damage\n+3% additional Attack Damage dealt to Nearby enemies\n+4% additional damage",
   },
   {
-    type: "Spell",
+    type: "Cold",
+    rarity: "Magic",
+    name: "Awooawoo - White Mist",
+    innerRing1: {
+      name: "Cold Damage I",
+      affix: "+14% Cold Damage",
+    },
+    innerRing2: {
+      name: "Cold Damage I",
+      affix: "+14% Cold Damage",
+    },
+    innerRing3: {
+      name: "Cold Penetration I",
+      affix: "+2.5% Cold Penetration",
+    },
+    innerRing4: {
+      name: "Cold Penetration I",
+      affix: "+2.5% Cold Penetration",
+    },
+    innerRing5: {
+      name: "Frozen Time I",
+      affix: "+7% Frostbite Duration",
+    },
+    innerRing6: {
+      name: "Frozen Time I",
+      affix: "+7% Frostbite Duration",
+    },
+    midRing1: {
+      name: "Damage II",
+      affix: "+24% damage +24% Minion Damage",
+    },
+    midRing2: {
+      name: "Damage II",
+      affix: "+24% damage +24% Minion Damage",
+    },
+    midRing3: {
+      name: "Damage II",
+      affix: "+24% damage +24% Minion Damage",
+    },
+    effect1: "+5% additional damage; +5% additional Minion Damage",
+    effect2:
+      "+5% additional damage; +5% additional Minion Damage\n1.5% additional Cold Damage",
+    effect3:
+      "+5% additional damage; +5% additional Minion Damage\n1.5% additional Cold Damage\n+2% additional damage",
+    effect4:
+      "+5% additional damage; +5% additional Minion Damage\n+3% additional Cold Damage\n+2% additional damage",
+    effect5:
+      "+5% additional damage; +5% additional Minion Damage\n+3% additional Cold Damage\n+4% additional damage",
+    effect6:
+      "+7% additional damage; +7% additional Minion Damage\n+3% additional Cold Damage\n+4% additional damage",
+  },
+  {
+    type: "Attack",
     rarity: "Legendary",
-    name: "Dreamweaver",
-    effect:
-      "+19% additional Elemental Damage dealt by Spell Skills\n1.2% Elemental Resistance Penetration when hitting an enemy with Elemental Damage, stacking up to 4 times +3% Elemental Resistance Penetration every time you hit an enemy with Elemental Damage recently. Stacks up to 4 times +4% additional damage",
+    name: "Azure Gunslinger",
+    innerRing1: {
+      name: "Attack Damage I",
+      affix: "+12% Attack Damage",
+    },
+    innerRing2: {
+      name: "Attack Damage I",
+      affix: "+12% Attack Damage",
+    },
+    innerRing3: {
+      name: "Attack Critical Strike I",
+      affix: "+22% Attack Critical Strike Rating",
+    },
+    innerRing4: {
+      name: "Attack Critical Strike I",
+      affix: "+22% Attack Critical Strike Rating",
+    },
+    innerRing5: {
+      name: "Attack Speed I",
+      affix: "+4% Attack Speed",
+    },
+    innerRing6: {
+      name: "Attack Speed I",
+      affix: "+4% Attack Speed",
+    },
+    midRing1: {
+      name: "Attack Damage II",
+      affix: "+24% Attack Damage",
+    },
+    midRing2: {
+      name: "Attack Critical Strike II",
+      affix: "+44% Attack Critical Strike Rating",
+    },
+    midRing3: {
+      name: "Attack Speed II",
+      affix: "+8% Attack Speed",
+    },
+    effect1: "Gains 1 stack of Pure Heart when using an Attack Mobility Skill",
+    effect2:
+      "Gains 1 stack of Pure Heart when using an Attack Mobility Skill\nWhen gaining Pure Heart, there is a 50% chance to gain 1 additional stack of Pure Heart",
+    effect3:
+      "Gains 1 stack of Pure Heart when using an Attack Mobility Skill\nWhen gaining Pure Heart, there is a 50% chance to gain 1 additional stack of Pure Heart\n-4% additional damage taken when Pure Heart is active",
+    effect4:
+      "Gains 1 stack of Pure Heart when using an Attack Mobility Skill\nWhen gaining Pure Heart, there is a 100% chance to gain 1 additional stack of Pure Heart\n-4% additional damage taken when Pure Heart is active",
+    effect5:
+      "Gains 1 stack of Pure Heart when using an Attack Mobility Skill\nWhen gaining Pure Heart, there is a 100% chance to gain 1 additional stack of Pure Heart\n-8% additional damage taken when Pure Heart is active",
+    effect6:
+      "Gains 1 stack of Pure Heart when using an Attack Mobility Skill\nWhen gaining Pure Heart, there is a 100% chance to gain 1 additional stack of Pure Heart\n-8% additional damage taken when Pure Heart is active\n+1 Max Pure Heart Stacks\n+100% Pure Heart Duration",
   },
   {
-    type: "Spell",
+    type: "Attack",
     rarity: "Legendary",
-    name: "Squiddle",
-    effect:
-      'Activating Spell Burst with at least 6 stack(s) of Max Spell Burst grants 1 stack of Spell Burst for 10s." data-tooltipid="166212yxpewy">Squidnova +50% Spell Burst for 10s." data-tooltipid="119362yyj01q">Squidnova Effect +8% additional Spell Damage when having Spell Burst for 10s." data-tooltipid="116812yzv7ze">Squidnova +1 to Max Spell Burst when having Spell Burst for 10s." data-tooltipid="40792z1rzx3">Squidnova',
+    name: "Backup Power",
+    innerRing1: {
+      name: "Attack and Cast Speed I",
+      affix: "+4% Attack and Cast Speed",
+    },
+    innerRing2: {
+      name: "Attack and Cast Speed I",
+      affix: "+4% Attack and Cast Speed",
+    },
+    innerRing3: {
+      name: "Lightning Damage I",
+      affix: "+12% Lightning Damage",
+    },
+    innerRing4: {
+      name: "Lightning Damage I",
+      affix: "+12% Lightning Damage",
+    },
+    innerRing5: {
+      name: "Movement Speed I",
+      affix: "+3% Movement Speed",
+    },
+    innerRing6: {
+      name: "Movement Speed I",
+      affix: "+3% Movement Speed",
+    },
+    midRing1: {
+      name: "Attack and Cast Speed II",
+      affix: "+8% Attack and Cast Speed",
+    },
+    midRing2: {
+      name: "Lightning Damage II",
+      affix: "+24% Lightning Damage",
+    },
+    midRing3: {
+      name: "Movement Speed II",
+      affix: "+6% Movement Speed",
+    },
+    effect1: "+35% Numbed Effect",
+    effect2:
+      "+35% Numbed Effect\nWhen inflicting Numbed, restores 1.5% Missing Life and Energy Shield. Interval: 0.2 s",
+    effect3:
+      "+35% Numbed Effect\nWhen inflicting Numbed, restores 1.5% Missing Life and Energy Shield. Interval: 0.2 s\n+15% Movement Speed if you have inflicted Numbed recently",
+    effect4:
+      "+35% Numbed Effect\nWhen inflicting Numbed, restores 3% Missing Life and Energy Shield. Interval: 0.2 s\n+15% Movement Speed if you have inflicted Numbed recently",
+    effect5:
+      "+35% Numbed Effect\nWhen inflicting Numbed, restores 3% Missing Life and Energy Shield. Interval: 0.2 s\n+30% Movement Speed if you have inflicted Numbed recently",
+    effect6:
+      "+45% Numbed Effect\nWhen inflicting Numbed, restores 3% Missing Life and Energy Shield. Interval: 0.2 s\n+30% Movement Speed if you have inflicted Numbed recently",
   },
   {
-    type: "Spell",
-    rarity: "Legendary",
-    name: "Starcatcher",
-    effect:
-      "+8% additional Cast Speed per second when an Elite is Nearby, up to +24%\n+4% Movement Speed when an Elite is Nearby, up to +12% +10% Movement Speed per second when an Elite is nearby, up to +3 stack(s) +4% additional damage",
-  },
-  {
-    type: "Spell",
-    rarity: "Legendary",
-    name: "The Bone worm's Daughter",
-    effect:
-      "+70 Spell Critical Strike Rating per Ailment on enemies, up to +140\n+7% Critical Strike Damage per Ailment on enemies, up to +14% +18% Critical Strike Damage per Ailment on enemies, up to +36% +4% additional damage",
-  },
-  {
-    type: "Spell",
+    type: "Erosion",
     rarity: "Rare",
-    name: "Cloudgatherer - Violet",
-    effect:
-      "+7% additional damage; +7% additional Minion Damage 1.6% Elemental Resistance Penetration every time you hit an enemy with Elemental Damage recently. Stacks up to 4 times +4% additional damage",
+    name: "Benign Bug - Ghost Light Yellow",
+    innerRing1: {
+      name: "Erosion Damage I",
+      affix: "+14% Erosion Damage",
+    },
+    innerRing2: {
+      name: "Erosion Damage I",
+      affix: "+14% Erosion Damage",
+    },
+    innerRing3: {
+      name: "Erosion Damage I",
+      affix: "+14% Erosion Damage",
+    },
+    innerRing4: {
+      name: "Erosion Damage I",
+      affix: "+14% Erosion Damage",
+    },
+    innerRing5: {
+      name: "Erosion Penetration I",
+      affix: "+2.5% Erosion Resistance Penetration",
+    },
+    innerRing6: {
+      name: "Erosion Penetration I",
+      affix: "+2.5% Erosion Resistance Penetration",
+    },
+    midRing1: {
+      name: "Erosion Damage II",
+      affix: "+28% Erosion Damage",
+    },
+    midRing2: {
+      name: "Erosion Damage II",
+      affix: "+28% Erosion Damage",
+    },
+    midRing3: {
+      name: "Erosion Penetration II",
+      affix: "+5% Erosion Resistance Penetration",
+    },
+    effect1: "+5% additional damage; +5% additional Minion Damage",
+    effect2:
+      "+5% additional damage; +5% additional Minion Damage\n+2% additional damage",
+    effect3:
+      "+5% additional damage; +5% additional Minion Damage\n+14% Erosion Damage\n+2% additional damage",
+    effect4:
+      "+5% additional damage; +5% additional Minion Damage\n+14% Erosion Damage\n+4% additional damage",
+    effect5:
+      "+5% additional damage; +5% additional Minion Damage\n+28% Erosion Damage\n+4% additional damage",
+    effect6:
+      "+7% additional damage; +7% additional Minion Damage\n+28% Erosion Damage\n+4% additional damage",
   },
   {
-    type: "Spell",
+    type: "Attack",
     rarity: "Rare",
-    name: "Hell Cavalry - Glow",
-    effect:
-      "+7% additional damage; +7% additional Minion Damage +9% Critical Strike Damage per Ailment on enemies, up to +18% +4% additional damage",
+    name: "Benign Bug - Tolerant Green",
+    innerRing1: {
+      name: "Attack Damage I",
+      affix: "+12% Attack Damage",
+    },
+    innerRing2: {
+      name: "Attack Damage I",
+      affix: "+12% Attack Damage",
+    },
+    innerRing3: {
+      name: "Attack Critical Strike I",
+      affix: "+22% Attack Critical Strike Rating",
+    },
+    innerRing4: {
+      name: "Attack Critical Strike I",
+      affix: "+22% Attack Critical Strike Rating",
+    },
+    innerRing5: {
+      name: "Attack Speed I",
+      affix: "+4% Attack Speed",
+    },
+    innerRing6: {
+      name: "Attack Speed I",
+      affix: "+4% Attack Speed",
+    },
+    midRing1: {
+      name: "Attack Damage II",
+      affix: "+24% Attack Damage",
+    },
+    midRing2: {
+      name: "Attack Critical Strike II",
+      affix: "+44% Attack Critical Strike Rating",
+    },
+    midRing3: {
+      name: "Attack Speed II",
+      affix: "+8% Attack Speed",
+    },
+    effect1: "+5% additional damage; +5% additional Minion Damage",
+    effect2:
+      "+5% additional damage; +5% additional Minion Damage\n+2% additional damage",
+    effect3:
+      "+5% additional damage; +5% additional Minion Damage\n+14% Attack Damage\n+2% additional damage",
+    effect4:
+      "+5% additional damage; +5% additional Minion Damage\n+14% Attack Damage\n+4% additional damage",
+    effect5:
+      "+5% additional damage; +5% additional Minion Damage\n+28% Attack Damage\n+4% additional damage",
+    effect6:
+      "+7% additional damage; +7% additional Minion Damage\n+28% Attack Damage\n+4% additional damage",
   },
   {
-    type: "Spell",
-    rarity: "Rare",
-    name: "Shro-Shroom - Oyster Mushroom",
-    effect:
-      "+7% additional damage; +7% additional Minion Damage +28% Spell Damage +4% additional damage",
-  },
-  {
-    type: "Spell",
-    rarity: "Rare",
-    name: "Winter Darer - Shallow Sea",
-    effect:
-      "+7% additional damage; +7% additional Minion Damage +5% Movement Speed per second when an Elite is nearby, up to +3 stack(s) +4% additional damage",
-  },
-  {
-    type: "Spell",
-    rarity: "Magic",
-    name: "Idling Weasel - Sprouts",
-    effect:
-      "+7% additional damage; +7% additional Minion Damage 0.8% Elemental Resistance Penetration every time you hit an enemy with Elemental Damage recently. Stacks up to 4 times +4% additional damage",
-  },
-  {
-    type: "Spell",
-    rarity: "Magic",
-    name: "Luluri - Amethyst",
-    effect:
-      "+7% additional damage; +7% additional Minion Damage +4% Critical Strike Damage per Ailment on enemies, up to +8% +4% additional damage",
-  },
-  {
-    type: "Spell",
-    rarity: "Magic",
-    name: "Luluri - Maple",
-    effect:
-      "+7% additional damage; +7% additional Minion Damage +3% Movement Speed per second when an Elite is nearby, up to +3 stack(s) +4% additional damage",
-  },
-  {
-    type: "Spell",
-    rarity: "Magic",
-    name: "Lumidrake - Aurora",
-    effect:
-      "+7% additional damage; +7% additional Minion Damage +14% Spell Damage +4% additional damage",
-  },
-  {
-    type: "Summon",
+    type: "Lightning",
     rarity: "Legendary",
-    name: "Drapion Lady",
-    effect:
-      "+55% Origin of Spirit Magus effect\n+7% additional Spirit Magus Skill Damage +8% additional Spirit Magus Skill Damage +4% additional Minion Damage",
+    name: "Bitter Thunder",
+    innerRing1: {
+      name: "Lightning Damage I",
+      affix: "+14% Lightning Damage",
+    },
+    innerRing2: {
+      name: "Lightning Damage I",
+      affix: "+14% Lightning Damage",
+    },
+    innerRing3: {
+      name: "Lightning Penetration I",
+      affix: "+2.5% Lightning Penetration",
+    },
+    innerRing4: {
+      name: "Lightning Penetration I",
+      affix: "+2.5% Lightning Penetration",
+    },
+    innerRing5: {
+      name: "Attack and Cast Speed I",
+      affix: "+4% Attack and Cast Speed",
+    },
+    innerRing6: {
+      name: "Attack and Cast Speed I",
+      affix: "+4% Attack and Cast Speed",
+    },
+    midRing1: {
+      name: "Lightning Damage II",
+      affix: "+28% Lightning Damage",
+    },
+    midRing2: {
+      name: "Lightning Penetration II",
+      affix: "+5% Lightning Penetration",
+    },
+    midRing3: {
+      name: "Attack and Cast Speed II",
+      affix: "+8% Attack and Cast Speed",
+    },
+    effect1:
+      "Bestows the surging power of lightning to the pact holder, granting + 14% additional Lightning Damage and + 15% additional Max Damage for 5s.\nCooldown: 10s.",
+    effect2:
+      "Bestows the surging power of lightning to the pact holder, granting + 14% additional Lightning Damage and + 15% additional Max Damage for 5s.\nCooldown: 10s.\n+6% additional Lightning Damage",
+    effect3:
+      "Bestows the surging power of lightning to the pact holder, granting + 14% additional Lightning Damage and + 15% additional Max Damage for 5s.\nCooldown: 10s.\n+6% additional Lightning Damage\n+2% additional damage",
+    effect4:
+      "Bestows the surging power of lightning to the pact holder, granting + 14% additional Lightning Damage and + 15% additional Max Damage for 5s.\nCooldown: 10s.\n+12% additional Lightning Damage\n+2% additional damage",
+    effect5:
+      "Bestows the surging power of lightning to the pact holder, granting + 14% additional Lightning Damage and + 15% additional Max Damage for 5s.\nCooldown: 10s.\n+12% additional Lightning Damage\n+4% additional damage",
+    effect6:
+      "Bestows the surging power of lightning to the pact holder, granting + 19% additional Lightning Damage and + 20% additional Max Damage for 5s.\nCooldown: 10s.\n+12% additional Lightning Damage\n+4% additional damage",
   },
   {
-    type: "Summon",
+    type: "Attack",
     rarity: "Legendary",
-    name: "Mechanical Throne",
-    effect:
-      "+19% chance for Synthetic Troop Minions to deal Double Damage\n+8% Minion Attack and Cast Speed for 4 s when your Synthetic Troop Minions deal Double Damage +20% Minion Attack and Cast Speed for 4 s when your Synthetic Troops deal Double Damage +4% additional Minion Damage",
-  },
-  {
-    type: "Summon",
-    rarity: "Legendary",
-    name: "Scale of Original Sin",
-    effect:
-      "+53% additional Spirit Magus Ultimate Damage and Ailment Damage dealt by Ultimate when any two of Strength, Dexterity, and Intelligence are equal +2 Spirit Magus Skill Level +4% additional Minion Damage",
-  },
-  {
-    type: "Summon",
-    rarity: "Legendary",
-    name: "Sprite of Silent Vale",
-    effect:
-      "+75 initial Growth for Spirit Magi +12% Movement Speed when a Spirit Magus is nearby For every 20 Growth a Spirit Magus has, it deals +1% additional damage, up to +10% additional damage",
-  },
-  {
-    type: "Summon",
-    rarity: "Legendary",
-    name: "Whisperwind Leaves",
-    effect:
-      "+30% additional damage for recently summoned Minions\n+60 Critical Strike Rating for recently summoned Minions +160 Critical Strike Rating for recently summoned Minions +4% additional Minion Damage",
+    name: "Captain Kitty of the Furious Sea",
+    innerRing1: {
+      name: "Warcry Duration I",
+      affix: "+7.5% Warcry Skill Effect Duration",
+    },
+    innerRing2: {
+      name: "Warcry Duration I",
+      affix: "+7.5% Warcry Skill Effect Duration",
+    },
+    innerRing3: {
+      name: "Warcry Cooldown I",
+      affix: "+5.5% Warcry Cooldown Recovery Speed",
+    },
+    innerRing4: {
+      name: "Warcry Cooldown I",
+      affix: "+5.5% Warcry Cooldown Recovery Speed",
+    },
+    innerRing5: {
+      name: "Warcry Effect I",
+      affix: "+3% Warcry Effect",
+    },
+    innerRing6: {
+      name: "Warcry Effect I",
+      affix: "+3% Warcry Effect",
+    },
+    midRing1: {
+      name: "Warcry Duration II",
+      affix: "+15% Warcry Skill Effect Duration",
+    },
+    midRing2: {
+      name: "Warcry Cooldown II",
+      affix: "+11% Warcry Cooldown Recovery Speed",
+    },
+    midRing3: {
+      name: "Warcry Effect II",
+      affix: "+6% Warcry Effect",
+    },
+    effect1: "Immediately casts Warcry. +20% additional Warcry Skill Effect",
+    effect2:
+      "Immediately casts Warcry. +20% additional Warcry Skill Effect\n+11% Warcry Cooldown Recovery Speed",
+    effect3:
+      "Immediately casts Warcry. +20% additional Warcry Skill Effect\n+11% Warcry Cooldown Recovery Speed\n+1 Max Warcry Skill Charges",
+    effect4:
+      "Immediately casts Warcry. +20% additional Warcry Skill Effect\n+22% Warcry Cooldown Recovery Speed\n+1 Max Warcry Skill Charges",
+    effect5:
+      "Immediately casts Warcry. +20% additional Warcry Skill Effect\n+22% Warcry Cooldown Recovery Speed\n+2 Max Warcry Skill Charges",
+    effect6:
+      "Immediately casts Warcry. +25% additional Warcry Skill Effect\n+22% Warcry Cooldown Recovery Speed\n+2 Max Warcry Skill Charges",
   },
   {
     type: "Summon",
     rarity: "Rare",
     name: "Cloudgatherer - Sparkle",
-    effect:
-      "+7% additional damage; +7% additional Minion Damage +80 Critical Strike Rating for recently summoned Minions +4% additional Minion Damage",
+    innerRing1: {
+      name: "Servant Damage I",
+      affix: "+15% Minion Damage",
+    },
+    innerRing2: {
+      name: "Servant Damage I",
+      affix: "+15% Minion Damage",
+    },
+    innerRing3: {
+      name: "Servant Speed I",
+      affix: "+4% Minion Attack and Cast Speed",
+    },
+    innerRing4: {
+      name: "Servant Speed I",
+      affix: "+4% Minion Attack and Cast Speed",
+    },
+    innerRing5: {
+      name: "Servant Life I",
+      affix: "+4% Minion Max Life",
+    },
+    innerRing6: {
+      name: "Servant Life I",
+      affix: "+4% Minion Max Life",
+    },
+    midRing1: {
+      name: "Servant Damage II",
+      affix: "+30% Minion Damage",
+    },
+    midRing2: {
+      name: "Servant Speed II",
+      affix: "+8% Minion Attack and Cast Speed",
+    },
+    midRing3: {
+      name: "Servant Life II",
+      affix: "+8% Minion Max Life",
+    },
+    effect1: "+5% additional damage; +5% additional Minion Damage",
+    effect2:
+      "+5% additional damage; +5% additional Minion Damage\n+2% additional Minion Damage",
+    effect3:
+      "+5% additional damage; +5% additional Minion Damage\n+40 Critical Strike Rating for recently summoned Minions\n+2% additional Minion Damage",
+    effect4:
+      "+5% additional damage; +5% additional Minion Damage\n+40 Critical Strike Rating for recently summoned Minions\n+4% additional Minion Damage",
+    effect5:
+      "+5% additional damage; +5% additional Minion Damage\n+80 Critical Strike Rating for recently summoned Minions\n+4% additional Minion Damage",
+    effect6:
+      "+7% additional damage; +7% additional Minion Damage\n+80 Critical Strike Rating for recently summoned Minions\n+4% additional Minion Damage",
+  },
+  {
+    type: "Spell",
+    rarity: "Rare",
+    name: "Cloudgatherer - Violet",
+    innerRing1: {
+      name: "Elemental Damage I",
+      affix: "+12% Elemental Damage",
+    },
+    innerRing2: {
+      name: "Elemental Damage I",
+      affix: "+12% Elemental Damage",
+    },
+    innerRing3: {
+      name: "Elemental Penetration I",
+      affix: "Damage Penetrates 2% Elemental Resistance",
+    },
+    innerRing4: {
+      name: "Elemental Penetration I",
+      affix: "Damage Penetrates 2% Elemental Resistance",
+    },
+    innerRing5: {
+      name: "Cast Speed I",
+      affix: "+4% Cast Speed",
+    },
+    innerRing6: {
+      name: "Cast Speed I",
+      affix: "+4% Cast Speed",
+    },
+    midRing1: {
+      name: "Elemental Damage II",
+      affix: "+24% Elemental Damage",
+    },
+    midRing2: {
+      name: "Elemental Penetration II",
+      affix: "Damage Penetrates 4% Elemental Resistance",
+    },
+    midRing3: {
+      name: "Cast Speed II",
+      affix: "+8% Cast Speed",
+    },
+    effect1: "+5% additional damage; +5% additional Minion Damage",
+    effect2:
+      "+5% additional damage; +5% additional Minion Damage\n+2% additional damage",
+    effect3:
+      "+5% additional damage; +5% additional Minion Damage\n0.8% Elemental Resistance Penetration every time you hit an enemy with Elemental Damage recently. Stacks up to 4 times\n+2% additional damage",
+    effect4:
+      "+5% additional damage; +5% additional Minion Damage\n0.8% Elemental Resistance Penetration every time you hit an enemy with Elemental Damage recently. Stacks up to 4 times\n+4% additional damage",
+    effect5:
+      "+5% additional damage; +5% additional Minion Damage\n1.6% Elemental Resistance Penetration every time you hit an enemy with Elemental Damage recently. Stacks up to 4 times\n+4% additional damage",
+    effect6:
+      "+7% additional damage; +7% additional Minion Damage\n1.6% Elemental Resistance Penetration every time you hit an enemy with Elemental Damage recently. Stacks up to 4 times\n+4% additional damage",
+  },
+  {
+    type: "Persistent",
+    rarity: "Legendary",
+    name: "Crossroad Walker",
+    innerRing1: {
+      name: "Ailment Chance I",
+      affix: "+3.5% chance to cause Ailments",
+    },
+    innerRing2: {
+      name: "Ailment Chance I",
+      affix: "+3.5% chance to cause Ailments",
+    },
+    innerRing3: {
+      name: "Ailment Damage I",
+      affix: "+12% Ailment Damage",
+    },
+    innerRing4: {
+      name: "Ailment Damage I",
+      affix: "+12% Ailment Damage",
+    },
+    innerRing5: {
+      name: "Ailment Duration I",
+      affix: "+6% Ailment Duration",
+    },
+    innerRing6: {
+      name: "Ailment Duration I",
+      affix: "+6% Ailment Duration",
+    },
+    midRing1: {
+      name: "Ailment Chance II",
+      affix: "+7% chance to cause Ailments",
+    },
+    midRing2: {
+      name: "Ailment Damage II",
+      affix: "+24% Ailment Damage",
+    },
+    midRing3: {
+      name: "Ailment Duration II",
+      affix: "+12% Ailment Duration",
+    },
+    effect1:
+      "+13% additional Ailment Damage against Cursed enemies\n11.5% Curse effect",
+    effect2:
+      "+13% additional Ailment Damage against Cursed enemies\n11.5% Curse effect\n+2% additional damage",
+    effect3:
+      "+13% additional Ailment Damage against Cursed enemies\n11.5% Curse effect\n+10% curse effect\n+2% additional damage",
+    effect4:
+      "+13% additional Ailment Damage against Cursed enemies\n11.5% Curse effect\n+10% curse effect\n+4% additional damage",
+    effect5:
+      "+13% additional Ailment Damage against Cursed enemies\n11.5% Curse effect\n+20% curse effect\n+4% additional damage",
+    effect6:
+      "+18% additional Ailment Damage against Cursed enemies\n+15% Curse effect\n+20% curse effect\n+4% additional damage",
+  },
+  {
+    type: "Attack",
+    rarity: "Rare",
+    name: "Dragon Plant - Kale",
+    innerRing1: {
+      name: "Movement Speed I",
+      affix: "+4% Movement Speed while channeling",
+    },
+    innerRing2: {
+      name: "Movement Speed I",
+      affix: "+4% Movement Speed while channeling",
+    },
+    innerRing3: {
+      name: "Channeled Damage I",
+      affix: "+14% damage for Channeled Skills",
+    },
+    innerRing4: {
+      name: "Channeled Damage I",
+      affix: "+14% damage for Channeled Skills",
+    },
+    innerRing5: {
+      name: "Attack and Cast Speed I",
+      affix: "+4% Attack and Cast Speed",
+    },
+    innerRing6: {
+      name: "Attack and Cast Speed I",
+      affix: "+4% Attack and Cast Speed",
+    },
+    midRing1: {
+      name: "Movement Speed II",
+      affix: "+8% Movement Speed while channeling",
+    },
+    midRing2: {
+      name: "Channeled Damage II",
+      affix: "+28% damage for Channeled Skills",
+    },
+    midRing3: {
+      name: "Attack and Cast Speed II",
+      affix: "+8% Attack and Cast Speed",
+    },
+    effect1: "+5% additional damage; +5% additional Minion Damage",
+    effect2:
+      "+5% additional damage; +5% additional Minion Damage\n+2% additional damage",
+    effect3:
+      "+5% additional damage; +5% additional Minion Damage\nAt max channeled stacks, +2% additional damage for Channeled Skills for 4 s\n+2% additional damage",
+    effect4:
+      "+5% additional damage; +5% additional Minion Damage\nAt max channeled stacks, +2% additional damage for Channeled Skills for 4 s\n+4% additional damage",
+    effect5:
+      "+5% additional damage; +5% additional Minion Damage\nAt max channeled stacks, +4% additional damage for Channeled Skills for 4 s\n+4% additional damage",
+    effect6:
+      "+7% additional damage; +7% additional Minion Damage\nAt max channeled stacks, +4% additional damage for Channeled Skills for 4 s\n+4% additional damage",
   },
   {
     type: "Summon",
     rarity: "Rare",
     name: "Dragon Plant - Onion",
-    effect:
-      "+7% additional damage; +7% additional Minion Damage +6% Movement Speed when a Spirit Magus is nearby +4% additional Minion Damage",
+    innerRing1: {
+      name: "Servant Damage I",
+      affix: "+14% Minion Damage",
+    },
+    innerRing2: {
+      name: "Servant Damage I",
+      affix: "+14% Minion Damage",
+    },
+    innerRing3: {
+      name: "Servant Damage I",
+      affix: "+14% Minion Damage",
+    },
+    innerRing4: {
+      name: "Servant Damage I",
+      affix: "+14% Minion Damage",
+    },
+    innerRing5: {
+      name: "Servant Speed I",
+      affix: "+4% Minion Attack and Cast Speed",
+    },
+    innerRing6: {
+      name: "Servant Speed I",
+      affix: "+4% Minion Attack and Cast Speed",
+    },
+    midRing1: {
+      name: "Servant Damage II",
+      affix: "+28% Minion Damage",
+    },
+    midRing2: {
+      name: "Servant Damage II",
+      affix: "+28% Minion Damage",
+    },
+    midRing3: {
+      name: "Servant Speed II",
+      affix: "+8% Minion Attack and Cast Speed",
+    },
+    effect1: "+5% additional damage; +5% additional Minion Damage",
+    effect2:
+      "+5% additional damage; +5% additional Minion Damage\n+2% additional Minion Damage",
+    effect3:
+      "+5% additional damage; +5% additional Minion Damage\n+3% Movement Speed when a Spirit Magus is nearby\n+2% additional Minion Damage",
+    effect4:
+      "+5% additional damage; +5% additional Minion Damage\n+3% Movement Speed when a Spirit Magus is nearby\n+4% additional Minion Damage",
+    effect5:
+      "+5% additional damage; +5% additional Minion Damage\n+6% Movement Speed when a Spirit Magus is nearby\n+4% additional Minion Damage",
+    effect6:
+      "+7% additional damage; +7% additional Minion Damage\n+6% Movement Speed when a Spirit Magus is nearby\n+4% additional Minion Damage",
   },
   {
-    type: "Summon",
+    type: "Attack",
     rarity: "Rare",
-    name: "Greedy Chestnut - Lotus Root",
-    effect:
-      "+7% additional damage; +7% additional Minion Damage +4% additional Spirit Magus Skill Damage +4% additional Minion Damage",
+    name: "Dragon Plant - Truffle",
+    innerRing1: {
+      name: "Knockback Distance I",
+      affix: "+12% Knockback distance",
+    },
+    innerRing2: {
+      name: "Knockback Distance I",
+      affix: "+12% Knockback distance",
+    },
+    innerRing3: {
+      name: "Projectile Speed I",
+      affix: "+7% Projectile Speed",
+    },
+    innerRing4: {
+      name: "Projectile Speed I",
+      affix: "+7% Projectile Speed",
+    },
+    innerRing5: {
+      name: "Projectile Damage I",
+      affix: "+10% Projectile Damage",
+    },
+    innerRing6: {
+      name: "Projectile Damage I",
+      affix: "+10% Projectile Damage",
+    },
+    midRing1: {
+      name: "Knockback Distance II",
+      affix: "+24% Knockback distance",
+    },
+    midRing2: {
+      name: "Projectile Speed II",
+      affix: "+14% Projectile Speed",
+    },
+    midRing3: {
+      name: "Projectile Damage II",
+      affix: "+20% Projectile Damage",
+    },
+    effect1: "+5% additional damage; +5% additional Minion Damage",
+    effect2:
+      "+5% additional damage; +5% additional Minion Damage\n+2% additional damage",
+    effect3:
+      "+5% additional damage; +5% additional Minion Damage\n+2% additional Attack and Cast Speed when no enemies are in proximity\n+2% additional damage",
+    effect4:
+      "+5% additional damage; +5% additional Minion Damage\n+2% additional Attack and Cast Speed when no enemies are in proximity\n+4% additional damage",
+    effect5:
+      "+5% additional damage; +5% additional Minion Damage\n+4% additional Attack and Cast Speed when no enemies are in proximity\n+4% additional damage",
+    effect6:
+      "+7% additional damage; +7% additional Minion Damage\n+4% additional Attack and Cast Speed when no enemies are in proximity\n+4% additional damage",
   },
   {
     type: "Summon",
-    rarity: "Rare",
-    name: "Letice - Amethyst",
-    effect:
-      "+7% additional damage; +7% additional Minion Damage +56% Spirit Magus Skill Damage +4% additional Minion Damage",
-  },
-  {
-    type: "Summon",
-    rarity: "Rare",
-    name: "Winter Darer",
-    effect:
-      "+7% additional damage; +7% additional Minion Damage +10% Minion Attack and Cast Speed for 4 s when your Synthetic Troops deal Double Damage +4% additional Minion Damage",
-  },
-  {
-    type: "Summon",
-    rarity: "Magic",
-    name: "Explorer Otter - Olive",
-    effect:
-      "+7% additional damage; +7% additional Minion Damage +2% additional Spirit Magus Skill Damage +4% additional Minion Damage",
-  },
-  {
-    type: "Summon",
-    rarity: "Magic",
-    name: "Feasting Samurai - Garlic",
-    effect:
-      "+7% additional damage; +7% additional Minion Damage +3% Movement Speed when a Spirit Magus is nearby +4% additional Minion Damage",
-  },
-  {
-    type: "Summon",
-    rarity: "Magic",
-    name: "Shocket - Pale",
-    effect:
-      "+7% additional damage; +7% additional Minion Damage +28% Spirit Magus Skill Damage +4% additional Minion Damage",
-  },
-  {
-    type: "Summon",
-    rarity: "Magic",
-    name: "Spiny Snail - Flower",
-    effect:
-      "+7% additional damage; +7% additional Minion Damage +5% Minion Attack and Cast Speed for 4 s when your Synthetic Troops deal Double Damage +4% additional Minion Damage",
-  },
-  {
-    type: "Summon",
-    rarity: "Magic",
-    name: "Spiny Snail - Iris",
-    effect:
-      "+7% additional damage; +7% additional Minion Damage +40 Critical Strike Rating for recently summoned Minions +4% additional Minion Damage",
-  },
-  {
-    type: "Survival",
     rarity: "Legendary",
-    name: "Anthem",
-    effect:
-      "+14% additional Life\nRegenerates 0.9% Life per second Regenerates 2% Life per second -4% additional damage taken",
-  },
-  {
-    type: "Survival",
-    rarity: "Legendary",
-    name: "Knight of Pale Blue",
-    effect:
-      "-55% additional Physical Damage taken when there are only 1 enemies Nearby\n-4% additional damage taken -8% additional damage taken -4% additional damage taken",
-  },
-  {
-    type: "Survival",
-    rarity: "Legendary",
-    name: "Preserver of Eternity",
-    effect:
-      "+40% Movement Speed if you haven't been hit recently\n+8% Movement Speed +20% Movement Speed -4% additional damage taken",
-  },
-  {
-    type: "Survival",
-    rarity: "Legendary",
-    name: "Spirit Bless",
-    effect:
-      "+14% additional Max Energy Shield\n+8% Energy Shield Charge Speed +16% Energy Shield Charge Speed -4% additional damage taken",
-  },
-  {
-    type: "Survival",
-    rarity: "Legendary",
-    name: "Warbler of Plum Blossoms",
-    effect:
-      "+14% Elemental Resistance Converts 3% of Physical Damage taken to random Elemental Damage Converts 8% of Physical Damage taken to random Elemental Damage -4% additional damage taken",
-  },
-  {
-    type: "Survival",
-    rarity: "Rare",
-    name: "Hell Cavalry",
-    effect:
-      "-6% additional damage taken -4% additional damage taken -4% additional damage taken",
-  },
-  {
-    type: "Survival",
-    rarity: "Rare",
-    name: "Plaintive Ball of Thread",
-    effect:
-      "-6% additional damage taken Regenerates 1.2% Life per second -4% additional damage taken",
-  },
-  {
-    type: "Survival",
-    rarity: "Rare",
-    name: "Traveling Lizard - Flower",
-    effect:
-      "-6% additional damage taken +10% Movement Speed -4% additional damage taken",
-  },
-  {
-    type: "Survival",
-    rarity: "Rare",
-    name: "Traveling Lizard - Ocean",
-    effect:
-      "-6% additional damage taken +8% Energy Shield Charge Speed -4% additional damage taken",
-  },
-  {
-    type: "Survival",
-    rarity: "Rare",
-    name: "Winter Darer - Rock",
-    effect:
-      "-6% additional damage taken Converts 4% of Physical Damage taken to random Elemental Damage -4% additional damage taken",
+    name: "Drapion Lady",
+    innerRing1: {
+      name: "Servant Buff I",
+      affix: "+7% Origin of Spirit Magus effect",
+    },
+    innerRing2: {
+      name: "Servant Buff I",
+      affix: "+7% Origin of Spirit Magus effect",
+    },
+    innerRing3: {
+      name: "Servant Cooldown I",
+      affix: "Spirit Magi's Skill Cooldown Recovery Speed +5%",
+    },
+    innerRing4: {
+      name: "Servant Cooldown I",
+      affix: "Spirit Magi's Skill Cooldown Recovery Speed +5%",
+    },
+    innerRing5: {
+      name: "Servant Life I",
+      affix: "+4% Minion Max Life",
+    },
+    innerRing6: {
+      name: "Servant Life I",
+      affix: "+4% Minion Max Life",
+    },
+    midRing1: {
+      name: "Servant Buff II",
+      affix: "+14% Origin of Spirit Magus effect",
+    },
+    midRing2: {
+      name: "Servant Cooldown II",
+      affix: "Spirit Magi's Skill Cooldown Recovery Speed +10%",
+    },
+    midRing3: {
+      name: "Servant Life II",
+      affix: "+8% Minion Max Life",
+    },
+    effect1:
+      "+40% Origin of Spirit Magus effect\n+5% additional Spirit Magus Skill Damage",
+    effect2:
+      "+40% Origin of Spirit Magus effect\n+5% additional Spirit Magus Skill Damage\n+2% additional Minion Damage",
+    effect3:
+      "+40% Origin of Spirit Magus effect\n+5% additional Spirit Magus Skill Damage\n+4% additional Spirit Magus Skill Damage\n+2% additional Minion Damage",
+    effect4:
+      "+40% Origin of Spirit Magus effect\n+5% additional Spirit Magus Skill Damage\n+4% additional Spirit Magus Skill Damage\n+4% additional Minion Damage",
+    effect5:
+      "+40% Origin of Spirit Magus effect\n+5% additional Spirit Magus Skill Damage\n+8% additional Spirit Magus Skill Damage\n+4% additional Minion Damage",
+    effect6:
+      "+55% Origin of Spirit Magus effect\n+7% additional Spirit Magus Skill Damage\n+8% additional Spirit Magus Skill Damage\n+4% additional Minion Damage",
   },
   {
     type: "Survival",
     rarity: "Magic",
     name: "Explorer Otter - Mudstone",
-    effect:
-      "-6% additional damage taken Regenerates 0.6% Life per second -4% additional damage taken",
+    innerRing1: {
+      name: "Max Life I",
+      affix: "+4% Max Life",
+    },
+    innerRing2: {
+      name: "Max Life I",
+      affix: "+4% Max Life",
+    },
+    innerRing3: {
+      name: "Mana Restoration I",
+      affix: "+15% Mana Regeneration Speed",
+    },
+    innerRing4: {
+      name: "Mana Restoration I",
+      affix: "+15% Mana Regeneration Speed",
+    },
+    innerRing5: {
+      name: "XP Balance I",
+      affix:
+        "-10% XP falloff caused by the level difference between the player and the map",
+    },
+    innerRing6: {
+      name: "XP Balance I",
+      affix:
+        "-10% XP falloff caused by the level difference between the player and the map",
+    },
+    midRing1: {
+      name: "Mana Restoration II",
+      affix: "+30% Mana Regeneration Speed",
+    },
+    midRing2: {
+      name: "",
+      affix: "",
+    },
+    midRing3: {
+      name: "",
+      affix: "",
+    },
+    effect1: "-5% additional damage taken",
+    effect2: "-5% additional damage taken\n-2% additional damage taken",
+    effect3:
+      "-5% additional damage taken\nRegenerates 0.3% Life per second\n-2% additional damage taken",
+    effect4:
+      "-5% additional damage taken\nRegenerates 0.3% Life per second\n-4% additional damage taken",
+    effect5:
+      "-5% additional damage taken\nRegenerates 0.6% Life per second\n-4% additional damage taken",
+    effect6:
+      "-6% additional damage taken\nRegenerates 0.6% Life per second\n-4% additional damage taken",
+  },
+  {
+    type: "Summon",
+    rarity: "Magic",
+    name: "Explorer Otter - Olive",
+    innerRing1: {
+      name: "Servant Buff I",
+      affix: "+7% Origin of Spirit Magus effect",
+    },
+    innerRing2: {
+      name: "Servant Buff I",
+      affix: "+7% Origin of Spirit Magus effect",
+    },
+    innerRing3: {
+      name: "Servant Cooldown I",
+      affix: "Spirit Magi's Skill Cooldown Recovery Speed +5%",
+    },
+    innerRing4: {
+      name: "Servant Cooldown I",
+      affix: "Spirit Magi's Skill Cooldown Recovery Speed +5%",
+    },
+    innerRing5: {
+      name: "Servant Life I",
+      affix: "+4% Minion Max Life",
+    },
+    innerRing6: {
+      name: "Servant Life I",
+      affix: "+4% Minion Max Life",
+    },
+    midRing1: {
+      name: "Damage II",
+      affix: "+24% damage +24% Minion Damage",
+    },
+    midRing2: {
+      name: "Damage II",
+      affix: "+24% damage +24% Minion Damage",
+    },
+    midRing3: {
+      name: "Damage II",
+      affix: "+24% damage +24% Minion Damage",
+    },
+    effect1: "+5% additional damage; +5% additional Minion Damage",
+    effect2:
+      "+5% additional damage; +5% additional Minion Damage\n+2% additional Minion Damage",
+    effect3:
+      "+5% additional damage; +5% additional Minion Damage\n+1% additional Spirit Magus Skill Damage\n+2% additional Minion Damage",
+    effect4:
+      "+5% additional damage; +5% additional Minion Damage\n+1% additional Spirit Magus Skill Damage\n+4% additional Minion Damage",
+    effect5:
+      "+5% additional damage; +5% additional Minion Damage\n+2% additional Spirit Magus Skill Damage\n+4% additional Minion Damage",
+    effect6:
+      "+7% additional damage; +7% additional Minion Damage\n+2% additional Spirit Magus Skill Damage\n+4% additional Minion Damage",
   },
   {
     type: "Survival",
     rarity: "Magic",
     name: "Explorer Otter - Quicksand",
-    effect:
-      "-6% additional damage taken +5% Movement Speed -4% additional damage taken",
+    innerRing1: {
+      name: "Elemental Resistance I",
+      affix: "+2.5% Elemental Resistance",
+    },
+    innerRing2: {
+      name: "Elemental Resistance I",
+      affix: "+2.5% Elemental Resistance",
+    },
+    innerRing3: {
+      name: "Damage Avoidance I",
+      affix: "+1.5% chance to avoid damage",
+    },
+    innerRing4: {
+      name: "Damage Avoidance I",
+      affix: "+1.5% chance to avoid damage",
+    },
+    innerRing5: {
+      name: "XP Protection I",
+      affix: "-10% XP lost upon death",
+    },
+    innerRing6: {
+      name: "XP Protection I",
+      affix: "-10% XP lost upon death",
+    },
+    midRing1: {
+      name: "Mana Restoration II",
+      affix: "+30% Mana Regeneration Speed",
+    },
+    midRing2: {
+      name: "",
+      affix: "",
+    },
+    midRing3: {
+      name: "",
+      affix: "",
+    },
+    effect1: "-5% additional damage taken",
+    effect2: "-5% additional damage taken\n-2% additional damage taken",
+    effect3:
+      "-5% additional damage taken\n2.5% Movement Speed\n-2% additional damage taken",
+    effect4:
+      "-5% additional damage taken\n2.5% Movement Speed\n-4% additional damage taken",
+    effect5:
+      "-5% additional damage taken\n+5% Movement Speed\n-4% additional damage taken",
+    effect6:
+      "-6% additional damage taken\n+5% Movement Speed\n-4% additional damage taken",
   },
   {
     type: "Survival",
     rarity: "Magic",
     name: "Explorer Otter - Rock",
-    effect:
-      "-6% additional damage taken +4% Energy Shield Charge Speed -4% additional damage taken",
+    innerRing1: {
+      name: "Max Energy Shield I",
+      affix: "+4% Max Energy Shield",
+    },
+    innerRing2: {
+      name: "Max Energy Shield I",
+      affix: "+4% Max Energy Shield",
+    },
+    innerRing3: {
+      name: "Mana Restoration I",
+      affix: "+15% Mana Regeneration Speed",
+    },
+    innerRing4: {
+      name: "Mana Restoration I",
+      affix: "+15% Mana Regeneration Speed",
+    },
+    innerRing5: {
+      name: "XP Bonus I",
+      affix: "+3% XP earned",
+    },
+    innerRing6: {
+      name: "XP Bonus I",
+      affix: "+3% XP earned",
+    },
+    midRing1: {
+      name: "Mana Restoration II",
+      affix: "+30% Mana Regeneration Speed",
+    },
+    midRing2: {
+      name: "",
+      affix: "",
+    },
+    midRing3: {
+      name: "",
+      affix: "",
+    },
+    effect1: "-5% additional damage taken",
+    effect2: "-5% additional damage taken\n-2% additional damage taken",
+    effect3:
+      "-5% additional damage taken\n+2% Energy Shield Charge Speed\n-2% additional damage taken",
+    effect4:
+      "-5% additional damage taken\n+2% Energy Shield Charge Speed\n-4% additional damage taken",
+    effect5:
+      "-5% additional damage taken\n+4% Energy Shield Charge Speed\n-4% additional damage taken",
+    effect6:
+      "-6% additional damage taken\n+4% Energy Shield Charge Speed\n-4% additional damage taken",
+  },
+  {
+    type: "Summon",
+    rarity: "Magic",
+    name: "Feasting Samurai - Garlic",
+    innerRing1: {
+      name: "Servant Damage I",
+      affix: "+14% Minion Damage",
+    },
+    innerRing2: {
+      name: "Servant Damage I",
+      affix: "+14% Minion Damage",
+    },
+    innerRing3: {
+      name: "Servant Damage I",
+      affix: "+14% Minion Damage",
+    },
+    innerRing4: {
+      name: "Servant Damage I",
+      affix: "+14% Minion Damage",
+    },
+    innerRing5: {
+      name: "Servant Speed I",
+      affix: "+4% Minion Attack and Cast Speed",
+    },
+    innerRing6: {
+      name: "Servant Speed I",
+      affix: "+4% Minion Attack and Cast Speed",
+    },
+    midRing1: {
+      name: "Damage II",
+      affix: "+24% damage +24% Minion Damage",
+    },
+    midRing2: {
+      name: "Damage II",
+      affix: "+24% damage +24% Minion Damage",
+    },
+    midRing3: {
+      name: "Damage II",
+      affix: "+24% damage +24% Minion Damage",
+    },
+    effect1: "+5% additional damage; +5% additional Minion Damage",
+    effect2:
+      "+5% additional damage; +5% additional Minion Damage\n+2% additional Minion Damage",
+    effect3:
+      "+5% additional damage; +5% additional Minion Damage\n1.5% Movement Speed when a Spirit Magus is nearby\n+2% additional Minion Damage",
+    effect4:
+      "+5% additional damage; +5% additional Minion Damage\n1.5% Movement Speed when a Spirit Magus is nearby\n+4% additional Minion Damage",
+    effect5:
+      "+5% additional damage; +5% additional Minion Damage\n+3% Movement Speed when a Spirit Magus is nearby\n+4% additional Minion Damage",
+    effect6:
+      "+7% additional damage; +7% additional Minion Damage\n+3% Movement Speed when a Spirit Magus is nearby\n+4% additional Minion Damage",
+  },
+  {
+    type: "Attack",
+    rarity: "Magic",
+    name: "Feasting Samurai - Honey",
+    innerRing1: {
+      name: "Knockback Distance I",
+      affix: "+12% Knockback distance",
+    },
+    innerRing2: {
+      name: "Knockback Distance I",
+      affix: "+12% Knockback distance",
+    },
+    innerRing3: {
+      name: "Projectile Speed I",
+      affix: "+7% Projectile Speed",
+    },
+    innerRing4: {
+      name: "Projectile Speed I",
+      affix: "+7% Projectile Speed",
+    },
+    innerRing5: {
+      name: "Projectile Damage I",
+      affix: "+10% Projectile Damage",
+    },
+    innerRing6: {
+      name: "Projectile Damage I",
+      affix: "+10% Projectile Damage",
+    },
+    midRing1: {
+      name: "Damage II",
+      affix: "+24% damage +24% Minion Damage",
+    },
+    midRing2: {
+      name: "Damage II",
+      affix: "+24% damage +24% Minion Damage",
+    },
+    midRing3: {
+      name: "Damage II",
+      affix: "+24% damage +24% Minion Damage",
+    },
+    effect1: "+5% additional damage; +5% additional Minion Damage",
+    effect2:
+      "+5% additional damage; +5% additional Minion Damage\n+2% additional damage",
+    effect3:
+      "+5% additional damage; +5% additional Minion Damage\n+1% additional Attack and Cast Speed when no enemies are in proximity\n+2% additional damage",
+    effect4:
+      "+5% additional damage; +5% additional Minion Damage\n+1% additional Attack and Cast Speed when no enemies are in proximity\n+4% additional damage",
+    effect5:
+      "+5% additional damage; +5% additional Minion Damage\n+2% additional Attack and Cast Speed when no enemies are in proximity\n+4% additional damage",
+    effect6:
+      "+7% additional damage; +7% additional Minion Damage\n+2% additional Attack and Cast Speed when no enemies are in proximity\n+4% additional damage",
+  },
+  {
+    type: "Attack",
+    rarity: "Magic",
+    name: "Feasting Samurai - Orange",
+    innerRing1: {
+      name: "Movement Speed I",
+      affix: "+4% Movement Speed while channeling",
+    },
+    innerRing2: {
+      name: "Movement Speed I",
+      affix: "+4% Movement Speed while channeling",
+    },
+    innerRing3: {
+      name: "Channeled Damage I",
+      affix: "+14% damage for Channeled Skills",
+    },
+    innerRing4: {
+      name: "Channeled Damage I",
+      affix: "+14% damage for Channeled Skills",
+    },
+    innerRing5: {
+      name: "Attack and Cast Speed I",
+      affix: "+4% Attack and Cast Speed",
+    },
+    innerRing6: {
+      name: "Attack and Cast Speed I",
+      affix: "+4% Attack and Cast Speed",
+    },
+    midRing1: {
+      name: "Damage II",
+      affix: "+24% damage +24% Minion Damage",
+    },
+    midRing2: {
+      name: "Damage II",
+      affix: "+24% damage +24% Minion Damage",
+    },
+    midRing3: {
+      name: "Damage II",
+      affix: "+24% damage +24% Minion Damage",
+    },
+    effect1: "+5% additional damage; +5% additional Minion Damage",
+    effect2:
+      "+5% additional damage; +5% additional Minion Damage\n+2% additional damage",
+    effect3:
+      "+5% additional damage; +5% additional Minion Damage\nAt max channeled stacks, +1% additional damage for Channeled Skills for 4 s\n+2% additional damage",
+    effect4:
+      "+5% additional damage; +5% additional Minion Damage\nAt max channeled stacks, +1% additional damage for Channeled Skills for 4 s\n+4% additional damage",
+    effect5:
+      "+5% additional damage; +5% additional Minion Damage\nAt max channeled stacks, +2% additional damage for Channeled Skills for 4 s\n+4% additional damage",
+    effect6:
+      "+7% additional damage; +7% additional Minion Damage\nAt max channeled stacks, +2% additional damage for Channeled Skills for 4 s\n+4% additional damage",
+  },
+  {
+    type: "Persistent",
+    rarity: "Legendary",
+    name: "Fire Swordsman",
+    innerRing1: {
+      name: "Damage Over Time I",
+      affix: "+12% Damage Over Time",
+    },
+    innerRing2: {
+      name: "Damage Over Time I",
+      affix: "+12% Damage Over Time",
+    },
+    innerRing3: {
+      name: "Ailment Chance I",
+      affix: "+3.5% chance to cause Ailments",
+    },
+    innerRing4: {
+      name: "Ailment Chance I",
+      affix: "+3.5% chance to cause Ailments",
+    },
+    innerRing5: {
+      name: "Damage Affliction I",
+      affix: "+10% Affliction Effect",
+    },
+    innerRing6: {
+      name: "Damage Affliction I",
+      affix: "+10% Affliction Effect",
+    },
+    midRing1: {
+      name: "Damage Over Time II",
+      affix: "+24% Damage Over Time",
+    },
+    midRing2: {
+      name: "Ailment Chance II",
+      affix: "+7% chance to cause Ailments",
+    },
+    midRing3: {
+      name: "Damage Affliction II",
+      affix: "+20% Affliction Effect",
+    },
+    effect1:
+      "Reaps 0.8 s of Damage Over Time when inflicting an Ailment. The effect has a 6 s cooldown against the same target\n+4% Reaping Duration for each recent Reaping, stacks up to 4 times",
+    effect2:
+      "Reaps 0.8 s of Damage Over Time when inflicting an Ailment. The effect has a 6 s cooldown against the same target\n+4% Reaping Duration for each recent Reaping, stacks up to 4 times\n+2% additional damage",
+    effect3:
+      "Reaps 0.8 s of Damage Over Time when inflicting an Ailment. The effect has a 6 s cooldown against the same target\n+4% Reaping Duration for each recent Reaping, stacks up to 4 times\n+7% Reaping Duration for each Reap dealt, stacking up to 4 times.\n+2% additional damage",
+    effect4:
+      "Reaps 0.8 s of Damage Over Time when inflicting an Ailment. The effect has a 6 s cooldown against the same target\n+4% Reaping Duration for each recent Reaping, stacks up to 4 times\n+7% Reaping Duration for each Reap dealt, stacking up to 4 times.\n+4% additional damage",
+    effect5:
+      "Reaps 0.8 s of Damage Over Time when inflicting an Ailment. The effect has a 6 s cooldown against the same target\n+4% Reaping Duration for each recent Reaping, stacks up to 4 times\n+14% Reaping Duration for each Reap dealt, stacking up to 4 times.\n+4% additional damage",
+    effect6:
+      "Reaps 1 s of Damage Over Time when inflicting an Ailment. The effect has a 6 s cooldown against the same target\n+6% Reaping Duration for each recent Reaping, stacks up to 4 times\n+14% Reaping Duration for each Reap dealt, stacking up to 4 times.\n+4% additional damage",
+  },
+  {
+    type: "Attack",
+    rarity: "Rare",
+    name: "First Mate of the Furious Sea - Rock",
+    innerRing1: {
+      name: "Attack and Cast Speed I",
+      affix: "+4% Attack and Cast Speed",
+    },
+    innerRing2: {
+      name: "Attack and Cast Speed I",
+      affix: "+4% Attack and Cast Speed",
+    },
+    innerRing3: {
+      name: "Lightning Damage I",
+      affix: "+12% Lightning Damage",
+    },
+    innerRing4: {
+      name: "Lightning Damage I",
+      affix: "+12% Lightning Damage",
+    },
+    innerRing5: {
+      name: "Movement Speed I",
+      affix: "+3% Movement Speed",
+    },
+    innerRing6: {
+      name: "Movement Speed I",
+      affix: "+3% Movement Speed",
+    },
+    midRing1: {
+      name: "Attack and Cast Speed II",
+      affix: "+8% Attack and Cast Speed",
+    },
+    midRing2: {
+      name: "Lightning Damage II",
+      affix: "+24% Lightning Damage",
+    },
+    midRing3: {
+      name: "Movement Speed II",
+      affix: "+6% Movement Speed",
+    },
+    effect1: "+5% additional damage; +5% additional Minion Damage",
+    effect2:
+      "+5% additional damage; +5% additional Minion Damage\n+2% additional damage",
+    effect3:
+      "+5% additional damage; +5% additional Minion Damage\nWhen inflicting Numbed, restores 1.5% Missing Life and Energy Shield. Interval: 0.4 s\n+2% additional damage",
+    effect4:
+      "+5% additional damage; +5% additional Minion Damage\nWhen inflicting Numbed, restores 1.5% Missing Life and Energy Shield. Interval: 0.4 s\n+4% additional damage",
+    effect5:
+      "+5% additional damage; +5% additional Minion Damage\nWhen inflicting Numbed, restores 1.5% Missing Life and Energy Shield. Interval: 0.4 s\n7.5% Movement Speed if you have inflicted Numbed recently\n+4% additional damage",
+    effect6:
+      "+7% additional damage; +7% additional Minion Damage\nWhen inflicting Numbed, restores 1.5% Missing Life and Energy Shield. Interval: 0.4 s\n7.5% Movement Speed if you have inflicted Numbed recently\n+4% additional damage",
+  },
+  {
+    type: "Attack",
+    rarity: "Rare",
+    name: "First Mate of the Furious Sea - Sky",
+    innerRing1: {
+      name: "Warcry Duration I",
+      affix: "+7.5% Warcry Skill Effect Duration",
+    },
+    innerRing2: {
+      name: "Warcry Duration I",
+      affix: "+7.5% Warcry Skill Effect Duration",
+    },
+    innerRing3: {
+      name: "Warcry Cooldown I",
+      affix: "+5.5% Warcry Cooldown Recovery Speed",
+    },
+    innerRing4: {
+      name: "Warcry Cooldown I",
+      affix: "+5.5% Warcry Cooldown Recovery Speed",
+    },
+    innerRing5: {
+      name: "Warcry Effect I",
+      affix: "+3% Warcry Effect",
+    },
+    innerRing6: {
+      name: "Warcry Effect I",
+      affix: "+3% Warcry Effect",
+    },
+    midRing1: {
+      name: "Warcry Duration II",
+      affix: "+15% Warcry Skill Effect Duration",
+    },
+    midRing2: {
+      name: "Warcry Cooldown II",
+      affix: "+11% Warcry Cooldown Recovery Speed",
+    },
+    midRing3: {
+      name: "Warcry Effect II",
+      affix: "+6% Warcry Effect",
+    },
+    effect1: "+5% additional damage; +5% additional Minion Damage",
+    effect2:
+      "+5% additional damage; +5% additional Minion Damage\n+2% additional damage",
+    effect3:
+      "+5% additional damage; +5% additional Minion Damage\n5.5% Warcry Cooldown Recovery Speed\n+2% additional damage",
+    effect4:
+      "+5% additional damage; +5% additional Minion Damage\n5.5% Warcry Cooldown Recovery Speed\n+4% additional damage",
+    effect5:
+      "+5% additional damage; +5% additional Minion Damage\n+11% Warcry Cooldown Recovery Speed\n+4% additional damage",
+    effect6:
+      "+7% additional damage; +7% additional Minion Damage\n+11% Warcry Cooldown Recovery Speed\n+4% additional damage",
+  },
+  {
+    type: "Attack",
+    rarity: "Legendary",
+    name: "Flower Whisperer",
+    innerRing1: {
+      name: "Projectile Damage I",
+      affix: "+14% Projectile Damage",
+    },
+    innerRing2: {
+      name: "Projectile Damage I",
+      affix: "+14% Projectile Damage",
+    },
+    innerRing3: {
+      name: "Projectile Speed I",
+      affix: "+6% Projectile Speed",
+    },
+    innerRing4: {
+      name: "Projectile Speed I",
+      affix: "+6% Projectile Speed",
+    },
+    innerRing5: {
+      name: "Multistrike I",
+      affix: "+22% Attack Critical Strike Rating",
+    },
+    innerRing6: {
+      name: "Multistrike I",
+      affix: "+22% Attack Critical Strike Rating",
+    },
+    midRing1: {
+      name: "Projectile Damage II",
+      affix: "+30% Projectile Damage",
+    },
+    midRing2: {
+      name: "Projectile Speed II",
+      affix: "+12% Projectile Speed",
+    },
+    midRing3: {
+      name: "Multistrike II",
+      affix: "+45% Attack Critical Strike Rating",
+    },
+    effect1:
+      "+16% additional Projectile Skill Critical Strike Damage against Distant enemies\n+40 Attack Projectile Skill Critical Strike Rating against Distant enemies",
+    effect2:
+      "+16% additional Projectile Skill Critical Strike Damage against Distant enemies\n+40 Attack Projectile Skill Critical Strike Rating against Distant enemies\n+2% additional damage",
+    effect3:
+      "+16% additional Projectile Skill Critical Strike Damage against Distant enemies\n+40 Attack Projectile Skill Critical Strike Rating against Distant enemies\n+70 Attack Projectile Skill Critical Strike Rating against Distant enemies\n+2% additional damage",
+    effect4:
+      "+16% additional Projectile Skill Critical Strike Damage against Distant enemies\n+40 Attack Projectile Skill Critical Strike Rating against Distant enemies\n+70 Attack Projectile Skill Critical Strike Rating against Distant enemies\n+4% additional damage",
+    effect5:
+      "+16% additional Projectile Skill Critical Strike Damage against Distant enemies\n+40 Attack Projectile Skill Critical Strike Rating against Distant enemies\n+140 Attack Projectile Skill Critical Strike Rating against Distant enemies\n+4% additional damage",
+    effect6:
+      "+21% additional Projectile Skill Critical Strike Damage against Distant enemies\n+55 Attack Projectile Skill Critical Strike Rating against Distant enemies\n+140 Attack Projectile Skill Critical Strike Rating against Distant enemies\n+4% additional damage",
+  },
+  {
+    type: "Attack",
+    rarity: "Legendary",
+    name: "Fog Scorpion",
+    innerRing1: {
+      name: "Double Damage I",
+      affix: "Attack Skills: a +2% chance to deal Double Damage",
+    },
+    innerRing2: {
+      name: "Double Damage I",
+      affix: "Attack Skills: a +2% chance to deal Double Damage",
+    },
+    innerRing3: {
+      name: "Attack Damage I",
+      affix: "+12% Attack Damage",
+    },
+    innerRing4: {
+      name: "Attack Damage I",
+      affix: "+12% Attack Damage",
+    },
+    innerRing5: {
+      name: "Multistrike I",
+      affix: "+8% chance to Multistrike",
+    },
+    innerRing6: {
+      name: "Multistrike I",
+      affix: "+8% chance to Multistrike",
+    },
+    midRing1: {
+      name: "Double Damage II",
+      affix: "Attack Skills: a +4% chance to deal Double Damage",
+    },
+    midRing2: {
+      name: "Attack Damage II",
+      affix: "+24% Attack Damage",
+    },
+    midRing3: {
+      name: "Multistrike II",
+      affix: "+16% chance to Multistrike",
+    },
+    effect1:
+      "+20% additional Attack Speed when only 1 enemies are Nearby\n+9% Movement Speed when at least 2 enemies are Nearby",
+    effect2:
+      "+20% additional Attack Speed when only 1 enemies are Nearby\n+9% Movement Speed when at least 2 enemies are Nearby\n+2% additional damage",
+    effect3:
+      "+20% additional Attack Speed when only 1 enemies are Nearby\n+9% Movement Speed when at least 2 enemies are Nearby\n+15% Movement Speed when at least 2 enemies are Nearby\n+2% additional damage",
+    effect4:
+      "+20% additional Attack Speed when only 1 enemies are Nearby\n+9% Movement Speed when at least 2 enemies are Nearby\n+15% Movement Speed when at least 2 enemies are Nearby\n+4% additional damage",
+    effect5:
+      "+20% additional Attack Speed when only 1 enemies are Nearby\n+9% Movement Speed when at least 2 enemies are Nearby\n+30% Movement Speed when at least 2 enemies are Nearby\n+4% additional damage",
+    effect6:
+      "+27% additional Attack Speed when only 1 enemies are Nearby\n+12% Movement Speed when at least 2 enemies are Nearby\n+30% Movement Speed when at least 2 enemies are Nearby\n+4% additional damage",
+  },
+  {
+    type: "Persistent",
+    rarity: "Rare",
+    name: "Greedy Chestnut - Emerald",
+    innerRing1: {
+      name: "Ailment Chance I",
+      affix: "+3.5% chance to cause Ailments",
+    },
+    innerRing2: {
+      name: "Ailment Chance I",
+      affix: "+3.5% chance to cause Ailments",
+    },
+    innerRing3: {
+      name: "Ailment Damage I",
+      affix: "+12% Ailment Damage",
+    },
+    innerRing4: {
+      name: "Ailment Damage I",
+      affix: "+12% Ailment Damage",
+    },
+    innerRing5: {
+      name: "Ailment Duration I",
+      affix: "+6% Ailment Duration",
+    },
+    innerRing6: {
+      name: "Ailment Duration I",
+      affix: "+6% Ailment Duration",
+    },
+    midRing1: {
+      name: "Ailment Chance II",
+      affix: "+7% chance to cause Ailments",
+    },
+    midRing2: {
+      name: "Ailment Damage II",
+      affix: "+24% Ailment Damage",
+    },
+    midRing3: {
+      name: "Ailment Duration II",
+      affix: "+12% Ailment Duration",
+    },
+    effect1: "+5% additional damage; +5% additional Minion Damage",
+    effect2:
+      "+5% additional damage; +5% additional Minion Damage\n+2% additional damage",
+    effect3:
+      "+5% additional damage; +5% additional Minion Damage\n+5% curse effect\n+2% additional damage",
+    effect4:
+      "+5% additional damage; +5% additional Minion Damage\n+5% curse effect\n+4% additional damage",
+    effect5:
+      "+5% additional damage; +5% additional Minion Damage\n+10% curse effect\n+4% additional damage",
+    effect6:
+      "+7% additional damage; +7% additional Minion Damage\n+10% curse effect\n+4% additional damage",
+  },
+  {
+    type: "Persistent",
+    rarity: "Rare",
+    name: "Greedy Chestnut - Lotus Leaf",
+    innerRing1: {
+      name: "Damage Over Time I",
+      affix: "+12% Damage Over Time",
+    },
+    innerRing2: {
+      name: "Damage Over Time I",
+      affix: "+12% Damage Over Time",
+    },
+    innerRing3: {
+      name: "Ailment Chance I",
+      affix: "+3.5% chance to cause Ailments",
+    },
+    innerRing4: {
+      name: "Ailment Chance I",
+      affix: "+3.5% chance to cause Ailments",
+    },
+    innerRing5: {
+      name: "Damage Affliction I",
+      affix: "+10% Affliction Effect",
+    },
+    innerRing6: {
+      name: "Damage Affliction I",
+      affix: "+10% Affliction Effect",
+    },
+    midRing1: {
+      name: "Damage Over Time II",
+      affix: "+24% Damage Over Time",
+    },
+    midRing2: {
+      name: "Ailment Chance II",
+      affix: "+7% chance to cause Ailments",
+    },
+    midRing3: {
+      name: "Damage Affliction II",
+      affix: "+20% Affliction Effect",
+    },
+    effect1: "+5% additional damage; +5% additional Minion Damage",
+    effect2:
+      "+5% additional damage; +5% additional Minion Damage\n+2% additional damage",
+    effect3:
+      "+5% additional damage; +5% additional Minion Damage\n3.5% Reaping Duration for each Reap dealt, stacking up to 4 times.\n+2% additional damage",
+    effect4:
+      "+5% additional damage; +5% additional Minion Damage\n3.5% Reaping Duration for each Reap dealt, stacking up to 4 times.\n+4% additional damage",
+    effect5:
+      "+5% additional damage; +5% additional Minion Damage\n+7% Reaping Duration for each Reap dealt, stacking up to 4 times.\n+4% additional damage",
+    effect6:
+      "+7% additional damage; +7% additional Minion Damage\n+7% Reaping Duration for each Reap dealt, stacking up to 4 times.\n+4% additional damage",
+  },
+  {
+    type: "Summon",
+    rarity: "Rare",
+    name: "Greedy Chestnut - Lotus Root",
+    innerRing1: {
+      name: "Servant Buff I",
+      affix: "+7% Origin of Spirit Magus effect",
+    },
+    innerRing2: {
+      name: "Servant Buff I",
+      affix: "+7% Origin of Spirit Magus effect",
+    },
+    innerRing3: {
+      name: "Servant Cooldown I",
+      affix: "Spirit Magi's Skill Cooldown Recovery Speed +5%",
+    },
+    innerRing4: {
+      name: "Servant Cooldown I",
+      affix: "Spirit Magi's Skill Cooldown Recovery Speed +5%",
+    },
+    innerRing5: {
+      name: "Servant Life I",
+      affix: "+4% Minion Max Life",
+    },
+    innerRing6: {
+      name: "Servant Life I",
+      affix: "+4% Minion Max Life",
+    },
+    midRing1: {
+      name: "Servant Buff II",
+      affix: "+14% Origin of Spirit Magus effect",
+    },
+    midRing2: {
+      name: "Servant Cooldown II",
+      affix: "Spirit Magi's Skill Cooldown Recovery Speed +10%",
+    },
+    midRing3: {
+      name: "Servant Life II",
+      affix: "+8% Minion Max Life",
+    },
+    effect1: "+5% additional damage; +5% additional Minion Damage",
+    effect2:
+      "+5% additional damage; +5% additional Minion Damage\n+2% additional Minion Damage",
+    effect3:
+      "+5% additional damage; +5% additional Minion Damage\n+2% additional Spirit Magus Skill Damage\n+2% additional Minion Damage",
+    effect4:
+      "+5% additional damage; +5% additional Minion Damage\n+2% additional Spirit Magus Skill Damage\n+4% additional Minion Damage",
+    effect5:
+      "+5% additional damage; +5% additional Minion Damage\n+4% additional Spirit Magus Skill Damage\n+4% additional Minion Damage",
+    effect6:
+      "+7% additional damage; +7% additional Minion Damage\n+4% additional Spirit Magus Skill Damage\n+4% additional Minion Damage",
+  },
+  {
+    type: "Persistent",
+    rarity: "Rare",
+    name: "Greedy Chestnut - Radiance",
+    innerRing1: {
+      name: "Damage Over Time I",
+      affix: "+12% Damage Over Time",
+    },
+    innerRing2: {
+      name: "Damage Over Time I",
+      affix: "+12% Damage Over Time",
+    },
+    innerRing3: {
+      name: "Skill Duration I",
+      affix: "+5% Skill Effect Duration",
+    },
+    innerRing4: {
+      name: "Skill Duration I",
+      affix: "+5% Skill Effect Duration",
+    },
+    innerRing5: {
+      name: "Damage Affliction I",
+      affix: "+10% Affliction Effect",
+    },
+    innerRing6: {
+      name: "Damage Affliction I",
+      affix: "+10% Affliction Effect",
+    },
+    midRing1: {
+      name: "Damage Over Time II",
+      affix: "+24% Damage Over Time",
+    },
+    midRing2: {
+      name: "Skill Duration II",
+      affix: "+10% Skill Effect Duration",
+    },
+    midRing3: {
+      name: "Damage Affliction II",
+      affix: "+20% Affliction Effect",
+    },
+    effect1: "+5% additional damage; +5% additional Minion Damage",
+    effect2:
+      "+5% additional damage; +5% additional Minion Damage\n+2% additional damage",
+    effect3:
+      "+5% additional damage; +5% additional Minion Damage\n+8 Affliction inflicted per second at Full Life.\n+2% additional damage",
+    effect4:
+      "+5% additional damage; +5% additional Minion Damage\n+8 Affliction inflicted per second at Full Life.\n+4% additional damage",
+    effect5:
+      "+5% additional damage; +5% additional Minion Damage\n+16 Affliction inflicted per second at Full Life.\n+4% additional damage",
+    effect6:
+      "+7% additional damage; +7% additional Minion Damage\n+16 Affliction inflicted per second at Full Life.\n+4% additional damage",
+  },
+  {
+    type: "Lightning",
+    rarity: "Magic",
+    name: "Happy Chonky - Electrify",
+    innerRing1: {
+      name: "Lightning Damage I",
+      affix: "+14% Lightning Damage",
+    },
+    innerRing2: {
+      name: "Lightning Damage I",
+      affix: "+14% Lightning Damage",
+    },
+    innerRing3: {
+      name: "Lightning Penetration I",
+      affix: "+2.5% Lightning Penetration",
+    },
+    innerRing4: {
+      name: "Lightning Penetration I",
+      affix: "+2.5% Lightning Penetration",
+    },
+    innerRing5: {
+      name: "Attack and Cast Speed I",
+      affix: "+4% Attack and Cast Speed",
+    },
+    innerRing6: {
+      name: "Attack and Cast Speed I",
+      affix: "+4% Attack and Cast Speed",
+    },
+    midRing1: {
+      name: "Damage II",
+      affix: "+24% damage +24% Minion Damage",
+    },
+    midRing2: {
+      name: "Damage II",
+      affix: "+24% damage +24% Minion Damage",
+    },
+    midRing3: {
+      name: "Damage II",
+      affix: "+24% damage +24% Minion Damage",
+    },
+    effect1: "+5% additional damage; +5% additional Minion Damage",
+    effect2:
+      "+5% additional damage; +5% additional Minion Damage\n1.5% additional Lightning Damage",
+    effect3:
+      "+5% additional damage; +5% additional Minion Damage\n1.5% additional Lightning Damage\n+2% additional damage",
+    effect4:
+      "+5% additional damage; +5% additional Minion Damage\n+3% additional Lightning Damage\n+2% additional damage",
+    effect5:
+      "+5% additional damage; +5% additional Minion Damage\n+3% additional Lightning Damage\n+4% additional damage",
+    effect6:
+      "+7% additional damage; +7% additional Minion Damage\n+3% additional Lightning Damage\n+4% additional damage",
+  },
+  {
+    type: "Fire",
+    rarity: "Magic",
+    name: "Happy Chonky - Ember",
+    innerRing1: {
+      name: "Fire Damage I",
+      affix: "+14% Fire Damage",
+    },
+    innerRing2: {
+      name: "Fire Damage I",
+      affix: "+14% Fire Damage",
+    },
+    innerRing3: {
+      name: "Fire Penetration I",
+      affix: "+2.5% Fire Penetration",
+    },
+    innerRing4: {
+      name: "Fire Penetration I",
+      affix: "+2.5% Fire Penetration",
+    },
+    innerRing5: {
+      name: "Fire Area I",
+      affix: "+14% Fire Skill Area",
+    },
+    innerRing6: {
+      name: "Fire Area I",
+      affix: "+14% Fire Skill Area",
+    },
+    midRing1: {
+      name: "Damage II",
+      affix: "+24% damage +24% Minion Damage",
+    },
+    midRing2: {
+      name: "Damage II",
+      affix: "+24% damage +24% Minion Damage",
+    },
+    midRing3: {
+      name: "Damage II",
+      affix: "+24% damage +24% Minion Damage",
+    },
+    effect1: "+5% additional damage; +5% additional Minion Damage",
+    effect2:
+      "+5% additional damage; +5% additional Minion Damage\n1.5% additional Fire Damage",
+    effect3:
+      "+5% additional damage; +5% additional Minion Damage\n1.5% additional Fire Damage\n+2% additional damage",
+    effect4:
+      "+5% additional damage; +5% additional Minion Damage\n+3% additional Fire Damage\n+2% additional damage",
+    effect5:
+      "+5% additional damage; +5% additional Minion Damage\n+3% additional Fire Damage\n+4% additional damage",
+    effect6:
+      "+7% additional damage; +7% additional Minion Damage\n+3% additional Fire Damage\n+4% additional damage",
+  },
+  {
+    type: "Survival",
+    rarity: "Rare",
+    name: "Hell Cavalry",
+    innerRing1: {
+      name: "Elemental Resistance I",
+      affix: "+2.5% Elemental Resistance",
+    },
+    innerRing2: {
+      name: "Elemental Resistance I",
+      affix: "+2.5% Elemental Resistance",
+    },
+    innerRing3: {
+      name: "Damage Mitigation I",
+      affix: "-1.5% additional damage taken",
+    },
+    innerRing4: {
+      name: "Damage Mitigation I",
+      affix: "-1.5% additional damage taken",
+    },
+    innerRing5: {
+      name: "XP Bonus I",
+      affix: "+3% XP earned",
+    },
+    innerRing6: {
+      name: "XP Bonus I",
+      affix: "+3% XP earned",
+    },
+    midRing1: {
+      name: "Elemental Resistance II",
+      affix: "+5% Elemental Resistance",
+    },
+    midRing2: {
+      name: "Damage Mitigation II",
+      affix: "-3% additional damage taken",
+    },
+    midRing3: {
+      name: "XP Bonus II",
+      affix: "+6% XP earned",
+    },
+    effect1: "-5% additional damage taken",
+    effect2: "-5% additional damage taken\n-2% additional damage taken",
+    effect3:
+      "-5% additional damage taken\n-2% additional damage taken\n-2% additional damage taken",
+    effect4:
+      "-5% additional damage taken\n-2% additional damage taken\n-4% additional damage taken",
+    effect5:
+      "-5% additional damage taken\n-4% additional damage taken\n-4% additional damage taken",
+    effect6:
+      "-6% additional damage taken\n-4% additional damage taken\n-4% additional damage taken",
+  },
+  {
+    type: "Cold",
+    rarity: "Rare",
+    name: "Hell Cavalry - Crushed Ice",
+    innerRing1: {
+      name: "Cold Damage I",
+      affix: "+14% Cold Damage",
+    },
+    innerRing2: {
+      name: "Cold Damage I",
+      affix: "+14% Cold Damage",
+    },
+    innerRing3: {
+      name: "Cold Penetration I",
+      affix: "+2.5% Cold Penetration",
+    },
+    innerRing4: {
+      name: "Cold Penetration I",
+      affix: "+2.5% Cold Penetration",
+    },
+    innerRing5: {
+      name: "Frozen Time I",
+      affix: "+7% Frostbite Duration",
+    },
+    innerRing6: {
+      name: "Frozen Time I",
+      affix: "+7% Frostbite Duration",
+    },
+    midRing1: {
+      name: "Cold Damage II",
+      affix: "+28% Cold Damage",
+    },
+    midRing2: {
+      name: "Cold Penetration II",
+      affix: "+5% Cold Penetration",
+    },
+    midRing3: {
+      name: "Frozen Time II",
+      affix: "+14% Frostbite Duration",
+    },
+    effect1: "+5% additional damage; +5% additional Minion Damage",
+    effect2:
+      "+5% additional damage; +5% additional Minion Damage\n+3% additional Cold Damage",
+    effect3:
+      "+5% additional damage; +5% additional Minion Damage\n+3% additional Cold Damage\n+2% additional damage",
+    effect4:
+      "+5% additional damage; +5% additional Minion Damage\n+6% additional Cold Damage\n+2% additional damage",
+    effect5:
+      "+5% additional damage; +5% additional Minion Damage\n+6% additional Cold Damage\n+4% additional damage",
+    effect6:
+      "+7% additional damage; +7% additional Minion Damage\n+6% additional Cold Damage\n+4% additional damage",
+  },
+  {
+    type: "Spell",
+    rarity: "Rare",
+    name: "Hell Cavalry - Glow",
+    innerRing1: {
+      name: "Mana Restoration I",
+      affix: "+15% Mana Regeneration Speed",
+    },
+    innerRing2: {
+      name: "Mana Restoration I",
+      affix: "+15% Mana Regeneration Speed",
+    },
+    innerRing3: {
+      name: "Spell Damage I",
+      affix: "+12% Spell Damage",
+    },
+    innerRing4: {
+      name: "Spell Damage I",
+      affix: "+12% Spell Damage",
+    },
+    innerRing5: {
+      name: "Critical Strike Damage I",
+      affix: "+10% Critical Strike Damage",
+    },
+    innerRing6: {
+      name: "Critical Strike Damage I",
+      affix: "+10% Critical Strike Damage",
+    },
+    midRing1: {
+      name: "Mana Restoration II",
+      affix: "+30% Mana Regeneration Speed",
+    },
+    midRing2: {
+      name: "Spell Damage II",
+      affix: "+24% Spell Damage",
+    },
+    midRing3: {
+      name: "Critical Strike Damage II",
+      affix: "+20% Critical Strike Damage",
+    },
+    effect1: "+5% additional damage; +5% additional Minion Damage",
+    effect2:
+      "+5% additional damage; +5% additional Minion Damage\n+2% additional damage",
+    effect3:
+      "+5% additional damage; +5% additional Minion Damage\n4.5% Critical Strike Damage per Ailment on enemies, up to +9%\n+2% additional damage",
+    effect4:
+      "+5% additional damage; +5% additional Minion Damage\n4.5% Critical Strike Damage per Ailment on enemies, up to +9%\n+4% additional damage",
+    effect5:
+      "+5% additional damage; +5% additional Minion Damage\n+9% Critical Strike Damage per Ailment on enemies, up to +18%\n+4% additional damage",
+    effect6:
+      "+7% additional damage; +7% additional Minion Damage\n+9% Critical Strike Damage per Ailment on enemies, up to +18%\n+4% additional damage",
+  },
+  {
+    type: "Lightning",
+    rarity: "Rare",
+    name: "Hell Cavalry - Muffled Thunder",
+    innerRing1: {
+      name: "Lightning Damage I",
+      affix: "+14% Lightning Damage",
+    },
+    innerRing2: {
+      name: "Lightning Damage I",
+      affix: "+14% Lightning Damage",
+    },
+    innerRing3: {
+      name: "Lightning Penetration I",
+      affix: "+2.5% Lightning Penetration",
+    },
+    innerRing4: {
+      name: "Lightning Penetration I",
+      affix: "+2.5% Lightning Penetration",
+    },
+    innerRing5: {
+      name: "Attack and Cast Speed I",
+      affix: "+4% Attack and Cast Speed",
+    },
+    innerRing6: {
+      name: "Attack and Cast Speed I",
+      affix: "+4% Attack and Cast Speed",
+    },
+    midRing1: {
+      name: "Lightning Damage II",
+      affix: "+28% Lightning Damage",
+    },
+    midRing2: {
+      name: "Lightning Penetration II",
+      affix: "+5% Lightning Penetration",
+    },
+    midRing3: {
+      name: "Attack and Cast Speed II",
+      affix: "+8% Attack and Cast Speed",
+    },
+    effect1: "+5% additional damage; +5% additional Minion Damage",
+    effect2:
+      "+5% additional damage; +5% additional Minion Damage\n+3% additional Lightning Damage",
+    effect3:
+      "+5% additional damage; +5% additional Minion Damage\n+3% additional Lightning Damage\n+2% additional damage",
+    effect4:
+      "+5% additional damage; +5% additional Minion Damage\n+6% additional Lightning Damage\n+2% additional damage",
+    effect5:
+      "+5% additional damage; +5% additional Minion Damage\n+6% additional Lightning Damage\n+4% additional damage",
+    effect6:
+      "+7% additional damage; +7% additional Minion Damage\n+6% additional Lightning Damage\n+4% additional damage",
+  },
+  {
+    type: "Attack",
+    rarity: "Rare",
+    name: "Hell Cavalry - Twilight",
+    innerRing1: {
+      name: "Damage I",
+      affix: "+12% damage +12% Minion Damage",
+    },
+    innerRing2: {
+      name: "Damage I",
+      affix: "+12% damage +12% Minion Damage",
+    },
+    innerRing3: {
+      name: "Erosion Resistance I",
+      affix: "+6% Erosion Resistance",
+    },
+    innerRing4: {
+      name: "Erosion Resistance I",
+      affix: "+6% Erosion Resistance",
+    },
+    innerRing5: {
+      name: "Crowd Control Effects II",
+      affix: "+5% crowd control effects",
+    },
+    innerRing6: {
+      name: "Crowd Control Effects II",
+      affix: "+5% crowd control effects",
+    },
+    midRing1: {
+      name: "Damage II",
+      affix: "+24% damage +24% Minion Damage",
+    },
+    midRing2: {
+      name: "Erosion Resistance II",
+      affix: "+12% Erosion Resistance",
+    },
+    midRing3: {
+      name: "Crowd Control Effects II",
+      affix: "+10% crowd control effects",
+    },
+    effect1: "+5% additional damage; +5% additional Minion Damage",
+    effect2:
+      "+5% additional damage; +5% additional Minion Damage\n+2% additional damage",
+    effect3:
+      "+5% additional damage; +5% additional Minion Damage\nFor every type of crowd control effect the enemy has, you and your Minions deal 0.8% additional damage to them\n+2% additional damage",
+    effect4:
+      "+5% additional damage; +5% additional Minion Damage\nFor every type of crowd control effect the enemy has, you and your Minions deal 0.8% additional damage to them\n+4% additional damage",
+    effect5:
+      "+5% additional damage; +5% additional Minion Damage\nFor every type of crowd control effect the enemy has, you and your Minions deal 1.6% additional damage to them\n+4% additional damage",
+    effect6:
+      "+7% additional damage; +7% additional Minion Damage\nFor every type of crowd control effect the enemy has, you and your Minions deal 1.6% additional damage to them\n+4% additional damage",
+  },
+  {
+    type: "Cold",
+    rarity: "Legendary",
+    name: "Ice Puppet",
+    innerRing1: {
+      name: "Cold Damage I",
+      affix: "+14% Cold Damage",
+    },
+    innerRing2: {
+      name: "Cold Damage I",
+      affix: "+14% Cold Damage",
+    },
+    innerRing3: {
+      name: "Cold Penetration I",
+      affix: "+2.5% Cold Penetration",
+    },
+    innerRing4: {
+      name: "Cold Penetration I",
+      affix: "+2.5% Cold Penetration",
+    },
+    innerRing5: {
+      name: "Frozen Time I",
+      affix: "+7% Frostbite Duration",
+    },
+    innerRing6: {
+      name: "Frozen Time I",
+      affix: "+7% Frostbite Duration",
+    },
+    midRing1: {
+      name: "Cold Damage II",
+      affix: "+28% Cold Damage",
+    },
+    midRing2: {
+      name: "Cold Penetration II",
+      affix: "+5% Cold Penetration",
+    },
+    midRing3: {
+      name: "Frozen Time II",
+      affix: "+14% Frostbite Duration",
+    },
+    effect1:
+      "Focus energy to create an ice prison Near yourself and the Pact Holder, which debuffs Frostbitten enemies inside every second and makes them take +10% additional Cold Damage, up to 4 stacks, for 6s.\nCooldown: 10s",
+    effect2:
+      "Focus energy to create an ice prison Near yourself and the Pact Holder, which debuffs Frostbitten enemies inside every second and makes them take +10% additional Cold Damage, up to 4 stacks, for 6s.\nCooldown: 10s\n+6% additional Cold Damage",
+    effect3:
+      "Focus energy to create an ice prison Near yourself and the Pact Holder, which debuffs Frostbitten enemies inside every second and makes them take +10% additional Cold Damage, up to 4 stacks, for 6s.\nCooldown: 10s\n+6% additional Cold Damage\n+2% additional damage",
+    effect4:
+      "Focus energy to create an ice prison Near yourself and the Pact Holder, which debuffs Frostbitten enemies inside every second and makes them take +10% additional Cold Damage, up to 4 stacks, for 6s.\nCooldown: 10s\n+12% additional Cold Damage\n+2% additional damage",
+    effect5:
+      "Focus energy to create an ice prison Near yourself and the Pact Holder, which debuffs Frostbitten enemies inside every second and makes them take +10% additional Cold Damage, up to 4 stacks, for 6s.\nCooldown: 10s\n+12% additional Cold Damage\n+4% additional damage",
+    effect6:
+      "Focus energy to create an ice prison Near yourself and the Pact Holder, which debuffs Frostbitten enemies inside every second and makes them take +13% additional Cold Damage, up to 4 stacks, for 6s.\nCooldown: 10s\n+12% additional Cold Damage\n+4% additional damage",
+  },
+  {
+    type: "Persistent",
+    rarity: "Magic",
+    name: "Idling Weasel - Abyss",
+    innerRing1: {
+      name: "Ailment Chance I",
+      affix: "+3.5% chance to cause Ailments",
+    },
+    innerRing2: {
+      name: "Ailment Chance I",
+      affix: "+3.5% chance to cause Ailments",
+    },
+    innerRing3: {
+      name: "Ailment Damage I",
+      affix: "+12% Ailment Damage",
+    },
+    innerRing4: {
+      name: "Ailment Damage I",
+      affix: "+12% Ailment Damage",
+    },
+    innerRing5: {
+      name: "Ailment Duration I",
+      affix: "+6% Ailment Duration",
+    },
+    innerRing6: {
+      name: "Ailment Duration I",
+      affix: "+6% Ailment Duration",
+    },
+    midRing1: {
+      name: "Damage II",
+      affix: "+24% damage +24% Minion Damage",
+    },
+    midRing2: {
+      name: "Damage II",
+      affix: "+24% damage +24% Minion Damage",
+    },
+    midRing3: {
+      name: "Damage II",
+      affix: "+24% damage +24% Minion Damage",
+    },
+    effect1: "+5% additional damage; +5% additional Minion Damage",
+    effect2:
+      "+5% additional damage; +5% additional Minion Damage\n+2% additional damage",
+    effect3:
+      "+5% additional damage; +5% additional Minion Damage\n2.5% curse effect\n+2% additional damage",
+    effect4:
+      "+5% additional damage; +5% additional Minion Damage\n2.5% curse effect\n+4% additional damage",
+    effect5:
+      "+5% additional damage; +5% additional Minion Damage\n+5% curse effect\n+4% additional damage",
+    effect6:
+      "+7% additional damage; +7% additional Minion Damage\n+5% curse effect\n+4% additional damage",
+  },
+  {
+    type: "Attack",
+    rarity: "Magic",
+    name: "Idling Weasel - Sandstone",
+    innerRing1: {
+      name: "Attack and Cast Speed I",
+      affix: "+4% Attack and Cast Speed",
+    },
+    innerRing2: {
+      name: "Attack and Cast Speed I",
+      affix: "+4% Attack and Cast Speed",
+    },
+    innerRing3: {
+      name: "Lightning Damage I",
+      affix: "+12% Lightning Damage",
+    },
+    innerRing4: {
+      name: "Lightning Damage I",
+      affix: "+12% Lightning Damage",
+    },
+    innerRing5: {
+      name: "Movement Speed I",
+      affix: "+3% Movement Speed",
+    },
+    innerRing6: {
+      name: "Movement Speed I",
+      affix: "+3% Movement Speed",
+    },
+    midRing1: {
+      name: "Damage II",
+      affix: "+24% damage +24% Minion Damage",
+    },
+    midRing2: {
+      name: "Damage II",
+      affix: "+24% damage +24% Minion Damage",
+    },
+    midRing3: {
+      name: "Damage II",
+      affix: "+24% damage +24% Minion Damage",
+    },
+    effect1: "+5% additional damage; +5% additional Minion Damage",
+    effect2:
+      "+5% additional damage; +5% additional Minion Damage\n+2% additional damage",
+    effect3:
+      "+5% additional damage; +5% additional Minion Damage\nWhen inflicting Numbed, restores 1.5% Missing Life and Energy Shield. Interval: 0.8 s\n+2% additional damage",
+    effect4:
+      "+5% additional damage; +5% additional Minion Damage\nWhen inflicting Numbed, restores 1.5% Missing Life and Energy Shield. Interval: 0.8 s\n+4% additional damage",
+    effect5:
+      "+5% additional damage; +5% additional Minion Damage\nWhen inflicting Numbed, restores 1.5% Missing Life and Energy Shield. Interval: 0.8 s\n3.75% Movement Speed if you have inflicted Numbed recently\n+4% additional damage",
+    effect6:
+      "+7% additional damage; +7% additional Minion Damage\nWhen inflicting Numbed, restores 1.5% Missing Life and Energy Shield. Interval: 0.8 s\n3.75% Movement Speed if you have inflicted Numbed recently\n+4% additional damage",
+  },
+  {
+    type: "Attack",
+    rarity: "Magic",
+    name: "Idling Weasel - Shallow sea",
+    innerRing1: {
+      name: "Double Damage I",
+      affix: "Attack Skills: a +2% chance to deal Double Damage",
+    },
+    innerRing2: {
+      name: "Double Damage I",
+      affix: "Attack Skills: a +2% chance to deal Double Damage",
+    },
+    innerRing3: {
+      name: "Attack Damage I",
+      affix: "+12% Attack Damage",
+    },
+    innerRing4: {
+      name: "Attack Damage I",
+      affix: "+12% Attack Damage",
+    },
+    innerRing5: {
+      name: "Multistrike I",
+      affix: "+8% chance to Multistrike",
+    },
+    innerRing6: {
+      name: "Multistrike I",
+      affix: "+8% chance to Multistrike",
+    },
+    midRing1: {
+      name: "Damage II",
+      affix: "+24% damage +24% Minion Damage",
+    },
+    midRing2: {
+      name: "Damage II",
+      affix: "+24% damage +24% Minion Damage",
+    },
+    midRing3: {
+      name: "Damage II",
+      affix: "+24% damage +24% Minion Damage",
+    },
+    effect1: "+5% additional damage; +5% additional Minion Damage",
+    effect2:
+      "+5% additional damage; +5% additional Minion Damage\n+2% additional damage",
+    effect3:
+      "+5% additional damage; +5% additional Minion Damage\n+4% Movement Speed when at least 2 enemies are Nearby\n+2% additional damage",
+    effect4:
+      "+5% additional damage; +5% additional Minion Damage\n+4% Movement Speed when at least 2 enemies are Nearby\n+4% additional damage",
+    effect5:
+      "+5% additional damage; +5% additional Minion Damage\n+8% Movement Speed when at least 2 enemies are Nearby\n+4% additional damage",
+    effect6:
+      "+7% additional damage; +7% additional Minion Damage\n+8% Movement Speed when at least 2 enemies are Nearby\n+4% additional damage",
+  },
+  {
+    type: "Spell",
+    rarity: "Magic",
+    name: "Idling Weasel - Sprouts",
+    innerRing1: {
+      name: "Elemental Damage I",
+      affix: "+12% Elemental Damage",
+    },
+    innerRing2: {
+      name: "Elemental Damage I",
+      affix: "+12% Elemental Damage",
+    },
+    innerRing3: {
+      name: "Elemental Penetration I",
+      affix: "Damage Penetrates 2% Elemental Resistance",
+    },
+    innerRing4: {
+      name: "Elemental Penetration I",
+      affix: "Damage Penetrates 2% Elemental Resistance",
+    },
+    innerRing5: {
+      name: "Cast Speed I",
+      affix: "+4% Cast Speed",
+    },
+    innerRing6: {
+      name: "Cast Speed I",
+      affix: "+4% Cast Speed",
+    },
+    midRing1: {
+      name: "Damage II",
+      affix: "+24% damage +24% Minion Damage",
+    },
+    midRing2: {
+      name: "Damage II",
+      affix: "+24% damage +24% Minion Damage",
+    },
+    midRing3: {
+      name: "Damage II",
+      affix: "+24% damage +24% Minion Damage",
+    },
+    effect1: "+5% additional damage; +5% additional Minion Damage",
+    effect2:
+      "+5% additional damage; +5% additional Minion Damage\n+2% additional damage",
+    effect3:
+      "+5% additional damage; +5% additional Minion Damage\n0.4% Elemental Resistance Penetration every time you hit an enemy with Elemental Damage recently. Stacks up to 4 times\n+2% additional damage",
+    effect4:
+      "+5% additional damage; +5% additional Minion Damage\n0.4% Elemental Resistance Penetration every time you hit an enemy with Elemental Damage recently. Stacks up to 4 times\n+4% additional damage",
+    effect5:
+      "+5% additional damage; +5% additional Minion Damage\n0.8% Elemental Resistance Penetration every time you hit an enemy with Elemental Damage recently. Stacks up to 4 times\n+4% additional damage",
+    effect6:
+      "+7% additional damage; +7% additional Minion Damage\n0.8% Elemental Resistance Penetration every time you hit an enemy with Elemental Damage recently. Stacks up to 4 times\n+4% additional damage",
+  },
+  {
+    type: "Attack",
+    rarity: "Legendary",
+    name: "Iron Lion",
+    innerRing1: {
+      name: "Knockback Distance I",
+      affix: "+12% Knockback distance",
+    },
+    innerRing2: {
+      name: "Knockback Distance I",
+      affix: "+12% Knockback distance",
+    },
+    innerRing3: {
+      name: "Projectile Speed I",
+      affix: "+7% Projectile Speed",
+    },
+    innerRing4: {
+      name: "Projectile Speed I",
+      affix: "+7% Projectile Speed",
+    },
+    innerRing5: {
+      name: "Projectile Damage I",
+      affix: "+10% Projectile Damage",
+    },
+    innerRing6: {
+      name: "Projectile Damage I",
+      affix: "+10% Projectile Damage",
+    },
+    midRing1: {
+      name: "Knockback Distance II",
+      affix: "+24% Knockback distance",
+    },
+    midRing2: {
+      name: "Projectile Speed II",
+      affix: "+14% Projectile Speed",
+    },
+    midRing3: {
+      name: "Projectile Damage II",
+      affix: "+20% Projectile Damage",
+    },
+    effect1: "Projectile Quantity +2",
+    effect2:
+      "Projectile Quantity +2\n+4% additional Attack and Cast Speed when no enemies are in proximity",
+    effect3:
+      "Projectile Quantity +2\n+4% additional Attack and Cast Speed when no enemies are in proximity\n+24% Knockback distance",
+    effect4:
+      "Projectile Quantity +2\n+8% additional Attack and Cast Speed when no enemies are in proximity\n+24% Knockback distance",
+    effect5:
+      "Projectile Quantity +2\n+8% additional Attack and Cast Speed when no enemies are in proximity\n+48% Knockback distance",
+    effect6:
+      "Projectile Quantity +2\n+8% additional Attack and Cast Speed when no enemies are in proximity\n+48% Knockback distance\n+14% Projectile Speed",
+  },
+  {
+    type: "Survival",
+    rarity: "Legendary",
+    name: "Knight of Pale Blue",
+    innerRing1: {
+      name: "Elemental Resistance I",
+      affix: "+2.5% Elemental Resistance",
+    },
+    innerRing2: {
+      name: "Elemental Resistance I",
+      affix: "+2.5% Elemental Resistance",
+    },
+    innerRing3: {
+      name: "Damage Mitigation I",
+      affix: "-1.5% additional damage taken",
+    },
+    innerRing4: {
+      name: "Damage Mitigation I",
+      affix: "-1.5% additional damage taken",
+    },
+    innerRing5: {
+      name: "XP Bonus I",
+      affix: "+3% XP earned",
+    },
+    innerRing6: {
+      name: "XP Bonus I",
+      affix: "+3% XP earned",
+    },
+    midRing1: {
+      name: "Elemental Resistance II",
+      affix: "+5% Elemental Resistance",
+    },
+    midRing2: {
+      name: "Damage Mitigation II",
+      affix: "-3% additional damage taken",
+    },
+    midRing3: {
+      name: "XP Bonus II",
+      affix: "+6% XP earned",
+    },
+    effect1:
+      "-40% additional Physical Damage taken when there are only 1 enemies Nearby\n-3% additional damage taken",
+    effect2:
+      "-40% additional Physical Damage taken when there are only 1 enemies Nearby\n-3% additional damage taken\n-2% additional damage taken",
+    effect3:
+      "-40% additional Physical Damage taken when there are only 1 enemies Nearby\n-3% additional damage taken\n-4% additional damage taken\n-2% additional damage taken",
+    effect4:
+      "-40% additional Physical Damage taken when there are only 1 enemies Nearby\n-3% additional damage taken\n-4% additional damage taken\n-4% additional damage taken",
+    effect5:
+      "-40% additional Physical Damage taken when there are only 1 enemies Nearby\n-3% additional damage taken\n-8% additional damage taken\n-4% additional damage taken",
+    effect6:
+      "-55% additional Physical Damage taken when there are only 1 enemies Nearby\n-4% additional damage taken\n-8% additional damage taken\n-4% additional damage taken",
+  },
+  {
+    type: "Summon",
+    rarity: "Rare",
+    name: "Letice - Amethyst",
+    innerRing1: {
+      name: "Spirit Magus Seal Removed I",
+      affix: "+10% Sealed Mana Compensation for Spirit Magus Skills",
+    },
+    innerRing2: {
+      name: "Spirit Magus Seal Removed I",
+      affix: "+10% Sealed Mana Compensation for Spirit Magus Skills",
+    },
+    innerRing3: {
+      name: "Damage I",
+      affix: "+10% damage +10% Minion Damage",
+    },
+    innerRing4: {
+      name: "Damage I",
+      affix: "+10% damage +10% Minion Damage",
+    },
+    innerRing5: {
+      name: "Skill Duration I",
+      affix: "+5% Skill Effect Duration",
+    },
+    innerRing6: {
+      name: "Skill Duration I",
+      affix: "+5% Skill Effect Duration",
+    },
+    midRing1: {
+      name: "Spirit Magus Seal Removed II",
+      affix: "+20% Sealed Mana Compensation for Spirit Magus Skills",
+    },
+    midRing2: {
+      name: "Damage II",
+      affix: "+20% damage +20% Minion Damage",
+    },
+    midRing3: {
+      name: "Skill Duration II",
+      affix: "+10% Skill Effect Duration",
+    },
+    effect1: "+5% additional damage; +5% additional Minion Damage",
+    effect2:
+      "+5% additional damage; +5% additional Minion Damage\n+2% additional Minion Damage",
+    effect3:
+      "+5% additional damage; +5% additional Minion Damage\n+28% Spirit Magus Skill Damage\n+2% additional Minion Damage",
+    effect4:
+      "+5% additional damage; +5% additional Minion Damage\n+28% Spirit Magus Skill Damage\n+4% additional Minion Damage",
+    effect5:
+      "+5% additional damage; +5% additional Minion Damage\n+56% Spirit Magus Skill Damage\n+4% additional Minion Damage",
+    effect6:
+      "+7% additional damage; +7% additional Minion Damage\n+56% Spirit Magus Skill Damage\n+4% additional Minion Damage",
+  },
+  {
+    type: "Persistent",
+    rarity: "Rare",
+    name: "Letice - Flame",
+    innerRing1: {
+      name: "Reaping Cooldown I",
+      affix: "+5% Reaping Cooldown Recovery Speed",
+    },
+    innerRing2: {
+      name: "Reaping Cooldown I",
+      affix: "+5% Reaping Cooldown Recovery Speed",
+    },
+    innerRing3: {
+      name: "Damage Over Time I",
+      affix: "+12% Damage Over Time",
+    },
+    innerRing4: {
+      name: "Damage Over Time I",
+      affix: "+12% Damage Over Time",
+    },
+    innerRing5: {
+      name: "Damage Affliction I",
+      affix: "+10% Affliction Effect",
+    },
+    innerRing6: {
+      name: "Damage Affliction I",
+      affix: "+10% Affliction Effect",
+    },
+    midRing1: {
+      name: "Reaping Cooldown II",
+      affix: "+10% Reaping Cooldown Recovery Speed",
+    },
+    midRing2: {
+      name: "Damage Over Time II",
+      affix: "+24% Damage Over Time",
+    },
+    midRing3: {
+      name: "Damage Affliction II",
+      affix: "+20% Affliction Effect",
+    },
+    effect1: "+5% additional damage; +5% additional Minion Damage",
+    effect2:
+      "+5% additional damage; +5% additional Minion Damage\n+2% additional damage",
+    effect3:
+      "+5% additional damage; +5% additional Minion Damage\n+5% Movement Speed if you have caused Reaping recently\n+2% additional damage",
+    effect4:
+      "+5% additional damage; +5% additional Minion Damage\n+5% Movement Speed if you have caused Reaping recently\n+4% additional damage",
+    effect5:
+      "+5% additional damage; +5% additional Minion Damage\n+10% Movement Speed if you have caused Reaping recently\n+4% additional damage",
+    effect6:
+      "+7% additional damage; +7% additional Minion Damage\n+10% Movement Speed if you have caused Reaping recently\n+4% additional damage",
+  },
+  {
+    type: "Attack",
+    rarity: "Rare",
+    name: "Letice - Withered Leaf",
+    innerRing1: {
+      name: "Damage I",
+      affix: "+10% damage",
+    },
+    innerRing2: {
+      name: "Damage I",
+      affix: "+10% damage",
+    },
+    innerRing3: {
+      name: "Attack Block I",
+      affix: "+6% Attack Block Chance",
+    },
+    innerRing4: {
+      name: "Attack Block I",
+      affix: "+6% Attack Block Chance",
+    },
+    innerRing5: {
+      name: "Spell Block I",
+      affix: "+6% Spell Block Chance",
+    },
+    innerRing6: {
+      name: "Spell Block I",
+      affix: "+6% Spell Block Chance",
+    },
+    midRing1: {
+      name: "Damage II",
+      affix: "+20% damage",
+    },
+    midRing2: {
+      name: "Attack Block II",
+      affix: "+12% Attack Block Chance",
+    },
+    midRing3: {
+      name: "Spell Block II",
+      affix: "+12% Spell Block Chance",
+    },
+    effect1: "+5% additional damage; +5% additional Minion Damage",
+    effect2:
+      "+5% additional damage; +5% additional Minion Damage\n+2% additional damage",
+    effect3:
+      "+5% additional damage; +5% additional Minion Damage\n1.5% Block Ratio when there is a Boss Nearby\n+2% additional damage",
+    effect4:
+      "+5% additional damage; +5% additional Minion Damage\n1.5% Block Ratio when there is a Boss Nearby\n+4% additional damage",
+    effect5:
+      "+5% additional damage; +5% additional Minion Damage\n+3% Block Ratio when there is a Boss Nearby\n+4% additional damage",
+    effect6:
+      "+7% additional damage; +7% additional Minion Damage\n+3% Block Ratio when there is a Boss Nearby\n+4% additional damage",
+  },
+  {
+    type: "Spell",
+    rarity: "Magic",
+    name: "Luluri - Amethyst",
+    innerRing1: {
+      name: "Mana Restoration I",
+      affix: "+15% Mana Regeneration Speed",
+    },
+    innerRing2: {
+      name: "Mana Restoration I",
+      affix: "+15% Mana Regeneration Speed",
+    },
+    innerRing3: {
+      name: "Spell Damage I",
+      affix: "+12% Spell Damage",
+    },
+    innerRing4: {
+      name: "Spell Damage I",
+      affix: "+12% Spell Damage",
+    },
+    innerRing5: {
+      name: "Critical Strike Damage I",
+      affix: "+10% Critical Strike Damage",
+    },
+    innerRing6: {
+      name: "Critical Strike Damage I",
+      affix: "+10% Critical Strike Damage",
+    },
+    midRing1: {
+      name: "Damage II",
+      affix: "+24% damage +24% Minion Damage",
+    },
+    midRing2: {
+      name: "Damage II",
+      affix: "+24% damage +24% Minion Damage",
+    },
+    midRing3: {
+      name: "Damage II",
+      affix: "+24% damage +24% Minion Damage",
+    },
+    effect1: "+5% additional damage; +5% additional Minion Damage",
+    effect2:
+      "+5% additional damage; +5% additional Minion Damage\n+2% additional damage",
+    effect3:
+      "+5% additional damage; +5% additional Minion Damage\n+2% Critical Strike Damage per Ailment on enemies, up to +4%\n+2% additional damage",
+    effect4:
+      "+5% additional damage; +5% additional Minion Damage\n+2% Critical Strike Damage per Ailment on enemies, up to +4%\n+4% additional damage",
+    effect5:
+      "+5% additional damage; +5% additional Minion Damage\n+4% Critical Strike Damage per Ailment on enemies, up to +8%\n+4% additional damage",
+    effect6:
+      "+7% additional damage; +7% additional Minion Damage\n+4% Critical Strike Damage per Ailment on enemies, up to +8%\n+4% additional damage",
+  },
+  {
+    type: "Persistent",
+    rarity: "Magic",
+    name: "Luluri - Golden Leaf",
+    innerRing1: {
+      name: "Damage Over Time I",
+      affix: "+12% Damage Over Time",
+    },
+    innerRing2: {
+      name: "Damage Over Time I",
+      affix: "+12% Damage Over Time",
+    },
+    innerRing3: {
+      name: "Skill Duration I",
+      affix: "+5% Skill Effect Duration",
+    },
+    innerRing4: {
+      name: "Skill Duration I",
+      affix: "+5% Skill Effect Duration",
+    },
+    innerRing5: {
+      name: "Damage Affliction I",
+      affix: "+10% Affliction Effect",
+    },
+    innerRing6: {
+      name: "Damage Affliction I",
+      affix: "+10% Affliction Effect",
+    },
+    midRing1: {
+      name: "Damage II",
+      affix: "+24% damage +24% Minion Damage",
+    },
+    midRing2: {
+      name: "Damage II",
+      affix: "+24% damage +24% Minion Damage",
+    },
+    midRing3: {
+      name: "Damage II",
+      affix: "+24% damage +24% Minion Damage",
+    },
+    effect1: "+5% additional damage; +5% additional Minion Damage",
+    effect2:
+      "+5% additional damage; +5% additional Minion Damage\n+2% additional damage",
+    effect3:
+      "+5% additional damage; +5% additional Minion Damage\n+4 Affliction inflicted per second at Full Life.\n+2% additional damage",
+    effect4:
+      "+5% additional damage; +5% additional Minion Damage\n+4 Affliction inflicted per second at Full Life.\n+4% additional damage",
+    effect5:
+      "+5% additional damage; +5% additional Minion Damage\n+8 Affliction inflicted per second at Full Life.\n+4% additional damage",
+    effect6:
+      "+7% additional damage; +7% additional Minion Damage\n+8 Affliction inflicted per second at Full Life.\n+4% additional damage",
+  },
+  {
+    type: "Spell",
+    rarity: "Magic",
+    name: "Luluri - Maple",
+    innerRing1: {
+      name: "Double Spell I",
+      affix: "+2% chance for Spells to deal Double Damage",
+    },
+    innerRing2: {
+      name: "Double Spell I",
+      affix: "+2% chance for Spells to deal Double Damage",
+    },
+    innerRing3: {
+      name: "Spell Damage I",
+      affix: "+12% Spell Damage",
+    },
+    innerRing4: {
+      name: "Spell Damage I",
+      affix: "+12% Spell Damage",
+    },
+    innerRing5: {
+      name: "Cast Speed I",
+      affix: "+4% Cast Speed",
+    },
+    innerRing6: {
+      name: "Cast Speed I",
+      affix: "+4% Cast Speed",
+    },
+    midRing1: {
+      name: "Damage II",
+      affix: "+24% damage +24% Minion Damage",
+    },
+    midRing2: {
+      name: "Damage II",
+      affix: "+24% damage +24% Minion Damage",
+    },
+    midRing3: {
+      name: "Damage II",
+      affix: "+24% damage +24% Minion Damage",
+    },
+    effect1: "+5% additional damage; +5% additional Minion Damage",
+    effect2:
+      "+5% additional damage; +5% additional Minion Damage\n+2% additional damage",
+    effect3:
+      "+5% additional damage; +5% additional Minion Damage\n1.5% Movement Speed per second when an Elite is nearby, up to +3 stack(s)\n+2% additional damage",
+    effect4:
+      "+5% additional damage; +5% additional Minion Damage\n1.5% Movement Speed per second when an Elite is nearby, up to +3 stack(s)\n+4% additional damage",
+    effect5:
+      "+5% additional damage; +5% additional Minion Damage\n+3% Movement Speed per second when an Elite is nearby, up to +3 stack(s)\n+4% additional damage",
+    effect6:
+      "+7% additional damage; +7% additional Minion Damage\n+3% Movement Speed per second when an Elite is nearby, up to +3 stack(s)\n+4% additional damage",
+  },
+  {
+    type: "Attack",
+    rarity: "Magic",
+    name: "Luluri - Shallow Sea",
+    innerRing1: {
+      name: "Warcry Duration I",
+      affix: "+7.5% Warcry Skill Effect Duration",
+    },
+    innerRing2: {
+      name: "Warcry Duration I",
+      affix: "+7.5% Warcry Skill Effect Duration",
+    },
+    innerRing3: {
+      name: "Warcry Cooldown I",
+      affix: "+5.5% Warcry Cooldown Recovery Speed",
+    },
+    innerRing4: {
+      name: "Warcry Cooldown I",
+      affix: "+5.5% Warcry Cooldown Recovery Speed",
+    },
+    innerRing5: {
+      name: "Warcry Effect I",
+      affix: "+3% Warcry Effect",
+    },
+    innerRing6: {
+      name: "Warcry Effect I",
+      affix: "+3% Warcry Effect",
+    },
+    midRing1: {
+      name: "Damage II",
+      affix: "+24% damage +24% Minion Damage",
+    },
+    midRing2: {
+      name: "Damage II",
+      affix: "+24% damage +24% Minion Damage",
+    },
+    midRing3: {
+      name: "Damage II",
+      affix: "+24% damage +24% Minion Damage",
+    },
+    effect1: "+5% additional damage; +5% additional Minion Damage",
+    effect2:
+      "+5% additional damage; +5% additional Minion Damage\n+2% additional damage",
+    effect3:
+      "+5% additional damage; +5% additional Minion Damage\n2.75% Warcry Cooldown Recovery Speed\n+2% additional damage",
+    effect4:
+      "+5% additional damage; +5% additional Minion Damage\n2.75% Warcry Cooldown Recovery Speed\n+4% additional damage",
+    effect5:
+      "+5% additional damage; +5% additional Minion Damage\n5.5% Warcry Cooldown Recovery Speed\n+4% additional damage",
+    effect6:
+      "+7% additional damage; +7% additional Minion Damage\n5.5% Warcry Cooldown Recovery Speed\n+4% additional damage",
+  },
+  {
+    type: "Spell",
+    rarity: "Magic",
+    name: "Lumidrake - Aurora",
+    innerRing1: {
+      name: "Spell Damage I",
+      affix: "+12% Spell Damage",
+    },
+    innerRing2: {
+      name: "Spell Damage I",
+      affix: "+12% Spell Damage",
+    },
+    innerRing3: {
+      name: "Spell Critical Strike I",
+      affix: "+22% Spell Critical Strike Rating",
+    },
+    innerRing4: {
+      name: "Spell Critical Strike I",
+      affix: "+22% Spell Critical Strike Rating",
+    },
+    innerRing5: {
+      name: "Cast Speed I",
+      affix: "+4% Cast Speed",
+    },
+    innerRing6: {
+      name: "Cast Speed I",
+      affix: "+4% Cast Speed",
+    },
+    midRing1: {
+      name: "Damage II",
+      affix: "+24% damage +24% Minion Damage",
+    },
+    midRing2: {
+      name: "Damage II",
+      affix: "+24% damage +24% Minion Damage",
+    },
+    midRing3: {
+      name: "Damage II",
+      affix: "+24% damage +24% Minion Damage",
+    },
+    effect1: "+5% additional damage; +5% additional Minion Damage",
+    effect2:
+      "+5% additional damage; +5% additional Minion Damage\n+2% additional damage",
+    effect3:
+      "+5% additional damage; +5% additional Minion Damage\n+7% Spell Damage\n+2% additional damage",
+    effect4:
+      "+5% additional damage; +5% additional Minion Damage\n+7% Spell Damage\n+4% additional damage",
+    effect5:
+      "+5% additional damage; +5% additional Minion Damage\n+14% Spell Damage\n+4% additional damage",
+    effect6:
+      "+7% additional damage; +7% additional Minion Damage\n+14% Spell Damage\n+4% additional damage",
+  },
+  {
+    type: "Attack",
+    rarity: "Magic",
+    name: "Lumidrake - Fluorescence",
+    innerRing1: {
+      name: "Attack Damage I",
+      affix: "+12% Attack Damage",
+    },
+    innerRing2: {
+      name: "Attack Damage I",
+      affix: "+12% Attack Damage",
+    },
+    innerRing3: {
+      name: "Attack Critical Strike I",
+      affix: "+22% Attack Critical Strike Rating",
+    },
+    innerRing4: {
+      name: "Attack Critical Strike I",
+      affix: "+22% Attack Critical Strike Rating",
+    },
+    innerRing5: {
+      name: "Attack Speed I",
+      affix: "+4% Attack Speed",
+    },
+    innerRing6: {
+      name: "Attack Speed I",
+      affix: "+4% Attack Speed",
+    },
+    midRing1: {
+      name: "Damage II",
+      affix: "+24% damage +24% Minion Damage",
+    },
+    midRing2: {
+      name: "Damage II",
+      affix: "+24% damage +24% Minion Damage",
+    },
+    midRing3: {
+      name: "Damage II",
+      affix: "+24% damage +24% Minion Damage",
+    },
+    effect1: "+5% additional damage; +5% additional Minion Damage",
+    effect2:
+      "+5% additional damage; +5% additional Minion Damage\n+2% additional damage",
+    effect3:
+      "+5% additional damage; +5% additional Minion Damage\n+7% Attack Damage\n+2% additional damage",
+    effect4:
+      "+5% additional damage; +5% additional Minion Damage\n+7% Attack Damage\n+4% additional damage",
+    effect5:
+      "+5% additional damage; +5% additional Minion Damage\n+14% Attack Damage\n+4% additional damage",
+    effect6:
+      "+7% additional damage; +7% additional Minion Damage\n+14% Attack Damage\n+4% additional damage",
+  },
+  {
+    type: "Summon",
+    rarity: "Legendary",
+    name: "Mechanical Throne",
+    innerRing1: {
+      name: "Servant Damage I",
+      affix: "+15% Minion Damage",
+    },
+    innerRing2: {
+      name: "Servant Damage I",
+      affix: "+15% Minion Damage",
+    },
+    innerRing3: {
+      name: "Servant Speed I",
+      affix: "+4% Minion Attack and Cast Speed",
+    },
+    innerRing4: {
+      name: "Servant Speed I",
+      affix: "+4% Minion Attack and Cast Speed",
+    },
+    innerRing5: {
+      name: "Servant Life I",
+      affix: "+4% Minion Max Life",
+    },
+    innerRing6: {
+      name: "Servant Life I",
+      affix: "+4% Minion Max Life",
+    },
+    midRing1: {
+      name: "Servant Damage II",
+      affix: "+30% Minion Damage",
+    },
+    midRing2: {
+      name: "Servant Speed II",
+      affix: "+8% Minion Attack and Cast Speed",
+    },
+    midRing3: {
+      name: "Servant Life II",
+      affix: "+8% Minion Max Life",
+    },
+    effect1:
+      "+14% chance for Synthetic Troop Minions to deal Double Damage\n+6% Minion Attack and Cast Speed for 4 s when your Synthetic Troop Minions deal Double Damage",
+    effect2:
+      "+14% chance for Synthetic Troop Minions to deal Double Damage\n+6% Minion Attack and Cast Speed for 4 s when your Synthetic Troop Minions deal Double Damage\n+2% additional Minion Damage",
+    effect3:
+      "+14% chance for Synthetic Troop Minions to deal Double Damage\n+6% Minion Attack and Cast Speed for 4 s when your Synthetic Troop Minions deal Double Damage\n+10% Minion Attack and Cast Speed for 4 s when your Synthetic Troops deal Double Damage\n+2% additional Minion Damage",
+    effect4:
+      "+14% chance for Synthetic Troop Minions to deal Double Damage\n+6% Minion Attack and Cast Speed for 4 s when your Synthetic Troop Minions deal Double Damage\n+10% Minion Attack and Cast Speed for 4 s when your Synthetic Troops deal Double Damage\n+4% additional Minion Damage",
+    effect5:
+      "+14% chance for Synthetic Troop Minions to deal Double Damage\n+6% Minion Attack and Cast Speed for 4 s when your Synthetic Troop Minions deal Double Damage\n+20% Minion Attack and Cast Speed for 4 s when your Synthetic Troops deal Double Damage\n+4% additional Minion Damage",
+    effect6:
+      "+19% chance for Synthetic Troop Minions to deal Double Damage\n+8% Minion Attack and Cast Speed for 4 s when your Synthetic Troop Minions deal Double Damage\n+20% Minion Attack and Cast Speed for 4 s when your Synthetic Troops deal Double Damage\n+4% additional Minion Damage",
+  },
+  {
+    type: "Fire",
+    rarity: "Legendary",
+    name: "Melting Flames",
+    innerRing1: {
+      name: "Fire Damage I",
+      affix: "+14% Fire Damage",
+    },
+    innerRing2: {
+      name: "Fire Damage I",
+      affix: "+14% Fire Damage",
+    },
+    innerRing3: {
+      name: "Fire Penetration I",
+      affix: "+2.5% Fire Penetration",
+    },
+    innerRing4: {
+      name: "Fire Penetration I",
+      affix: "+2.5% Fire Penetration",
+    },
+    innerRing5: {
+      name: "Fire Area I",
+      affix: "+14% Fire Skill Area",
+    },
+    innerRing6: {
+      name: "Fire Area I",
+      affix: "+14% Fire Skill Area",
+    },
+    midRing1: {
+      name: "Fire Damage II",
+      affix: "+28% Fire Damage",
+    },
+    midRing2: {
+      name: "Fire Penetration II",
+      affix: "+5% Fire Penetration",
+    },
+    midRing3: {
+      name: "Fire Area II",
+      affix: "+28% Fire Skill Area",
+    },
+    effect1:
+      "Covers targets within a 5m radius with flames and debuffs enemies within the area.\nDebuff: + 26% additional Fire Damage taken by the enemy for 3s.\nCooldown: 5 s.",
+    effect2:
+      "Covers targets within a 5m radius with flames and debuffs enemies within the area.\nDebuff: + 26% additional Fire Damage taken by the enemy for 3s.\nCooldown: 5 s.\n+6% additional Fire Damage",
+    effect3:
+      "Covers targets within a 5m radius with flames and debuffs enemies within the area.\nDebuff: + 26% additional Fire Damage taken by the enemy for 3s.\nCooldown: 5 s.\n+6% additional Fire Damage\n+2% additional damage",
+    effect4:
+      "Covers targets within a 5m radius with flames and debuffs enemies within the area.\nDebuff: + 26% additional Fire Damage taken by the enemy for 3s.\nCooldown: 5 s.\n+12% additional Fire Damage\n+2% additional damage",
+    effect5:
+      "Covers targets within a 5m radius with flames and debuffs enemies within the area.\nDebuff: + 26% additional Fire Damage taken by the enemy for 3s.\nCooldown: 5 s.\n+12% additional Fire Damage\n+4% additional damage",
+    effect6:
+      "Covers targets within a 5m radius with flames and debuffs enemies within the area.\nDebuff: + 35% additional Fire Damage taken by the enemy for 3s.\nCooldown: 5 s.\n+12% additional Fire Damage\n+4% additional damage",
+  },
+  {
+    type: "Survival",
+    rarity: "Rare",
+    name: "Plaintive Ball of Thread",
+    innerRing1: {
+      name: "Max Life I",
+      affix: "+4% Max Life",
+    },
+    innerRing2: {
+      name: "Max Life I",
+      affix: "+4% Max Life",
+    },
+    innerRing3: {
+      name: "Mana Restoration I",
+      affix: "+15% Mana Regeneration Speed",
+    },
+    innerRing4: {
+      name: "Mana Restoration I",
+      affix: "+15% Mana Regeneration Speed",
+    },
+    innerRing5: {
+      name: "XP Balance I",
+      affix:
+        "-10% XP falloff caused by the level difference between the player and the map",
+    },
+    innerRing6: {
+      name: "XP Balance I",
+      affix:
+        "-10% XP falloff caused by the level difference between the player and the map",
+    },
+    midRing1: {
+      name: "Max Life II",
+      affix: "+8% Max Life",
+    },
+    midRing2: {
+      name: "Mana Restoration II",
+      affix: "+30% Mana Regeneration Speed",
+    },
+    midRing3: {
+      name: "XP Balance II",
+      affix:
+        "-20% XP falloff caused by the level difference between the player and the map",
+    },
+    effect1: "-5% additional damage taken",
+    effect2: "-5% additional damage taken\n-2% additional damage taken",
+    effect3:
+      "-5% additional damage taken\nRegenerates 0.6% Life per second\n-2% additional damage taken",
+    effect4:
+      "-5% additional damage taken\nRegenerates 0.6% Life per second\n-4% additional damage taken",
+    effect5:
+      "-5% additional damage taken\nRegenerates 1.2% Life per second\n-4% additional damage taken",
+    effect6:
+      "-6% additional damage taken\nRegenerates 1.2% Life per second\n-4% additional damage taken",
+  },
+  {
+    type: "Attack",
+    rarity: "Rare",
+    name: "Plaintive Ball of Thread - Violet",
+    innerRing1: {
+      name: "Double Damage I",
+      affix: "Attack Skills: a +2% chance to deal Double Damage",
+    },
+    innerRing2: {
+      name: "Double Damage I",
+      affix: "Attack Skills: a +2% chance to deal Double Damage",
+    },
+    innerRing3: {
+      name: "Attack Damage I",
+      affix: "+12% Attack Damage",
+    },
+    innerRing4: {
+      name: "Attack Damage I",
+      affix: "+12% Attack Damage",
+    },
+    innerRing5: {
+      name: "Multistrike I",
+      affix: "+8% chance to Multistrike",
+    },
+    innerRing6: {
+      name: "Multistrike I",
+      affix: "+8% chance to Multistrike",
+    },
+    midRing1: {
+      name: "Double Damage II",
+      affix: "Attack Skills: a +4% chance to deal Double Damage",
+    },
+    midRing2: {
+      name: "Attack Damage II",
+      affix: "+24% Attack Damage",
+    },
+    midRing3: {
+      name: "Multistrike II",
+      affix: "+16% chance to Multistrike",
+    },
+    effect1: "+5% additional damage; +5% additional Minion Damage",
+    effect2:
+      "+5% additional damage; +5% additional Minion Damage\n+2% additional damage",
+    effect3:
+      "+5% additional damage; +5% additional Minion Damage\n7.5% Movement Speed when at least 2 enemies are Nearby\n+2% additional damage",
+    effect4:
+      "+5% additional damage; +5% additional Minion Damage\n7.5% Movement Speed when at least 2 enemies are Nearby\n+4% additional damage",
+    effect5:
+      "+5% additional damage; +5% additional Minion Damage\n+15% Movement Speed when at least 2 enemies are Nearby\n+4% additional damage",
+    effect6:
+      "+7% additional damage; +7% additional Minion Damage\n+15% Movement Speed when at least 2 enemies are Nearby\n+4% additional damage",
+  },
+  {
+    type: "Attack",
+    rarity: "Legendary",
+    name: "Poisoned Omen",
+    innerRing1: {
+      name: "Damage I",
+      affix: "+10% damage",
+    },
+    innerRing2: {
+      name: "Damage I",
+      affix: "+10% damage",
+    },
+    innerRing3: {
+      name: "Cursed Enemy Weakening I",
+      affix: "-2% additional damage taken from Cursed enemies",
+    },
+    innerRing4: {
+      name: "Cursed Enemy Weakening I",
+      affix: "-2% additional damage taken from Cursed enemies",
+    },
+    innerRing5: {
+      name: "Curse Effect I",
+      affix: "+1.5% curse effect",
+    },
+    innerRing6: {
+      name: "Curse Effect I",
+      affix: "+1.5% curse effect",
+    },
+    midRing1: {
+      name: "Damage II",
+      affix: "+20% damage",
+    },
+    midRing2: {
+      name: "Cursed Enemy Weakening II",
+      affix: "-4% additional damage taken from Cursed enemies",
+    },
+    midRing3: {
+      name: "Curse Effect II",
+      affix: "+3% curse effect",
+    },
+    effect1:
+      "You can cast 1 additional Curses\n+4% Movement Speed if you have cast a Curse Skill recently",
+    effect2:
+      "You can cast 1 additional Curses\n+4% Movement Speed if you have cast a Curse Skill recently\n+2% additional damage",
+    effect3:
+      "You can cast 1 additional Curses\n+4% Movement Speed if you have cast a Curse Skill recently\n+8% additional damage against Cursed enemies\n+2% additional damage",
+    effect4:
+      "You can cast 1 additional Curses\n+4% Movement Speed if you have cast a Curse Skill recently\n+8% additional damage against Cursed enemies\n+4% additional damage",
+    effect5:
+      "You can cast 1 additional Curses\n+4% Movement Speed if you have cast a Curse Skill recently\n+16% additional damage against Cursed enemies\n+4% additional damage",
+    effect6:
+      "You can cast 1 additional Curses\n6.5% Movement Speed if you have cast a Curse Skill recently\n+16% additional damage against Cursed enemies\n+4% additional damage",
+  },
+  {
+    type: "Erosion",
+    rarity: "Legendary",
+    name: "Portrait of a Fallen Saintess",
+    innerRing1: {
+      name: "Erosion Damage I",
+      affix: "+14% Erosion Damage",
+    },
+    innerRing2: {
+      name: "Erosion Damage I",
+      affix: "+14% Erosion Damage",
+    },
+    innerRing3: {
+      name: "Erosion Damage I",
+      affix: "+14% Erosion Damage",
+    },
+    innerRing4: {
+      name: "Erosion Damage I",
+      affix: "+14% Erosion Damage",
+    },
+    innerRing5: {
+      name: "Erosion Penetration I",
+      affix: "+2.5% Erosion Resistance Penetration",
+    },
+    innerRing6: {
+      name: "Erosion Penetration I",
+      affix: "+2.5% Erosion Resistance Penetration",
+    },
+    midRing1: {
+      name: "Erosion Damage II",
+      affix: "+28% Erosion Damage",
+    },
+    midRing2: {
+      name: "Erosion Damage II",
+      affix: "+28% Erosion Damage",
+    },
+    midRing3: {
+      name: "Erosion Penetration II",
+      affix: "+5% Erosion Resistance Penetration",
+    },
+    effect1: "Gains 1 stack of Repentance when gaining any Blessing",
+    effect2:
+      "Gains 1 stack of Repentance when gaining any Blessing\n+1 Max Repentance Stacks",
+    effect3:
+      "Gains 1 stack of Repentance when gaining any Blessing\n+1 Max Repentance Stacks\n+1% Erosion Resistance per stack of Repentance",
+    effect4:
+      "Gains 1 stack of Repentance when gaining any Blessing\n+2 Max Repentance Stacks\n+1% Erosion Resistance per stack of Repentance",
+    effect5:
+      "Gains 1 stack of Repentance when gaining any Blessing\n+2 Max Repentance Stacks\n+3% Erosion Resistance per stack of Repentance",
+    effect6:
+      "Gains 1 stack of Repentance when gaining any Blessing\n+3 Max Repentance Stacks\n+3% Erosion Resistance per stack of Repentance",
+  },
+  {
+    type: "Survival",
+    rarity: "Legendary",
+    name: "Preserver of Eternity",
+    innerRing1: {
+      name: "Elemental Resistance I",
+      affix: "+2.5% Elemental Resistance",
+    },
+    innerRing2: {
+      name: "Elemental Resistance I",
+      affix: "+2.5% Elemental Resistance",
+    },
+    innerRing3: {
+      name: "Damage Avoidance I",
+      affix: "+1.5% chance to avoid damage",
+    },
+    innerRing4: {
+      name: "Damage Avoidance I",
+      affix: "+1.5% chance to avoid damage",
+    },
+    innerRing5: {
+      name: "XP Protection I",
+      affix: "-10% XP lost upon death",
+    },
+    innerRing6: {
+      name: "XP Protection I",
+      affix: "-10% XP lost upon death",
+    },
+    midRing1: {
+      name: "Elemental Resistance II",
+      affix: "+5% Elemental Resistance",
+    },
+    midRing2: {
+      name: "Damage Avoidance II",
+      affix: "+3% chance to avoid damage",
+    },
+    midRing3: {
+      name: "XP Protection II",
+      affix: "-20% XP lost upon death",
+    },
+    effect1:
+      "+30% Movement Speed if you haven't been hit recently\n+6% Movement Speed",
+    effect2:
+      "+30% Movement Speed if you haven't been hit recently\n+6% Movement Speed\n-2% additional damage taken",
+    effect3:
+      "+30% Movement Speed if you haven't been hit recently\n+6% Movement Speed\n+10% Movement Speed\n-2% additional damage taken",
+    effect4:
+      "+30% Movement Speed if you haven't been hit recently\n+6% Movement Speed\n+10% Movement Speed\n-4% additional damage taken",
+    effect5:
+      "+30% Movement Speed if you haven't been hit recently\n+6% Movement Speed\n+20% Movement Speed\n-4% additional damage taken",
+    effect6:
+      "+40% Movement Speed if you haven't been hit recently\n+8% Movement Speed\n+20% Movement Speed\n-4% additional damage taken",
+  },
+  {
+    type: "Attack",
+    rarity: "Legendary",
+    name: "Raging Sands of Eternal Night",
+    innerRing1: {
+      name: "Damage I",
+      affix: "+10% damage",
+    },
+    innerRing2: {
+      name: "Damage I",
+      affix: "+10% damage",
+    },
+    innerRing3: {
+      name: "Attack Block I",
+      affix: "+6% Attack Block Chance",
+    },
+    innerRing4: {
+      name: "Attack Block I",
+      affix: "+6% Attack Block Chance",
+    },
+    innerRing5: {
+      name: "Spell Block I",
+      affix: "+6% Spell Block Chance",
+    },
+    innerRing6: {
+      name: "Spell Block I",
+      affix: "+6% Spell Block Chance",
+    },
+    midRing1: {
+      name: "Damage II",
+      affix: "+20% damage",
+    },
+    midRing2: {
+      name: "Attack Block II",
+      affix: "+12% Attack Block Chance",
+    },
+    midRing3: {
+      name: "Spell Block II",
+      affix: "+12% Spell Block Chance",
+    },
+    effect1:
+      "Attacks eliminate enemies under 15% Life on hit if you have Blocked recently",
+    effect2:
+      "Attacks eliminate enemies under 15% Life on hit if you have Blocked recently\n+2% additional damage",
+    effect3:
+      "Attacks eliminate enemies under 15% Life on hit if you have Blocked recently\n+3% Block Ratio when there is a Boss Nearby\n+2% additional damage",
+    effect4:
+      "Attacks eliminate enemies under 15% Life on hit if you have Blocked recently\n+3% Block Ratio when there is a Boss Nearby\n+4% additional damage",
+    effect5:
+      "Attacks eliminate enemies under 15% Life on hit if you have Blocked recently\n+6% Block Ratio when there is a Boss Nearby\n+4% additional damage",
+    effect6:
+      "Attacks eliminate enemies under 20% Life on hit if you have Blocked recently\n+6% Block Ratio when there is a Boss Nearby\n+4% additional damage",
+  },
+  {
+    type: "Attack",
+    rarity: "Legendary",
+    name: "Red Umbrella",
+    innerRing1: {
+      name: "Attack Damage I",
+      affix: "+12% Attack Damage",
+    },
+    innerRing2: {
+      name: "Attack Damage I",
+      affix: "+12% Attack Damage",
+    },
+    innerRing3: {
+      name: "Attack Critical Strike I",
+      affix: "+22% Attack Critical Strike Rating",
+    },
+    innerRing4: {
+      name: "Attack Critical Strike I",
+      affix: "+22% Attack Critical Strike Rating",
+    },
+    innerRing5: {
+      name: "Attack Speed I",
+      affix: "+4% Attack Speed",
+    },
+    innerRing6: {
+      name: "Attack Speed I",
+      affix: "+4% Attack Speed",
+    },
+    midRing1: {
+      name: "Attack Damage II",
+      affix: "+24% Attack Damage",
+    },
+    midRing2: {
+      name: "Attack Critical Strike II",
+      affix: "+45% Attack Critical Strike Rating",
+    },
+    midRing3: {
+      name: "Attack Speed II",
+      affix: "+8% Attack Speed",
+    },
+    effect1:
+      "+19% chance for Attacks to inflict Paralysis on hit\n+10% additional Attack Damage dealt to Nearby enemies",
+    effect2:
+      "+19% chance for Attacks to inflict Paralysis on hit\n+10% additional Attack Damage dealt to Nearby enemies\n+2% additional damage",
+    effect3:
+      "+19% chance for Attacks to inflict Paralysis on hit\n+10% additional Attack Damage dealt to Nearby enemies\n+6% additional Attack Damage dealt to Nearby enemies\n+2% additional damage",
+    effect4:
+      "+19% chance for Attacks to inflict Paralysis on hit\n+10% additional Attack Damage dealt to Nearby enemies\n+6% additional Attack Damage dealt to Nearby enemies\n+4% additional damage",
+    effect5:
+      "+19% chance for Attacks to inflict Paralysis on hit\n+10% additional Attack Damage dealt to Nearby enemies\n+12% additional Attack Damage dealt to Nearby enemies\n+4% additional damage",
+    effect6:
+      "+26% chance for Attacks to inflict Paralysis on hit\n+14% additional Attack Damage dealt to Nearby enemies\n+12% additional Attack Damage dealt to Nearby enemies\n+4% additional damage",
+  },
+  {
+    type: "Summon",
+    rarity: "Legendary",
+    name: "Scale of Original Sin",
+    innerRing1: {
+      name: "Spirit Magus Seal Removed I",
+      affix: "+10% Sealed Mana Compensation for Spirit Magus Skills",
+    },
+    innerRing2: {
+      name: "Spirit Magus Seal Removed I",
+      affix: "+10% Sealed Mana Compensation for Spirit Magus Skills",
+    },
+    innerRing3: {
+      name: "Damage I",
+      affix: "+10% damage +10% Minion Damage",
+    },
+    innerRing4: {
+      name: "Damage I",
+      affix: "+10% damage +10% Minion Damage",
+    },
+    innerRing5: {
+      name: "Skill Duration I",
+      affix: "+5% Skill Effect Duration",
+    },
+    innerRing6: {
+      name: "Skill Duration I",
+      affix: "+5% Skill Effect Duration",
+    },
+    midRing1: {
+      name: "Spirit Magus Seal Removed II",
+      affix: "+20% Sealed Mana Compensation for Spirit Magus Skills",
+    },
+    midRing2: {
+      name: "Damage II",
+      affix: "+20% damage +20% Minion Damage",
+    },
+    midRing3: {
+      name: "Skill Duration II",
+      affix: "+10% Skill Effect Duration",
+    },
+    effect1:
+      "+40% additional Spirit Magus Ultimate Damage and Ailment Damage dealt by Ultimate when any two of Strength, Dexterity, and Intelligence are equal",
+    effect2:
+      "+40% additional Spirit Magus Ultimate Damage and Ailment Damage dealt by Ultimate when any two of Strength, Dexterity, and Intelligence are equal\n+2% additional Minion Damage",
+    effect3:
+      "+40% additional Spirit Magus Ultimate Damage and Ailment Damage dealt by Ultimate when any two of Strength, Dexterity, and Intelligence are equal\n+1 Spirit Magus Skill Level\n+2% additional Minion Damage",
+    effect4:
+      "+40% additional Spirit Magus Ultimate Damage and Ailment Damage dealt by Ultimate when any two of Strength, Dexterity, and Intelligence are equal\n+1 Spirit Magus Skill Level\n+4% additional Minion Damage",
+    effect5:
+      "+40% additional Spirit Magus Ultimate Damage and Ailment Damage dealt by Ultimate when any two of Strength, Dexterity, and Intelligence are equal\n+2 Spirit Magus Skill Level\n+4% additional Minion Damage",
+    effect6:
+      "+53% additional Spirit Magus Ultimate Damage and Ailment Damage dealt by Ultimate when any two of Strength, Dexterity, and Intelligence are equal\n+2 Spirit Magus Skill Level\n+4% additional Minion Damage",
+  },
+  {
+    type: "Attack",
+    rarity: "Magic",
+    name: "Shocket - Green Leaf",
+    innerRing1: {
+      name: "Damage I",
+      affix: "+10% damage",
+    },
+    innerRing2: {
+      name: "Damage I",
+      affix: "+10% damage",
+    },
+    innerRing3: {
+      name: "Attack Block I",
+      affix: "+6% Attack Block Chance",
+    },
+    innerRing4: {
+      name: "Attack Block I",
+      affix: "+6% Attack Block Chance",
+    },
+    innerRing5: {
+      name: "Spell Block I",
+      affix: "+6% Spell Block Chance",
+    },
+    innerRing6: {
+      name: "Spell Block I",
+      affix: "+6% Spell Block Chance",
+    },
+    midRing1: {
+      name: "Damage II",
+      affix: "+24% damage +24% Minion Damage",
+    },
+    midRing2: {
+      name: "Damage II",
+      affix: "+24% damage +24% Minion Damage",
+    },
+    midRing3: {
+      name: "Damage II",
+      affix: "+24% damage +24% Minion Damage",
+    },
+    effect1: "+5% additional damage; +5% additional Minion Damage",
+    effect2:
+      "+5% additional damage; +5% additional Minion Damage\n+2% additional damage",
+    effect3:
+      "+5% additional damage; +5% additional Minion Damage\n0.8% Block Ratio when there is a Boss Nearby\n+2% additional damage",
+    effect4:
+      "+5% additional damage; +5% additional Minion Damage\n0.8% Block Ratio when there is a Boss Nearby\n+4% additional damage",
+    effect5:
+      "+5% additional damage; +5% additional Minion Damage\n1.6% Block Ratio when there is a Boss Nearby\n+4% additional damage",
+    effect6:
+      "+7% additional damage; +7% additional Minion Damage\n1.6% Block Ratio when there is a Boss Nearby\n+4% additional damage",
+  },
+  {
+    type: "Summon",
+    rarity: "Magic",
+    name: "Shocket - Pale",
+    innerRing1: {
+      name: "Spirit Magus Seal Removed I",
+      affix: "+10% Sealed Mana Compensation for Spirit Magus Skills",
+    },
+    innerRing2: {
+      name: "Spirit Magus Seal Removed I",
+      affix: "+10% Sealed Mana Compensation for Spirit Magus Skills",
+    },
+    innerRing3: {
+      name: "Damage I",
+      affix: "+10% damage +10% Minion Damage",
+    },
+    innerRing4: {
+      name: "Damage I",
+      affix: "+10% damage +10% Minion Damage",
+    },
+    innerRing5: {
+      name: "Skill Duration I",
+      affix: "+5% Skill Effect Duration",
+    },
+    innerRing6: {
+      name: "Skill Duration I",
+      affix: "+5% Skill Effect Duration",
+    },
+    midRing1: {
+      name: "Damage II",
+      affix: "+24% damage +24% Minion Damage",
+    },
+    midRing2: {
+      name: "Damage II",
+      affix: "+24% damage +24% Minion Damage",
+    },
+    midRing3: {
+      name: "Damage II",
+      affix: "+24% damage +24% Minion Damage",
+    },
+    effect1: "+5% additional damage; +5% additional Minion Damage",
+    effect2:
+      "+5% additional damage; +5% additional Minion Damage\n+2% additional Minion Damage",
+    effect3:
+      "+5% additional damage; +5% additional Minion Damage\n+14% Spirit Magus Skill Damage\n+2% additional Minion Damage",
+    effect4:
+      "+5% additional damage; +5% additional Minion Damage\n+14% Spirit Magus Skill Damage\n+4% additional Minion Damage",
+    effect5:
+      "+5% additional damage; +5% additional Minion Damage\n+28% Spirit Magus Skill Damage\n+4% additional Minion Damage",
+    effect6:
+      "+7% additional damage; +7% additional Minion Damage\n+28% Spirit Magus Skill Damage\n+4% additional Minion Damage",
+  },
+  {
+    type: "Persistent",
+    rarity: "Magic",
+    name: "Shocket - Violet",
+    innerRing1: {
+      name: "Reaping Cooldown I",
+      affix: "+5% Reaping Cooldown Recovery Speed",
+    },
+    innerRing2: {
+      name: "Reaping Cooldown I",
+      affix: "+5% Reaping Cooldown Recovery Speed",
+    },
+    innerRing3: {
+      name: "Damage Over Time I",
+      affix: "+12% Damage Over Time",
+    },
+    innerRing4: {
+      name: "Damage Over Time I",
+      affix: "+12% Damage Over Time",
+    },
+    innerRing5: {
+      name: "Damage Affliction I",
+      affix: "+10% Affliction Effect",
+    },
+    innerRing6: {
+      name: "Damage Affliction I",
+      affix: "+10% Affliction Effect",
+    },
+    midRing1: {
+      name: "Damage II",
+      affix: "+24% damage +24% Minion Damage",
+    },
+    midRing2: {
+      name: "Damage II",
+      affix: "+24% damage +24% Minion Damage",
+    },
+    midRing3: {
+      name: "Damage II",
+      affix: "+24% damage +24% Minion Damage",
+    },
+    effect1: "+5% additional damage; +5% additional Minion Damage",
+    effect2:
+      "+5% additional damage; +5% additional Minion Damage\n+2% additional damage",
+    effect3:
+      "+5% additional damage; +5% additional Minion Damage\n2.5% Movement Speed if you have caused Reaping recently\n+2% additional damage",
+    effect4:
+      "+5% additional damage; +5% additional Minion Damage\n2.5% Movement Speed if you have caused Reaping recently\n+4% additional damage",
+    effect5:
+      "+5% additional damage; +5% additional Minion Damage\n+5% Movement Speed if you have caused Reaping recently\n+4% additional damage",
+    effect6:
+      "+7% additional damage; +7% additional Minion Damage\n+5% Movement Speed if you have caused Reaping recently\n+4% additional damage",
+  },
+  {
+    type: "Attack",
+    rarity: "Rare",
+    name: "Shro-Shroom - Boletus",
+    innerRing1: {
+      name: "Attack Damage I",
+      affix: "+12% Attack Damage",
+    },
+    innerRing2: {
+      name: "Attack Damage I",
+      affix: "+12% Attack Damage",
+    },
+    innerRing3: {
+      name: "Attack Critical Strike I",
+      affix: "+22% Attack Critical Strike Rating",
+    },
+    innerRing4: {
+      name: "Attack Critical Strike I",
+      affix: "+22% Attack Critical Strike Rating",
+    },
+    innerRing5: {
+      name: "Attack Speed I",
+      affix: "+4% Attack Speed",
+    },
+    innerRing6: {
+      name: "Attack Speed I",
+      affix: "+4% Attack Speed",
+    },
+    midRing1: {
+      name: "Attack Damage II",
+      affix: "+24% Attack Damage",
+    },
+    midRing2: {
+      name: "Attack Critical Strike II",
+      affix: "+44% Attack Critical Strike Rating",
+    },
+    midRing3: {
+      name: "Attack Speed II",
+      affix: "+8% Attack Speed",
+    },
+    effect1: "+5% additional damage; +5% additional Minion Damage",
+    effect2:
+      "+5% additional damage; +5% additional Minion Damage\n+2% additional damage",
+    effect3:
+      "+5% additional damage; +5% additional Minion Damage\n+14% Elemental Damage\n+2% additional damage",
+    effect4:
+      "+5% additional damage; +5% additional Minion Damage\n+14% Elemental Damage\n+4% additional damage",
+    effect5:
+      "+5% additional damage; +5% additional Minion Damage\n+28% Elemental Damage\n+4% additional damage",
+    effect6:
+      "+7% additional damage; +7% additional Minion Damage\n+28% Elemental Damage\n+4% additional damage",
+  },
+  {
+    type: "Spell",
+    rarity: "Rare",
+    name: "Shro-Shroom - Oyster Mushroom",
+    innerRing1: {
+      name: "Spell Damage I",
+      affix: "+12% Spell Damage",
+    },
+    innerRing2: {
+      name: "Spell Damage I",
+      affix: "+12% Spell Damage",
+    },
+    innerRing3: {
+      name: "Spell Critical Strike I",
+      affix: "+22% Spell Critical Strike Rating",
+    },
+    innerRing4: {
+      name: "Spell Critical Strike I",
+      affix: "+22% Spell Critical Strike Rating",
+    },
+    innerRing5: {
+      name: "Cast Speed I",
+      affix: "+4% Cast Speed",
+    },
+    innerRing6: {
+      name: "Cast Speed I",
+      affix: "+4% Cast Speed",
+    },
+    midRing1: {
+      name: "Spell Damage II",
+      affix: "+24% Spell Damage",
+    },
+    midRing2: {
+      name: "Spell Critical Strike II",
+      affix: "+45% Spell Critical Strike Rating",
+    },
+    midRing3: {
+      name: "Cast Speed II",
+      affix: "+8% Cast Speed",
+    },
+    effect1: "+5% additional damage; +5% additional Minion Damage",
+    effect2:
+      "+5% additional damage; +5% additional Minion Damage\n+2% additional damage",
+    effect3:
+      "+5% additional damage; +5% additional Minion Damage\n+14% Spell Damage\n+2% additional damage",
+    effect4:
+      "+5% additional damage; +5% additional Minion Damage\n+14% Spell Damage\n+4% additional damage",
+    effect5:
+      "+5% additional damage; +5% additional Minion Damage\n+28% Spell Damage\n+4% additional damage",
+    effect6:
+      "+7% additional damage; +7% additional Minion Damage\n+28% Spell Damage\n+4% additional damage",
   },
   {
     type: "Survival",
     rarity: "Magic",
     name: "Spiny Snail - Cloudless Sky",
-    effect:
-      "-6% additional damage taken -2% additional damage taken -4% additional damage taken",
+    innerRing1: {
+      name: "Elemental Resistance I",
+      affix: "+2.5% Elemental Resistance",
+    },
+    innerRing2: {
+      name: "Elemental Resistance I",
+      affix: "+2.5% Elemental Resistance",
+    },
+    innerRing3: {
+      name: "Damage Mitigation I",
+      affix: "-1.5% additional damage taken",
+    },
+    innerRing4: {
+      name: "Damage Mitigation I",
+      affix: "-1.5% additional damage taken",
+    },
+    innerRing5: {
+      name: "XP Bonus I",
+      affix: "+3% XP earned",
+    },
+    innerRing6: {
+      name: "XP Bonus I",
+      affix: "+3% XP earned",
+    },
+    midRing1: {
+      name: "Mana Restoration II",
+      affix: "+30% Mana Regeneration Speed",
+    },
+    midRing2: {
+      name: "",
+      affix: "",
+    },
+    midRing3: {
+      name: "",
+      affix: "",
+    },
+    effect1: "-5% additional damage taken",
+    effect2: "-5% additional damage taken\n-2% additional damage taken",
+    effect3:
+      "-5% additional damage taken\n-1% additional damage taken\n-2% additional damage taken",
+    effect4:
+      "-5% additional damage taken\n-1% additional damage taken\n-4% additional damage taken",
+    effect5:
+      "-5% additional damage taken\n-2% additional damage taken\n-4% additional damage taken",
+    effect6:
+      "-6% additional damage taken\n-2% additional damage taken\n-4% additional damage taken",
+  },
+  {
+    type: "Attack",
+    rarity: "Magic",
+    name: "Spiny Snail - Flame",
+    innerRing1: {
+      name: "Damage I",
+      affix: "+10% damage",
+    },
+    innerRing2: {
+      name: "Damage I",
+      affix: "+10% damage",
+    },
+    innerRing3: {
+      name: "Cursed Enemy Weakening I",
+      affix: "-2% additional damage taken from Cursed enemies",
+    },
+    innerRing4: {
+      name: "Cursed Enemy Weakening I",
+      affix: "-2% additional damage taken from Cursed enemies",
+    },
+    innerRing5: {
+      name: "Curse Effect I",
+      affix: "+1.5% curse effect",
+    },
+    innerRing6: {
+      name: "Curse Effect I",
+      affix: "+1.5% curse effect",
+    },
+    midRing1: {
+      name: "Damage II",
+      affix: "+24% damage +24% Minion Damage",
+    },
+    midRing2: {
+      name: "Damage II",
+      affix: "+24% damage +24% Minion Damage",
+    },
+    midRing3: {
+      name: "Damage II",
+      affix: "+24% damage +24% Minion Damage",
+    },
+    effect1: "+5% additional damage; +5% additional Minion Damage",
+    effect2:
+      "+5% additional damage; +5% additional Minion Damage\n+2% additional damage",
+    effect3:
+      "+5% additional damage; +5% additional Minion Damage\n+2% additional damage against Cursed enemies\n+2% additional damage",
+    effect4:
+      "+5% additional damage; +5% additional Minion Damage\n+2% additional damage against Cursed enemies\n+4% additional damage",
+    effect5:
+      "+5% additional damage; +5% additional Minion Damage\n+4% additional damage against Cursed enemies\n+4% additional damage",
+    effect6:
+      "+7% additional damage; +7% additional Minion Damage\n+4% additional damage against Cursed enemies\n+4% additional damage",
+  },
+  {
+    type: "Summon",
+    rarity: "Magic",
+    name: "Spiny Snail - Flower",
+    innerRing1: {
+      name: "Servant Damage I",
+      affix: "+15% Minion Damage",
+    },
+    innerRing2: {
+      name: "Servant Damage I",
+      affix: "+15% Minion Damage",
+    },
+    innerRing3: {
+      name: "Servant Speed I",
+      affix: "+4% Minion Attack and Cast Speed",
+    },
+    innerRing4: {
+      name: "Servant Speed I",
+      affix: "+4% Minion Attack and Cast Speed",
+    },
+    innerRing5: {
+      name: "Servant Life I",
+      affix: "+4% Minion Max Life",
+    },
+    innerRing6: {
+      name: "Servant Life I",
+      affix: "+4% Minion Max Life",
+    },
+    midRing1: {
+      name: "Damage II",
+      affix: "+24% damage +24% Minion Damage",
+    },
+    midRing2: {
+      name: "Damage II",
+      affix: "+24% damage +24% Minion Damage",
+    },
+    midRing3: {
+      name: "Damage II",
+      affix: "+24% damage +24% Minion Damage",
+    },
+    effect1: "+5% additional damage; +5% additional Minion Damage",
+    effect2:
+      "+5% additional damage; +5% additional Minion Damage\n+2% additional Minion Damage",
+    effect3:
+      "+5% additional damage; +5% additional Minion Damage\n2.5% Minion Attack and Cast Speed for 4 s when your Synthetic Troops deal Double Damage\n+2% additional Minion Damage",
+    effect4:
+      "+5% additional damage; +5% additional Minion Damage\n2.5% Minion Attack and Cast Speed for 4 s when your Synthetic Troops deal Double Damage\n+4% additional Minion Damage",
+    effect5:
+      "+5% additional damage; +5% additional Minion Damage\n+5% Minion Attack and Cast Speed for 4 s when your Synthetic Troops deal Double Damage\n+4% additional Minion Damage",
+    effect6:
+      "+7% additional damage; +7% additional Minion Damage\n+5% Minion Attack and Cast Speed for 4 s when your Synthetic Troops deal Double Damage\n+4% additional Minion Damage",
   },
   {
     type: "Survival",
     rarity: "Magic",
     name: "Spiny Snail - Green",
-    effect:
-      "-6% additional damage taken Converts 2% of Physical Damage taken to random Elemental Damage -4% additional damage taken",
+    innerRing1: {
+      name: "Elemental Resistance I",
+      affix: "+2.5% Elemental Resistance",
+    },
+    innerRing2: {
+      name: "Elemental Resistance I",
+      affix: "+2.5% Elemental Resistance",
+    },
+    innerRing3: {
+      name: "Mana Restoration I",
+      affix: "+15% Mana Regeneration Speed",
+    },
+    innerRing4: {
+      name: "Mana Restoration I",
+      affix: "+15% Mana Regeneration Speed",
+    },
+    innerRing5: {
+      name: "XP Bonus I",
+      affix: "+3% XP earned",
+    },
+    innerRing6: {
+      name: "XP Bonus I",
+      affix: "+3% XP earned",
+    },
+    midRing1: {
+      name: "Mana Restoration II",
+      affix: "+30% Mana Regeneration Speed",
+    },
+    midRing2: {
+      name: "",
+      affix: "",
+    },
+    midRing3: {
+      name: "",
+      affix: "",
+    },
+    effect1: "-5% additional damage taken",
+    effect2: "-5% additional damage taken\n-2% additional damage taken",
+    effect3:
+      "-5% additional damage taken\nConverts 1% of Physical Damage taken to random Elemental Damage\n-2% additional damage taken",
+    effect4:
+      "-5% additional damage taken\nConverts 1% of Physical Damage taken to random Elemental Damage\n-4% additional damage taken",
+    effect5:
+      "-5% additional damage taken\nConverts 2% of Physical Damage taken to random Elemental Damage\n-4% additional damage taken",
+    effect6:
+      "-6% additional damage taken\nConverts 2% of Physical Damage taken to random Elemental Damage\n-4% additional damage taken",
+  },
+  {
+    type: "Summon",
+    rarity: "Magic",
+    name: "Spiny Snail - Iris",
+    innerRing1: {
+      name: "Servant Damage I",
+      affix: "+15% Minion Damage",
+    },
+    innerRing2: {
+      name: "Servant Damage I",
+      affix: "+15% Minion Damage",
+    },
+    innerRing3: {
+      name: "Servant Speed I",
+      affix: "+4% Minion Attack and Cast Speed",
+    },
+    innerRing4: {
+      name: "Servant Speed I",
+      affix: "+4% Minion Attack and Cast Speed",
+    },
+    innerRing5: {
+      name: "Servant Life I",
+      affix: "+4% Minion Max Life",
+    },
+    innerRing6: {
+      name: "Servant Life I",
+      affix: "+4% Minion Max Life",
+    },
+    midRing1: {
+      name: "Damage II",
+      affix: "+24% damage +24% Minion Damage",
+    },
+    midRing2: {
+      name: "Damage II",
+      affix: "+24% damage +24% Minion Damage",
+    },
+    midRing3: {
+      name: "Damage II",
+      affix: "+24% damage +24% Minion Damage",
+    },
+    effect1: "+5% additional damage; +5% additional Minion Damage",
+    effect2:
+      "+5% additional damage; +5% additional Minion Damage\n+2% additional Minion Damage",
+    effect3:
+      "+5% additional damage; +5% additional Minion Damage\n+20 Critical Strike Rating for recently summoned Minions\n+2% additional Minion Damage",
+    effect4:
+      "+5% additional damage; +5% additional Minion Damage\n+20 Critical Strike Rating for recently summoned Minions\n+4% additional Minion Damage",
+    effect5:
+      "+5% additional damage; +5% additional Minion Damage\n+40 Critical Strike Rating for recently summoned Minions\n+4% additional Minion Damage",
+    effect6:
+      "+7% additional damage; +7% additional Minion Damage\n+40 Critical Strike Rating for recently summoned Minions\n+4% additional Minion Damage",
+  },
+  {
+    type: "Survival",
+    rarity: "Legendary",
+    name: "Spirit Bless",
+    innerRing1: {
+      name: "Max Energy Shield I",
+      affix: "+4% Max Energy Shield",
+    },
+    innerRing2: {
+      name: "Max Energy Shield I",
+      affix: "+4% Max Energy Shield",
+    },
+    innerRing3: {
+      name: "Mana Restoration I",
+      affix: "+15% Mana Regeneration Speed",
+    },
+    innerRing4: {
+      name: "Mana Restoration I",
+      affix: "+15% Mana Regeneration Speed",
+    },
+    innerRing5: {
+      name: "XP Bonus I",
+      affix: "+3% XP earned",
+    },
+    innerRing6: {
+      name: "XP Bonus I",
+      affix: "+3% XP earned",
+    },
+    midRing1: {
+      name: "Max Energy Shield II",
+      affix: "+8% Max Energy Shield",
+    },
+    midRing2: {
+      name: "Mana Restoration II",
+      affix: "+30% Mana Regeneration Speed",
+    },
+    midRing3: {
+      name: "XP Bonus II",
+      affix: "+6% XP earned",
+    },
+    effect1:
+      "+10% additional Max Energy Shield\n+6% Energy Shield Charge Speed",
+    effect2:
+      "+10% additional Max Energy Shield\n+6% Energy Shield Charge Speed\n-2% additional damage taken",
+    effect3:
+      "+10% additional Max Energy Shield\n+6% Energy Shield Charge Speed\n+8% Energy Shield Charge Speed\n-2% additional damage taken",
+    effect4:
+      "+10% additional Max Energy Shield\n+6% Energy Shield Charge Speed\n+8% Energy Shield Charge Speed\n-4% additional damage taken",
+    effect5:
+      "+10% additional Max Energy Shield\n+6% Energy Shield Charge Speed\n+16% Energy Shield Charge Speed\n-4% additional damage taken",
+    effect6:
+      "+14% additional Max Energy Shield\n+8% Energy Shield Charge Speed\n+16% Energy Shield Charge Speed\n-4% additional damage taken",
+  },
+  {
+    type: "Summon",
+    rarity: "Legendary",
+    name: "Sprite of Silent Vale",
+    innerRing1: {
+      name: "Servant Damage I",
+      affix: "+14% Minion Damage",
+    },
+    innerRing2: {
+      name: "Servant Damage I",
+      affix: "+14% Minion Damage",
+    },
+    innerRing3: {
+      name: "Servant Damage I",
+      affix: "+14% Minion Damage",
+    },
+    innerRing4: {
+      name: "Servant Damage I",
+      affix: "+14% Minion Damage",
+    },
+    innerRing5: {
+      name: "Servant Speed I",
+      affix: "+4% Minion Attack and Cast Speed",
+    },
+    innerRing6: {
+      name: "Servant Speed I",
+      affix: "+4% Minion Attack and Cast Speed",
+    },
+    midRing1: {
+      name: "Servant Damage II",
+      affix: "+28% Minion Damage",
+    },
+    midRing2: {
+      name: "Servant Damage II",
+      affix: "+28% Minion Damage",
+    },
+    midRing3: {
+      name: "Servant Speed II",
+      affix: "+8% Minion Attack and Cast Speed",
+    },
+    effect1: "+60 initial Growth for Spirit Magi",
+    effect2:
+      "+60 initial Growth for Spirit Magi\n+6% Movement Speed when a Spirit Magus is nearby",
+    effect3:
+      "+60 initial Growth for Spirit Magi\n+6% Movement Speed when a Spirit Magus is nearby\nFor every 20 Growth a Spirit Magus has, it deals +1% additional damage, up to +5% additional damage",
+    effect4:
+      "+60 initial Growth for Spirit Magi\n+12% Movement Speed when a Spirit Magus is nearby\nFor every 20 Growth a Spirit Magus has, it deals +1% additional damage, up to +5% additional damage",
+    effect5:
+      "+60 initial Growth for Spirit Magi\n+12% Movement Speed when a Spirit Magus is nearby\nFor every 20 Growth a Spirit Magus has, it deals +1% additional damage, up to +10% additional damage",
+    effect6:
+      "+75 initial Growth for Spirit Magi\n+12% Movement Speed when a Spirit Magus is nearby\nFor every 20 Growth a Spirit Magus has, it deals +1% additional damage, up to +10% additional damage",
+  },
+  {
+    type: "Attack",
+    rarity: "Magic",
+    name: "Sprouting Grass - Black Porcelain",
+    innerRing1: {
+      name: "Attack Damage I",
+      affix: "+12% Attack Damage",
+    },
+    innerRing2: {
+      name: "Attack Damage I",
+      affix: "+12% Attack Damage",
+    },
+    innerRing3: {
+      name: "Attack Critical Strike I",
+      affix: "+22% Attack Critical Strike Rating",
+    },
+    innerRing4: {
+      name: "Attack Critical Strike I",
+      affix: "+22% Attack Critical Strike Rating",
+    },
+    innerRing5: {
+      name: "Attack Speed I",
+      affix: "+4% Attack Speed",
+    },
+    innerRing6: {
+      name: "Attack Speed I",
+      affix: "+4% Attack Speed",
+    },
+    midRing1: {
+      name: "Damage II",
+      affix: "+24% damage +24% Minion Damage",
+    },
+    midRing2: {
+      name: "Damage II",
+      affix: "+24% damage +24% Minion Damage",
+    },
+    midRing3: {
+      name: "Damage II",
+      affix: "+24% damage +24% Minion Damage",
+    },
+    effect1: "+5% additional damage; +5% additional Minion Damage",
+    effect2:
+      "+5% additional damage; +5% additional Minion Damage\n+2% additional damage",
+    effect3:
+      "+5% additional damage; +5% additional Minion Damage\n+7% Elemental Damage\n+2% additional damage",
+    effect4:
+      "+5% additional damage; +5% additional Minion Damage\n+7% Elemental Damage\n+4% additional damage",
+    effect5:
+      "+5% additional damage; +5% additional Minion Damage\n+14% Elemental Damage\n+4% additional damage",
+    effect6:
+      "+7% additional damage; +7% additional Minion Damage\n+14% Elemental Damage\n+4% additional damage",
+  },
+  {
+    type: "Erosion",
+    rarity: "Magic",
+    name: "Sprouting Grass - Green Porcelain",
+    innerRing1: {
+      name: "Erosion Damage I",
+      affix: "+14% Erosion Damage",
+    },
+    innerRing2: {
+      name: "Erosion Damage I",
+      affix: "+14% Erosion Damage",
+    },
+    innerRing3: {
+      name: "Erosion Damage I",
+      affix: "+14% Erosion Damage",
+    },
+    innerRing4: {
+      name: "Erosion Damage I",
+      affix: "+14% Erosion Damage",
+    },
+    innerRing5: {
+      name: "Erosion Penetration I",
+      affix: "+2.5% Erosion Resistance Penetration",
+    },
+    innerRing6: {
+      name: "Erosion Penetration I",
+      affix: "+2.5% Erosion Resistance Penetration",
+    },
+    midRing1: {
+      name: "Damage II",
+      affix: "+24% damage +24% Minion Damage",
+    },
+    midRing2: {
+      name: "Damage II",
+      affix: "+24% damage +24% Minion Damage",
+    },
+    midRing3: {
+      name: "Damage II",
+      affix: "+24% damage +24% Minion Damage",
+    },
+    effect1: "+5% additional damage; +5% additional Minion Damage",
+    effect2:
+      "+5% additional damage; +5% additional Minion Damage\n+2% additional damage",
+    effect3:
+      "+5% additional damage; +5% additional Minion Damage\n+7% Erosion Damage\n+2% additional damage",
+    effect4:
+      "+5% additional damage; +5% additional Minion Damage\n+7% Erosion Damage\n+4% additional damage",
+    effect5:
+      "+5% additional damage; +5% additional Minion Damage\n+14% Erosion Damage\n+4% additional damage",
+    effect6:
+      "+7% additional damage; +7% additional Minion Damage\n+14% Erosion Damage\n+4% additional damage",
+  },
+  {
+    type: "Attack",
+    rarity: "Legendary",
+    name: "Swaying Bonnie",
+    innerRing1: {
+      name: "Movement Speed I",
+      affix: "+4% Movement Speed while channeling",
+    },
+    innerRing2: {
+      name: "Movement Speed I",
+      affix: "+4% Movement Speed while channeling",
+    },
+    innerRing3: {
+      name: "Channeled Damage I",
+      affix: "+14% damage for Channeled Skills",
+    },
+    innerRing4: {
+      name: "Channeled Damage I",
+      affix: "+14% damage for Channeled Skills",
+    },
+    innerRing5: {
+      name: "Attack and Cast Speed I",
+      affix: "+4% Attack and Cast Speed",
+    },
+    innerRing6: {
+      name: "Attack and Cast Speed I",
+      affix: "+4% Attack and Cast Speed",
+    },
+    midRing1: {
+      name: "Movement Speed II",
+      affix: "+8% Movement Speed while channeling",
+    },
+    midRing2: {
+      name: "Channeled Damage II",
+      affix: "+28% damage for Channeled Skills",
+    },
+    midRing3: {
+      name: "Attack and Cast Speed II",
+      affix: "+8% Attack and Cast Speed",
+    },
+    effect1: "Max Channeled Stacks +2",
+    effect2:
+      "Max Channeled Stacks +2\nAt max channeled stacks, +4% additional damage for Channeled Skills for 4 s",
+    effect3:
+      "Max Channeled Stacks +2\nAt max channeled stacks, +4% additional damage for Channeled Skills for 4 s\nFor every 4 channeled stacks, inflicts Weaken on enemies within 10 m",
+    effect4:
+      "Max Channeled Stacks +2\nAt max channeled stacks, +8% additional damage for Channeled Skills for 4 s\nFor every 4 channeled stacks, inflicts Weaken on enemies within 10 m",
+    effect5:
+      "Max Channeled Stacks +2\nAt max channeled stacks, +8% additional damage for Channeled Skills for 4 s\nFor every 4 channeled stacks, inflicts Weaken on enemies within 20 m",
+    effect6:
+      "Max Channeled Stacks +2\nAt max channeled stacks, +12% additional damage for Channeled Skills for 4 s\nFor every 4 channeled stacks, inflicts Weaken on enemies within 20 m",
+  },
+  {
+    type: "Spell",
+    rarity: "Legendary",
+    name: "The Bone worm's Daughter",
+    innerRing1: {
+      name: "Mana Restoration I",
+      affix: "+15% Mana Regeneration Speed",
+    },
+    innerRing2: {
+      name: "Mana Restoration I",
+      affix: "+15% Mana Regeneration Speed",
+    },
+    innerRing3: {
+      name: "Spell Damage I",
+      affix: "+12% Spell Damage",
+    },
+    innerRing4: {
+      name: "Spell Damage I",
+      affix: "+12% Spell Damage",
+    },
+    innerRing5: {
+      name: "Critical Strike Damage I",
+      affix: "+10% Critical Strike Damage",
+    },
+    innerRing6: {
+      name: "Critical Strike Damage I",
+      affix: "+10% Critical Strike Damage",
+    },
+    midRing1: {
+      name: "Mana Restoration II",
+      affix: "+30% Mana Regeneration Speed",
+    },
+    midRing2: {
+      name: "Spell Damage II",
+      affix: "+24% Spell Damage",
+    },
+    midRing3: {
+      name: "Critical Strike Damage II",
+      affix: "+20% Critical Strike Damage",
+    },
+    effect1:
+      "+50 Spell Critical Strike Rating per Ailment on enemies, up to +100\n+6% Critical Strike Damage per Ailment on enemies, up to +12%",
+    effect2:
+      "+50 Spell Critical Strike Rating per Ailment on enemies, up to +100\n+6% Critical Strike Damage per Ailment on enemies, up to +12%\n+2% additional damage",
+    effect3:
+      "+50 Spell Critical Strike Rating per Ailment on enemies, up to +100\n+6% Critical Strike Damage per Ailment on enemies, up to +12%\n+9% Critical Strike Damage per Ailment on enemies, up to +18%\n+2% additional damage",
+    effect4:
+      "+50 Spell Critical Strike Rating per Ailment on enemies, up to +100\n+6% Critical Strike Damage per Ailment on enemies, up to +12%\n+9% Critical Strike Damage per Ailment on enemies, up to +18%\n+4% additional damage",
+    effect5:
+      "+50 Spell Critical Strike Rating per Ailment on enemies, up to +100\n+6% Critical Strike Damage per Ailment on enemies, up to +12%\n+18% Critical Strike Damage per Ailment on enemies, up to +36%\n+4% additional damage",
+    effect6:
+      "+70 Spell Critical Strike Rating per Ailment on enemies, up to +140\n+7% Critical Strike Damage per Ailment on enemies, up to +14%\n+18% Critical Strike Damage per Ailment on enemies, up to +36%\n+4% additional damage",
+  },
+  {
+    type: "Survival",
+    rarity: "Rare",
+    name: "Traveling Lizard - Flower",
+    innerRing1: {
+      name: "Elemental Resistance I",
+      affix: "+2.5% Elemental Resistance",
+    },
+    innerRing2: {
+      name: "Elemental Resistance I",
+      affix: "+2.5% Elemental Resistance",
+    },
+    innerRing3: {
+      name: "Damage Avoidance I",
+      affix: "+1.5% chance to avoid damage",
+    },
+    innerRing4: {
+      name: "Damage Avoidance I",
+      affix: "+1.5% chance to avoid damage",
+    },
+    innerRing5: {
+      name: "XP Protection I",
+      affix: "-10% XP lost upon death",
+    },
+    innerRing6: {
+      name: "XP Protection I",
+      affix: "-10% XP lost upon death",
+    },
+    midRing1: {
+      name: "Elemental Resistance II",
+      affix: "+5% Elemental Resistance",
+    },
+    midRing2: {
+      name: "Damage Avoidance II",
+      affix: "+3% chance to avoid damage",
+    },
+    midRing3: {
+      name: "XP Protection II",
+      affix: "-20% XP lost upon death",
+    },
+    effect1: "-5% additional damage taken",
+    effect2: "-5% additional damage taken\n-2% additional damage taken",
+    effect3:
+      "-5% additional damage taken\n+5% Movement Speed\n-2% additional damage taken",
+    effect4:
+      "-5% additional damage taken\n+5% Movement Speed\n-4% additional damage taken",
+    effect5:
+      "-5% additional damage taken\n+10% Movement Speed\n-4% additional damage taken",
+    effect6:
+      "-6% additional damage taken\n+10% Movement Speed\n-4% additional damage taken",
+  },
+  {
+    type: "Attack",
+    rarity: "Rare",
+    name: "Traveling Lizard - Green Leaf",
+    innerRing1: {
+      name: "Attack Damage I",
+      affix: "+12% Attack Damage",
+    },
+    innerRing2: {
+      name: "Attack Damage I",
+      affix: "+12% Attack Damage",
+    },
+    innerRing3: {
+      name: "Attack Critical Strike I",
+      affix: "+22% Attack Critical Strike Rating",
+    },
+    innerRing4: {
+      name: "Attack Critical Strike I",
+      affix: "+22% Attack Critical Strike Rating",
+    },
+    innerRing5: {
+      name: "Attack Speed I",
+      affix: "+4% Attack Speed",
+    },
+    innerRing6: {
+      name: "Attack Speed I",
+      affix: "+4% Attack Speed",
+    },
+    midRing1: {
+      name: "Attack Damage II",
+      affix: "+24% Attack Damage",
+    },
+    midRing2: {
+      name: "Attack Critical Strike II",
+      affix: "+45% Attack Critical Strike Rating",
+    },
+    midRing3: {
+      name: "Attack Speed II",
+      affix: "+8% Attack Speed",
+    },
+    effect1: "+5% additional damage; +5% additional Minion Damage",
+    effect2:
+      "+5% additional damage; +5% additional Minion Damage\n+2% additional damage",
+    effect3:
+      "+5% additional damage; +5% additional Minion Damage\n+3% additional Attack Damage dealt to Nearby enemies\n+2% additional damage",
+    effect4:
+      "+5% additional damage; +5% additional Minion Damage\n+3% additional Attack Damage dealt to Nearby enemies\n+4% additional damage",
+    effect5:
+      "+5% additional damage; +5% additional Minion Damage\n+6% additional Attack Damage dealt to Nearby enemies\n+4% additional damage",
+    effect6:
+      "+7% additional damage; +7% additional Minion Damage\n+6% additional Attack Damage dealt to Nearby enemies\n+4% additional damage",
+  },
+  {
+    type: "Survival",
+    rarity: "Rare",
+    name: "Traveling Lizard - Ocean",
+    innerRing1: {
+      name: "Max Energy Shield I",
+      affix: "+4% Max Energy Shield",
+    },
+    innerRing2: {
+      name: "Max Energy Shield I",
+      affix: "+4% Max Energy Shield",
+    },
+    innerRing3: {
+      name: "Mana Restoration I",
+      affix: "+15% Mana Regeneration Speed",
+    },
+    innerRing4: {
+      name: "Mana Restoration I",
+      affix: "+15% Mana Regeneration Speed",
+    },
+    innerRing5: {
+      name: "XP Bonus I",
+      affix: "+3% XP earned",
+    },
+    innerRing6: {
+      name: "XP Bonus I",
+      affix: "+3% XP earned",
+    },
+    midRing1: {
+      name: "Max Energy Shield II",
+      affix: "+8% Max Energy Shield",
+    },
+    midRing2: {
+      name: "Mana Restoration II",
+      affix: "+30% Mana Regeneration Speed",
+    },
+    midRing3: {
+      name: "XP Bonus II",
+      affix: "+6% XP earned",
+    },
+    effect1: "-5% additional damage taken",
+    effect2: "-5% additional damage taken\n-2% additional damage taken",
+    effect3:
+      "-5% additional damage taken\n+4% Energy Shield Charge Speed\n-2% additional damage taken",
+    effect4:
+      "-5% additional damage taken\n+4% Energy Shield Charge Speed\n-4% additional damage taken",
+    effect5:
+      "-5% additional damage taken\n+8% Energy Shield Charge Speed\n-4% additional damage taken",
+    effect6:
+      "-6% additional damage taken\n+8% Energy Shield Charge Speed\n-4% additional damage taken",
+  },
+  {
+    type: "Attack",
+    rarity: "Rare",
+    name: "Traveling Lizard - Violet",
+    innerRing1: {
+      name: "Projectile Damage I",
+      affix: "+14% Projectile Damage",
+    },
+    innerRing2: {
+      name: "Projectile Damage I",
+      affix: "+14% Projectile Damage",
+    },
+    innerRing3: {
+      name: "Projectile Speed I",
+      affix: "+6% Projectile Speed",
+    },
+    innerRing4: {
+      name: "Projectile Speed I",
+      affix: "+6% Projectile Speed",
+    },
+    innerRing5: {
+      name: "Multistrike I",
+      affix: "+22% Attack Critical Strike Rating",
+    },
+    innerRing6: {
+      name: "Multistrike I",
+      affix: "+22% Attack Critical Strike Rating",
+    },
+    midRing1: {
+      name: "Projectile Damage II",
+      affix: "+30% Projectile Damage",
+    },
+    midRing2: {
+      name: "Projectile Speed II",
+      affix: "+12% Projectile Speed",
+    },
+    midRing3: {
+      name: "Multistrike II",
+      affix: "+45% Attack Critical Strike Rating",
+    },
+    effect1: "+5% additional damage; +5% additional Minion Damage",
+    effect2:
+      "+5% additional damage; +5% additional Minion Damage\n+2% additional damage",
+    effect3:
+      "+5% additional damage; +5% additional Minion Damage\n+35 Attack Projectile Skill Critical Strike Rating against Distant enemies\n+2% additional damage",
+    effect4:
+      "+5% additional damage; +5% additional Minion Damage\n+35 Attack Projectile Skill Critical Strike Rating against Distant enemies\n+4% additional damage",
+    effect5:
+      "+5% additional damage; +5% additional Minion Damage\n+70 Attack Projectile Skill Critical Strike Rating against Distant enemies\n+4% additional damage",
+    effect6:
+      "+7% additional damage; +7% additional Minion Damage\n+70 Attack Projectile Skill Critical Strike Rating against Distant enemies\n+4% additional damage",
+  },
+  {
+    type: "Attack",
+    rarity: "Legendary",
+    name: "Valkyrie's Night Patrol",
+    innerRing1: {
+      name: "Attack Damage I",
+      affix: "+12% Attack Damage",
+    },
+    innerRing2: {
+      name: "Attack Damage I",
+      affix: "+12% Attack Damage",
+    },
+    innerRing3: {
+      name: "Attack Critical Strike I",
+      affix: "+22% Attack Critical Strike Rating",
+    },
+    innerRing4: {
+      name: "Attack Critical Strike I",
+      affix: "+22% Attack Critical Strike Rating",
+    },
+    innerRing5: {
+      name: "Attack Speed I",
+      affix: "+4% Attack Speed",
+    },
+    innerRing6: {
+      name: "Attack Speed I",
+      affix: "+4% Attack Speed",
+    },
+    midRing1: {
+      name: "Attack Damage II",
+      affix: "+24% Attack Damage",
+    },
+    midRing2: {
+      name: "Attack Critical Strike II",
+      affix: "+44% Attack Critical Strike Rating",
+    },
+    midRing3: {
+      name: "Attack Speed II",
+      affix: "+8% Attack Speed",
+    },
+    effect1: "Gains 1 stack of Valkyrie's Hymn for every 2% Max Mana consumed",
+    effect2:
+      "Gains 1 stack of Valkyrie's Hymn for every 2% Max Mana consumed\n+1 Max Valkyrie's Hymn Stacks",
+    effect3:
+      "Gains 1 stack of Valkyrie's Hymn for every 2% Max Mana consumed\n+1 Max Valkyrie's Hymn Stacks\n+4% Elemental Damage for every stack of Valkyrie's Hymn",
+    effect4:
+      "Gains 1 stack of Valkyrie's Hymn for every 2% Max Mana consumed\n+2 Max Valkyrie's Hymn Stacks\n+4% Elemental Damage for every stack of Valkyrie's Hymn",
+    effect5:
+      "Gains 1 stack of Valkyrie's Hymn for every 2% Max Mana consumed\n+2 Max Valkyrie's Hymn Stacks\n+8% Elemental Damage for every stack of Valkyrie's Hymn",
+    effect6:
+      "Gains 1 stack of Valkyrie's Hymn for every 2% Max Mana consumed\n+2 Max Valkyrie's Hymn Stacks\n+8% Elemental Damage for every stack of Valkyrie's Hymn\nUpon reaching Max Valkyrie's Hymn Stacks, +10% Elemental Resistance Penetration",
+  },
+  {
+    type: "Survival",
+    rarity: "Legendary",
+    name: "Warbler of Plum Blossoms",
+    innerRing1: {
+      name: "Elemental Resistance I",
+      affix: "+2.5% Elemental Resistance",
+    },
+    innerRing2: {
+      name: "Elemental Resistance I",
+      affix: "+2.5% Elemental Resistance",
+    },
+    innerRing3: {
+      name: "Mana Restoration I",
+      affix: "+15% Mana Regeneration Speed",
+    },
+    innerRing4: {
+      name: "Mana Restoration I",
+      affix: "+15% Mana Regeneration Speed",
+    },
+    innerRing5: {
+      name: "XP Bonus I",
+      affix: "+3% XP earned",
+    },
+    innerRing6: {
+      name: "XP Bonus I",
+      affix: "+3% XP earned",
+    },
+    midRing1: {
+      name: "Elemental Resistance II",
+      affix: "+5% Elemental Resistance",
+    },
+    midRing2: {
+      name: "Mana Restoration II",
+      affix: "+30% Mana Regeneration Speed",
+    },
+    midRing3: {
+      name: "XP Bonus II",
+      affix: "+6% XP earned",
+    },
+    effect1:
+      "+10% Elemental Resistance\nConverts 2% of Physical Damage taken to random Elemental Damage",
+    effect2:
+      "+10% Elemental Resistance\nConverts 2% of Physical Damage taken to random Elemental Damage\n-2% additional damage taken",
+    effect3:
+      "+10% Elemental Resistance\nConverts 2% of Physical Damage taken to random Elemental Damage\nConverts 4% of Physical Damage taken to random Elemental Damage\n-2% additional damage taken",
+    effect4:
+      "+10% Elemental Resistance\nConverts 2% of Physical Damage taken to random Elemental Damage\nConverts 4% of Physical Damage taken to random Elemental Damage\n-4% additional damage taken",
+    effect5:
+      "+10% Elemental Resistance\nConverts 2% of Physical Damage taken to random Elemental Damage\nConverts 8% of Physical Damage taken to random Elemental Damage\n-4% additional damage taken",
+    effect6:
+      "+14% Elemental Resistance\nConverts 3% of Physical Damage taken to random Elemental Damage\nConverts 8% of Physical Damage taken to random Elemental Damage\n-4% additional damage taken",
+  },
+  {
+    type: "Summon",
+    rarity: "Legendary",
+    name: "Whisperwind Leaves",
+    innerRing1: {
+      name: "Servant Damage I",
+      affix: "+15% Minion Damage",
+    },
+    innerRing2: {
+      name: "Servant Damage I",
+      affix: "+15% Minion Damage",
+    },
+    innerRing3: {
+      name: "Servant Speed I",
+      affix: "+4% Minion Attack and Cast Speed",
+    },
+    innerRing4: {
+      name: "Servant Speed I",
+      affix: "+4% Minion Attack and Cast Speed",
+    },
+    innerRing5: {
+      name: "Servant Life I",
+      affix: "+4% Minion Max Life",
+    },
+    innerRing6: {
+      name: "Servant Life I",
+      affix: "+4% Minion Max Life",
+    },
+    midRing1: {
+      name: "Servant Damage II",
+      affix: "+30% Minion Damage",
+    },
+    midRing2: {
+      name: "Servant Speed II",
+      affix: "+8% Minion Attack and Cast Speed",
+    },
+    midRing3: {
+      name: "Servant Life II",
+      affix: "+8% Minion Max Life",
+    },
+    effect1:
+      "+22% additional damage for recently summoned Minions\n+50 Critical Strike Rating for recently summoned Minions",
+    effect2:
+      "+22% additional damage for recently summoned Minions\n+50 Critical Strike Rating for recently summoned Minions\n+2% additional Minion Damage",
+    effect3:
+      "+22% additional damage for recently summoned Minions\n+50 Critical Strike Rating for recently summoned Minions\n+80 Critical Strike Rating for recently summoned Minions\n+2% additional Minion Damage",
+    effect4:
+      "+22% additional damage for recently summoned Minions\n+50 Critical Strike Rating for recently summoned Minions\n+80 Critical Strike Rating for recently summoned Minions\n+4% additional Minion Damage",
+    effect5:
+      "+22% additional damage for recently summoned Minions\n+50 Critical Strike Rating for recently summoned Minions\n+160 Critical Strike Rating for recently summoned Minions\n+4% additional Minion Damage",
+    effect6:
+      "+30% additional damage for recently summoned Minions\n+60 Critical Strike Rating for recently summoned Minions\n+160 Critical Strike Rating for recently summoned Minions\n+4% additional Minion Damage",
+  },
+  {
+    type: "Summon",
+    rarity: "Rare",
+    name: "Winter Darer",
+    innerRing1: {
+      name: "Servant Damage I",
+      affix: "+15% Minion Damage",
+    },
+    innerRing2: {
+      name: "Servant Damage I",
+      affix: "+15% Minion Damage",
+    },
+    innerRing3: {
+      name: "Servant Speed I",
+      affix: "+4% Minion Attack and Cast Speed",
+    },
+    innerRing4: {
+      name: "Servant Speed I",
+      affix: "+4% Minion Attack and Cast Speed",
+    },
+    innerRing5: {
+      name: "Servant Life I",
+      affix: "+4% Minion Max Life",
+    },
+    innerRing6: {
+      name: "Servant Life I",
+      affix: "+4% Minion Max Life",
+    },
+    midRing1: {
+      name: "Servant Damage II",
+      affix: "+30% Minion Damage",
+    },
+    midRing2: {
+      name: "Servant Speed II",
+      affix: "+8% Minion Attack and Cast Speed",
+    },
+    midRing3: {
+      name: "Servant Life II",
+      affix: "+8% Minion Max Life",
+    },
+    effect1: "+5% additional damage; +5% additional Minion Damage",
+    effect2:
+      "+5% additional damage; +5% additional Minion Damage\n+2% additional Minion Damage",
+    effect3:
+      "+5% additional damage; +5% additional Minion Damage\n+5% Minion Attack and Cast Speed for 4 s when your Synthetic Troops deal Double Damage\n+2% additional Minion Damage",
+    effect4:
+      "+5% additional damage; +5% additional Minion Damage\n+5% Minion Attack and Cast Speed for 4 s when your Synthetic Troops deal Double Damage\n+4% additional Minion Damage",
+    effect5:
+      "+5% additional damage; +5% additional Minion Damage\n+10% Minion Attack and Cast Speed for 4 s when your Synthetic Troops deal Double Damage\n+4% additional Minion Damage",
+    effect6:
+      "+7% additional damage; +7% additional Minion Damage\n+10% Minion Attack and Cast Speed for 4 s when your Synthetic Troops deal Double Damage\n+4% additional Minion Damage",
+  },
+  {
+    type: "Fire",
+    rarity: "Rare",
+    name: "Winter Darer - Lava",
+    innerRing1: {
+      name: "Fire Damage I",
+      affix: "+14% Fire Damage",
+    },
+    innerRing2: {
+      name: "Fire Damage I",
+      affix: "+14% Fire Damage",
+    },
+    innerRing3: {
+      name: "Fire Penetration I",
+      affix: "+2.5% Fire Penetration",
+    },
+    innerRing4: {
+      name: "Fire Penetration I",
+      affix: "+2.5% Fire Penetration",
+    },
+    innerRing5: {
+      name: "Fire Area I",
+      affix: "+14% Fire Skill Area",
+    },
+    innerRing6: {
+      name: "Fire Area I",
+      affix: "+14% Fire Skill Area",
+    },
+    midRing1: {
+      name: "Fire Damage II",
+      affix: "+28% Fire Damage",
+    },
+    midRing2: {
+      name: "Fire Penetration II",
+      affix: "+5% Fire Penetration",
+    },
+    midRing3: {
+      name: "Fire Area II",
+      affix: "+28% Fire Skill Area",
+    },
+    effect1: "+5% additional damage; +5% additional Minion Damage",
+    effect2:
+      "+5% additional damage; +5% additional Minion Damage\n+3% additional Fire Damage",
+    effect3:
+      "+5% additional damage; +5% additional Minion Damage\n+3% additional Fire Damage\n+2% additional damage",
+    effect4:
+      "+5% additional damage; +5% additional Minion Damage\n+6% additional Fire Damage\n+2% additional damage",
+    effect5:
+      "+5% additional damage; +5% additional Minion Damage\n+6% additional Fire Damage\n+4% additional damage",
+    effect6:
+      "+7% additional damage; +7% additional Minion Damage\n+6% additional Fire Damage\n+4% additional damage",
+  },
+  {
+    type: "Survival",
+    rarity: "Rare",
+    name: "Winter Darer - Rock",
+    innerRing1: {
+      name: "Elemental Resistance I",
+      affix: "+2.5% Elemental Resistance",
+    },
+    innerRing2: {
+      name: "Elemental Resistance I",
+      affix: "+2.5% Elemental Resistance",
+    },
+    innerRing3: {
+      name: "Mana Restoration I",
+      affix: "+15% Mana Regeneration Speed",
+    },
+    innerRing4: {
+      name: "Mana Restoration I",
+      affix: "+15% Mana Regeneration Speed",
+    },
+    innerRing5: {
+      name: "XP Bonus I",
+      affix: "+3% XP earned",
+    },
+    innerRing6: {
+      name: "XP Bonus I",
+      affix: "+3% XP earned",
+    },
+    midRing1: {
+      name: "Elemental Resistance II",
+      affix: "+5% Elemental Resistance",
+    },
+    midRing2: {
+      name: "Mana Restoration II",
+      affix: "+30% Mana Regeneration Speed",
+    },
+    midRing3: {
+      name: "XP Bonus II",
+      affix: "+6% XP earned",
+    },
+    effect1: "-5% additional damage taken",
+    effect2: "-5% additional damage taken\n-2% additional damage taken",
+    effect3:
+      "-5% additional damage taken\nConverts 2% of Physical Damage taken to random Elemental Damage\n-2% additional damage taken",
+    effect4:
+      "-5% additional damage taken\nConverts 2% of Physical Damage taken to random Elemental Damage\n-4% additional damage taken",
+    effect5:
+      "-5% additional damage taken\nConverts 4% of Physical Damage taken to random Elemental Damage\n-4% additional damage taken",
+    effect6:
+      "-6% additional damage taken\nConverts 4% of Physical Damage taken to random Elemental Damage\n-4% additional damage taken",
+  },
+  {
+    type: "Spell",
+    rarity: "Rare",
+    name: "Winter Darer - Shallow Sea",
+    innerRing1: {
+      name: "Double Spell I",
+      affix: "+2% chance for Spells to deal Double Damage",
+    },
+    innerRing2: {
+      name: "Double Spell I",
+      affix: "+2% chance for Spells to deal Double Damage",
+    },
+    innerRing3: {
+      name: "Spell Damage I",
+      affix: "+12% Spell Damage",
+    },
+    innerRing4: {
+      name: "Spell Damage I",
+      affix: "+12% Spell Damage",
+    },
+    innerRing5: {
+      name: "Cast Speed I",
+      affix: "+4% Cast Speed",
+    },
+    innerRing6: {
+      name: "Cast Speed I",
+      affix: "+4% Cast Speed",
+    },
+    midRing1: {
+      name: "Double Spell II",
+      affix: "+4% chance for Spells to deal Double Damage",
+    },
+    midRing2: {
+      name: "Spell Damage II",
+      affix: "+24% Spell Damage",
+    },
+    midRing3: {
+      name: "Cast Speed II",
+      affix: "+8% Cast Speed",
+    },
+    effect1: "+5% additional damage; +5% additional Minion Damage",
+    effect2:
+      "+5% additional damage; +5% additional Minion Damage\n+2% additional damage",
+    effect3:
+      "+5% additional damage; +5% additional Minion Damage\n2.5% Movement Speed per second when an Elite is nearby, up to +3 stack(s)\n+2% additional damage",
+    effect4:
+      "+5% additional damage; +5% additional Minion Damage\n2.5% Movement Speed per second when an Elite is nearby, up to +3 stack(s)\n+4% additional damage",
+    effect5:
+      "+5% additional damage; +5% additional Minion Damage\n+5% Movement Speed per second when an Elite is nearby, up to +3 stack(s)\n+4% additional damage",
+    effect6:
+      "+7% additional damage; +7% additional Minion Damage\n+5% Movement Speed per second when an Elite is nearby, up to +3 stack(s)\n+4% additional damage",
+  },
+  {
+    type: "Attack",
+    rarity: "Rare",
+    name: "Winter Darer - Sky",
+    innerRing1: {
+      name: "Damage I",
+      affix: "+10% damage",
+    },
+    innerRing2: {
+      name: "Damage I",
+      affix: "+10% damage",
+    },
+    innerRing3: {
+      name: "Cursed Enemy Weakening I",
+      affix: "-2% additional damage taken from Cursed enemies",
+    },
+    innerRing4: {
+      name: "Cursed Enemy Weakening I",
+      affix: "-2% additional damage taken from Cursed enemies",
+    },
+    innerRing5: {
+      name: "Curse Effect I",
+      affix: "+1.5% curse effect",
+    },
+    innerRing6: {
+      name: "Curse Effect I",
+      affix: "+1.5% curse effect",
+    },
+    midRing1: {
+      name: "Damage II",
+      affix: "+20% damage",
+    },
+    midRing2: {
+      name: "Cursed Enemy Weakening II",
+      affix: "-4% additional damage taken from Cursed enemies",
+    },
+    midRing3: {
+      name: "Curse Effect II",
+      affix: "+3% curse effect",
+    },
+    effect1: "+5% additional damage; +5% additional Minion Damage",
+    effect2:
+      "+5% additional damage; +5% additional Minion Damage\n+2% additional damage",
+    effect3:
+      "+5% additional damage; +5% additional Minion Damage\n+4% additional damage against Cursed enemies\n+2% additional damage",
+    effect4:
+      "+5% additional damage; +5% additional Minion Damage\n+4% additional damage against Cursed enemies\n+4% additional damage",
+    effect5:
+      "+5% additional damage; +5% additional Minion Damage\n+8% additional damage against Cursed enemies\n+4% additional damage",
+    effect6:
+      "+7% additional damage; +7% additional Minion Damage\n+8% additional damage against Cursed enemies\n+4% additional damage",
+  },
+  {
+    type: "Attack",
+    rarity: "Legendary",
+    name: "Witch Antelope of Lust",
+    innerRing1: {
+      name: "Damage I",
+      affix: "+12% damage +12% Minion Damage",
+    },
+    innerRing2: {
+      name: "Damage I",
+      affix: "+12% damage +12% Minion Damage",
+    },
+    innerRing3: {
+      name: "Erosion Resistance I",
+      affix: "+6% Erosion Resistance",
+    },
+    innerRing4: {
+      name: "Erosion Resistance I",
+      affix: "+6% Erosion Resistance",
+    },
+    innerRing5: {
+      name: "Crowd Control Effects II",
+      affix: "+5% crowd control effects",
+    },
+    innerRing6: {
+      name: "Crowd Control Effects II",
+      affix: "+5% crowd control effects",
+    },
+    midRing1: {
+      name: "Damage II",
+      affix: "+24% damage +24% Minion Damage",
+    },
+    midRing2: {
+      name: "Erosion Resistance II",
+      affix: "+12% Erosion Resistance",
+    },
+    midRing3: {
+      name: "Crowd Control Effects II",
+      affix: "+10% crowd control effects",
+    },
+    effect1:
+      "Inflicts Paralysis or Weaken on enemies within 10m in turn. Cooldown: 5 s",
+    effect2:
+      "Inflicts Paralysis or Weaken on enemies within 10m in turn. Cooldown: 5 s\n+2% additional damage",
+    effect3:
+      "Inflicts Paralysis or Weaken on enemies within 10m in turn. Cooldown: 5 s\nFor every type of crowd control effect the enemy has, you and your Minions deal 1.5% additional damage to them\n+2% additional damage",
+    effect4:
+      "Inflicts Paralysis or Weaken on enemies within 10m in turn. Cooldown: 5 s\nFor every type of crowd control effect the enemy has, you and your Minions deal 1.5% additional damage to them\n+4% additional damage",
+    effect5:
+      "Inflicts Paralysis or Weaken on enemies within 10m in turn. Cooldown: 5 s\nFor every type of crowd control effect the enemy has, you and your Minions deal +3% additional damage to them\n+4% additional damage",
+    effect6:
+      "Inflicts Paralysis or Weaken on enemies within 10m in turn. Cooldown: 4 s\nFor every type of crowd control effect the enemy has, you and your Minions deal +3% additional damage to them\n+4% additional damage",
   },
 ] as const satisfies readonly Pactspirit[];
 
