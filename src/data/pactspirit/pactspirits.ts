@@ -4111,8 +4111,7 @@ export const Pactspirits = [
       name: "XP Bonus II",
       affix: "+6% XP earned",
     },
-    affix1:
-      "+10% additional Max Energy Shield\n+6% Energy Shield Charge Speed",
+    affix1: "+10% additional Max Energy Shield\n+6% Energy Shield Charge Speed",
     affix2:
       "+10% additional Max Energy Shield\n+6% Energy Shield Charge Speed\n-2% additional damage taken",
     affix3:

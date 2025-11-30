@@ -22,10 +22,7 @@ interface PactspiritTabProps {
     ringSlot: RingSlotKey,
     destiny: InstalledDestinyResult,
   ) => void;
-  onRevertRing: (
-    slotIndex: PactspiritSlotIndex,
-    ringSlot: RingSlotKey,
-  ) => void;
+  onRevertRing: (slotIndex: PactspiritSlotIndex, ringSlot: RingSlotKey) => void;
 }
 
 export const PactspiritTab: React.FC<PactspiritTabProps> = ({

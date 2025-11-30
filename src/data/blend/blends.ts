@@ -259,8 +259,7 @@ export const Blends = [
   },
   {
     type: "Medium",
-    affix:
-      "+12% additional max damage\n+12% additional Max Damage for Minions",
+    affix: "+12% additional max damage\n+12% additional Max Damage for Minions",
   },
   {
     type: "Medium",

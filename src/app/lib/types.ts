@@ -4,7 +4,12 @@ export type GearSlot = keyof RawGearPage;
 
 export type TreeSlot = "tree1" | "tree2" | "tree3" | "tree4";
 
-export type ActivePage = "equipment" | "talents" | "skills" | "hero" | "pactspirit";
+export type ActivePage =
+  | "equipment"
+  | "talents"
+  | "skills"
+  | "hero"
+  | "pactspirit";
 
 export interface AffixSlotState {
   affixIndex: number | null;

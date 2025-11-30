@@ -13,11 +13,13 @@ pnpm test         # Run all tests
 pnpm test <file>  # Run single test file
 pnpm typecheck    # TypeScript type checking
 pnpm lint         # ESLint
+pnpm format       # Prettier formatting
 ```
 
 ## Architecture
 
-- **UI** ([src/app/](src/app/)) - React components, localStorage state
+- **UI Components** ([src/app/components/](src/app/components/)) - React components organized by feature (equipment, talents, skills, hero, pactspirit)
+- **UI Lib** ([src/app/lib/](src/app/lib/)) - Shared types, constants, storage utilities, build-code encoding
 - **Calculation Engine** ([src/tli/offense.ts](src/tli/offense.ts)) - DPS/stat calculations
 - **Mod Parser** ([src/tli/mod_parser.ts](src/tli/mod_parser.ts)) - String → typed Mod conversion
 - **Data Models** ([src/tli/core.ts](src/tli/core.ts), [src/tli/mod.ts](src/tli/mod.ts)) - Type definitions

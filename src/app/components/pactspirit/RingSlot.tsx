@@ -34,7 +34,11 @@ export const RingSlot: React.FC<RingSlotProps> = ({
   let destinyType: string | undefined;
 
   if (hasDestiny && ringState.installedDestiny) {
-    const { destinyName, destinyType: dType, resolvedAffix } = ringState.installedDestiny;
+    const {
+      destinyName,
+      destinyType: dType,
+      resolvedAffix,
+    } = ringState.installedDestiny;
     destinyType = dType;
     displayName = destinyName;
     displayAffix = resolvedAffix;

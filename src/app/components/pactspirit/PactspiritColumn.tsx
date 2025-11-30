@@ -128,7 +128,10 @@ export const PactspiritColumn: React.FC<PactspiritColumnProps> = ({
         <div className="space-y-2">
           <h4 className="text-sm font-medium text-zinc-400 mb-2">Ring Slots</h4>
           {RING_DISPLAY_ORDER.map((ringSlot) => {
-            const originalRing = getPactspiritRing(selectedPactspirit, ringSlot);
+            const originalRing = getPactspiritRing(
+              selectedPactspirit,
+              ringSlot,
+            );
             return (
               <RingSlot
                 key={ringSlot}
