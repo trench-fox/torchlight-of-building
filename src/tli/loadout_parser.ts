@@ -1,14 +1,11 @@
 import {
   Affix,
-  Gear,
-  GearPage,
+  ParsedGear,
+  ParsedGearPage,
   Loadout,
-  RawGear,
-  RawLoadout,
-  RawTalentPage,
-  RawTalentTree,
-  TalentPage,
+  ParsedTalentPage,
 } from "./core";
+import { Gear, SaveData, TalentPage, TalentTree } from "@/src/app/lib/save-data";
 import { Mod } from "./mod";
 import { parseMod } from "./mod_parser";
 import { readFileSync } from "fs";
@@ -82,14 +79,14 @@ const parseAffixString = (affixString: string): Affix => {
   };
 };
 
-const parseGear = (rawGear: RawGear): Gear => {
+const parseGear = (gear: Gear): ParsedGear => {
   return {
-    gearType: rawGear.gearType,
-    affixes: rawGear.affixes.map(parseAffixString),
+    gearType: gear.gearType,
+    affixes: gear.affixes.map(parseAffixString),
   };
 };
 
-const parseTalentTree = (rawTree: RawTalentTree): Affix[] => {
+const parseTalentTree = (rawTree: TalentTree): Affix[] => {
   // Check if tree name exists in our lookup map
   const treeFileName = TREE_NAME_TO_FILE[rawTree.name];
   if (!treeFileName) {
@@ -145,7 +142,7 @@ const parseTalentTree = (rawTree: RawTalentTree): Affix[] => {
   return affixes;
 };
 
-const parseTalentPage = (rawTalentPage: RawTalentPage): TalentPage => {
+const parseTalentPage = (rawTalentPage: TalentPage): ParsedTalentPage => {
   const allAffixes = [
     ...(rawTalentPage.tree1 ? parseTalentTree(rawTalentPage.tree1) : []),
     ...(rawTalentPage.tree2 ? parseTalentTree(rawTalentPage.tree2) : []),
@@ -158,19 +155,19 @@ const parseTalentPage = (rawTalentPage: RawTalentPage): TalentPage => {
   };
 };
 
-export const parse_loadout = (rawLoadout: RawLoadout): Loadout => {
-  const gearPage: GearPage = {};
+export const parse_loadout = (saveData: SaveData): Loadout => {
+  const gearPage: ParsedGearPage = {};
 
   // Parse each gear slot in the equipment page
-  for (const [slot, rawGear] of Object.entries(rawLoadout.equipmentPage)) {
-    if (rawGear) {
-      gearPage[slot as keyof GearPage] = parseGear(rawGear);
+  for (const [slot, gear] of Object.entries(saveData.equipmentPage)) {
+    if (gear) {
+      gearPage[slot as keyof ParsedGearPage] = parseGear(gear);
     }
   }
 
   return {
     equipmentPage: gearPage,
-    talentPage: parseTalentPage(rawLoadout.talentPage),
+    talentPage: parseTalentPage(saveData.talentPage),
     divinityPage: { slates: [] },
     customConfiguration: [],
   };

@@ -1,4 +1,4 @@
-import { RawGear } from "@/src/tli/core";
+import { Gear } from "./save-data";
 import { EquipmentSlot, EquipmentType } from "@/src/tli/gear_data_types";
 import { ALL_GEAR_AFFIXES } from "@/src/tli/all_affixes";
 import {
@@ -21,9 +21,9 @@ export const getValidEquipmentTypes = (slot: GearSlot): EquipmentType[] => {
 };
 
 export const getCompatibleItems = (
-  itemsList: RawGear[],
+  itemsList: Gear[],
   slot: GearSlot,
-): RawGear[] => {
+): Gear[] => {
   const validTypes = SLOT_TO_VALID_EQUIPMENT_TYPES[slot];
   return itemsList.filter(
     (item) => item.equipmentType && validTypes.includes(item.equipmentType),
@@ -32,7 +32,7 @@ export const getCompatibleItems = (
 
 export const getGearTypeFromEquipmentType = (
   equipmentType: EquipmentType,
-): RawGear["gearType"] => {
+): Gear["gearType"] => {
   if (equipmentType.includes("Helmet")) return "helmet";
   if (equipmentType.includes("Chest")) return "chest";
   if (equipmentType.includes("Gloves")) return "gloves";
@@ -47,7 +47,7 @@ export const getGearTypeFromEquipmentType = (
 
 export const getGearTypeFromEquipmentSlot = (
   equipmentSlot: EquipmentSlot,
-): RawGear["gearType"] => {
+): Gear["gearType"] => {
   switch (equipmentSlot) {
     case "Helmet":
       return "helmet";

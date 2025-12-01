@@ -1,11 +1,11 @@
 import { deflateSync, inflateSync, strToU8, strFromU8 } from "fflate";
-import { RawLoadout } from "@/src/tli/core";
+import { SaveData } from "./save-data";
 
 const BUILD_CODE_VERSION = 1;
 
 interface VersionedLoadout {
   v: number;
-  d: RawLoadout;
+  d: SaveData;
 }
 
 const toBase64Url = (data: Uint8Array): string => {
@@ -27,14 +27,14 @@ const fromBase64Url = (str: string): Uint8Array => {
   return bytes;
 };
 
-export const encodeBuildCode = (loadout: RawLoadout): string => {
+export const encodeBuildCode = (loadout: SaveData): string => {
   const versioned: VersionedLoadout = { v: BUILD_CODE_VERSION, d: loadout };
   const json = JSON.stringify(versioned);
   const compressed = deflateSync(strToU8(json));
   return toBase64Url(compressed);
 };
 
-export const decodeBuildCode = (code: string): RawLoadout | null => {
+export const decodeBuildCode = (code: string): SaveData | null => {
   try {
     const compressed = fromBase64Url(code);
     const json = strFromU8(inflateSync(compressed));

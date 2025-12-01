@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { RawRingSlotState } from "@/src/tli/core";
+import { RingSlotState } from "@/src/app/lib/save-data";
 import { PactspiritRingDetails } from "@/src/data/pactspirit/types";
 import { RingSlotKey } from "../../lib/types";
 import { isInnerRing } from "../../lib/pactspirit-utils";
@@ -10,7 +10,7 @@ import { RingTooltip } from "./RingTooltip";
 interface RingSlotProps {
   ringSlot: RingSlotKey;
   originalRing: PactspiritRingDetails;
-  ringState: RawRingSlotState;
+  ringState: RingSlotState;
   onInstallClick: () => void;
   onRevert: () => void;
 }

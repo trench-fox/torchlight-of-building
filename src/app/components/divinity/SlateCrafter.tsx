@@ -2,15 +2,14 @@
 
 import { useState, useEffect, useMemo } from "react";
 import {
-  RawDivinitySlate,
+  DivinitySlate,
   DIVINITY_GODS,
   SLATE_SHAPES,
   DivinityGod,
   SlateShape,
-  DivinityAffixType,
   Rotation,
   ROTATIONS,
-} from "@/src/tli/core";
+} from "@/src/app/lib/save-data";
 import { generateItemId } from "@/src/app/lib/storage";
 import {
   getDivinityAffixes,
@@ -25,9 +24,9 @@ import {
 } from "@/src/app/components/ui/SearchableSelect";
 
 interface SlateCrafterProps {
-  editingSlate: RawDivinitySlate | undefined;
+  editingSlate: DivinitySlate | undefined;
   isPlaced?: boolean;
-  onSave: (slate: RawDivinitySlate) => void;
+  onSave: (slate: DivinitySlate) => void;
   onCancel?: () => void;
   onRemoveFromGrid?: () => void;
 }
@@ -58,7 +57,7 @@ export const SlateCrafter: React.FC<SlateCrafterProps> = ({
       setFlippedH(editingSlate.flippedH);
       setFlippedV(editingSlate.flippedV);
       const affixes: DivinityAffix[] = editingSlate.affixes.map(
-        (effect, i) => ({
+        (effect: string, i: number) => ({
           effect,
           type: editingSlate.affixTypes[i],
         }),
@@ -111,7 +110,7 @@ export const SlateCrafter: React.FC<SlateCrafterProps> = ({
   };
 
   const handleSave = () => {
-    const slate: RawDivinitySlate = {
+    const slate: DivinitySlate = {
       id: editingSlate?.id ?? generateItemId(),
       god,
       shape,

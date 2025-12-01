@@ -1,11 +1,11 @@
 "use client";
 
-import { RawDivinitySlate } from "@/src/tli/core";
+import { DivinitySlate } from "@/src/app/lib/save-data";
 import { getSlateDisplayName } from "@/src/app/lib/divinity-utils";
 import { SlatePreview } from "./SlatePreview";
 
 interface SlateInventoryItemProps {
-  slate: RawDivinitySlate;
+  slate: DivinitySlate;
   isPlaced: boolean;
   onPlace: () => void;
   onEdit: () => void;

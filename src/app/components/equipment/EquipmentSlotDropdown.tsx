@@ -1,4 +1,4 @@
-import { RawGear } from "@/src/tli/core";
+import { Gear } from "@/src/app/lib/save-data";
 import { GearSlot } from "../../lib/types";
 import { SearchableSelect } from "@/src/app/components/ui/SearchableSelect";
 
@@ -6,7 +6,7 @@ interface EquipmentSlotDropdownProps {
   slot: GearSlot;
   label: string;
   selectedItemId: string | null;
-  compatibleItems: RawGear[];
+  compatibleItems: Gear[];
   onSelectItem: (slot: GearSlot, itemId: string | null) => void;
 }
 

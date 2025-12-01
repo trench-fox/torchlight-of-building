@@ -5,11 +5,11 @@ import { DmgModType } from "./constants";
 import {
   Affix,
   Loadout,
-  GearPage,
-  Gear,
-  TalentPage,
-  DivinityPage,
-  DivinitySlate,
+  ParsedGearPage,
+  ParsedGear,
+  ParsedTalentPage,
+  ParsedDivinityPage,
+  ParsedDivinitySlate,
   Configuration,
   DmgRange,
 } from "./core";

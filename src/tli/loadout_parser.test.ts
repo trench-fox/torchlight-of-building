@@ -1,14 +1,14 @@
 import { describe, expect, it } from "vitest";
 import { parse_loadout } from "./loadout_parser";
 import {
-  RawLoadout,
-  RawSkillPage,
-  RawHeroPage,
-  RawPactspiritPage,
-  RawDivinityPage,
-} from "./core";
+  SaveData,
+  SkillPage,
+  HeroPage,
+  PactspiritPage,
+  DivinityPage,
+} from "@/src/app/lib/save-data";
 
-const createEmptyHeroPage = (): RawHeroPage => ({
+const createEmptyHeroPage = (): HeroPage => ({
   selectedHero: undefined,
   traits: {
     level1: undefined,
@@ -23,7 +23,7 @@ const createEmptyHeroPage = (): RawHeroPage => ({
   },
 });
 
-const createEmptySkillPage = (): RawSkillPage => ({
+const createEmptySkillPage = (): SkillPage => ({
   activeSkill1: { enabled: true, supportSkills: {} },
   activeSkill2: { enabled: true, supportSkills: {} },
   activeSkill3: { enabled: true, supportSkills: {} },
@@ -50,19 +50,19 @@ const createEmptyPactspiritSlot = () => ({
   },
 });
 
-const createEmptyPactspiritPage = (): RawPactspiritPage => ({
+const createEmptyPactspiritPage = (): PactspiritPage => ({
   slot1: createEmptyPactspiritSlot(),
   slot2: createEmptyPactspiritSlot(),
   slot3: createEmptyPactspiritSlot(),
 });
 
-const createEmptyDivinityPage = (): RawDivinityPage => ({
+const createEmptyDivinityPage = (): DivinityPage => ({
   placedSlates: [],
 });
 
 describe("parse_loadout", () => {
   it("should parse a simple loadout with single-line affixes", () => {
-    const rawLoadout: RawLoadout = {
+    const rawLoadout: SaveData = {
       equipmentPage: {
         helmet: {
           id: "test-helmet-1",
@@ -115,7 +115,7 @@ describe("parse_loadout", () => {
   });
 
   it("should parse affixes with multiple mods separated by newlines", () => {
-    const rawLoadout: RawLoadout = {
+    const rawLoadout: SaveData = {
       equipmentPage: {
         chest: {
           id: "test-chest-1",
@@ -169,7 +169,7 @@ describe("parse_loadout", () => {
   });
 
   it("should handle unrecognized mods by excluding them from mods array", () => {
-    const rawLoadout: RawLoadout = {
+    const rawLoadout: SaveData = {
       equipmentPage: {
         gloves: {
           id: "test-gloves-1",
@@ -219,7 +219,7 @@ describe("parse_loadout", () => {
   });
 
   it("should handle empty affixes array", () => {
-    const rawLoadout: RawLoadout = {
+    const rawLoadout: SaveData = {
       equipmentPage: {
         boots: {
           id: "test-boots-1",
@@ -249,7 +249,7 @@ describe("parse_loadout", () => {
   });
 
   it("should handle multiple gear pieces", () => {
-    const rawLoadout: RawLoadout = {
+    const rawLoadout: SaveData = {
       equipmentPage: {
         helmet: {
           id: "test-helmet-2",
@@ -297,7 +297,7 @@ describe("parse_loadout", () => {
   });
 
   it("should initialize empty talentPage, divinityPage, and customConfiguration", () => {
-    const rawLoadout: RawLoadout = {
+    const rawLoadout: SaveData = {
       equipmentPage: {},
       talentPage: {
         tree1: { name: "Warrior", allocatedNodes: [] },
@@ -322,7 +322,7 @@ describe("parse_loadout", () => {
   });
 
   it("should handle affixes with empty lines", () => {
-    const rawLoadout: RawLoadout = {
+    const rawLoadout: SaveData = {
       equipmentPage: {
         belt: {
           id: "test-belt-1",
@@ -357,7 +357,7 @@ describe("parse_loadout", () => {
 
 describe("talent tree parsing", () => {
   it("should parse a single talent node with 1 point", () => {
-    const rawLoadout: RawLoadout = {
+    const rawLoadout: SaveData = {
       equipmentPage: {},
       talentPage: {
         tree1: {
@@ -392,7 +392,7 @@ describe("talent tree parsing", () => {
   });
 
   it("should multiply mod values by allocated points", () => {
-    const rawLoadout: RawLoadout = {
+    const rawLoadout: SaveData = {
       equipmentPage: {},
       talentPage: {
         tree1: {
@@ -425,7 +425,7 @@ describe("talent tree parsing", () => {
   });
 
   it("should parse multi-line affixes in talent nodes", () => {
-    const rawLoadout: RawLoadout = {
+    const rawLoadout: SaveData = {
       equipmentPage: {},
       talentPage: {
         tree1: {
@@ -464,7 +464,7 @@ describe("talent tree parsing", () => {
   });
 
   it("should parse multiple talent nodes from multiple trees", () => {
-    const rawLoadout: RawLoadout = {
+    const rawLoadout: SaveData = {
       equipmentPage: {},
       talentPage: {
         tree1: {
@@ -502,7 +502,7 @@ describe("talent tree parsing", () => {
   });
 
   it("should throw error for unknown tree name", () => {
-    const rawLoadout: RawLoadout = {
+    const rawLoadout: SaveData = {
       equipmentPage: {},
       talentPage: {
         tree1: {
@@ -528,7 +528,7 @@ describe("talent tree parsing", () => {
   });
 
   it("should throw error for invalid node coordinates", () => {
-    const rawLoadout: RawLoadout = {
+    const rawLoadout: SaveData = {
       equipmentPage: {},
       talentPage: {
         tree1: {
@@ -556,7 +556,7 @@ describe("talent tree parsing", () => {
   it("should handle unrecognized mods in talent nodes", () => {
     // This test uses a node that may have some unrecognized mods
     // The parser should keep the raw string but filter out unparseable mods
-    const rawLoadout: RawLoadout = {
+    const rawLoadout: SaveData = {
       equipmentPage: {},
       talentPage: {
         tree1: {

@@ -1,9 +1,9 @@
 import {
   SlateShape,
   Rotation,
-  RawDivinitySlate,
+  DivinitySlate,
   PlacedSlate,
-} from "@/src/tli/core";
+} from "./save-data";
 
 export const SHAPE_CELLS: Record<SlateShape, [number, number][]> = {
   O: [
@@ -113,7 +113,7 @@ export const getTransformedCells = (
 };
 
 export const getOccupiedCells = (
-  slate: RawDivinitySlate,
+  slate: DivinitySlate,
   placed: PlacedSlate,
 ): [number, number][] => {
   const cells = getTransformedCells(

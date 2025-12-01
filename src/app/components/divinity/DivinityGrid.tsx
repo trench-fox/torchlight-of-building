@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { RawDivinityPage, RawDivinitySlate } from "@/src/tli/core";
+import { DivinityPage, DivinitySlate } from "@/src/app/lib/save-data";
 import {
   GRID_MASK,
   GRID_ROWS,
@@ -21,8 +21,8 @@ import {
 import { DivinityGridCell } from "./DivinityGridCell";
 
 interface DivinityGridProps {
-  divinityPage: RawDivinityPage;
-  divinitySlateList: RawDivinitySlate[];
+  divinityPage: DivinityPage;
+  divinitySlateList: DivinitySlate[];
   onClickPlacedSlate: (slateId: string) => void;
   onMoveSlate: (
     slateId: string,

@@ -1,14 +1,14 @@
 "use client";
 
-import { RawDivinitySlate } from "@/src/tli/core";
+import { DivinitySlate } from "@/src/app/lib/save-data";
 import { SlateInventoryItem } from "./SlateInventoryItem";
 
 interface SlateInventoryProps {
-  slates: RawDivinitySlate[];
+  slates: DivinitySlate[];
   placedSlateIds: string[];
   onPlace: (slateId: string) => void;
-  onEdit: (slate: RawDivinitySlate) => void;
-  onCopy: (slate: RawDivinitySlate) => void;
+  onEdit: (slate: DivinitySlate) => void;
+  onCopy: (slate: DivinitySlate) => void;
   onDelete: (slateId: string) => void;
 }
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { RawPactspiritPage } from "@/src/tli/core";
+import { PactspiritPage } from "@/src/app/lib/save-data";
 import { RingSlotKey, PactspiritSlotIndex } from "../../lib/types";
 import { PactspiritColumn } from "./PactspiritColumn";
 
@@ -11,7 +11,7 @@ interface InstalledDestinyResult {
 }
 
 interface PactspiritTabProps {
-  pactspiritPage: RawPactspiritPage;
+  pactspiritPage: PactspiritPage;
   onPactspiritSelect: (
     slotIndex: PactspiritSlotIndex,
     pactspiritName: string | undefined,
@@ -37,7 +37,7 @@ export const PactspiritTab: React.FC<PactspiritTabProps> = ({
   return (
     <div className="flex gap-4">
       {slotIndices.map((slotIndex) => {
-        const slotKey = `slot${slotIndex}` as keyof RawPactspiritPage;
+        const slotKey = `slot${slotIndex}` as keyof PactspiritPage;
         const slot = pactspiritPage[slotKey];
 
         return (

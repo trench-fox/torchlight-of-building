@@ -1,14 +1,14 @@
 "use client";
 
 import { useState } from "react";
-import { RawSkillWithSupports, RawSupportSkills } from "@/src/tli/core";
+import { SkillWithSupports, SupportSkills } from "@/src/app/lib/save-data";
 import { SupportSkillSelector } from "./SupportSkillSelector";
 import {
   SearchableSelect,
   SearchableSelectOption,
 } from "@/src/app/components/ui/SearchableSelect";
 
-type SupportSkillKey = keyof RawSupportSkills;
+type SupportSkillKey = keyof SupportSkills;
 
 const SUPPORT_SKILL_KEYS: SupportSkillKey[] = [
   "supportSkill1",
@@ -20,7 +20,7 @@ const SUPPORT_SKILL_KEYS: SupportSkillKey[] = [
 
 interface SkillSlotProps {
   slotLabel: string;
-  skill: RawSkillWithSupports;
+  skill: SkillWithSupports;
   availableSkills: readonly { name: string }[];
   excludedSkillNames: string[];
   onSkillChange: (skillName: string | undefined) => void;

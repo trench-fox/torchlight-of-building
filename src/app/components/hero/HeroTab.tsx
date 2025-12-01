@@ -4,13 +4,13 @@ import { useState, useMemo } from "react";
 import { createPortal } from "react-dom";
 import type { HeroTrait } from "@/src/data/hero_trait/types";
 import type {
-  RawHeroPage,
-  RawHeroMemory,
+  HeroPage,
+  HeroMemory,
   HeroMemoryType,
   HeroMemorySlot,
-  RawHeroMemoryAffix,
-} from "@/src/tli/core";
-import { HERO_MEMORY_TYPES } from "@/src/tli/core";
+  HeroMemoryAffix,
+} from "@/src/app/lib/save-data";
+import { HERO_MEMORY_TYPES } from "@/src/app/lib/save-data";
 import {
   getUniqueHeroes,
   getTraitsForHeroAtLevel,
@@ -27,13 +27,13 @@ import { HeroMemoryItem } from "./HeroMemoryItem";
 import { SearchableSelect } from "@/src/app/components/ui/SearchableSelect";
 
 interface HeroTabProps {
-  heroPage: RawHeroPage;
-  heroMemoryList: RawHeroMemory[];
+  heroPage: HeroPage;
+  heroMemoryList: HeroMemory[];
   onHeroChange: (hero: string | undefined) => void;
   onTraitSelect: (level: 45 | 60 | 75, traitName: string | undefined) => void;
   onMemoryEquip: (slot: HeroMemorySlot, memoryId: string | undefined) => void;
-  onMemorySave: (memory: RawHeroMemory) => void;
-  onMemoryCopy: (memory: RawHeroMemory) => void;
+  onMemorySave: (memory: HeroMemory) => void;
+  onMemoryCopy: (memory: HeroMemory) => void;
   onMemoryDelete: (id: string) => void;
 }
 
@@ -231,21 +231,21 @@ export const HeroTab: React.FC<HeroTabProps> = ({
   const handleSaveMemory = () => {
     if (!selectedMemoryType || !selectedBaseStat) return;
 
-    const fixedAffixesData: RawHeroMemoryAffix[] = fixedAffixSlots
+    const fixedAffixesData: HeroMemoryAffix[] = fixedAffixSlots
       .filter((slot) => slot.effectIndex !== undefined)
       .map((slot) => ({
         effect: fixedAffixes[slot.effectIndex!],
         quality: slot.quality,
       }));
 
-    const randomAffixesData: RawHeroMemoryAffix[] = randomAffixSlots
+    const randomAffixesData: HeroMemoryAffix[] = randomAffixSlots
       .filter((slot) => slot.effectIndex !== undefined)
       .map((slot) => ({
         effect: randomAffixes[slot.effectIndex!],
         quality: slot.quality,
       }));
 
-    const newMemory: RawHeroMemory = {
+    const newMemory: HeroMemory = {
       id: generateItemId(),
       memoryType: selectedMemoryType,
       baseStat: selectedBaseStat,

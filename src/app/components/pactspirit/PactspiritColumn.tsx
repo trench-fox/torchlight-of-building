@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Pactspirits } from "@/src/data/pactspirit/pactspirits";
-import { RawPactspiritSlot } from "@/src/tli/core";
+import { PactspiritSlot } from "@/src/app/lib/save-data";
 import {
   RingSlotKey,
   RING_DISPLAY_ORDER,
@@ -25,7 +25,7 @@ interface InstalledDestinyResult {
 
 interface PactspiritColumnProps {
   slotIndex: PactspiritSlotIndex;
-  slot: RawPactspiritSlot;
+  slot: PactspiritSlot;
   onPactspiritSelect: (pactspiritName: string | undefined) => void;
   onLevelChange: (level: number) => void;
   onInstallDestiny: (

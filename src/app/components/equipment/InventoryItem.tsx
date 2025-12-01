@@ -2,12 +2,12 @@
 
 import { useState } from "react";
 import { createPortal } from "react-dom";
-import { RawGear } from "@/src/tli/core";
+import { Gear } from "@/src/app/lib/save-data";
 
 interface InventoryItemProps {
-  item: RawGear;
+  item: Gear;
   isEquipped: boolean;
-  onCopy: (item: RawGear) => void;
+  onCopy: (item: Gear) => void;
   onDelete: (id: string) => void;
 }
 

@@ -1,11 +1,7 @@
 import { HeroTraits } from "@/src/data/hero_trait/hero_traits";
 import { HeroMemories } from "@/src/data/hero_memory/hero_memories";
 import type { HeroTrait } from "@/src/data/hero_trait/types";
-import type {
-  HeroMemoryType,
-  RawHeroMemory,
-  HeroMemorySlot,
-} from "@/src/tli/core";
+import type { HeroMemoryType, HeroMemory, HeroMemorySlot } from "./save-data";
 
 export const normalizeHeroName = (hero: string): string => {
   return hero.replace(/\n\s*/g, " ").trim();
@@ -89,7 +85,7 @@ export const craftHeroMemoryAffix = (
   });
 };
 
-export const formatCraftedMemoryAffixes = (memory: RawHeroMemory): string[] => {
+export const formatCraftedMemoryAffixes = (memory: HeroMemory): string[] => {
   const lines: string[] = [];
 
   lines.push(memory.baseStat);
@@ -106,15 +102,15 @@ export const formatCraftedMemoryAffixes = (memory: RawHeroMemory): string[] => {
 };
 
 export const canEquipMemoryInSlot = (
-  memory: RawHeroMemory,
+  memory: HeroMemory,
   slot: HeroMemorySlot,
 ): boolean => {
   return memory.memoryType === MEMORY_SLOT_TYPE_MAP[slot];
 };
 
 export const getCompatibleMemoriesForSlot = (
-  memories: RawHeroMemory[],
+  memories: HeroMemory[],
   slot: HeroMemorySlot,
-): RawHeroMemory[] => {
+): HeroMemory[] => {
   return memories.filter((memory) => canEquipMemoryInSlot(memory, slot));
 };

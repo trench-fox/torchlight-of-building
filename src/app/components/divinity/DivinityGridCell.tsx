@@ -1,6 +1,6 @@
 "use client";
 
-import { RawDivinitySlate } from "@/src/tli/core";
+import { DivinitySlate } from "@/src/app/lib/save-data";
 import { GOD_COLORS } from "@/src/app/lib/divinity-utils";
 
 interface SlateEdges {
@@ -15,12 +15,12 @@ interface DivinityGridCellProps {
   col: number;
   isValid: boolean;
   isOutOfBounds: boolean;
-  slate: RawDivinitySlate | undefined;
+  slate: DivinitySlate | undefined;
   slateEdges: SlateEdges | undefined;
   isInvalid: boolean;
   isDragging: boolean;
   isPreview: boolean;
-  previewSlate: RawDivinitySlate | undefined;
+  previewSlate: DivinitySlate | undefined;
   onClick: () => void;
   onDragStart: ((e: React.DragEvent) => void) | undefined;
   onDragEnd: () => void;

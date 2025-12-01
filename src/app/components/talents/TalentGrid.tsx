@@ -5,12 +5,12 @@ import {
   canDeallocateNode,
   isPrerequisiteSatisfied,
 } from "@/src/tli/talent_tree";
-import { RawAllocatedTalentNode } from "@/src/tli/core";
+import { AllocatedTalentNode } from "@/src/app/lib/save-data";
 import { TalentNodeDisplay } from "./TalentNodeDisplay";
 
 interface TalentGridProps {
   treeData: TalentTreeData;
-  allocatedNodes: RawAllocatedTalentNode[];
+  allocatedNodes: AllocatedTalentNode[];
   onAllocate: (x: number, y: number) => void;
   onDeallocate: (x: number, y: number) => void;
 }

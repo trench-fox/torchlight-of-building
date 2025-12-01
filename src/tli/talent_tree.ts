@@ -1,4 +1,5 @@
-import { RawAllocatedTalentNode, TalentNodeData, TalentTreeData } from "./core";
+import { AllocatedTalentNode } from "@/src/app/lib/save-data";
+import { TalentNodeData, TalentTreeData } from "./core";
 import { TALENT_TREES } from "./talent_data";
 import type { TreeName } from "./talent_tree_types";
 
@@ -15,7 +16,7 @@ export type { TalentNodeData, TalentTreeData };
 
 // Calculate total points in a specific column
 export const calculateColumnPoints = (
-  allocatedNodes: RawAllocatedTalentNode[],
+  allocatedNodes: AllocatedTalentNode[],
   columnIndex: number,
 ): number => {
   return allocatedNodes
@@ -25,7 +26,7 @@ export const calculateColumnPoints = (
 
 // Calculate total points allocated before a specific column
 export const getTotalPointsBeforeColumn = (
-  allocatedNodes: RawAllocatedTalentNode[],
+  allocatedNodes: AllocatedTalentNode[],
   columnIndex: number,
 ): number => {
   let total = 0;
@@ -37,7 +38,7 @@ export const getTotalPointsBeforeColumn = (
 
 // Check if a column is unlocked based on point requirements
 export const isColumnUnlocked = (
-  allocatedNodes: RawAllocatedTalentNode[],
+  allocatedNodes: AllocatedTalentNode[],
   columnIndex: number,
 ): boolean => {
   const requiredPoints = columnIndex * 3;
@@ -51,7 +52,7 @@ export const isColumnUnlocked = (
 // Check if a prerequisite node is fully satisfied
 export const isPrerequisiteSatisfied = (
   prerequisite: { x: number; y: number } | undefined,
-  allocatedNodes: RawAllocatedTalentNode[],
+  allocatedNodes: AllocatedTalentNode[],
   treeData: TalentTreeData,
 ): boolean => {
   if (!prerequisite) return true;
@@ -71,7 +72,7 @@ export const isPrerequisiteSatisfied = (
 // Check if a node can be allocated
 export const canAllocateNode = (
   node: TalentNodeData,
-  allocatedNodes: RawAllocatedTalentNode[],
+  allocatedNodes: AllocatedTalentNode[],
   treeData: TalentTreeData,
 ): boolean => {
   // Check column gating
@@ -98,7 +99,7 @@ export const canAllocateNode = (
 // Check if a node can be deallocated
 export const canDeallocateNode = (
   node: TalentNodeData,
-  allocatedNodes: RawAllocatedTalentNode[],
+  allocatedNodes: AllocatedTalentNode[],
   treeData: TalentTreeData,
 ): boolean => {
   // Must have points allocated

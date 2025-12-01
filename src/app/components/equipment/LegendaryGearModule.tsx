@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import { RawGear } from "@/src/tli/core";
+import { Gear } from "@/src/app/lib/save-data";
 import { Legendaries } from "@/src/data/legendary/legendaries";
 import { craft } from "@/src/tli/crafting/craft";
 import { generateItemId } from "../../lib/storage";
@@ -10,7 +10,7 @@ import { SearchableSelect } from "../ui/SearchableSelect";
 import { LegendaryAffixRow, LegendaryAffixState } from "./LegendaryAffixRow";
 
 interface LegendaryGearModuleProps {
-  onSaveToInventory: (item: RawGear) => void;
+  onSaveToInventory: (item: Gear) => void;
 }
 
 const craftAffix = (affix: string, percentage: number): string => {
@@ -81,7 +81,7 @@ export const LegendaryGearModule: React.FC<LegendaryGearModuleProps> = ({
       return craftAffix(affix, state.percentage);
     });
 
-    const newItem: RawGear = {
+    const newItem: Gear = {
       id: generateItemId(),
       gearType: getGearTypeFromEquipmentType(selectedLegendary.equipmentType),
       affixes,

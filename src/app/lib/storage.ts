@@ -1,20 +1,20 @@
 import {
-  RawLoadout,
-  RawSkillWithSupports,
-  RawHeroPage,
-  RawPactspiritPage,
-  RawPactspiritSlot,
-  RawRingSlotState,
-  RawDivinityPage,
-} from "@/src/tli/core";
+  SaveData,
+  SkillWithSupports,
+  HeroPage,
+  PactspiritPage,
+  PactspiritSlot,
+  RingSlotState,
+  DivinityPage,
+} from "./save-data";
 import { DEBUG_MODE_STORAGE_KEY } from "./constants";
 
-const createEmptySkillSlot = (): RawSkillWithSupports => ({
+const createEmptySkillSlot = (): SkillWithSupports => ({
   enabled: true,
   supportSkills: {},
 });
 
-export const createEmptyHeroPage = (): RawHeroPage => ({
+export const createEmptyHeroPage = (): HeroPage => ({
   selectedHero: undefined,
   traits: {
     level1: undefined,
@@ -29,9 +29,9 @@ export const createEmptyHeroPage = (): RawHeroPage => ({
   },
 });
 
-const createEmptyRingSlotState = (): RawRingSlotState => ({});
+const createEmptyRingSlotState = (): RingSlotState => ({});
 
-export const createEmptyPactspiritSlot = (): RawPactspiritSlot => ({
+export const createEmptyPactspiritSlot = (): PactspiritSlot => ({
   pactspiritName: undefined,
   level: 1,
   rings: {
@@ -47,13 +47,13 @@ export const createEmptyPactspiritSlot = (): RawPactspiritSlot => ({
   },
 });
 
-export const createEmptyPactspiritPage = (): RawPactspiritPage => ({
+export const createEmptyPactspiritPage = (): PactspiritPage => ({
   slot1: createEmptyPactspiritSlot(),
   slot2: createEmptyPactspiritSlot(),
   slot3: createEmptyPactspiritSlot(),
 });
 
-export const createEmptyDivinityPage = (): RawDivinityPage => ({
+export const createEmptyDivinityPage = (): DivinityPage => ({
   placedSlates: [],
 });
 
@@ -79,7 +79,7 @@ export const saveDebugModeToStorage = (enabled: boolean): void => {
   }
 };
 
-export const createEmptyLoadout = (): RawLoadout => ({
+export const createEmptyLoadout = (): SaveData => ({
   equipmentPage: {},
   talentPage: {},
   skillPage: {

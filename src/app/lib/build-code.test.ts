@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { encodeBuildCode, decodeBuildCode } from "./build-code";
-import { RawLoadout, RawSkillPage, RawHeroPage } from "@/src/tli/core";
+import { SaveData, SkillPage } from "./save-data";
 import {
   createEmptyLoadout,
   createEmptyHeroPage,
@@ -8,7 +8,7 @@ import {
   createEmptyDivinityPage,
 } from "./storage";
 
-const createEmptySkillPage = (): RawSkillPage => ({
+const createEmptySkillPage = (): SkillPage => ({
   activeSkill1: { enabled: true, supportSkills: {} },
   activeSkill2: { enabled: true, supportSkills: {} },
   activeSkill3: { enabled: true, supportSkills: {} },
@@ -29,7 +29,7 @@ describe("build-code", () => {
   });
 
   it("should encode and decode a loadout with equipment", () => {
-    const loadout: RawLoadout = {
+    const loadout: SaveData = {
       equipmentPage: {
         helmet: {
           id: "test-helmet-1",
@@ -60,7 +60,7 @@ describe("build-code", () => {
   });
 
   it("should encode and decode a loadout with talents", () => {
-    const loadout: RawLoadout = {
+    const loadout: SaveData = {
       equipmentPage: {},
       talentPage: {
         tree1: {
@@ -110,7 +110,7 @@ describe("build-code", () => {
       supportSkills: {},
     };
 
-    const loadout: RawLoadout = {
+    const loadout: SaveData = {
       equipmentPage: {},
       talentPage: {},
       skillPage,
@@ -136,7 +136,7 @@ describe("build-code", () => {
       supportSkills: {},
     };
 
-    const loadout: RawLoadout = {
+    const loadout: SaveData = {
       equipmentPage: {
         helmet: {
           id: "test-1",

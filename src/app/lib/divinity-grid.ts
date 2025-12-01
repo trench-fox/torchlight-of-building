@@ -1,9 +1,9 @@
 import {
-  RawDivinitySlate,
+  DivinitySlate,
   PlacedSlate,
   SlateShape,
   Rotation,
-} from "@/src/tli/core";
+} from "./save-data";
 import { getOccupiedCells, getTransformedCells } from "./divinity-shapes";
 
 export const GRID_MASK: number[][] = [
@@ -32,7 +32,7 @@ export const isValidGridCell = (row: number, col: number): boolean => {
 };
 
 export const buildOccupiedCellsSet = (
-  slates: RawDivinitySlate[],
+  slates: DivinitySlate[],
   placements: PlacedSlate[],
 ): Set<string> => {
   const occupied = new Set<string>();
@@ -71,7 +71,7 @@ export const canPlaceSlate = (
 export const findSlateAtCell = (
   row: number,
   col: number,
-  slates: RawDivinitySlate[],
+  slates: DivinitySlate[],
   placements: PlacedSlate[],
 ): PlacedSlate | undefined => {
   for (const placement of placements) {
@@ -91,7 +91,7 @@ export const findGridCenter = (): { row: number; col: number } => {
 };
 
 export const findOverlappingCells = (
-  slates: RawDivinitySlate[],
+  slates: DivinitySlate[],
   placements: PlacedSlate[],
 ): Set<string> => {
   const cellCounts = new Map<string, number>();
@@ -118,7 +118,7 @@ export const findOverlappingCells = (
 };
 
 export const findOutOfBoundsCells = (
-  slates: RawDivinitySlate[],
+  slates: DivinitySlate[],
   placements: PlacedSlate[],
 ): Set<string> => {
   const outOfBounds = new Set<string>();

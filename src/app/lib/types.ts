@@ -1,6 +1,6 @@
-import { RawGearPage, RawPactspiritSlot } from "@/src/tli/core";
+import { GearPage, PactspiritSlot } from "./save-data";
 
-export type GearSlot = keyof RawGearPage;
+export type GearSlot = keyof GearPage;
 
 export type TreeSlot = "tree1" | "tree2" | "tree3" | "tree4";
 
@@ -40,4 +40,4 @@ export const RING_DISPLAY_ORDER: RingSlotKey[] = [
 ];
 
 export type PactspiritSlotIndex = 1 | 2 | 3;
-export type PactspiritSlotKey = keyof RawPactspiritSlot["rings"];
+export type PactspiritSlotKey = keyof PactspiritSlot["rings"];

@@ -1,6 +1,5 @@
 import { Mod } from "./mod";
 import { TreeName } from "./talent_tree_types";
-import { EquipmentType } from "./gear_data_types";
 
 export interface Affix {
   mods: Mod[];
@@ -22,49 +21,11 @@ export interface Configuration {
   };
 }
 
-export interface DivinitySlate {
+export interface ParsedDivinitySlate {
   affixes: Affix[];
 }
 
-export const SLATE_SHAPES = ["O", "L", "Z"] as const;
-export type SlateShape = (typeof SLATE_SHAPES)[number];
-
-export const DIVINITY_GODS = [
-  "Deception",
-  "Hunting",
-  "Knowledge",
-  "Machines",
-  "Might",
-  "War",
-] as const;
-export type DivinityGod = (typeof DIVINITY_GODS)[number];
-
-export const ROTATIONS = [0, 90, 180, 270] as const;
-export type Rotation = (typeof ROTATIONS)[number];
-
-export type DivinityAffixType = "Legendary Medium" | "Medium";
-
-export interface RawDivinitySlate {
-  id: string;
-  god: DivinityGod;
-  shape: SlateShape;
-  rotation: Rotation;
-  flippedH: boolean;
-  flippedV: boolean;
-  affixes: string[];
-  affixTypes: DivinityAffixType[];
-}
-
-export interface PlacedSlate {
-  slateId: string;
-  position: { row: number; col: number };
-}
-
-export interface RawDivinityPage {
-  placedSlates: PlacedSlate[];
-}
-
-export interface Gear {
+export interface ParsedGear {
   gearType:
     | "helmet"
     | "chest"
@@ -78,50 +39,32 @@ export interface Gear {
   affixes: Affix[];
 }
 
-export interface TalentPage {
+export interface ParsedTalentPage {
   affixes: Affix[];
 }
 
-export interface DivinityPage {
-  slates: DivinitySlate[];
+export interface ParsedDivinityPage {
+  slates: ParsedDivinitySlate[];
 }
 
-export interface GearPage {
-  helmet?: Gear;
-  chest?: Gear;
-  neck?: Gear;
-  gloves?: Gear;
-  belt?: Gear;
-  boots?: Gear;
-  leftRing?: Gear;
-  rightRing?: Gear;
-  mainHand?: Gear;
-  offHand?: Gear;
+export interface ParsedGearPage {
+  helmet?: ParsedGear;
+  chest?: ParsedGear;
+  neck?: ParsedGear;
+  gloves?: ParsedGear;
+  belt?: ParsedGear;
+  boots?: ParsedGear;
+  leftRing?: ParsedGear;
+  rightRing?: ParsedGear;
+  mainHand?: ParsedGear;
+  offHand?: ParsedGear;
 }
 
 export interface Loadout {
-  equipmentPage: GearPage;
-  talentPage: TalentPage;
-  divinityPage: DivinityPage;
+  equipmentPage: ParsedGearPage;
+  talentPage: ParsedTalentPage;
+  divinityPage: ParsedDivinityPage;
   customConfiguration: Affix[];
-}
-
-export interface RawAllocatedTalentNode {
-  x: number;
-  y: number;
-  points: number;
-}
-
-export interface RawTalentTree {
-  name: string;
-  allocatedNodes: RawAllocatedTalentNode[];
-}
-
-export interface RawTalentPage {
-  tree1?: RawTalentTree;
-  tree2?: RawTalentTree;
-  tree3?: RawTalentTree;
-  tree4?: RawTalentTree;
 }
 
 export interface TalentNodeData {
@@ -136,140 +79,4 @@ export interface TalentNodeData {
 export interface TalentTreeData {
   name: TreeName;
   nodes: TalentNodeData[];
-}
-
-export interface RawGear {
-  id: string;
-  gearType:
-    | "helmet"
-    | "chest"
-    | "neck"
-    | "gloves"
-    | "belt"
-    | "boots"
-    | "ring"
-    | "sword"
-    | "shield";
-  affixes: string[];
-  equipmentType?: EquipmentType;
-  rarity?: "rare" | "legendary";
-  baseStats?: string;
-  legendaryName?: string;
-}
-
-export interface RawGearPage {
-  helmet?: RawGear;
-  chest?: RawGear;
-  neck?: RawGear;
-  gloves?: RawGear;
-  belt?: RawGear;
-  boots?: RawGear;
-  leftRing?: RawGear;
-  rightRing?: RawGear;
-  mainHand?: RawGear;
-  offHand?: RawGear;
-}
-
-export interface RawSupportSkills {
-  supportSkill1?: string;
-  supportSkill2?: string;
-  supportSkill3?: string;
-  supportSkill4?: string;
-  supportSkill5?: string;
-}
-
-export interface RawSkillWithSupports {
-  skillName?: string;
-  enabled: boolean;
-  supportSkills: RawSupportSkills;
-}
-
-export interface RawSkillPage {
-  activeSkill1: RawSkillWithSupports;
-  activeSkill2: RawSkillWithSupports;
-  activeSkill3: RawSkillWithSupports;
-  activeSkill4: RawSkillWithSupports;
-  passiveSkill1: RawSkillWithSupports;
-  passiveSkill2: RawSkillWithSupports;
-  passiveSkill3: RawSkillWithSupports;
-  passiveSkill4: RawSkillWithSupports;
-}
-
-export const HERO_MEMORY_TYPES = [
-  "Memory of Origin",
-  "Memory of Discipline",
-  "Memory of Progress",
-] as const;
-export type HeroMemoryType = (typeof HERO_MEMORY_TYPES)[number];
-
-export interface RawHeroMemoryAffix {
-  effect: string;
-  quality: number;
-}
-
-export interface RawHeroMemory {
-  id: string;
-  memoryType: HeroMemoryType;
-  baseStat: string;
-  fixedAffixes: RawHeroMemoryAffix[];
-  randomAffixes: RawHeroMemoryAffix[];
-}
-
-export type HeroMemorySlot = "slot45" | "slot60" | "slot75";
-
-export interface RawHeroPage {
-  selectedHero: string | undefined;
-  traits: {
-    level1: string | undefined;
-    level45: string | undefined;
-    level60: string | undefined;
-    level75: string | undefined;
-  };
-  memorySlots: {
-    slot45: RawHeroMemory | undefined;
-    slot60: RawHeroMemory | undefined;
-    slot75: RawHeroMemory | undefined;
-  };
-}
-
-export interface RawRingSlotState {
-  installedDestiny?: {
-    destinyName: string;
-    destinyType: string;
-    resolvedAffix: string;
-  };
-}
-
-export interface RawPactspiritSlot {
-  pactspiritName?: string;
-  level: number;
-  rings: {
-    innerRing1: RawRingSlotState;
-    innerRing2: RawRingSlotState;
-    innerRing3: RawRingSlotState;
-    innerRing4: RawRingSlotState;
-    innerRing5: RawRingSlotState;
-    innerRing6: RawRingSlotState;
-    midRing1: RawRingSlotState;
-    midRing2: RawRingSlotState;
-    midRing3: RawRingSlotState;
-  };
-}
-
-export interface RawPactspiritPage {
-  slot1: RawPactspiritSlot;
-  slot2: RawPactspiritSlot;
-  slot3: RawPactspiritSlot;
-}
-
-export interface RawLoadout {
-  equipmentPage: RawGearPage;
-  talentPage: RawTalentPage;
-  skillPage: RawSkillPage;
-  heroPage: RawHeroPage;
-  pactspiritPage: RawPactspiritPage;
-  divinityPage: RawDivinityPage;
-  itemsList: RawGear[];
-  heroMemoryList: RawHeroMemory[];
-  divinitySlateList: RawDivinitySlate[];
 }

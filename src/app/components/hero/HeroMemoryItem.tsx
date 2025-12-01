@@ -2,13 +2,13 @@
 
 import { useState } from "react";
 import { createPortal } from "react-dom";
-import type { RawHeroMemory } from "@/src/tli/core";
+import type { HeroMemory } from "@/src/app/lib/save-data";
 import { formatCraftedMemoryAffixes } from "../../lib/hero-utils";
 
 interface HeroMemoryItemProps {
-  memory: RawHeroMemory;
+  memory: HeroMemory;
   isEquipped: boolean;
-  onCopy: (memory: RawHeroMemory) => void;
+  onCopy: (memory: HeroMemory) => void;
   onDelete: (id: string) => void;
 }
 

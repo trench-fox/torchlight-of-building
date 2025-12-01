@@ -2,17 +2,17 @@
 
 import { useState, useEffect, useMemo } from "react";
 import {
-  RawLoadout,
-  RawGear,
-  RawAllocatedTalentNode,
-  RawSkillPage,
-  RawSupportSkills,
-  RawHeroMemory,
+  SaveData,
+  Gear,
+  AllocatedTalentNode,
+  SkillPage,
+  SupportSkills,
+  HeroMemory,
   HeroMemorySlot,
-  RawPactspiritPage,
-  RawDivinitySlate,
+  PactspiritPage,
+  DivinitySlate,
   PlacedSlate,
-} from "@/src/tli/core";
+} from "./lib/save-data";
 import { ActiveSkills, PassiveSkills } from "@/src/data/skill";
 import {
   TalentTreeData,
@@ -66,7 +66,7 @@ import { LegendaryGearModule } from "./components/equipment/LegendaryGearModule"
 import { DivinityTab } from "./components/divinity/DivinityTab";
 
 export default function Home() {
-  const [loadout, setLoadout] = useState<RawLoadout>(createEmptyLoadout);
+  const [loadout, setLoadout] = useState<SaveData>(createEmptyLoadout);
   const [mounted, setMounted] = useState(false);
   const [activePage, setActivePage] = useState<ActivePage>("equipment");
   const [activeTreeSlot, setActiveTreeSlot] = useState<TreeSlot>("tree1");
@@ -156,7 +156,7 @@ export default function Home() {
       affixes.push(craft(selectedAffix, selection.percentage));
     });
 
-    const newItem: RawGear = {
+    const newItem: Gear = {
       id: generateItemId(),
       gearType: getGearTypeFromEquipmentType(selectedEquipmentType),
       affixes,
@@ -176,15 +176,15 @@ export default function Home() {
     );
   };
 
-  const handleAddItemToInventory = (item: RawGear) => {
+  const handleAddItemToInventory = (item: Gear) => {
     setLoadout((prev) => ({
       ...prev,
       itemsList: [...prev.itemsList, item],
     }));
   };
 
-  const handleCopyItem = (item: RawGear) => {
-    const newItem: RawGear = { ...item, id: generateItemId() };
+  const handleCopyItem = (item: Gear) => {
+    const newItem: Gear = { ...item, id: generateItemId() };
     setLoadout((prev) => ({
       ...prev,
       itemsList: [...prev.itemsList, newItem],
@@ -366,7 +366,7 @@ export default function Home() {
       );
       if (!nodeData) return prev;
 
-      let updatedNodes: RawAllocatedTalentNode[];
+      let updatedNodes: AllocatedTalentNode[];
 
       if (existing) {
         if (existing.points >= nodeData.maxPoints) return prev;
@@ -394,7 +394,7 @@ export default function Home() {
       const existing = tree.allocatedNodes.find((n) => n.x === x && n.y === y);
       if (!existing) return prev;
 
-      let updatedNodes: RawAllocatedTalentNode[];
+      let updatedNodes: AllocatedTalentNode[];
 
       if (existing.points > 1) {
         updatedNodes = tree.allocatedNodes.map((n) =>
@@ -427,7 +427,7 @@ export default function Home() {
     | "passiveSkill3"
     | "passiveSkill4";
   type SkillSlotKey = ActiveSkillSlot | PassiveSkillSlot;
-  type SupportSkillKey = keyof RawSupportSkills;
+  type SupportSkillKey = keyof SupportSkills;
 
   const ACTIVE_SKILL_SLOTS: ActiveSkillSlot[] = [
     "activeSkill1",
@@ -575,15 +575,15 @@ export default function Home() {
     });
   };
 
-  const handleHeroMemorySave = (memory: RawHeroMemory) => {
+  const handleHeroMemorySave = (memory: HeroMemory) => {
     setLoadout((prev) => ({
       ...prev,
       heroMemoryList: [...prev.heroMemoryList, memory],
     }));
   };
 
-  const handleHeroMemoryCopy = (memory: RawHeroMemory) => {
-    const newMemory: RawHeroMemory = { ...memory, id: generateItemId() };
+  const handleHeroMemoryCopy = (memory: HeroMemory) => {
+    const newMemory: HeroMemory = { ...memory, id: generateItemId() };
     setLoadout((prev) => ({
       ...prev,
       heroMemoryList: [...prev.heroMemoryList, newMemory],
@@ -621,7 +621,7 @@ export default function Home() {
     slotIndex: PactspiritSlotIndex,
     pactspiritName: string | undefined,
   ) => {
-    const slotKey = `slot${slotIndex}` as keyof RawPactspiritPage;
+    const slotKey = `slot${slotIndex}` as keyof PactspiritPage;
     setLoadout((prev) => ({
       ...prev,
       pactspiritPage: {
@@ -638,7 +638,7 @@ export default function Home() {
     slotIndex: PactspiritSlotIndex,
     level: number,
   ) => {
-    const slotKey = `slot${slotIndex}` as keyof RawPactspiritPage;
+    const slotKey = `slot${slotIndex}` as keyof PactspiritPage;
     setLoadout((prev) => ({
       ...prev,
       pactspiritPage: {
@@ -660,7 +660,7 @@ export default function Home() {
       resolvedAffix: string;
     },
   ) => {
-    const slotKey = `slot${slotIndex}` as keyof RawPactspiritPage;
+    const slotKey = `slot${slotIndex}` as keyof PactspiritPage;
     setLoadout((prev) => ({
       ...prev,
       pactspiritPage: {
@@ -682,7 +682,7 @@ export default function Home() {
     slotIndex: PactspiritSlotIndex,
     ringSlot: RingSlotKey,
   ) => {
-    const slotKey = `slot${slotIndex}` as keyof RawPactspiritPage;
+    const slotKey = `slot${slotIndex}` as keyof PactspiritPage;
     setLoadout((prev) => ({
       ...prev,
       pactspiritPage: {
@@ -698,14 +698,14 @@ export default function Home() {
     }));
   };
 
-  const handleSaveDivinitySlate = (slate: RawDivinitySlate) => {
+  const handleSaveDivinitySlate = (slate: DivinitySlate) => {
     setLoadout((prev) => ({
       ...prev,
       divinitySlateList: [...prev.divinitySlateList, slate],
     }));
   };
 
-  const handleUpdateDivinitySlate = (slate: RawDivinitySlate) => {
+  const handleUpdateDivinitySlate = (slate: DivinitySlate) => {
     setLoadout((prev) => ({
       ...prev,
       divinitySlateList: prev.divinitySlateList.map((s) =>
@@ -714,7 +714,7 @@ export default function Home() {
     }));
   };
 
-  const handleCopyDivinitySlate = (slate: RawDivinitySlate) => {
+  const handleCopyDivinitySlate = (slate: DivinitySlate) => {
     const newSlate = { ...slate, id: generateItemId() };
     setLoadout((prev) => ({
       ...prev,

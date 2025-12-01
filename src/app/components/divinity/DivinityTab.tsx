@@ -1,18 +1,22 @@
 "use client";
 
 import { useState } from "react";
-import { RawDivinityPage, RawDivinitySlate, PlacedSlate } from "@/src/tli/core";
+import {
+  DivinityPage,
+  DivinitySlate,
+  PlacedSlate,
+} from "@/src/app/lib/save-data";
 import { findGridCenter } from "@/src/app/lib/divinity-grid";
 import { DivinityGrid } from "./DivinityGrid";
 import { SlateCrafter } from "./SlateCrafter";
 import { SlateInventory } from "./SlateInventory";
 
 interface DivinityTabProps {
-  divinityPage: RawDivinityPage;
-  divinitySlateList: RawDivinitySlate[];
-  onSaveSlate: (slate: RawDivinitySlate) => void;
-  onUpdateSlate: (slate: RawDivinitySlate) => void;
-  onCopySlate: (slate: RawDivinitySlate) => void;
+  divinityPage: DivinityPage;
+  divinitySlateList: DivinitySlate[];
+  onSaveSlate: (slate: DivinitySlate) => void;
+  onUpdateSlate: (slate: DivinitySlate) => void;
+  onCopySlate: (slate: DivinitySlate) => void;
   onDeleteSlate: (slateId: string) => void;
   onPlaceSlate: (placement: PlacedSlate) => void;
   onRemovePlacedSlate: (slateId: string) => void;
@@ -33,9 +37,7 @@ export const DivinityTab: React.FC<DivinityTabProps> = ({
   onRemovePlacedSlate,
   onMoveSlate,
 }) => {
-  const [editingSlate, setEditingSlate] = useState<
-    RawDivinitySlate | undefined
-  >();
+  const [editingSlate, setEditingSlate] = useState<DivinitySlate | undefined>();
 
   const placedSlateIds = divinityPage.placedSlates.map((p) => p.slateId);
   const editingSlateIsPlaced = editingSlate
@@ -51,7 +53,7 @@ export const DivinityTab: React.FC<DivinityTabProps> = ({
     onPlaceSlate(placement);
   };
 
-  const handleEditSlate = (slate: RawDivinitySlate) => {
+  const handleEditSlate = (slate: DivinitySlate) => {
     setEditingSlate(slate);
   };
 
@@ -59,7 +61,7 @@ export const DivinityTab: React.FC<DivinityTabProps> = ({
     setEditingSlate(undefined);
   };
 
-  const handleSaveEdit = (slate: RawDivinitySlate) => {
+  const handleSaveEdit = (slate: DivinitySlate) => {
     onUpdateSlate(slate);
     setEditingSlate(undefined);
   };
