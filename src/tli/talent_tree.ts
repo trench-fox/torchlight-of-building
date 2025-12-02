@@ -142,6 +142,41 @@ export const canAllocateNode = (
   return true;
 };
 
+// Check if removing a point from a column would break any later column's gating
+const wouldBreakColumnGating = (
+  allocatedNodes: AllocatedTalentNode[],
+  nodeColumn: number,
+): boolean => {
+  const getTotalPointsBeforeColumnSimulated = (columnIndex: number): number => {
+    let total = 0;
+    for (let x = 0; x < columnIndex; x++) {
+      const colPoints = allocatedNodes
+        .filter((n) => n.x === x)
+        .reduce((sum, n) => sum + n.points, 0);
+      // Subtract 1 if this is the column we're removing from
+      total += x === nodeColumn ? colPoints - 1 : colPoints;
+    }
+    return total;
+  };
+
+  // Check if any allocated node in a later column would become invalid
+  for (const allocation of allocatedNodes) {
+    if (allocation.x <= nodeColumn) continue; // Only check later columns
+    if (allocation.points === 0) continue;
+
+    const requiredPoints = allocation.x * 3;
+    const pointsAfterRemoval = getTotalPointsBeforeColumnSimulated(
+      allocation.x,
+    );
+
+    if (pointsAfterRemoval < requiredPoints) {
+      return true;
+    }
+  }
+
+  return false;
+};
+
 // Check if a node can be deallocated
 export const canDeallocateNode = (
   node: TalentNodeData,
@@ -155,6 +190,11 @@ export const canDeallocateNode = (
     (n) => n.x === node.position.x && n.y === node.position.y,
   );
   if (!current || current.points === 0) {
+    return false;
+  }
+
+  // Check if removing a point would break column gating for any later column
+  if (wouldBreakColumnGating(allocatedNodes, node.position.x)) {
     return false;
   }
 
