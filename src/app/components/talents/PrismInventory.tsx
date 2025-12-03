@@ -11,6 +11,7 @@ interface PrismInventoryProps {
   selectedPrismId?: string;
   onSelectPrism?: (prismId: string | undefined) => void;
   hasPrismPlaced?: boolean;
+  isOnGodGoddessTree?: boolean;
 }
 
 export const PrismInventory: React.FC<PrismInventoryProps> = ({
@@ -21,6 +22,7 @@ export const PrismInventory: React.FC<PrismInventoryProps> = ({
   selectedPrismId,
   onSelectPrism,
   hasPrismPlaced = false,
+  isOnGodGoddessTree = false,
 }) => {
   const selectionMode = !!onSelectPrism;
 
@@ -46,8 +48,10 @@ export const PrismInventory: React.FC<PrismInventoryProps> = ({
             {hasPrismPlaced
               ? "A prism is already placed. Remove it first to place a different one."
               : selectedPrismId
-                ? "Click on an empty talent node to place the prism, or click the prism again to deselect."
-                : "Click a rare prism to select it for placement."}
+                ? isOnGodGoddessTree
+                  ? "Switch to a Profession Tree (Slots 2-4) to place the prism."
+                  : "Click on an empty talent node to place the prism, or click the prism again to deselect."
+                : "Click a prism to select it for placement."}
           </p>
         </div>
       )}
@@ -59,8 +63,7 @@ export const PrismInventory: React.FC<PrismInventoryProps> = ({
       ) : (
         <div className="flex flex-col gap-2 max-h-96 overflow-y-auto">
           {prisms.map((prism) => {
-            const canSelect =
-              prism.rarity === "rare" && !hasPrismPlaced && selectionMode;
+            const canSelect = !hasPrismPlaced && selectionMode;
             return (
               <PrismInventoryItem
                 key={prism.id}

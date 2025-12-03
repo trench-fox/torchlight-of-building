@@ -18,6 +18,7 @@ import {
 } from "@/src/tli/talent_tree";
 import { AllocatedTalentNode, CraftedPrism } from "../../lib/save-data";
 import { generateItemId } from "../../lib/storage";
+import { getPrismReplacedCoreTalent } from "../../lib/prism-utils";
 
 export const TalentsSection = () => {
   // Builder store - loadout data
@@ -258,9 +259,6 @@ export const TalentsSection = () => {
       const prism = loadout.prismList.find((p) => p.id === selectedPrismId);
       if (!prism) return;
 
-      // Only allow rare prisms
-      if (prism.rarity !== "rare") return;
-
       // Only allow one prism at a time
       if (loadout.talentPage.placedPrism) return;
 
@@ -272,20 +270,36 @@ export const TalentsSection = () => {
       );
       if (existingAllocation && existingAllocation.points > 0) return;
 
-      updateLoadout((prev) => ({
-        ...prev,
-        // Remove prism from inventory
-        prismList: prev.prismList.filter((p) => p.id !== selectedPrismId),
-        // Place prism in talent page
-        talentPage: {
-          ...prev.talentPage,
-          placedPrism: {
-            prism,
-            treeSlot,
-            position: { x, y },
+      // Check if this prism replaces core talents
+      const replacesCoreTalent = getPrismReplacedCoreTalent(prism);
+
+      updateLoadout((prev) => {
+        const updatedTree = prev.talentPage[treeSlot];
+
+        return {
+          ...prev,
+          // Remove prism from inventory
+          prismList: prev.prismList.filter((p) => p.id !== selectedPrismId),
+          // Place prism in talent page
+          talentPage: {
+            ...prev.talentPage,
+            placedPrism: {
+              prism,
+              treeSlot,
+              position: { x, y },
+            },
+            // Clear core talents if prism replaces them
+            ...(replacesCoreTalent && updatedTree
+              ? {
+                  [treeSlot]: {
+                    ...updatedTree,
+                    selectedCoreTalents: [],
+                  },
+                }
+              : {}),
           },
-        },
-      }));
+        };
+      });
 
       // Clear selection after placing
       setSelectedPrismId(undefined);
@@ -431,6 +445,13 @@ export const TalentsSection = () => {
             onSelectCoreTalent={(slotIndex, name) =>
               handleSelectCoreTalent(activeTreeSlot, slotIndex, name)
             }
+            replacedByPrism={
+              loadout.talentPage.placedPrism?.treeSlot === activeTreeSlot
+                ? getPrismReplacedCoreTalent(
+                    loadout.talentPage.placedPrism.prism,
+                  )
+                : undefined
+            }
           />
         )}
 
@@ -491,6 +512,7 @@ export const TalentsSection = () => {
         selectedPrismId={selectedPrismId}
         onSelectPrism={setSelectedPrismId}
         hasPrismPlaced={!!loadout.talentPage.placedPrism}
+        isOnGodGoddessTree={activeTreeSlot === "tree1"}
       />
     </>
   );

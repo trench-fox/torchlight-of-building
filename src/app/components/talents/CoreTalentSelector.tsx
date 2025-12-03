@@ -25,6 +25,7 @@ interface CoreTalentSelectorProps {
     slotIndex: number,
     talentName: string | undefined,
   ) => void;
+  replacedByPrism?: string; // Ethereal talent name if prism replaces core talents
 }
 
 interface SlotConfig {
@@ -41,6 +42,7 @@ export const CoreTalentSelector: React.FC<CoreTalentSelectorProps> = ({
   pointsSpent,
   selectedCoreTalents,
   onSelectCoreTalent,
+  replacedByPrism,
 }) => {
   const isGodTree = isGodGoddessTree(treeName);
   const maxSlots = getMaxCoreTalentSlots(treeSlot);
@@ -84,6 +86,20 @@ export const CoreTalentSelector: React.FC<CoreTalentSelectorProps> = ({
       available,
       selected: selectedCoreTalents[0],
     });
+  }
+
+  // If core talents are replaced by a prism, show disabled state
+  if (replacedByPrism) {
+    return (
+      <div className="bg-zinc-900 rounded-lg p-4 border border-purple-500/50 mb-4 opacity-60">
+        <h3 className="text-lg font-semibold mb-3 text-zinc-400">
+          Core Talents
+        </h3>
+        <div className="text-sm text-purple-400">
+          Replaced by Prism Ethereal Talent
+        </div>
+      </div>
+    );
   }
 
   return (

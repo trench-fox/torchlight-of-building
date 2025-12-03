@@ -14,6 +14,7 @@ interface PrismSectionProps {
   selectedPrismId?: string;
   onSelectPrism?: (prismId: string | undefined) => void;
   hasPrismPlaced?: boolean;
+  isOnGodGoddessTree?: boolean;
 }
 
 export const PrismSection: React.FC<PrismSectionProps> = ({
@@ -25,6 +26,7 @@ export const PrismSection: React.FC<PrismSectionProps> = ({
   selectedPrismId,
   onSelectPrism,
   hasPrismPlaced = false,
+  isOnGodGoddessTree = false,
 }) => {
   const [editingPrism, setEditingPrism] = useState<CraftedPrism | undefined>(
     undefined,
@@ -67,6 +69,7 @@ export const PrismSection: React.FC<PrismSectionProps> = ({
             selectedPrismId={selectedPrismId}
             onSelectPrism={onSelectPrism}
             hasPrismPlaced={hasPrismPlaced}
+            isOnGodGoddessTree={isOnGodGoddessTree}
           />
         </div>
       </div>

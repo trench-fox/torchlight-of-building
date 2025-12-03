@@ -121,7 +121,9 @@ export const TalentNodeDisplay: React.FC<TalentNodeDisplayProps> = ({
 
         <Tooltip isVisible={isHovered} mousePos={mousePos} variant="prism">
           <TooltipTitle>
-            <span className="text-purple-400">Rare Prism</span>
+            <span className="text-purple-400">
+              {prism.rarity === "legendary" ? "Legendary" : "Rare"} Prism
+            </span>
           </TooltipTitle>
           <TooltipContent>{prism.baseAffix}</TooltipContent>
           {prism.gaugeAffixes.length > 0 && (
