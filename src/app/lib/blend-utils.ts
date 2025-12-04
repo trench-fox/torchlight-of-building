@@ -34,7 +34,7 @@ export const formatBlendOption = (blend: Blend): string => {
   }
   // Non-bracketed affix - replace newlines with slashes and truncate
   const display = name.replace(/\n/g, " / ");
-  return display.length > 60 ? display.substring(0, 57) + "..." : display;
+  return display.length > 60 ? `${display.substring(0, 57)}...` : display;
 };
 
 // Format blend for preview display - shows full affix text with newlines preserved

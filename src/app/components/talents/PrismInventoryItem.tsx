@@ -35,7 +35,7 @@ export const PrismInventoryItem: React.FC<PrismInventoryItemProps> = ({
   const baseAffixFirstLine = prism.baseAffix.split("\n")[0];
   const displayText =
     baseAffixFirstLine.length > 60
-      ? baseAffixFirstLine.slice(0, 60) + "..."
+      ? `${baseAffixFirstLine.slice(0, 60)}...`
       : baseAffixFirstLine;
 
   const handleClick = () => {

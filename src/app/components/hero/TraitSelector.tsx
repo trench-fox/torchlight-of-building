@@ -143,7 +143,7 @@ const TraitRow = ({
               onChange={(value) => onMemoryEquip(slot, value)}
               options={compatibleMemories.map((memory) => ({
                 value: memory.id,
-                label: memory.baseStat.substring(0, 30) + "...",
+                label: `${memory.baseStat.substring(0, 30)}...`,
               }))}
               placeholder="No memory"
               size="sm"

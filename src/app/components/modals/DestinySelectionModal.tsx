@@ -104,7 +104,7 @@ export const DestinySelectionModal = ({
             min="0"
             max="100"
             value={percentage}
-            onChange={(e) => setPercentage(parseInt(e.target.value))}
+            onChange={(e) => setPercentage(parseInt(e.target.value, 10))}
             className="w-full"
           />
         </div>

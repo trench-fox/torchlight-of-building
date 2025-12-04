@@ -1,6 +1,6 @@
-import { existsSync } from "fs";
-import { mkdir, readFile, writeFile } from "fs/promises";
-import path from "path";
+import { existsSync } from "node:fs";
+import { mkdir, readFile, writeFile } from "node:fs/promises";
+import path from "node:path";
 
 const BASE_URL = "https://tlidb.com/en";
 const PACTSPIRIT_LIST_URL = `${BASE_URL}/Pactspirit`;

@@ -1,7 +1,7 @@
 import * as cheerio from "cheerio";
-import { execSync } from "child_process";
-import { mkdir, readdir, readFile, writeFile } from "fs/promises";
-import { join } from "path";
+import { execSync } from "node:child_process";
+import { mkdir, readdir, readFile, writeFile } from "node:fs/promises";
+import { join } from "node:path";
 import type {
   Pactspirit,
   PactspiritRingDetails,
@@ -139,12 +139,12 @@ const extractPactspirit = (
     midRing1: midRings[0] || emptyRingDetails(),
     midRing2: midRings[1] || emptyRingDetails(),
     midRing3: midRings[2] || emptyRingDetails(),
-    affix1: effects["effect1"] || "",
-    affix2: effects["effect2"] || "",
-    affix3: effects["effect3"] || "",
-    affix4: effects["effect4"] || "",
-    affix5: effects["effect5"] || "",
-    affix6: effects["effect6"] || "",
+    affix1: effects.effect1 || "",
+    affix2: effects.effect2 || "",
+    affix3: effects.effect3 || "",
+    affix4: effects.effect4 || "",
+    affix5: effects.effect5 || "",
+    affix6: effects.effect6 || "",
   };
 };
 

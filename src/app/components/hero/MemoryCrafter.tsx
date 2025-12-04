@@ -54,7 +54,7 @@ const AffixSlot = ({
         onChange={onSelect}
         options={affixes.map((affix, idx) => ({
           value: idx,
-          label: affix.replace(/\n/g, " ").substring(0, 50) + "...",
+          label: `${affix.replace(/\n/g, " ").substring(0, 50)}...`,
         }))}
         placeholder={`Select ${type === "fixed" ? "Fixed" : "Random"} Affix ${slotIndex + 1}`}
         size="sm"
@@ -72,7 +72,7 @@ const AffixSlot = ({
             min="0"
             max="100"
             value={quality}
-            onChange={(e) => onQuality(parseInt(e.target.value))}
+            onChange={(e) => onQuality(parseInt(e.target.value, 10))}
             className="w-full mb-2"
           />
           <div className="bg-zinc-900 p-2 rounded border border-zinc-700">

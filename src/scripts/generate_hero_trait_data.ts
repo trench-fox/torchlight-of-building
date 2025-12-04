@@ -1,7 +1,7 @@
 import * as cheerio from "cheerio";
-import { execSync } from "child_process";
-import { mkdir, readFile, writeFile } from "fs/promises";
-import { join } from "path";
+import { execSync } from "node:child_process";
+import { mkdir, readFile, writeFile } from "node:fs/promises";
+import { join } from "node:path";
 import type { HeroTrait } from "../data/hero_trait/types";
 
 const cleanEffectText = (html: string): string => {
@@ -46,7 +46,7 @@ const extractHeroTraitData = (html: string): HeroTrait[] => {
     const effectHtml = $(tds[3]).html() || "";
 
     const level = parseInt(levelStr, 10);
-    if (isNaN(level)) {
+    if (Number.isNaN(level)) {
       console.warn(`Skipping row with invalid level: ${levelStr}`);
       return;
     }

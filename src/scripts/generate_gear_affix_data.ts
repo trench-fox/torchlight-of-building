@@ -1,7 +1,7 @@
 import * as cheerio from "cheerio";
-import { execSync } from "child_process";
-import { mkdir, readFile, writeFile } from "fs/promises";
-import { join } from "path";
+import { execSync } from "node:child_process";
+import { mkdir, readFile, writeFile } from "node:fs/promises";
+import { join } from "node:path";
 
 interface CraftingAffix {
   equipmentSlot: string;
@@ -117,7 +117,7 @@ const normalizeAffixType = (type: string): string => {
 
 const normalizeFileKey = (equipmentType: string, affixType: string): string => {
   return (
-    normalizeEquipmentType(equipmentType) + "_" + normalizeAffixType(affixType)
+    `${normalizeEquipmentType(equipmentType)}_${normalizeAffixType(affixType)}`
   );
 };
 
@@ -125,7 +125,7 @@ const generateEquipmentAffixFile = (
   fileKey: string,
   affixes: BaseGearAffix[],
 ): string => {
-  const constName = fileKey.toUpperCase() + "_AFFIXES";
+  const constName = `${fileKey.toUpperCase()}_AFFIXES`;
 
   return `import { BaseGearAffix } from "../../tli/gear_data_types";
 
@@ -136,7 +136,7 @@ export const ${constName}: readonly BaseGearAffix[] = ${JSON.stringify(affixes, 
 const generateAllAffixesFile = (fileKeys: string[]): string => {
   const imports = fileKeys
     .map((key) => {
-      const constName = key.toUpperCase() + "_AFFIXES";
+      const constName = `${key.toUpperCase()}_AFFIXES`;
       return `import { ${constName} } from "./${key}";`;
     })
     .join("\n");
@@ -180,7 +180,7 @@ const main = async (): Promise<void> => {
     if (!grouped.has(fileKey)) {
       grouped.set(fileKey, []);
     }
-    grouped.get(fileKey)!.push(affixEntry);
+    grouped.get(fileKey)?.push(affixEntry);
   }
 
   console.log(`Grouped into ${grouped.size} files`);
@@ -194,7 +194,7 @@ const main = async (): Promise<void> => {
 
   for (const [fileKey, affixes] of grouped) {
     fileKeys.push(fileKey);
-    const fileName = fileKey + ".ts";
+    const fileName = `${fileKey}.ts`;
     const filePath = join(outDir, fileName);
     const content = generateEquipmentAffixFile(fileKey, affixes);
 

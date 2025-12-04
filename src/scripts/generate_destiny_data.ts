@@ -1,7 +1,7 @@
 import * as cheerio from "cheerio";
-import { execSync } from "child_process";
-import { mkdir, readFile, writeFile } from "fs/promises";
-import { join } from "path";
+import { execSync } from "node:child_process";
+import { mkdir, readFile, writeFile } from "node:fs/promises";
+import { join } from "node:path";
 import type { Destiny } from "../data/destiny/types";
 
 const cleanEffectText = (html: string): string => {

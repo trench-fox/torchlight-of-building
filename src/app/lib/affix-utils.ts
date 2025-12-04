@@ -15,7 +15,7 @@ export const formatAffixOption = (affix: BaseGearAffix): string => {
   let display = affix.craftableAffix;
   display = display.replace(/\n/g, "/");
   if (display.length > 80) {
-    display = display.substring(0, 77) + "...";
+    display = `${display.substring(0, 77)}...`;
   }
   return display;
 };

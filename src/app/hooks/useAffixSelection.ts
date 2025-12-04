@@ -24,7 +24,7 @@ export const useAffixSelection = <T>(
     (affix: T): boolean => {
       if (selectedAffixes.length >= maxAffixes) return false;
 
-      if (isDuplicate && isDuplicate(selectedAffixes, affix)) {
+      if (isDuplicate?.(selectedAffixes, affix)) {
         return false;
       }
 

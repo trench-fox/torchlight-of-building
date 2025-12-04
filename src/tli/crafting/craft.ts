@@ -29,7 +29,7 @@ export const craft = <T extends { craftableAffix: string }>(
   // Pattern to match range values like (17-24) or (-6--4)
   const rangePattern = /\((-?\d+)-(-?\d+)\)/g;
 
-  result = result.replace(rangePattern, (match, minStr, maxStr) => {
+  result = result.replace(rangePattern, (_match, minStr, maxStr) => {
     const min = parseInt(minStr, 10);
     const max = parseInt(maxStr, 10);
     const value = interpolateValue({ min, max }, percentage);

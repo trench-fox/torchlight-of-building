@@ -74,7 +74,6 @@ const SaveCard: React.FC<SaveCardProps> = ({
                   if (e.key === "Enter") handleRenameSubmit();
                   if (e.key === "Escape") handleRenameCancel();
                 }}
-                autoFocus
               />
               <button
                 onClick={handleRenameSubmit}

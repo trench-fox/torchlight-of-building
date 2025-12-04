@@ -1,7 +1,7 @@
 import * as cheerio from "cheerio";
-import { execSync } from "child_process";
-import { mkdir, readFile, writeFile } from "fs/promises";
-import { join } from "path";
+import { execSync } from "node:child_process";
+import { mkdir, readFile, writeFile } from "node:fs/promises";
+import { join } from "node:path";
 import type { BaseSkill } from "../data/skill/types";
 
 interface RawSkill {
@@ -104,7 +104,7 @@ const main = async (): Promise<void> => {
     if (!grouped.has(skillType)) {
       grouped.set(skillType, []);
     }
-    grouped.get(skillType)!.push(skillEntry);
+    grouped.get(skillType)?.push(skillEntry);
   }
 
   console.log(`Grouped into ${grouped.size} skill types`);
@@ -116,7 +116,7 @@ const main = async (): Promise<void> => {
   // Generate individual skill type files
   for (const [skillType, skills] of grouped) {
     const config = SKILL_TYPE_CONFIG[skillType];
-    const fileName = config.fileKey + ".ts";
+    const fileName = `${config.fileKey}.ts`;
     const filePath = join(outDir, fileName);
     const content = generateSkillTypeFile(config.constName, skills);
 

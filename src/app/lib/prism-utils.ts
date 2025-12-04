@@ -143,7 +143,7 @@ export const getAffectedPositions = (
 export const scaleAffixText = (text: string, multiplier: number): string => {
   // Match numbers (integers and decimals) that appear in the text
   // Captures optional sign, integer part, and optional decimal part
-  return text.replace(/([+-]?)(\d+(?:\.\d+)?)/g, (match, sign, numStr) => {
+  return text.replace(/([+-]?)(\d+(?:\.\d+)?)/g, (_match, sign, numStr) => {
     const num = parseFloat(numStr);
     const scaled = num * multiplier;
     // Format: preserve decimal places if original had them, otherwise use integer
