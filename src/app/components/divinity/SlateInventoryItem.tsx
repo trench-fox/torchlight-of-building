@@ -75,6 +75,7 @@ export const SlateInventoryItem: React.FC<SlateInventoryItemProps> = ({
       <div className="flex items-center gap-1">
         {!isPlaced && (
           <button
+            type="button"
             onClick={onPlace}
             className="rounded bg-amber-600 px-2 py-1 text-xs text-white hover:bg-amber-500"
           >
@@ -82,18 +83,21 @@ export const SlateInventoryItem: React.FC<SlateInventoryItemProps> = ({
           </button>
         )}
         <button
+          type="button"
           onClick={onEdit}
           className="rounded bg-zinc-700 px-2 py-1 text-xs text-zinc-300 hover:bg-zinc-600"
         >
           Edit
         </button>
         <button
+          type="button"
           onClick={onCopy}
           className="rounded bg-zinc-700 px-2 py-1 text-xs text-zinc-300 hover:bg-zinc-600"
         >
           Copy
         </button>
         <button
+          type="button"
           onClick={onDelete}
           className="rounded bg-zinc-700 px-2 py-1 text-xs text-red-400 hover:bg-red-900"
         >

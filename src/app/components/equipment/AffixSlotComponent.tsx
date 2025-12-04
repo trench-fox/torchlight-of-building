@@ -94,6 +94,7 @@ export const AffixSlotComponent: React.FC<AffixSlotProps> = ({
 
           {/* Clear Button */}
           <button
+            type="button"
             onClick={() => onClear(slotIndex)}
             className="mt-2 text-xs text-red-500 hover:text-red-400 font-medium"
           >

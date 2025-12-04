@@ -66,7 +66,9 @@ export const DivinityGrid: React.FC<DivinityGridProps> = ({
     );
     if (placement) {
       const cells = getOccupiedCells(draggedSlate, placement);
-      cells.forEach(([r, c]) => draggedSlateCells.add(`${r},${c}`));
+      for (const [r, c] of cells) {
+        draggedSlateCells.add(`${r},${c}`);
+      }
     }
 
     // Calculate preview position
@@ -77,9 +79,9 @@ export const DivinityGrid: React.FC<DivinityGridProps> = ({
         draggedSlate.flippedH,
         draggedSlate.flippedV,
       );
-      shapeCells.forEach(([r, c]) => {
+      for (const [r, c] of shapeCells) {
         previewCells.add(`${r + dropTarget.row},${c + dropTarget.col}`);
-      });
+      }
     }
   }
 

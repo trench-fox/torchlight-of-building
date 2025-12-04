@@ -56,7 +56,12 @@ export const DivinityGridCell: React.FC<DivinityGridCellProps> = ({
   // Empty out-of-bounds cell (no slate and no preview)
   if (isOutOfBounds && !slate && !isPreview) {
     return (
-      <div className="h-12 w-12" onDragOver={onDragOver} onDrop={onDrop} />
+      <div
+        role="presentation"
+        className="h-12 w-12"
+        onDragOver={onDragOver}
+        onDrop={onDrop}
+      />
     );
   }
 
@@ -64,6 +69,7 @@ export const DivinityGridCell: React.FC<DivinityGridCellProps> = ({
   if (isOutOfBounds && !slate && isPreview && previewSlate) {
     return (
       <div
+        role="presentation"
         className={`relative h-12 w-12 ${GOD_COLORS[previewSlate.god]} opacity-60`}
         onDragOver={onDragOver}
         onDrop={onDrop}
@@ -78,15 +84,23 @@ export const DivinityGridCell: React.FC<DivinityGridCellProps> = ({
   if (isOutOfBounds && slate) {
     if (isDragging) {
       return (
-        <div className="h-12 w-12" onDragOver={onDragOver} onDrop={onDrop} />
+        <div
+          role="presentation"
+          className="h-12 w-12"
+          onDragOver={onDragOver}
+          onDrop={onDrop}
+        />
       );
     }
     return (
       <div
+        role="button"
+        tabIndex={0}
         className={`relative h-12 w-12 ${GOD_COLORS[slate.god]} cursor-grab`}
         style={getOutlineStyleForSlate(slateEdges)}
         draggable
         onClick={onClick}
+        onKeyDown={(e) => e.key === "Enter" && onClick()}
         onDragStart={onDragStart}
         onDragEnd={onDragEnd}
         onDragOver={onDragOver}
@@ -101,6 +115,7 @@ export const DivinityGridCell: React.FC<DivinityGridCellProps> = ({
   if (isDragging && slate && !isPreview) {
     return (
       <div
+        role="presentation"
         className="h-12 w-12 border border-zinc-700 bg-zinc-800"
         onDragOver={onDragOver}
         onDrop={onDrop}
@@ -112,6 +127,7 @@ export const DivinityGridCell: React.FC<DivinityGridCellProps> = ({
   if (isDragging && slate && isPreview && previewSlate) {
     return (
       <div
+        role="presentation"
         className={`relative h-12 w-12 ${GOD_COLORS[previewSlate.god]} opacity-60 border-2 border-white`}
         onDragOver={onDragOver}
         onDrop={onDrop}
@@ -167,10 +183,13 @@ export const DivinityGridCell: React.FC<DivinityGridCellProps> = ({
 
   return (
     <div
+      role={slate ? "button" : "presentation"}
+      tabIndex={slate ? 0 : undefined}
       className={`relative h-12 w-12 transition-colors ${getBackgroundClass()} ${getBorderClass()} ${getCursorClass()}`}
       style={getOutlineStyle()}
       draggable={!!slate}
       onClick={onClick}
+      onKeyDown={(e) => e.key === "Enter" && onClick()}
       onDragStart={onDragStart}
       onDragEnd={onDragEnd}
       onDragOver={onDragOver}

@@ -72,7 +72,7 @@ export const LegendaryAffixRow: React.FC<LegendaryAffixRowProps> = ({
             max="100"
             value={state.percentage}
             onChange={(e) =>
-              onPercentageChange(index, parseInt(e.target.value))
+              onPercentageChange(index, parseInt(e.target.value, 10))
             }
             className="w-full"
           />

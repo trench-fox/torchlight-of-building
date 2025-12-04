@@ -142,6 +142,7 @@ export const SlateCrafter: React.FC<SlateCrafterProps> = ({
         <div className="flex flex-wrap gap-2">
           {DIVINITY_GODS.map((g) => (
             <button
+              type="button"
               key={g}
               onClick={() => handleGodChange(g)}
               className={`rounded px-3 py-1 text-sm transition-colors ${
@@ -164,6 +165,7 @@ export const SlateCrafter: React.FC<SlateCrafterProps> = ({
           <div className="flex flex-col gap-2">
             {SLATE_SHAPES.map((s) => (
               <button
+                type="button"
                 key={s}
                 onClick={() => setShape(s)}
                 className={`flex h-12 w-12 items-center justify-center rounded border-2 transition-colors ${
@@ -190,6 +192,7 @@ export const SlateCrafter: React.FC<SlateCrafterProps> = ({
             </div>
             <div className="flex gap-1">
               <button
+                type="button"
                 onClick={handleRotate}
                 className="rounded bg-zinc-700 px-2 py-1 text-xs text-zinc-200 hover:bg-zinc-600"
                 title="Rotate 90°"
@@ -197,6 +200,7 @@ export const SlateCrafter: React.FC<SlateCrafterProps> = ({
                 ↻
               </button>
               <button
+                type="button"
                 onClick={() => setFlippedH((v) => !v)}
                 className={`rounded px-2 py-1 text-xs ${
                   flippedH
@@ -208,6 +212,7 @@ export const SlateCrafter: React.FC<SlateCrafterProps> = ({
                 ↔
               </button>
               <button
+                type="button"
                 onClick={() => setFlippedV((v) => !v)}
                 className={`rounded px-2 py-1 text-xs ${
                   flippedV
@@ -244,6 +249,7 @@ export const SlateCrafter: React.FC<SlateCrafterProps> = ({
                 {affix.effect.split("\n")[0]}
               </span>
               <button
+                type="button"
                 onClick={() => handleRemoveAffix(index)}
                 className="text-zinc-400 hover:text-red-400"
               >
@@ -274,6 +280,7 @@ export const SlateCrafter: React.FC<SlateCrafterProps> = ({
 
       <div className="flex gap-2">
         <button
+          type="button"
           onClick={handleSave}
           disabled={selectedAffixes.length === 0}
           className="flex-1 rounded bg-amber-600 px-4 py-2 text-white transition-colors hover:bg-amber-500 disabled:bg-zinc-600 disabled:cursor-not-allowed"
@@ -282,6 +289,7 @@ export const SlateCrafter: React.FC<SlateCrafterProps> = ({
         </button>
         {isPlaced && onRemoveFromGrid && (
           <button
+            type="button"
             onClick={onRemoveFromGrid}
             className="rounded bg-red-900 px-4 py-2 text-red-200 transition-colors hover:bg-red-800"
           >
@@ -290,6 +298,7 @@ export const SlateCrafter: React.FC<SlateCrafterProps> = ({
         )}
         {onCancel && (
           <button
+            type="button"
             onClick={onCancel}
             className="rounded bg-zinc-700 px-4 py-2 text-zinc-200 transition-colors hover:bg-zinc-600"
           >
