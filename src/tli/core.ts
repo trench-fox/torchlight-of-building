@@ -21,39 +21,44 @@ export interface Configuration {
   };
 }
 
-export interface ParsedDivinitySlate {
+export interface DivinitySlate {
   affixes: Affix[];
 }
 
-export interface ParsedGear {
+export interface Gear {
   equipmentType: EquipmentType;
   affixes: Affix[];
 }
 
-export interface ParsedTalentPage {
+export interface TalentPage {
   affixes: Affix[];
 }
 
-export interface ParsedDivinityPage {
-  slates: ParsedDivinitySlate[];
+export interface DivinityPage {
+  slates: DivinitySlate[];
 }
 
-export interface ParsedGearPage {
-  helmet?: ParsedGear;
-  chest?: ParsedGear;
-  neck?: ParsedGear;
-  gloves?: ParsedGear;
-  belt?: ParsedGear;
-  boots?: ParsedGear;
-  leftRing?: ParsedGear;
-  rightRing?: ParsedGear;
-  mainHand?: ParsedGear;
-  offHand?: ParsedGear;
+export interface EquippedGear {
+  helmet?: Gear;
+  chest?: Gear;
+  neck?: Gear;
+  gloves?: Gear;
+  belt?: Gear;
+  boots?: Gear;
+  leftRing?: Gear;
+  rightRing?: Gear;
+  mainHand?: Gear;
+  offHand?: Gear;
+}
+
+export interface GearPage {
+  equippedGear: EquippedGear;
+  inventory: Gear[];
 }
 
 export interface Loadout {
-  equipmentPage: ParsedGearPage;
-  talentPage: ParsedTalentPage;
-  divinityPage: ParsedDivinityPage;
+  gearPage: GearPage;
+  talentPage: TalentPage;
+  divinityPage: DivinityPage;
   customConfiguration: Affix[];
 }

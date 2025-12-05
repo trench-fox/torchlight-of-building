@@ -82,16 +82,36 @@ export const collectMods = (loadout: Loadout): Mod.Mod[] => {
       loadout.divinityPage.slates.flatMap((s) => s.affixes),
     ),
     ...collectModsFromAffixes(loadout.talentPage.affixes),
-    ...collectModsFromAffixes(loadout.equipmentPage.helmet?.affixes || []),
-    ...collectModsFromAffixes(loadout.equipmentPage.chest?.affixes || []),
-    ...collectModsFromAffixes(loadout.equipmentPage.neck?.affixes || []),
-    ...collectModsFromAffixes(loadout.equipmentPage.gloves?.affixes || []),
-    ...collectModsFromAffixes(loadout.equipmentPage.belt?.affixes || []),
-    ...collectModsFromAffixes(loadout.equipmentPage.boots?.affixes || []),
-    ...collectModsFromAffixes(loadout.equipmentPage.leftRing?.affixes || []),
-    ...collectModsFromAffixes(loadout.equipmentPage.rightRing?.affixes || []),
-    ...collectModsFromAffixes(loadout.equipmentPage.mainHand?.affixes || []),
-    ...collectModsFromAffixes(loadout.equipmentPage.offHand?.affixes || []),
+    ...collectModsFromAffixes(
+      loadout.gearPage.equippedGear.helmet?.affixes || [],
+    ),
+    ...collectModsFromAffixes(
+      loadout.gearPage.equippedGear.chest?.affixes || [],
+    ),
+    ...collectModsFromAffixes(
+      loadout.gearPage.equippedGear.neck?.affixes || [],
+    ),
+    ...collectModsFromAffixes(
+      loadout.gearPage.equippedGear.gloves?.affixes || [],
+    ),
+    ...collectModsFromAffixes(
+      loadout.gearPage.equippedGear.belt?.affixes || [],
+    ),
+    ...collectModsFromAffixes(
+      loadout.gearPage.equippedGear.boots?.affixes || [],
+    ),
+    ...collectModsFromAffixes(
+      loadout.gearPage.equippedGear.leftRing?.affixes || [],
+    ),
+    ...collectModsFromAffixes(
+      loadout.gearPage.equippedGear.rightRing?.affixes || [],
+    ),
+    ...collectModsFromAffixes(
+      loadout.gearPage.equippedGear.mainHand?.affixes || [],
+    ),
+    ...collectModsFromAffixes(
+      loadout.gearPage.equippedGear.offHand?.affixes || [],
+    ),
     ...collectModsFromAffixes(loadout.customConfiguration),
   ];
 };
@@ -148,7 +168,7 @@ const filterAffix = <T extends Mod.Mod["type"]>(
 
 // currently only calculating mainhand
 const calculateGearDmg = (loadout: Loadout, allMods: Mod.Mod[]): GearDmg => {
-  const mainhand = loadout.equipmentPage.mainHand;
+  const mainhand = loadout.gearPage.equippedGear.mainHand;
   if (mainhand === undefined) {
     return emptyGearDmg();
   }
