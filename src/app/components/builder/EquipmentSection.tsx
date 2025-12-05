@@ -56,6 +56,13 @@ export const EquipmentSection = () => {
   const setBaseStatsAffixIndex = useEquipmentUIStore(
     (state) => state.setBaseStatsAffixIndex,
   );
+  const baseAffixSlots = useEquipmentUIStore((state) => state.baseAffixSlots);
+  const setBaseAffixSlot = useEquipmentUIStore(
+    (state) => state.setBaseAffixSlot,
+  );
+  const clearBaseAffixSlot = useEquipmentUIStore(
+    (state) => state.clearBaseAffixSlot,
+  );
   const resetCrafting = useEquipmentUIStore((state) => state.resetCrafting);
 
   const prefixAffixes = useMemo(
@@ -83,6 +90,14 @@ export const EquipmentSection = () => {
     () =>
       selectedEquipmentType
         ? getFilteredAffixes(selectedEquipmentType, "Base Stats")
+        : [],
+    [selectedEquipmentType],
+  );
+
+  const baseAffixes = useMemo(
+    () =>
+      selectedEquipmentType
+        ? getFilteredAffixes(selectedEquipmentType, "Base Affix")
         : [],
     [selectedEquipmentType],
   );
@@ -158,6 +173,33 @@ export const EquipmentSection = () => {
     setBaseStatsAffixIndex(undefined);
   }, [setBaseStatsAffixIndex]);
 
+  const handleBaseAffixSelect = useCallback(
+    (slotIndex: number, value: string) => {
+      const affixIndex = value === "" ? undefined : parseInt(value, 10);
+      setBaseAffixSlot(slotIndex, {
+        affixIndex,
+        percentage:
+          affixIndex === undefined ? 50 : baseAffixSlots[slotIndex].percentage,
+      });
+    },
+    [setBaseAffixSlot, baseAffixSlots],
+  );
+
+  const handleBaseAffixSliderChange = useCallback(
+    (slotIndex: number, value: string) => {
+      const percentage = parseInt(value, 10);
+      setBaseAffixSlot(slotIndex, { percentage });
+    },
+    [setBaseAffixSlot],
+  );
+
+  const handleClearBaseAffix = useCallback(
+    (slotIndex: number) => {
+      clearBaseAffixSlot(slotIndex);
+    },
+    [clearBaseAffixSlot],
+  );
+
   const handleSaveToInventory = useCallback(() => {
     if (!selectedEquipmentType) return;
 
@@ -168,6 +210,13 @@ export const EquipmentSection = () => {
       const selectedBaseStats = baseStatsAffixes[baseStatsAffixIndex];
       affixes.push(selectedBaseStats.craftableAffix);
     }
+
+    // Add base affixes (2 max)
+    baseAffixSlots.forEach((selection) => {
+      if (selection.affixIndex === undefined) return;
+      const selectedAffix = baseAffixes[selection.affixIndex];
+      affixes.push(craft(selectedAffix, selection.percentage));
+    });
 
     // Add blend affix if selected (belt only)
     if (isBelt && blendAffixIndex !== undefined) {
@@ -206,6 +255,8 @@ export const EquipmentSection = () => {
     blendAffixes,
     baseStatsAffixIndex,
     baseStatsAffixes,
+    baseAffixSlots,
+    baseAffixes,
   ]);
 
   const handleSelectItemForSlot = useCallback(
@@ -291,6 +342,29 @@ export const EquipmentSection = () => {
                     onClear={handleClearBaseStats}
                     hideQualitySlider
                   />
+                </div>
+              )}
+              {/* Base Affixes Section */}
+              {baseAffixes.length > 0 && (
+                <div className="mb-6">
+                  <h3 className="mb-3 text-lg font-semibold text-zinc-50">
+                    Base Affixes (2 max)
+                  </h3>
+                  <div className="space-y-4">
+                    {[0, 1].map((slotIndex) => (
+                      <AffixSlotComponent
+                        key={slotIndex}
+                        slotIndex={slotIndex}
+                        affixType="Base Affix"
+                        affixes={baseAffixes}
+                        selection={baseAffixSlots[slotIndex]}
+                        onAffixSelect={handleBaseAffixSelect}
+                        onSliderChange={handleBaseAffixSliderChange}
+                        onClear={handleClearBaseAffix}
+                        hideTierInfo
+                      />
+                    ))}
+                  </div>
                 </div>
               )}
               {/* Blending Affix Section (Belts Only) */}
