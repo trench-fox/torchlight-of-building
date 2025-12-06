@@ -6,7 +6,7 @@ const initLoadout = (pl: Partial<Loadout> = {}): Loadout => {
   return {
     gearPage: pl.gearPage || { equippedGear: {}, inventory: [] },
     talentPage: pl.talentPage || {
-      allocatedTalents: {},
+      talentTrees: {},
       inventory: { prismList: [], inverseImageList: [] },
     },
     divinityPage: pl.divinityPage || { slates: [] },
@@ -340,7 +340,7 @@ test("calculate offense affixes from equipment, talents, and divinities combine"
       inventory: [],
     },
     talentPage: {
-      allocatedTalents: {
+      talentTrees: {
         tree1: {
           name: "test",
           nodes: [],
@@ -606,7 +606,7 @@ test("calculate offense with fervor and multiple FervorEff modifiers stacking", 
       inventory: [],
     },
     talentPage: {
-      allocatedTalents: {
+      talentTrees: {
         tree1: {
           name: "test",
           nodes: [],
@@ -784,7 +784,7 @@ test("calculate offense with multiple CritDmgPerFervor affixes stacking", () => 
       inventory: [],
     },
     talentPage: {
-      allocatedTalents: {
+      talentTrees: {
         tree1: {
           name: "test",
           nodes: [],

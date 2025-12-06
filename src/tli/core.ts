@@ -121,7 +121,7 @@ export interface PlacedInverseImage {
   position: { x: number; y: number };
 }
 
-export interface TalentGrid {
+export interface TalentTrees {
   tree1?: TalentTree;
   tree2?: TalentTree;
   tree3?: TalentTree;
@@ -136,13 +136,13 @@ export interface TalentInventory {
 }
 
 export interface TalentPage {
-  allocatedTalents: TalentGrid;
+  talentTrees: TalentTrees;
   inventory: TalentInventory;
 }
 
 export const getTalentAffixes = (talentPage: TalentPage): Affix[] => {
   const affixes: Affix[] = [];
-  const { allocatedTalents } = talentPage;
+  const { talentTrees: allocatedTalents } = talentPage;
 
   const trees = [
     allocatedTalents.tree1,

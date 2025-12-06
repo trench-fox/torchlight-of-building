@@ -25,7 +25,7 @@ import type {
   TalentNode,
   PlacedPrism,
   CraftedPrism,
-  TalentGrid,
+  TalentTrees,
   TalentInventory,
 } from "../core";
 import type { Mod } from "../mod";
@@ -290,7 +290,7 @@ const convertTalentPage = (
   const placedPrism = saveDataTalentPage.placedPrism;
   const placedInverseImage = saveDataTalentPage.placedInverseImage;
 
-  const allocatedTalents: TalentGrid = {};
+  const allocatedTalents: TalentTrees = {};
 
   for (const slot of treeSlots) {
     const tree = saveDataTalentPage[slot];
@@ -325,7 +325,7 @@ const convertTalentPage = (
   };
 
   return {
-    allocatedTalents,
+    talentTrees: allocatedTalents,
     inventory,
   };
 };
