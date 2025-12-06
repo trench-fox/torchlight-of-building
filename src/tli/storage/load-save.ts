@@ -6,6 +6,8 @@ import type {
   TalentTree as SaveDataTalentTree,
   PlacedPrism as SaveDataPlacedPrism,
   CraftedPrism as SaveDataCraftedPrism,
+  AllocatedTalentNode as SaveDataAllocatedTalentNode,
+  ReflectedAllocatedNode as SaveDataReflectedAllocatedNode,
 } from "@/src/app/lib/save-data";
 import type {
   Affix,
@@ -19,9 +21,17 @@ import type {
   CraftedPrism,
   AllocatedTalents,
   TalentInventory,
+  AllocatedTalentNode,
+  ReflectedAllocatedNode,
 } from "../core";
 import type { Mod } from "../mod";
 import { parseMod } from "../mod_parser";
+import {
+  findTalentNodeData,
+  getPrismAffixesForNode,
+  scaleTalentAffix,
+  type TreeSlot,
+} from "../talent-affix-utils";
 
 type GearSlot = keyof SaveDataGearPage;
 
@@ -106,19 +116,82 @@ const convertGearPage = (
   };
 };
 
-type TreeSlot = "tree1" | "tree2" | "tree3" | "tree4";
-
 const getTalentSrc = (treeSlot: TreeSlot): string => {
   return `Talent#${treeSlot}`;
 };
 
+const enrichAllocatedNode = (
+  node: SaveDataAllocatedTalentNode,
+  treeName: string,
+  treeSlot: TreeSlot,
+  placedPrism: SaveDataPlacedPrism | undefined,
+  src: string,
+): AllocatedTalentNode => {
+  const nodeData = findTalentNodeData(treeName, node.x, node.y);
+
+  if (!nodeData) {
+    return {
+      x: node.x,
+      y: node.y,
+      points: node.points,
+      affix: { text: "", src },
+      prismAffixes: [],
+    };
+  }
+
+  return {
+    x: node.x,
+    y: node.y,
+    points: node.points,
+    affix: scaleTalentAffix(nodeData.rawAffix, node.points, src),
+    prismAffixes: getPrismAffixesForNode(
+      { x: node.x, y: node.y },
+      nodeData.nodeType,
+      node.points,
+      placedPrism,
+      treeSlot,
+      src,
+    ),
+  };
+};
+
+const enrichReflectedNode = (
+  node: SaveDataReflectedAllocatedNode,
+  treeName: string,
+  src: string,
+): ReflectedAllocatedNode => {
+  const sourceNodeData = findTalentNodeData(
+    treeName,
+    node.sourceX,
+    node.sourceY,
+  );
+
+  const affix =
+    sourceNodeData !== undefined
+      ? scaleTalentAffix(sourceNodeData.rawAffix, node.points, src)
+      : { text: "", src };
+
+  return {
+    x: node.x,
+    y: node.y,
+    sourceX: node.sourceX,
+    sourceY: node.sourceY,
+    points: node.points,
+    affix,
+  };
+};
+
 const convertTalentTree = (
   tree: SaveDataTalentTree,
+  treeSlot: TreeSlot,
+  placedPrism: SaveDataPlacedPrism | undefined,
   src: string,
 ): TalentTree => {
   return {
     name: tree.name,
-    allocatedNodes: tree.allocatedNodes,
+    allocatedNodes: tree.allocatedNodes.map((node) =>
+      enrichAllocatedNode(node, tree.name, treeSlot, placedPrism, src),
+    ),
     selectedCoreTalents: tree.selectedCoreTalents
       ? tree.selectedCoreTalents.map((text) => convertAffix(text, src))
       : undefined,
@@ -154,6 +227,7 @@ const convertTalentPage = (
   inverseImageList: SaveData["inverseImageList"],
 ): TalentPage => {
   const treeSlots: TreeSlot[] = ["tree1", "tree2", "tree3", "tree4"];
+  const placedPrism = saveDataTalentPage.placedPrism;
 
   const allocatedTalents: AllocatedTalents = {};
 
@@ -161,20 +235,43 @@ const convertTalentPage = (
     const tree = saveDataTalentPage[slot];
     if (tree) {
       const src = getTalentSrc(slot);
-      allocatedTalents[slot] = convertTalentTree(tree, src);
+      allocatedTalents[slot] = convertTalentTree(tree, slot, placedPrism, src);
     }
   }
 
-  if (saveDataTalentPage.placedPrism) {
-    const src = getTalentSrc(saveDataTalentPage.placedPrism.treeSlot);
-    allocatedTalents.placedPrism = convertPlacedPrism(
-      saveDataTalentPage.placedPrism,
-      src,
-    );
+  if (placedPrism) {
+    const src = getTalentSrc(placedPrism.treeSlot);
+    allocatedTalents.placedPrism = convertPlacedPrism(placedPrism, src);
   }
 
   if (saveDataTalentPage.placedInverseImage) {
-    allocatedTalents.placedInverseImage = saveDataTalentPage.placedInverseImage;
+    const inverseImage = saveDataTalentPage.placedInverseImage;
+    const src = getTalentSrc(inverseImage.treeSlot);
+    const tree = saveDataTalentPage[inverseImage.treeSlot];
+
+    if (tree) {
+      allocatedTalents.placedInverseImage = {
+        inverseImage: inverseImage.inverseImage,
+        treeSlot: inverseImage.treeSlot,
+        position: inverseImage.position,
+        reflectedAllocatedNodes: inverseImage.reflectedAllocatedNodes.map(
+          (node) => enrichReflectedNode(node, tree.name, src),
+        ),
+      };
+    } else {
+      allocatedTalents.placedInverseImage = {
+        inverseImage: inverseImage.inverseImage,
+        treeSlot: inverseImage.treeSlot,
+        position: inverseImage.position,
+        reflectedAllocatedNodes: inverseImage.reflectedAllocatedNodes.map(
+          (node) => ({
+            ...node,
+            affix: { text: "", src },
+            prismAffixes: [],
+          }),
+        ),
+      };
+    }
   }
 
   const inventory: TalentInventory = {

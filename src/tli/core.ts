@@ -1,20 +1,12 @@
 import type { EquipmentType } from "./gear_data_types";
 import type { Mod } from "./mod";
 import type {
-  AllocatedTalentNode,
   CraftedInverseImage,
   CraftedPrism as SaveDataCraftedPrism,
-  PlacedInverseImage as SaveDataPlacedInverseImage,
   PrismRarity,
-  ReflectedAllocatedNode,
 } from "@/src/app/lib/save-data";
 
-export type {
-  AllocatedTalentNode,
-  CraftedInverseImage,
-  PrismRarity,
-  ReflectedAllocatedNode,
-};
+export type { CraftedInverseImage, PrismRarity };
 
 export interface Affix {
   mods?: Mod[];
@@ -78,6 +70,24 @@ export const getAllAffixes = (gear: Gear): Affix[] => {
   return affixes;
 };
 
+// Talent node types with derived affix data
+export interface AllocatedTalentNode {
+  x: number;
+  y: number;
+  points: number;
+  affix: Affix; // Scaled by allocated points
+  prismAffixes: Affix[]; // Prism gauge affixes matching node type, scaled by points
+}
+
+export interface ReflectedAllocatedNode {
+  x: number; // Position in target area
+  y: number;
+  sourceX: number; // Position of source node being reflected
+  sourceY: number;
+  points: number;
+  affix: Affix; // Scaled by points (no inverse image effect modifier applied)
+}
+
 // Talent types with parsed Affix objects (instead of strings)
 export interface TalentTree {
   name: string;
@@ -139,11 +149,24 @@ export const getTalentAffixes = (talentPage: TalentPage): Affix[] => {
     if (tree?.selectedCoreTalents) {
       affixes.push(...tree.selectedCoreTalents);
     }
+    if (tree?.allocatedNodes) {
+      for (const node of tree.allocatedNodes) {
+        affixes.push(node.affix);
+        affixes.push(...node.prismAffixes);
+      }
+    }
   }
 
   if (allocatedTalents.placedPrism) {
     affixes.push(allocatedTalents.placedPrism.prism.baseAffix);
     affixes.push(...allocatedTalents.placedPrism.prism.gaugeAffixes);
+  }
+
+  if (allocatedTalents.placedInverseImage) {
+    for (const node of allocatedTalents.placedInverseImage
+      .reflectedAllocatedNodes) {
+      affixes.push(node.affix);
+    }
   }
 
   return affixes;
