@@ -73,10 +73,7 @@ export const InventoryItem: React.FC<InventoryItemProps> = ({
         )}
         {item.baseStats && (
           <div className="text-xs text-amber-300 mb-2">
-            {item.baseStats.affixLines.map((line, idx) => (
-              // biome-ignore lint/suspicious/noArrayIndexKey: lines can have duplicate text, index is stable
-              <div key={idx}>{line.text}</div>
-            ))}
+            <div>{item.baseStats.text}</div>
           </div>
         )}
         {getAllAffixes(item).length > 0 ? (

@@ -92,7 +92,7 @@ const convertGear = (gear: SaveDataGear, src: string | undefined): Gear => {
     id: gear.id,
     rarity: gear.rarity,
     legendaryName: gear.legendaryName,
-    baseStats: gear.baseStats ? convertAffix(gear.baseStats, src) : undefined,
+    baseStats: gear.baseStats ? { text: gear.baseStats, src } : undefined,
     base_affixes: convertAffixArray(gear.base_affixes, src),
     prefixes: convertAffixArray(gear.prefixes, src),
     suffixes: convertAffixArray(gear.suffixes, src),

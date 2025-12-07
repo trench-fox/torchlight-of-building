@@ -15,6 +15,11 @@ export interface Affix {
   src?: string;
 }
 
+export interface BaseStats {
+  text: string;
+  src?: string;
+}
+
 export const getAffixText = (affix: Affix): string =>
   affix.affixLines.map((l) => l.text).join("\n");
 
@@ -43,7 +48,7 @@ export interface Gear {
   legendaryName?: string;
 
   // Base stats (shared by both regular and legendary gear)
-  baseStats?: Affix;
+  baseStats?: BaseStats;
 
   // Regular gear affix properties
   base_affixes?: Affix[];
@@ -57,8 +62,7 @@ export interface Gear {
 
 export const getAllAffixes = (gear: Gear): Affix[] => {
   const affixes: Affix[] = [];
-
-  if (gear.baseStats) affixes.push(gear.baseStats);
+  // handle base stats
 
   if (gear.legendary_affixes) {
     affixes.push(...gear.legendary_affixes);
