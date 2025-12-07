@@ -1,8 +1,9 @@
 "use client";
 
-import { Tooltip, TooltipTitle } from "@/src/app/components/ui/Tooltip";
+import { Tooltip } from "@/src/app/components/ui/Tooltip";
 import { useTooltip } from "@/src/app/hooks/useTooltip";
 import { type Gear, getAllAffixes } from "@/src/tli/core";
+import { GearTooltipContent } from "./GearTooltipContent";
 
 interface InventoryItemProps {
   item: Gear;
@@ -67,32 +68,7 @@ export const InventoryItem: React.FC<InventoryItemProps> = ({
         variant={isLegendary ? "legendary" : "default"}
         {...tooltipHandlers}
       >
-        <TooltipTitle>{item.legendaryName ?? item.equipmentType}</TooltipTitle>
-        {isLegendary && (
-          <div className="text-xs text-zinc-500 mb-2">{item.equipmentType}</div>
-        )}
-        {item.baseStats && (
-          <div className="text-xs text-amber-300 mb-2">
-            <div>{item.baseStats.text}</div>
-          </div>
-        )}
-        {getAllAffixes(item).length > 0 ? (
-          <ul className="space-y-1">
-            {getAllAffixes(item).map((affix, affixIdx) =>
-              affix.affixLines.map((line, lineIdx) => (
-                <li
-                  // biome-ignore lint/suspicious/noArrayIndexKey: affixes can have duplicate text, index is stable
-                  key={`${affixIdx}-${lineIdx}`}
-                  className="text-xs text-zinc-400"
-                >
-                  {line.text}
-                </li>
-              )),
-            )}
-          </ul>
-        ) : (
-          <p className="text-xs text-zinc-500 italic">No affixes</p>
-        )}
+        <GearTooltipContent item={item} />
       </Tooltip>
     </div>
   );
