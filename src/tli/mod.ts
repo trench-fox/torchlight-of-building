@@ -113,22 +113,7 @@ export type Mod =
       src?: string;
     }
   | {
-      type: "GearBaseCritRating";
-      value: number;
-      src?: string;
-    }
-  | {
-      type: "GearBaseAspd";
-      value: number;
-      src?: string;
-    }
-  | {
       type: "GearAspdPct";
-      value: number;
-      src?: string;
-    }
-  | {
-      type: "GearBasePhysFlatDmg";
       value: number;
       src?: string;
     }

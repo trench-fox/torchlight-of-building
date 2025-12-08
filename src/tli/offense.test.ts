@@ -60,7 +60,14 @@ test("calculate offense very basic", () => {
       equippedGear: {
         mainHand: {
           equipmentType: "One-Handed Sword",
-          base_affixes: [affix([{ type: "GearBasePhysFlatDmg", value: 100 }])],
+          baseStats: {
+            baseStatLines: [
+              {
+                text: "100 - 100 physical damage",
+                mod: { type: "FlatPhysDmg", value: 100 },
+              },
+            ],
+          },
         },
       },
       inventory: [],
@@ -89,7 +96,14 @@ test("calculate offense multiple inc dmg", () => {
       equippedGear: {
         mainHand: {
           equipmentType: "One-Handed Sword",
-          base_affixes: [affix([{ type: "GearBasePhysFlatDmg", value: 100 }])],
+          baseStats: {
+            baseStatLines: [
+              {
+                text: "100 - 100 physical damage",
+                mod: { type: "FlatPhysDmg", value: 100 },
+              },
+            ],
+          },
         },
       },
       inventory: [],
@@ -120,7 +134,14 @@ test("calculate offense multiple addn dmg", () => {
       equippedGear: {
         mainHand: {
           equipmentType: "One-Handed Sword",
-          base_affixes: [affix([{ type: "GearBasePhysFlatDmg", value: 100 }])],
+          baseStats: {
+            baseStatLines: [
+              {
+                text: "100 - 100 physical damage",
+                mod: { type: "FlatPhysDmg", value: 100 },
+              },
+            ],
+          },
         },
       },
       inventory: [],
@@ -152,7 +173,14 @@ test("calculate offense multiple mix inc and addn dmg", () => {
       equippedGear: {
         mainHand: {
           equipmentType: "One-Handed Sword",
-          base_affixes: [affix([{ type: "GearBasePhysFlatDmg", value: 100 }])],
+          baseStats: {
+            baseStatLines: [
+              {
+                text: "100 - 100 physical damage",
+                mod: { type: "FlatPhysDmg", value: 100 },
+              },
+            ],
+          },
         },
       },
       inventory: [],
@@ -185,7 +213,14 @@ test("calculate offense atk dmg mod", () => {
       equippedGear: {
         mainHand: {
           equipmentType: "One-Handed Sword",
-          base_affixes: [affix([{ type: "GearBasePhysFlatDmg", value: 100 }])],
+          baseStats: {
+            baseStatLines: [
+              {
+                text: "100 - 100 physical damage",
+                mod: { type: "FlatPhysDmg", value: 100 },
+              },
+            ],
+          },
         },
       },
       inventory: [],
@@ -215,7 +250,14 @@ test("calculate offense spell dmg mod doesn't affect attack skill", () => {
       equippedGear: {
         mainHand: {
           equipmentType: "One-Handed Sword",
-          base_affixes: [affix([{ type: "GearBasePhysFlatDmg", value: 100 }])],
+          baseStats: {
+            baseStatLines: [
+              {
+                text: "100 - 100 physical damage",
+                mod: { type: "FlatPhysDmg", value: 100 },
+              },
+            ],
+          },
         },
       },
       inventory: [],
@@ -246,8 +288,15 @@ test("calculate offense elemental damage", () => {
       equippedGear: {
         mainHand: {
           equipmentType: "One-Handed Sword",
+          baseStats: {
+            baseStatLines: [
+              {
+                text: "100 - 100 physical damage",
+                mod: { type: "FlatPhysDmg", value: 100 },
+              },
+            ],
+          },
           base_affixes: [
-            affix([{ type: "GearBasePhysFlatDmg", value: 100 }]),
             affix([
               {
                 type: "FlatGearDmg",
@@ -291,8 +340,15 @@ test("calculate offense cold damage", () => {
       equippedGear: {
         mainHand: {
           equipmentType: "One-Handed Sword",
+          baseStats: {
+            baseStatLines: [
+              {
+                text: "100 - 100 physical damage",
+                mod: { type: "FlatPhysDmg", value: 100 },
+              },
+            ],
+          },
           base_affixes: [
-            affix([{ type: "GearBasePhysFlatDmg", value: 100 }]),
             affix([
               {
                 type: "FlatGearDmg",
@@ -332,7 +388,14 @@ test("calculate offense with fervor enabled default points", () => {
       equippedGear: {
         mainHand: {
           equipmentType: "One-Handed Sword",
-          base_affixes: [affix([{ type: "GearBasePhysFlatDmg", value: 100 }])],
+          baseStats: {
+            baseStatLines: [
+              {
+                text: "100 - 100 physical damage",
+                mod: { type: "FlatPhysDmg", value: 100 },
+              },
+            ],
+          },
         },
       },
       inventory: [],
@@ -370,7 +433,14 @@ test("calculate offense with fervor enabled custom points", () => {
       equippedGear: {
         mainHand: {
           equipmentType: "One-Handed Sword",
-          base_affixes: [affix([{ type: "GearBasePhysFlatDmg", value: 100 }])],
+          baseStats: {
+            baseStatLines: [
+              {
+                text: "100 - 100 physical damage",
+                mod: { type: "FlatPhysDmg", value: 100 },
+              },
+            ],
+          },
         },
       },
       inventory: [],
@@ -408,7 +478,14 @@ test("calculate offense with fervor disabled", () => {
       equippedGear: {
         mainHand: {
           equipmentType: "One-Handed Sword",
-          base_affixes: [affix([{ type: "GearBasePhysFlatDmg", value: 100 }])],
+          baseStats: {
+            baseStatLines: [
+              {
+                text: "100 - 100 physical damage",
+                mod: { type: "FlatPhysDmg", value: 100 },
+              },
+            ],
+          },
         },
       },
       inventory: [],
@@ -445,8 +522,15 @@ test("calculate offense with fervor and other crit rating affixes", () => {
       equippedGear: {
         mainHand: {
           equipmentType: "One-Handed Sword",
+          baseStats: {
+            baseStatLines: [
+              {
+                text: "100 - 100 physical damage",
+                mod: { type: "FlatPhysDmg", value: 100 },
+              },
+            ],
+          },
           base_affixes: [
-            affix([{ type: "GearBasePhysFlatDmg", value: 100 }]),
             affix([{ type: "CritRatingPct", value: 0.5, modType: "global" }]), // +50% crit rating
           ],
         },
@@ -488,8 +572,15 @@ test("calculate offense with fervor and single FervorEff modifier", () => {
       equippedGear: {
         mainHand: {
           equipmentType: "One-Handed Sword",
+          baseStats: {
+            baseStatLines: [
+              {
+                text: "100 - 100 physical damage",
+                mod: { type: "FlatPhysDmg", value: 100 },
+              },
+            ],
+          },
           base_affixes: [
-            affix([{ type: "GearBasePhysFlatDmg", value: 100 }]),
             affix([{ type: "FervorEff", value: 0.5 }]), // +50% fervor effectiveness
           ],
         },
@@ -529,8 +620,15 @@ test("calculate offense with fervor and multiple FervorEff modifiers stacking", 
       equippedGear: {
         mainHand: {
           equipmentType: "One-Handed Sword",
+          baseStats: {
+            baseStatLines: [
+              {
+                text: "100 - 100 physical damage",
+                mod: { type: "FlatPhysDmg", value: 100 },
+              },
+            ],
+          },
           base_affixes: [
-            affix([{ type: "GearBasePhysFlatDmg", value: 100 }]),
             affix([{ type: "FervorEff", value: 0.1 }]), // +10% fervor effectiveness
           ],
         },
@@ -583,8 +681,15 @@ test("calculate offense with fervor and FervorEff with custom fervor points", ()
       equippedGear: {
         mainHand: {
           equipmentType: "One-Handed Sword",
+          baseStats: {
+            baseStatLines: [
+              {
+                text: "100 - 100 physical damage",
+                mod: { type: "FlatPhysDmg", value: 100 },
+              },
+            ],
+          },
           base_affixes: [
-            affix([{ type: "GearBasePhysFlatDmg", value: 100 }]),
             affix([{ type: "FervorEff", value: 1.0 }]), // +100% fervor effectiveness (doubles it)
           ],
         },
@@ -624,8 +729,15 @@ test("calculate offense with FervorEff but fervor disabled", () => {
       equippedGear: {
         mainHand: {
           equipmentType: "One-Handed Sword",
+          baseStats: {
+            baseStatLines: [
+              {
+                text: "100 - 100 physical damage",
+                mod: { type: "FlatPhysDmg", value: 100 },
+              },
+            ],
+          },
           base_affixes: [
-            affix([{ type: "GearBasePhysFlatDmg", value: 100 }]),
             affix([{ type: "FervorEff", value: 0.5 }]), // +50% fervor effectiveness
           ],
         },
@@ -664,8 +776,15 @@ test("calculate offense with CritDmgPerFervor single affix", () => {
       equippedGear: {
         mainHand: {
           equipmentType: "One-Handed Sword",
+          baseStats: {
+            baseStatLines: [
+              {
+                text: "100 - 100 physical damage",
+                mod: { type: "FlatPhysDmg", value: 100 },
+              },
+            ],
+          },
           base_affixes: [
-            affix([{ type: "GearBasePhysFlatDmg", value: 100 }]),
             affix([{ type: "CritDmgPerFervor", value: 0.005 }]), // +0.5% crit dmg per fervor point
           ],
         },
@@ -707,8 +826,15 @@ test("calculate offense with multiple CritDmgPerFervor affixes stacking", () => 
       equippedGear: {
         mainHand: {
           equipmentType: "One-Handed Sword",
+          baseStats: {
+            baseStatLines: [
+              {
+                text: "100 - 100 physical damage",
+                mod: { type: "FlatPhysDmg", value: 100 },
+              },
+            ],
+          },
           base_affixes: [
-            affix([{ type: "GearBasePhysFlatDmg", value: 100 }]),
             affix([{ type: "CritDmgPerFervor", value: 0.005 }]), // +0.5% per point
           ],
         },
@@ -762,8 +888,15 @@ test("calculate offense with CritDmgPerFervor with custom fervor points", () => 
       equippedGear: {
         mainHand: {
           equipmentType: "One-Handed Sword",
+          baseStats: {
+            baseStatLines: [
+              {
+                text: "100 - 100 physical damage",
+                mod: { type: "FlatPhysDmg", value: 100 },
+              },
+            ],
+          },
           base_affixes: [
-            affix([{ type: "GearBasePhysFlatDmg", value: 100 }]),
             affix([{ type: "CritDmgPerFervor", value: 0.01 }]), // +1% crit dmg per fervor point
           ],
         },
@@ -805,8 +938,15 @@ test("calculate offense with CritDmgPerFervor but fervor disabled", () => {
       equippedGear: {
         mainHand: {
           equipmentType: "One-Handed Sword",
+          baseStats: {
+            baseStatLines: [
+              {
+                text: "100 - 100 physical damage",
+                mod: { type: "FlatPhysDmg", value: 100 },
+              },
+            ],
+          },
           base_affixes: [
-            affix([{ type: "GearBasePhysFlatDmg", value: 100 }]),
             affix([{ type: "CritDmgPerFervor", value: 0.005 }]), // +0.5% per point
           ],
         },
@@ -846,8 +986,15 @@ test("calculate offense with CritDmgPerFervor and other crit damage modifiers", 
       equippedGear: {
         mainHand: {
           equipmentType: "One-Handed Sword",
+          baseStats: {
+            baseStatLines: [
+              {
+                text: "100 - 100 physical damage",
+                mod: { type: "FlatPhysDmg", value: 100 },
+              },
+            ],
+          },
           base_affixes: [
-            affix([{ type: "GearBasePhysFlatDmg", value: 100 }]),
             affix([{ type: "CritDmgPerFervor", value: 0.005 }]), // +0.5% per point
             affix([
               {

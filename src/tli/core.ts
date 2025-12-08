@@ -1,4 +1,4 @@
-import { BaseStatMod } from "./base_stat_mod";
+import type { BaseStatMod } from "./base_stat_mod";
 import type { EquipmentType } from "./gear_data_types";
 import type { Mod } from "./mod";
 

@@ -188,7 +188,9 @@ const calculateGearDmg = (loadout: Loadout, allMods: Mod.Mod[]): GearDmg => {
     return emptyGearDmg();
   }
   const mainhandMods = collectModsFromAffixes(getAllAffixes(mainhand));
-  const basePhysDmg = findAffix(mainhandMods, "GearBasePhysFlatDmg");
+  const basePhysDmg = mainhand.baseStats?.baseStatLines.find(
+    (l) => l.mod?.type === "FlatPhysDmg",
+  )?.mod?.value;
   if (basePhysDmg === undefined) {
     return emptyGearDmg();
   }
@@ -199,8 +201,8 @@ const calculateGearDmg = (loadout: Loadout, allMods: Mod.Mod[]): GearDmg => {
   let fire = emptyDamageRange();
   let erosion = emptyDamageRange();
 
-  phys.min += basePhysDmg.value;
-  phys.max += basePhysDmg.value;
+  phys.min += basePhysDmg;
+  phys.max += basePhysDmg;
   let physBonusPct = 0;
 
   const gearPhysDmgPct = findAffix(mainhandMods, "GearPhysDmgPct");
@@ -255,15 +257,15 @@ const calculateGearDmg = (loadout: Loadout, allMods: Mod.Mod[]): GearDmg => {
   };
 };
 
-const calculateGearAspd = (allMods: Mod.Mod[]): number => {
-  const baseAspd = findAffix(allMods, "GearBaseAspd");
-  if (baseAspd === undefined) {
-    return 0;
-  }
+const calculateGearAspd = (loadout: Loadout, allMods: Mod.Mod[]): number => {
+  const baseAspd =
+    loadout.gearPage.equippedGear.mainHand?.baseStats?.baseStatLines.find(
+      (l) => l.mod?.type === "AttackSpeed",
+    )?.mod?.value || 0;
   const gearAspdPctBonus = calculateInc(
     filterAffix(allMods, "GearAspdPct").map((b) => b.value),
   );
-  return baseAspd.value * (1 + gearAspdPctBonus);
+  return baseAspd * (1 + gearAspdPctBonus);
 };
 
 const calculateCritRating = (
@@ -341,8 +343,8 @@ const calculateCritDmg = (
   return 1.5 * (1 + inc) * addn;
 };
 
-const calculateAspd = (allMods: Mod.Mod[]): number => {
-  const gearAspd = calculateGearAspd(allMods);
+const calculateAspd = (loadout: Loadout, allMods: Mod.Mod[]): number => {
+  const gearAspd = calculateGearAspd(loadout, allMods);
   const aspdPctMods = filterAffix(allMods, "AspdPct");
   const inc = calculateInc(
     aspdPctMods.filter((m) => !m.addn).map((v) => v.value),
@@ -550,7 +552,7 @@ export const calculateOffense = (
     return undefined;
   }
   const gearDmg = calculateGearDmg(loadout, mods);
-  const aspd = calculateAspd(mods);
+  const aspd = calculateAspd(loadout, mods);
   const dmgPcts = filterAffix(mods, "DmgPct");
   const critChance = calculateCritRating(mods, configuration);
   const critDmgMult = calculateCritDmg(mods, configuration);

@@ -22,6 +22,7 @@ import type {
   TalentTree as SaveDataTalentTree,
 } from "@/src/app/lib/save-data";
 import type { TalentNodeData, TreeName } from "@/src/data/talent_tree";
+import { parseBaseStatMod } from "../base_stat_mod";
 import type {
   Affix,
   AffixLine,
@@ -57,7 +58,6 @@ import {
   type TreeSlot,
   treeDataByName,
 } from "../talent-affix-utils";
-import { parseBaseStatMod } from "../base_stat_mod";
 
 type GearSlot = keyof SaveDataGearPage;
 
