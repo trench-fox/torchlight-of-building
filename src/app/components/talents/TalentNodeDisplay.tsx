@@ -1,3 +1,4 @@
+import { ModNotImplementedIcon } from "@/src/app/components/ui/ModNotImplementedIcon";
 import {
   Tooltip,
   TooltipContent,
@@ -5,11 +6,10 @@ import {
 } from "@/src/app/components/ui/Tooltip";
 import { useTooltip } from "@/src/app/hooks/useTooltip";
 import { formatEffectModifier } from "@/src/app/lib/inverse-image-utils";
-import {
-  type CraftedInverseImage,
-  type CraftedPrism,
-  getAffixText,
-  type TalentNode,
+import type {
+  CraftedInverseImage,
+  CraftedPrism,
+  TalentNode,
 } from "@/src/tli/core";
 
 interface BonusAffix {
@@ -90,9 +90,6 @@ export const TalentNodeDisplay: React.FC<TalentNodeDisplayProps> = ({
       onPlaceInverseImage();
     }
   };
-
-  // Get tooltip affix text - for reflected nodes, show the raw affix text
-  const tooltipAffixText = getAffixText(node.affix);
 
   // Prism node rendering
   if (hasPrism && prism) {
@@ -369,7 +366,18 @@ export const TalentNodeDisplay: React.FC<TalentNodeDisplayProps> = ({
           <TooltipTitle>
             <span className="text-cyan-400">{talentTypeName} (Reflected)</span>
           </TooltipTitle>
-          <TooltipContent>{tooltipAffixText}</TooltipContent>
+          <TooltipContent>
+            {node.affix.affixLines.map((line, idx) => (
+              <div
+                // biome-ignore lint/suspicious/noArrayIndexKey: lines can have duplicate text, index is stable
+                key={idx}
+                className="flex items-center"
+              >
+                <span>{line.text}</span>
+                {!line.mod && <ModNotImplementedIcon />}
+              </div>
+            ))}
+          </TooltipContent>
           {bonusAffixes.length > 0 && (
             <div className="mt-2 pt-2 border-t border-blue-500/30">
               {bonusAffixes.map((bonus) => (
@@ -488,7 +496,18 @@ export const TalentNodeDisplay: React.FC<TalentNodeDisplayProps> = ({
         {...tooltipHandlers}
       >
         <TooltipTitle>{talentTypeName}</TooltipTitle>
-        <TooltipContent>{tooltipAffixText}</TooltipContent>
+        <TooltipContent>
+          {node.affix.affixLines.map((line, idx) => (
+            <div
+              // biome-ignore lint/suspicious/noArrayIndexKey: lines can have duplicate text, index is stable
+              key={idx}
+              className="flex items-center"
+            >
+              <span>{line.text}</span>
+              {!line.mod && <ModNotImplementedIcon />}
+            </div>
+          ))}
+        </TooltipContent>
         {bonusAffixes.length > 0 && (
           <div className="mt-2 pt-2 border-t border-blue-500/30">
             {bonusAffixes.map((bonus) => (
