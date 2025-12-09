@@ -1,7 +1,13 @@
-import { expect, test } from "vitest";
+import { describe, expect, test } from "vitest";
 import type { Affix, Configuration, Loadout } from "./core";
 import type { Mod } from "./mod";
-import { calculateOffense, collectMods } from "./offense";
+import {
+  calculateOffense,
+  collectMods,
+  convertDmg,
+  type DmgPools,
+  type DmgRanges,
+} from "./offense";
 import type { Skill } from "./skill_confs";
 
 // Helper to create Affix objects from mods for tests
@@ -695,4 +701,313 @@ test("calculate offense with flat erosion damage", () => {
     },
     { avgHit: 175, avgHitWithCrit: 179.375 },
   );
+});
+
+// Damage Conversion Tests
+// Conversion chain: Physical → Lightning → Cold → Fire → Erosion
+// Damage can skip steps but never convert backwards
+// Converted damage benefits from modifiers of all types it passed through
+
+const emptyDmgRanges = (): DmgRanges => ({
+  phys: { min: 0, max: 0 },
+  cold: { min: 0, max: 0 },
+  lightning: { min: 0, max: 0 },
+  fire: { min: 0, max: 0 },
+  erosion: { min: 0, max: 0 },
+});
+
+const sumPoolRanges = (pools: DmgPools, type: keyof DmgPools) => {
+  return pools[type].reduce(
+    (acc, p) => ({ min: acc.min + p.range.min, max: acc.max + p.range.max }),
+    { min: 0, max: 0 },
+  );
+};
+
+const findConvertedEntry = (pools: DmgPools, type: keyof DmgPools) => {
+  // Find entry with non-zero damage (the converted one, not original zero)
+  return pools[type].find((p) => p.range.min > 0 || p.range.max > 0);
+};
+
+describe("convertDmg", () => {
+  test("no conversion mods - damage passes through unchanged", () => {
+    const dmgRanges: DmgRanges = {
+      ...emptyDmgRanges(),
+      phys: { min: 100, max: 100 },
+    };
+
+    const result = convertDmg(dmgRanges, []);
+
+    expect(sumPoolRanges(result, "physical")).toEqual({ min: 100, max: 100 });
+    expect(sumPoolRanges(result, "cold")).toEqual({ min: 0, max: 0 });
+    expect(sumPoolRanges(result, "lightning")).toEqual({ min: 0, max: 0 });
+    expect(sumPoolRanges(result, "fire")).toEqual({ min: 0, max: 0 });
+    expect(sumPoolRanges(result, "erosion")).toEqual({ min: 0, max: 0 });
+  });
+
+  test("100% physical to cold conversion", () => {
+    const dmgRanges: DmgRanges = {
+      ...emptyDmgRanges(),
+      phys: { min: 100, max: 100 },
+    };
+
+    const mods: Mod[] = [
+      { type: "ConvertDmgPct", from: "physical", to: "cold", value: 1.0 },
+    ];
+
+    const result = convertDmg(dmgRanges, mods);
+
+    expect(sumPoolRanges(result, "physical")).toEqual({ min: 0, max: 0 });
+    expect(sumPoolRanges(result, "cold")).toEqual({ min: 100, max: 100 });
+    // Converted cold should track that it came from physical
+    const convertedCold = findConvertedEntry(result, "cold");
+    expect(convertedCold?.history).toContain("physical");
+  });
+
+  test("50% physical to cold conversion - splits damage", () => {
+    const dmgRanges: DmgRanges = {
+      ...emptyDmgRanges(),
+      phys: { min: 100, max: 100 },
+    };
+
+    const mods: Mod[] = [
+      { type: "ConvertDmgPct", from: "physical", to: "cold", value: 0.5 },
+    ];
+
+    const result = convertDmg(dmgRanges, mods);
+
+    expect(sumPoolRanges(result, "physical")).toEqual({ min: 50, max: 50 });
+    expect(sumPoolRanges(result, "cold")).toEqual({ min: 50, max: 50 });
+    // Unconverted phys has no extra mod types
+    const unconvertedPhys = findConvertedEntry(result, "physical");
+    expect(unconvertedPhys?.history).toEqual([]);
+    // Converted cold should track physical
+    const convertedCold = findConvertedEntry(result, "cold");
+    expect(convertedCold?.history).toContain("physical");
+  });
+
+  test("physical splits to multiple types", () => {
+    const dmgRanges: DmgRanges = {
+      ...emptyDmgRanges(),
+      phys: { min: 100, max: 100 },
+    };
+
+    const mods: Mod[] = [
+      { type: "ConvertDmgPct", from: "physical", to: "cold", value: 0.3 },
+      { type: "ConvertDmgPct", from: "physical", to: "fire", value: 0.5 },
+    ];
+
+    const result = convertDmg(dmgRanges, mods);
+
+    // 20% remains as physical (100% - 30% - 50%)
+    const physSum = sumPoolRanges(result, "physical");
+    expect(physSum.min).toBeCloseTo(20);
+    expect(physSum.max).toBeCloseTo(20);
+    expect(sumPoolRanges(result, "cold")).toEqual({ min: 30, max: 30 });
+    expect(sumPoolRanges(result, "fire")).toEqual({ min: 50, max: 50 });
+  });
+
+  test("overconversion (>100%) is prorated", () => {
+    // 60% to cold + 60% to fire = 120% total
+    // Should prorate to: 50% cold, 50% fire
+    const dmgRanges: DmgRanges = {
+      ...emptyDmgRanges(),
+      phys: { min: 120, max: 120 },
+    };
+
+    const mods: Mod[] = [
+      { type: "ConvertDmgPct", from: "physical", to: "cold", value: 0.6 },
+      { type: "ConvertDmgPct", from: "physical", to: "fire", value: 0.6 },
+    ];
+
+    const result = convertDmg(dmgRanges, mods);
+
+    // Proration: 1/1.2 = 0.833...
+    // Cold: 120 * 0.6 * (1/1.2) = 60
+    // Fire: 120 * 0.6 * (1/1.2) = 60
+    // Physical: 0 (all converted)
+    expect(sumPoolRanges(result, "physical")).toEqual({ min: 0, max: 0 });
+    expect(sumPoolRanges(result, "cold")).toEqual({ min: 60, max: 60 });
+    expect(sumPoolRanges(result, "fire")).toEqual({ min: 60, max: 60 });
+  });
+
+  test("chain conversion: physical → lightning → cold", () => {
+    const dmgRanges: DmgRanges = {
+      ...emptyDmgRanges(),
+      phys: { min: 100, max: 100 },
+    };
+
+    const mods: Mod[] = [
+      { type: "ConvertDmgPct", from: "physical", to: "lightning", value: 1.0 },
+      { type: "ConvertDmgPct", from: "lightning", to: "cold", value: 1.0 },
+    ];
+
+    const result = convertDmg(dmgRanges, mods);
+
+    expect(sumPoolRanges(result, "physical")).toEqual({ min: 0, max: 0 });
+    expect(sumPoolRanges(result, "lightning")).toEqual({ min: 0, max: 0 });
+    expect(sumPoolRanges(result, "cold")).toEqual({ min: 100, max: 100 });
+    // Cold damage should track both physical and lightning
+    const convertedCold = findConvertedEntry(result, "cold");
+    expect(convertedCold?.history).toContain("physical");
+    expect(convertedCold?.history).toContain("lightning");
+  });
+
+  test("chain conversion with partial: physical → lightning (50%) → cold (50%)", () => {
+    const dmgRanges: DmgRanges = {
+      ...emptyDmgRanges(),
+      phys: { min: 100, max: 100 },
+    };
+
+    const mods: Mod[] = [
+      { type: "ConvertDmgPct", from: "physical", to: "lightning", value: 0.5 },
+      { type: "ConvertDmgPct", from: "lightning", to: "cold", value: 0.5 },
+    ];
+
+    const result = convertDmg(dmgRanges, mods);
+
+    // 50 phys remains
+    expect(sumPoolRanges(result, "physical")).toEqual({ min: 50, max: 50 });
+    // 50 became lightning, 25 of that became cold, 25 remains lightning
+    expect(sumPoolRanges(result, "lightning")).toEqual({ min: 25, max: 25 });
+    expect(sumPoolRanges(result, "cold")).toEqual({ min: 25, max: 25 });
+  });
+
+  test("full chain: physical → lightning → cold → fire → erosion", () => {
+    const dmgRanges: DmgRanges = {
+      ...emptyDmgRanges(),
+      phys: { min: 100, max: 100 },
+    };
+
+    const mods: Mod[] = [
+      { type: "ConvertDmgPct", from: "physical", to: "lightning", value: 1.0 },
+      { type: "ConvertDmgPct", from: "lightning", to: "cold", value: 1.0 },
+      { type: "ConvertDmgPct", from: "cold", to: "fire", value: 1.0 },
+      { type: "ConvertDmgPct", from: "fire", to: "erosion", value: 1.0 },
+    ];
+
+    const result = convertDmg(dmgRanges, mods);
+
+    expect(sumPoolRanges(result, "physical")).toEqual({ min: 0, max: 0 });
+    expect(sumPoolRanges(result, "lightning")).toEqual({ min: 0, max: 0 });
+    expect(sumPoolRanges(result, "cold")).toEqual({ min: 0, max: 0 });
+    expect(sumPoolRanges(result, "fire")).toEqual({ min: 0, max: 0 });
+    expect(sumPoolRanges(result, "erosion")).toEqual({ min: 100, max: 100 });
+    // Erosion damage should track all previous types
+    const convertedErosion = findConvertedEntry(result, "erosion");
+    expect(convertedErosion?.history).toContain("physical");
+    expect(convertedErosion?.history).toContain("lightning");
+    expect(convertedErosion?.history).toContain("cold");
+    expect(convertedErosion?.history).toContain("fire");
+  });
+
+  test("original elemental damage is not affected by physical conversion", () => {
+    const dmgRanges: DmgRanges = {
+      ...emptyDmgRanges(),
+      phys: { min: 100, max: 100 },
+      cold: { min: 50, max: 50 },
+    };
+
+    const mods: Mod[] = [
+      { type: "ConvertDmgPct", from: "physical", to: "fire", value: 1.0 },
+    ];
+
+    const result = convertDmg(dmgRanges, mods);
+
+    expect(sumPoolRanges(result, "physical")).toEqual({ min: 0, max: 0 });
+    expect(sumPoolRanges(result, "fire")).toEqual({ min: 100, max: 100 });
+    // Original cold remains unchanged
+    expect(sumPoolRanges(result, "cold")).toEqual({ min: 50, max: 50 });
+    // Original cold has no extra mods (wasn't converted)
+    const originalCold = findConvertedEntry(result, "cold");
+    expect(originalCold?.history).toEqual([]);
+  });
+
+  test("multiple damage sources combine in pool", () => {
+    const dmgRanges: DmgRanges = {
+      ...emptyDmgRanges(),
+      phys: { min: 100, max: 100 },
+      lightning: { min: 50, max: 50 },
+    };
+
+    const mods: Mod[] = [
+      { type: "ConvertDmgPct", from: "physical", to: "lightning", value: 1.0 },
+    ];
+
+    const result = convertDmg(dmgRanges, mods);
+
+    // 100 phys converted to lightning + 50 original lightning
+    expect(sumPoolRanges(result, "lightning")).toEqual({ min: 150, max: 150 });
+    // Should have 2 entries in lightning pool: converted and original
+    expect(result.lightning.length).toBe(2);
+  });
+
+  test("skip-step conversion: physical directly to fire", () => {
+    const dmgRanges: DmgRanges = {
+      ...emptyDmgRanges(),
+      phys: { min: 100, max: 100 },
+    };
+
+    const mods: Mod[] = [
+      { type: "ConvertDmgPct", from: "physical", to: "fire", value: 1.0 },
+    ];
+
+    const result = convertDmg(dmgRanges, mods);
+
+    expect(sumPoolRanges(result, "physical")).toEqual({ min: 0, max: 0 });
+    expect(sumPoolRanges(result, "lightning")).toEqual({ min: 0, max: 0 });
+    expect(sumPoolRanges(result, "cold")).toEqual({ min: 0, max: 0 });
+    expect(sumPoolRanges(result, "fire")).toEqual({ min: 100, max: 100 });
+    // Fire should track physical (skipping lightning and cold)
+    const convertedFire = findConvertedEntry(result, "fire");
+    expect(convertedFire?.history).toContain("physical");
+    expect(convertedFire?.history).not.toContain("lightning");
+    expect(convertedFire?.history).not.toContain("cold");
+  });
+
+  test("damage range min/max are handled correctly", () => {
+    const dmgRanges: DmgRanges = {
+      ...emptyDmgRanges(),
+      phys: { min: 80, max: 120 },
+    };
+
+    const mods: Mod[] = [
+      { type: "ConvertDmgPct", from: "physical", to: "cold", value: 0.5 },
+    ];
+
+    const result = convertDmg(dmgRanges, mods);
+
+    expect(sumPoolRanges(result, "physical")).toEqual({ min: 40, max: 60 });
+    expect(sumPoolRanges(result, "cold")).toEqual({ min: 40, max: 60 });
+  });
+
+  test("triple overconversion prorates correctly", () => {
+    // 50% + 40% + 30% = 120%, should prorate to ~41.67%, ~33.33%, 25%
+    const dmgRanges: DmgRanges = {
+      ...emptyDmgRanges(),
+      phys: { min: 120, max: 120 },
+    };
+
+    const mods: Mod[] = [
+      { type: "ConvertDmgPct", from: "physical", to: "cold", value: 0.5 },
+      { type: "ConvertDmgPct", from: "physical", to: "fire", value: 0.4 },
+      { type: "ConvertDmgPct", from: "physical", to: "erosion", value: 0.3 },
+    ];
+
+    const result = convertDmg(dmgRanges, mods);
+
+    // Proration factor: 1/1.2 = 0.8333...
+    // Cold: 120 * 0.5 * (1/1.2) = 50
+    // Fire: 120 * 0.4 * (1/1.2) = 40
+    // Erosion: 120 * 0.3 * (1/1.2) = 30
+    expect(sumPoolRanges(result, "physical")).toEqual({ min: 0, max: 0 });
+    const coldSum = sumPoolRanges(result, "cold");
+    expect(coldSum.min).toBeCloseTo(50);
+    expect(coldSum.max).toBeCloseTo(50);
+    const fireSum = sumPoolRanges(result, "fire");
+    expect(fireSum.min).toBeCloseTo(40);
+    expect(fireSum.max).toBeCloseTo(40);
+    const erosionSum = sumPoolRanges(result, "erosion");
+    expect(erosionSum.min).toBeCloseTo(30);
+    expect(erosionSum.max).toBeCloseTo(30);
+  });
 });

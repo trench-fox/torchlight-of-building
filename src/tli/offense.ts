@@ -140,7 +140,7 @@ const emptyGearDmg = (): GearDmg => {
   };
 };
 
-interface DmgRanges {
+export interface DmgRanges {
   phys: DmgRange;
   cold: DmgRange;
   lightning: DmgRange;
@@ -172,6 +172,92 @@ const filterAffix = <T extends Mod.Mod["type"]>(
   type: T,
 ): Extract<Mod.Mod, { type: T }>[] => {
   return mods.filter((a) => a.type === type) as Extract<Mod.Mod, { type: T }>[];
+};
+
+// A chunk of damage that tracks its conversion history
+export interface DmgChunk {
+  range: DmgRange;
+  // Types this damage has been converted from (not including current pool type)
+  history: Mod.DmgType[];
+}
+
+// All damage organized by current type
+export interface DmgPools {
+  physical: DmgChunk[];
+  cold: DmgChunk[];
+  lightning: DmgChunk[];
+  fire: DmgChunk[];
+  erosion: DmgChunk[];
+}
+
+// Damage conversion order: Physical → Lightning → Cold → Fire → Erosion
+// Damage can skip steps but never convert backwards
+const CONVERSION_ORDER = ["physical", "lightning", "cold", "fire"] as const;
+
+// see poewiki for a good rundown on damage conversion in poe, which works similarly as tli
+// https://www.poewiki.net/wiki/Damage_conversion
+// a brief summary would be that damage gets converted in a specific order, and converted damage
+// remembers all the damage types through which it was converted for the purposes of applying
+// damage bonuses
+export const convertDmg = (
+  dmgRanges: DmgRanges,
+  allMods: Mod.Mod[],
+): DmgPools => {
+  const pools: DmgPools = {
+    physical: [],
+    cold: [],
+    lightning: [],
+    fire: [],
+    erosion: [],
+  };
+
+  // Initialize with non-zero original damage (empty history - not converted from anything)
+  const addIfNonZero = (pool: DmgChunk[], range: DmgRange) => {
+    if (range.min > 0 || range.max > 0) {
+      pool.push({ range, history: [] });
+    }
+  };
+  addIfNonZero(pools.physical, dmgRanges.phys);
+  addIfNonZero(pools.lightning, dmgRanges.lightning);
+  addIfNonZero(pools.cold, dmgRanges.cold);
+  addIfNonZero(pools.fire, dmgRanges.fire);
+  addIfNonZero(pools.erosion, dmgRanges.erosion);
+
+  // Process each source type in conversion order
+  for (const sourceType of CONVERSION_ORDER) {
+    const convMods = filterAffix(allMods, "ConvertDmgPct").filter(
+      (m) => m.from === sourceType,
+    );
+    if (convMods.length === 0) continue;
+
+    const totalPct = R.sumBy(convMods, (m) => m.value);
+    const proration = totalPct > 1 ? 1 / totalPct : 1;
+    const unconvertedPct = Math.max(0, 1 - totalPct);
+
+    const chunks = [...pools[sourceType]];
+    pools[sourceType] = [];
+
+    for (const chunk of chunks) {
+      // Unconverted damage stays in source pool with same history
+      if (unconvertedPct > 0) {
+        pools[sourceType].push({
+          range: multDR(chunk.range, unconvertedPct),
+          history: chunk.history,
+        });
+      }
+
+      // Converted damage goes to target pools with updated history
+      for (const mod of convMods) {
+        const convertPct = mod.value * proration;
+        pools[mod.to].push({
+          range: multDR(chunk.range, convertPct),
+          history: [...chunk.history, sourceType],
+        });
+      }
+    }
+  }
+
+  return pools;
 };
 
 // currently only calculating mainhand
