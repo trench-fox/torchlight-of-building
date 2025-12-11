@@ -6,8 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "check": "biome check --write --diagnostic-level=error",
-    "lint": "biome lint --write --diagnostic-level=error",
+    "check": "biome check --write --diagnostic-level=warn",
+    "lint": "biome lint --write --diagnostic-level=warn",
     "test": "vitest run",
     "typecheck": "tsc --noEmit",
     "format": "biome format --write"

@@ -68,7 +68,7 @@ export const TalentsSection = () => {
   const handleTreeChange = useCallback(
     (slot: TreeSlot, newTreeName: string) => {
       const tree = loadout.talentPage.talentTrees[slot];
-      if (tree && tree.nodes.some((n) => n.points > 0)) return;
+      if (tree?.nodes.some((n) => n.points > 0)) return;
 
       if (newTreeName === "") {
         updateSaveData((prev) => {

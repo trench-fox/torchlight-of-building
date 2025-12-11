@@ -339,7 +339,7 @@ const parseEnergyShieldRegainPct = (
   return { type: "EnergyShieldRegainPct", value };
 };
 
-const parseMultistrikeChancePct = (
+const _parseMultistrikeChancePct = (
   input: string,
 ): ModOfType<"MultistrikeChancePct"> | undefined => {
   // Regex to parse: +32% chance to Multistrike

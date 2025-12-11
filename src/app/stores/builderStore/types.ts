@@ -12,7 +12,6 @@ import type {
   ReflectedAllocatedNode,
   RingSlotState,
   SaveData,
-  SupportSkills,
 } from "../../lib/save-data";
 import type { SavesIndex } from "../../lib/saves";
 import type {

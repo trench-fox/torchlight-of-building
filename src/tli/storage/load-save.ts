@@ -42,14 +42,12 @@ import type {
   PactspiritPage,
   PactspiritSlot,
   PlacedPrism,
-  RingSlotState,
   TalentInventory,
   TalentNode,
   TalentPage,
   TalentTree,
   TalentTrees,
 } from "../core";
-import type { Mod } from "../mod";
 import { parseMod } from "../mod_parser";
 import {
   convertAffixTextToAffix,
@@ -302,7 +300,7 @@ const convertTalentTree = (
 
 const convertCraftedPrism = (
   prism: SaveDataCraftedPrism,
-  src: string,
+  _src: string,
 ): CraftedPrism => {
   return {
     id: prism.id,

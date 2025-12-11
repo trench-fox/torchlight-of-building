@@ -1,6 +1,6 @@
 import { ALL_GEAR_AFFIXES } from "@/src/tli/all_affixes";
 import type { Gear } from "@/src/tli/core";
-import type { EquipmentSlot, EquipmentType } from "@/src/tli/gear_data_types";
+import type { EquipmentType } from "@/src/tli/gear_data_types";
 import {
   SLOT_TO_EQUIPMENT_SLOT,
   SLOT_TO_VALID_EQUIPMENT_TYPES,

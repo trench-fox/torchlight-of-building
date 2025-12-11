@@ -5,7 +5,6 @@ import {
   type TreeName,
 } from "@/src/data/talent_tree";
 import type { Affix, AffixLine } from "./core";
-import type { Mod } from "./mod";
 import { parseMod } from "./mod_parser";
 
 export type TreeSlot = "tree1" | "tree2" | "tree3" | "tree4";

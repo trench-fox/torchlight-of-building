@@ -1,12 +1,6 @@
 "use client";
 
-import type {
-  Gear,
-  HeroMemorySlot,
-  PlacedSlate,
-  ReflectedAllocatedNode,
-  SupportSkills,
-} from "../../lib/save-data";
+import type { Gear, HeroMemorySlot, SupportSkills } from "../../lib/save-data";
 import {
   loadSaveData,
   loadSavesIndex,
