@@ -1,11 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import {
   SearchableSelect,
   type SearchableSelectOption,
 } from "@/src/app/components/ui/SearchableSelect";
 import type { SkillWithSupports, SupportSkills } from "@/src/app/lib/save-data";
+import type { ActiveSkill, BaseSkill } from "@/src/data/skill/types";
 import { SupportSkillSelector } from "./SupportSkillSelector";
 
 type SupportSkillKey = keyof SupportSkills;
@@ -21,7 +22,7 @@ const SUPPORT_SKILL_KEYS: SupportSkillKey[] = [
 interface SkillSlotProps {
   slotLabel: string;
   skill: SkillWithSupports | undefined;
-  availableSkills: readonly { name: string }[];
+  availableSkills: readonly (ActiveSkill | BaseSkill)[];
   excludedSkillNames: string[];
   onSkillChange: (skillName: string | undefined) => void;
   onToggle: () => void;
@@ -41,6 +42,11 @@ export const SkillSlot: React.FC<SkillSlotProps> = ({
   onUpdateSupport,
 }) => {
   const [expanded, setExpanded] = useState(false);
+
+  const mainSkill = useMemo(
+    () => availableSkills.find((s) => s.name === skill?.skillName),
+    [availableSkills, skill?.skillName],
+  );
 
   const selectedSupports = skill
     ? SUPPORT_SKILL_KEYS.map((key) => skill.supportSkills[key]).filter(
@@ -101,6 +107,7 @@ export const SkillSlot: React.FC<SkillSlotProps> = ({
               <div key={key} className="flex items-center gap-2">
                 <span className="text-xs text-zinc-500 w-6">{index + 1}.</span>
                 <SupportSkillSelector
+                  mainSkill={mainSkill}
                   selectedSkill={skill.supportSkills[key]}
                   excludedSkills={selectedSupports.filter(
                     (s) => s !== skill.supportSkills[key],

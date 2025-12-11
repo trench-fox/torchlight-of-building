@@ -1,6 +1,6 @@
-import type { BaseSkill } from "./types";
+import type { SupportSkill } from "./types";
 
-export const ActivationMediumSkills: readonly BaseSkill[] = [
+export const ActivationMediumSkills: readonly SupportSkill[] = [
   {
     type: "Activation Medium",
     name: "Activation Medium: Boss",
@@ -9,6 +9,28 @@ export const ActivationMediumSkills: readonly BaseSkill[] = [
       "Supports Empower, Defensive, Restoration, Curse, and Warcry Skills.\nCannot support Channeled Skills.\nThis skill can only be installed in the first Support Skill Slot of each Active Skill.",
       "Always attempts to trigger the supported skill when there is a boss within (6–20) m. Interval: 0.1s",
       "<Cooldown Recovery Speed or Duration Bonus>",
+    ],
+    supportTargets: [
+      {
+        tags: ["Empower"],
+      },
+      {
+        tags: ["Defensive"],
+      },
+      {
+        tags: ["Restoration"],
+      },
+      {
+        tags: ["Curse"],
+      },
+      {
+        tags: ["Warcry"],
+      },
+    ],
+    cannotSupportTargets: [
+      {
+        tags: ["Channeled"],
+      },
     ],
   },
   {
@@ -21,6 +43,21 @@ export const ActivationMediumSkills: readonly BaseSkill[] = [
       "(-15–-1)% additional Hit Damage for skills cast by Spell Burst when Spell Burst is activated by the supported skill",
       "-40% Movement Speed for 2 s when the supported skill activates Spell Burst",
     ],
+    supportTargets: [
+      {
+        tags: ["Spell"],
+        requiredKind: "deal_damage",
+      },
+      "spell_burst",
+    ],
+    cannotSupportTargets: [
+      {
+        skillType: "passive",
+      },
+      {
+        tags: ["Channeled"],
+      },
+    ],
   },
   {
     type: "Activation Medium",
@@ -30,6 +67,12 @@ export const ActivationMediumSkills: readonly BaseSkill[] = [
       "Supports Channeled Skills.\nThis skill can only be installed in the first Support Skill Slot of each Active Skill.",
       "When channeling the supported skill, sends 1 Instruction for every 2 stack(s) channeled.",
     ],
+    supportTargets: [
+      {
+        tags: ["Channeled"],
+      },
+    ],
+    cannotSupportTargets: [],
   },
   {
     type: "Activation Medium",
@@ -38,6 +81,12 @@ export const ActivationMediumSkills: readonly BaseSkill[] = [
     description: [
       "Supports skills that hit the enemy.\nThis skill cannot support Summon Skills.\nThis skill can only be installed in the first Support Skill Slot of each Active Skill.",
       "When the supported skill lands a Critical Strike, sends (2–3) Instruction(s). Interval: 0.03 s.",
+    ],
+    supportTargets: ["hit_enemies"],
+    cannotSupportTargets: [
+      {
+        tags: ["Summon"],
+      },
     ],
   },
   {
@@ -49,6 +98,28 @@ export const ActivationMediumSkills: readonly BaseSkill[] = [
       "Triggers the supported skill upon gaining Demolisher Charge. Interval: 0.1s",
       "<Cooldown Recovery Speed or Duration Bonus>",
     ],
+    supportTargets: [
+      {
+        tags: ["Empower"],
+      },
+      {
+        tags: ["Defensive"],
+      },
+      {
+        tags: ["Restoration"],
+      },
+      {
+        tags: ["Curse"],
+      },
+      {
+        tags: ["Warcry"],
+      },
+    ],
+    cannotSupportTargets: [
+      {
+        tags: ["Channeled"],
+      },
+    ],
   },
   {
     type: "Activation Medium",
@@ -59,6 +130,28 @@ export const ActivationMediumSkills: readonly BaseSkill[] = [
       "Always attempts to trigger the supported skill when there is an Elite within (6–20) m. Interval: 0.2 s",
       "<Cooldown Recovery Speed or Duration Bonus>",
     ],
+    supportTargets: [
+      {
+        tags: ["Empower"],
+      },
+      {
+        tags: ["Defensive"],
+      },
+      {
+        tags: ["Restoration"],
+      },
+      {
+        tags: ["Curse"],
+      },
+      {
+        tags: ["Warcry"],
+      },
+    ],
+    cannotSupportTargets: [
+      {
+        tags: ["Channeled"],
+      },
+    ],
   },
   {
     type: "Activation Medium",
@@ -68,6 +161,25 @@ export const ActivationMediumSkills: readonly BaseSkill[] = [
       "Supports Empower, Defensive, Restoration, and Curse Skills.\nCannot support Channeled Skills.\nThis skill can only be installed in the first Support Skill Slot of each Active Skill.",
       "Always attempts to trigger the supported skill when Energy Shield is lower than (20–95)% . Interval: 0.1s",
       "<Cooldown Recovery Speed or Duration Bonus>",
+    ],
+    supportTargets: [
+      {
+        tags: ["Empower"],
+      },
+      {
+        tags: ["Defensive"],
+      },
+      {
+        tags: ["Restoration"],
+      },
+      {
+        tags: ["Curse"],
+      },
+    ],
+    cannotSupportTargets: [
+      {
+        tags: ["Channeled"],
+      },
     ],
   },
   {
@@ -80,6 +192,20 @@ export const ActivationMediumSkills: readonly BaseSkill[] = [
       "The next skill triggered by the supported skill deals +(6–7)% additional damage for every Instruction received during the trigger interval, up to +(54–63)% additional damage.",
       "Manually used supported skills -80% additional damage",
     ],
+    supportTargets: [
+      {
+        skillType: "active",
+        requiredKind: "deal_damage",
+      },
+    ],
+    cannotSupportTargets: [
+      {
+        tags: ["Channeled"],
+      },
+      {
+        tags: ["Attack", "Mobility"],
+      },
+    ],
   },
   {
     type: "Activation Medium",
@@ -90,6 +216,16 @@ export const ActivationMediumSkills: readonly BaseSkill[] = [
       "When HP is lower than (20–95)% , always attempts to trigger the supported skill. This effect will be invalid while a Restoration Skill Effect is active.",
       "<Cooldown Recovery Speed or Duration Bonus>",
     ],
+    supportTargets: [
+      {
+        tags: ["Restoration"],
+      },
+    ],
+    cannotSupportTargets: [
+      {
+        tags: ["Channeled"],
+      },
+    ],
   },
   {
     type: "Activation Medium",
@@ -99,6 +235,12 @@ export const ActivationMediumSkills: readonly BaseSkill[] = [
       "Supports Active Skills.\nThis skill can only be installed in the first Support Skill Slot of each Active Skill.",
       "Locks On enemies within 25 m when you use the supported skill",
     ],
+    supportTargets: [
+      {
+        skillType: "active",
+      },
+    ],
+    cannotSupportTargets: [],
   },
   {
     type: "Activation Medium",
@@ -109,6 +251,12 @@ export const ActivationMediumSkills: readonly BaseSkill[] = [
       "Triggers the supported skill and replenishes the Minions of the supported skill to the maximum upon entering the stage",
       "+(30–36)% additional damage for Minions summoned by the supported skill",
     ],
+    supportTargets: [
+      {
+        tags: ["Synthetic Troop"],
+      },
+    ],
+    cannotSupportTargets: [],
   },
   {
     type: "Activation Medium",
@@ -118,6 +266,24 @@ export const ActivationMediumSkills: readonly BaseSkill[] = [
       "Supports Attack Skills and Spell Skills that deal damage.\nCannot support Passive Skills and Channeled Skills.\nThis skill can only be installed in the first Support Skill Slot of each Active Skill.",
       "Automatically and continuously cast the supported skill at the nearest enemy within 25m while standing still",
       "Auto-used supported skills +10% additional damage",
+    ],
+    supportTargets: [
+      {
+        tags: ["Attack"],
+        requiredKind: "deal_damage",
+      },
+      {
+        tags: ["Spell"],
+        requiredKind: "deal_damage",
+      },
+    ],
+    cannotSupportTargets: [
+      {
+        skillType: "passive",
+      },
+      {
+        tags: ["Channeled"],
+      },
     ],
   },
   {
@@ -129,6 +295,34 @@ export const ActivationMediumSkills: readonly BaseSkill[] = [
       "Triggers the supported skill upon reaching the max Multistrike Count. Interval: 0.1s",
       "<Cooldown Recovery Speed or Duration Bonus>",
     ],
+    supportTargets: [
+      {
+        tags: ["Empower"],
+      },
+      {
+        tags: ["Defensive"],
+      },
+      {
+        tags: ["Restoration"],
+      },
+      {
+        tags: ["Curse"],
+      },
+      {
+        tags: ["Mobility"],
+      },
+      {
+        tags: ["Warcry"],
+      },
+    ],
+    cannotSupportTargets: [
+      {
+        tags: ["Channeled"],
+      },
+      {
+        skillType: "active",
+      },
+    ],
   },
   {
     type: "Activation Medium",
@@ -138,6 +332,28 @@ export const ActivationMediumSkills: readonly BaseSkill[] = [
       "Supports Empower, Defensive, Restoration, Curse, and Warcry Skills.\nCannot support Channeled Skills.\nThis skill can only be installed in the first Support Skill Slot of each Active Skill.",
       "Always attempts to trigger the supported skill. Interval: 0.2s",
       "<Cooldown Recovery Speed or Duration Bonus>",
+    ],
+    supportTargets: [
+      {
+        tags: ["Empower"],
+      },
+      {
+        tags: ["Defensive"],
+      },
+      {
+        tags: ["Restoration"],
+      },
+      {
+        tags: ["Curse"],
+      },
+      {
+        tags: ["Warcry"],
+      },
+    ],
+    cannotSupportTargets: [
+      {
+        tags: ["Channeled"],
+      },
     ],
   },
   {
@@ -149,6 +365,19 @@ export const ActivationMediumSkills: readonly BaseSkill[] = [
       "Prepares the supported skill every (4–5) s",
       "<Cooldown Recovery Speed or Duration Bonus>",
     ],
+    supportTargets: [
+      {
+        skillType: "active",
+      },
+    ],
+    cannotSupportTargets: [
+      {
+        tags: ["Channeled"],
+      },
+      {
+        tags: ["Attack"],
+      },
+    ],
   },
   {
     type: "Activation Medium",
@@ -159,6 +388,28 @@ export const ActivationMediumSkills: readonly BaseSkill[] = [
       "Triggers the supported skill when Resonance is activated",
       "<Cooldown Recovery Speed or Duration Bonus>",
     ],
+    supportTargets: [
+      {
+        tags: ["Empower"],
+      },
+      {
+        tags: ["Defensive"],
+      },
+      {
+        tags: ["Restoration"],
+      },
+      {
+        tags: ["Curse"],
+      },
+      {
+        tags: ["Warcry"],
+      },
+    ],
+    cannotSupportTargets: [
+      {
+        tags: ["Channeled"],
+      },
+    ],
   },
   {
     type: "Activation Medium",
@@ -168,6 +419,28 @@ export const ActivationMediumSkills: readonly BaseSkill[] = [
       "Supports Empower, Defensive, Restoration, Curse, and Warcry Skills.\nCannot support Channeled Skills.\nThis skill can only be installed in the first Support Skill Slot of each Active Skill.",
       "Activates Resonance when you use the supported skill",
       "<Cooldown Recovery Speed or Duration Bonus>",
+    ],
+    supportTargets: [
+      {
+        tags: ["Empower"],
+      },
+      {
+        tags: ["Defensive"],
+      },
+      {
+        tags: ["Restoration"],
+      },
+      {
+        tags: ["Curse"],
+      },
+      {
+        tags: ["Warcry"],
+      },
+    ],
+    cannotSupportTargets: [
+      {
+        tags: ["Channeled"],
+      },
     ],
   },
   {
@@ -180,6 +453,20 @@ export const ActivationMediumSkills: readonly BaseSkill[] = [
       "The next skill triggered by the supported skill +3% additional damage for every 1m of movement made during the trigger interval, up to +(18–21)%.",
       "Manually used supported skills -80% additional damage",
     ],
+    supportTargets: [
+      {
+        skillType: "active",
+        requiredKind: "deal_damage",
+      },
+    ],
+    cannotSupportTargets: [
+      {
+        tags: ["Channeled"],
+      },
+      {
+        tags: ["Attack", "Mobility"],
+      },
+    ],
   },
   {
     type: "Activation Medium",
@@ -190,6 +477,28 @@ export const ActivationMediumSkills: readonly BaseSkill[] = [
       "Triggers the supported skill upon stopping moving. Interval: 0.1s",
       "<Cooldown Recovery Speed or Duration Bonus>",
     ],
+    supportTargets: [
+      {
+        tags: ["Empower"],
+      },
+      {
+        tags: ["Defensive"],
+      },
+      {
+        tags: ["Restoration"],
+      },
+      {
+        tags: ["Curse"],
+      },
+      {
+        tags: ["Warcry"],
+      },
+    ],
+    cannotSupportTargets: [
+      {
+        tags: ["Channeled"],
+      },
+    ],
   },
   {
     type: "Activation Medium",
@@ -199,6 +508,20 @@ export const ActivationMediumSkills: readonly BaseSkill[] = [
       "Supports Attack Skills that deal damage.\nCannot support Passive Skills and Channeled Skills.\nThis skill can only be installed in the first Support Skill Slot of each Active Skill.",
       "Automatically attempts to use a supported Attack Skill on the closest enemy when stopping moving. Interval: (0.2–0.3) s",
       "The next time when a skill is automatically used, the supported skill +(10–20)% additional damage for every 1m of movement made, up to +(46–65)% . When performing a Multistrike, the bonus will last until the Multistrike ends.",
+    ],
+    supportTargets: [
+      {
+        tags: ["Attack"],
+        requiredKind: "deal_damage",
+      },
+    ],
+    cannotSupportTargets: [
+      {
+        skillType: "passive",
+      },
+      {
+        tags: ["Channeled"],
+      },
     ],
   },
   {
@@ -211,6 +534,12 @@ export const ActivationMediumSkills: readonly BaseSkill[] = [
       "+(16–19)% additional damage for the supported skill",
       "+2 Sentries that can be deployed at a time by the supported skill",
     ],
+    supportTargets: [
+      {
+        tags: ["Sentry"],
+      },
+    ],
+    cannotSupportTargets: [],
   },
   {
     type: "Activation Medium",
@@ -220,6 +549,25 @@ export const ActivationMediumSkills: readonly BaseSkill[] = [
       "Supports Empower, Defensive, Restoration, and Curse Skills.\nCannot support Channeled Skills.\nThis skill can only be installed in the first Support Skill Slot of each Active Skill.",
       "Triggers the supported skill when suffering a Severe Injury",
       "<Cooldown Recovery Speed or Duration Bonus>",
+    ],
+    supportTargets: [
+      {
+        tags: ["Empower"],
+      },
+      {
+        tags: ["Defensive"],
+      },
+      {
+        tags: ["Restoration"],
+      },
+      {
+        tags: ["Curse"],
+      },
+    ],
+    cannotSupportTargets: [
+      {
+        tags: ["Channeled"],
+      },
     ],
   },
   {
@@ -231,6 +579,25 @@ export const ActivationMediumSkills: readonly BaseSkill[] = [
       "Triggers the supported skill when activating Spell Burst. Interval: 0.1s",
       "<Cooldown Recovery Speed or Duration Bonus>",
     ],
+    supportTargets: [
+      {
+        tags: ["Empower"],
+      },
+      {
+        tags: ["Defensive"],
+      },
+      {
+        tags: ["Restoration"],
+      },
+      {
+        tags: ["Curse"],
+      },
+    ],
+    cannotSupportTargets: [
+      {
+        tags: ["Channeled"],
+      },
+    ],
   },
   {
     type: "Activation Medium",
@@ -240,6 +607,28 @@ export const ActivationMediumSkills: readonly BaseSkill[] = [
       "Supports Empower, Defensive, Restoration, Curse, and Warcry Skills.\nCannot support Channeled Skills.\nThis skill can only be installed in the first Support Skill Slot of each Active Skill.",
       "Triggers the supported skill upon starting to move. Interval: 0.1s",
       "<Cooldown Recovery Speed or Duration Bonus>",
+    ],
+    supportTargets: [
+      {
+        tags: ["Empower"],
+      },
+      {
+        tags: ["Defensive"],
+      },
+      {
+        tags: ["Restoration"],
+      },
+      {
+        tags: ["Curse"],
+      },
+      {
+        tags: ["Warcry"],
+      },
+    ],
+    cannotSupportTargets: [
+      {
+        tags: ["Channeled"],
+      },
     ],
   },
   {
@@ -251,6 +640,20 @@ export const ActivationMediumSkills: readonly BaseSkill[] = [
       "Automatically attacks the closest enemy within 25m continuously with the supported Attack Skill while standing still.",
       "The supported skill is supported by Lv. (16–20) Willpower",
     ],
+    supportTargets: [
+      {
+        tags: ["Attack"],
+        requiredKind: "deal_damage",
+      },
+    ],
+    cannotSupportTargets: [
+      {
+        skillType: "passive",
+      },
+      {
+        tags: ["Channeled"],
+      },
+    ],
   },
   {
     type: "Activation Medium",
@@ -260,6 +663,20 @@ export const ActivationMediumSkills: readonly BaseSkill[] = [
       "Supports Active Skill that deal damage.\nCannot support Channeled Skills and Attack Mobility Skills.\nThis skill can only be installed in the first Support Skill Slot of each Active Skill.",
       "Triggers the supported skill once on up to 3 Locked-On enemy(ies) within (10–20) m every (0.7–0.8) s",
       "Always Locks On enemies within 20m.",
+    ],
+    supportTargets: [
+      {
+        skillType: "active",
+        requiredKind: "deal_damage",
+      },
+    ],
+    cannotSupportTargets: [
+      {
+        tags: ["Channeled"],
+      },
+      {
+        tags: ["Attack", "Mobility"],
+      },
     ],
   },
   {
@@ -271,6 +688,20 @@ export const ActivationMediumSkills: readonly BaseSkill[] = [
       "Always attempts to trigger the supported skill on the closest enemy within 25m. Cooldown: 0.6 s",
       "(80–85)% of the bonuses and additional bonuses for Cast Speed is also applied to the Cooldown Recovery Speed of this Support Skill and the supported skill",
       "Manually used supported skills -80% additional damage",
+    ],
+    supportTargets: [
+      {
+        tags: ["Spell"],
+        requiredKind: "deal_damage",
+      },
+    ],
+    cannotSupportTargets: [
+      {
+        skillType: "passive",
+      },
+      {
+        tags: ["Channeled"],
+      },
     ],
   },
 ];

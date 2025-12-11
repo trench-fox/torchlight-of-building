@@ -28,16 +28,33 @@ const matchesTarget = (skill: TargetSkill, target: SupportTarget): boolean => {
     return (skill as ActiveSkill).kinds.includes(target as InferredSkillKind);
   }
 
-  // { skillType: "active" | "passive" }
+  // { skillType: "active" | "passive" } optionally with requiredKind
   if ("skillType" in target) {
-    if (target.skillType === "active") return skill.type === "Active";
-    if (target.skillType === "passive") return skill.type === "Passive";
-    return false;
+    const typeMatches =
+      (target.skillType === "active" && skill.type === "Active") ||
+      (target.skillType === "passive" && skill.type === "Passive");
+
+    if (!typeMatches) return false;
+
+    // Check requiredKind if present
+    if ("requiredKind" in target) {
+      if (skill.type !== "Active") return false;
+      return (skill as ActiveSkill).kinds.includes(target.requiredKind);
+    }
+    return true;
   }
 
-  // { tags: SkillTag[] } - must have ALL specified tags
+  // { tags: SkillTag[] } optionally with requiredKind - must have ALL specified tags
   if ("tags" in target) {
-    return target.tags.every((tag) => skill.tags.includes(tag));
+    const tagsMatch = target.tags.every((tag) => skill.tags.includes(tag));
+    if (!tagsMatch) return false;
+
+    // Check requiredKind if present
+    if ("requiredKind" in target) {
+      if (skill.type !== "Active") return false;
+      return (skill as ActiveSkill).kinds.includes(target.requiredKind);
+    }
+    return true;
   }
 
   return false;
@@ -54,4 +71,21 @@ export const canSupport = (
 
   // Check if any supportTarget matches
   return supportSkill.supportTargets.some((t) => matchesTarget(skill, t));
+};
+
+// all the strings are the names of the skills
+export interface AvailableSupports {
+  compatible: string[];
+  activationMedium?: string;
+  magnificent?: string;
+  noble?: string;
+  other: string[];
+}
+
+export const listAvailableSupports = (
+  skill: TargetSkill,
+  // supportSkillSlot is 1-indexed
+  supportSkillSlot: number,
+): AvailableSupports => {
+  throw Error("to be implemented");
 };

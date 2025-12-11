@@ -115,10 +115,42 @@ const parseSupportTargets = (
       pattern: /Supports skills that hit enemies or deal Damage Over Time/i,
       targets: ["hit_enemies", "dot"],
     },
-    // Spell + Spell Burst combination
+    // Spell + Spell Burst combination (existing)
     {
       pattern: /Supports Spell Skills or skills that can activate Spell Burst/i,
       targets: [{ tags: ["Spell"] }, "spell_burst"],
+    },
+    // Spell Skills that deal damage or Spell Burst (activation medium)
+    {
+      pattern:
+        /Supports Spell Skills that deal damage or skills that can activate Spell Burst/i,
+      targets: [
+        { tags: ["Spell"], requiredKind: "deal_damage" },
+        "spell_burst",
+      ],
+    },
+    // Attack Skills and Spell Skills that deal damage (both must deal damage)
+    {
+      pattern: /Supports Attack Skills and Spell Skills that deal damage/i,
+      targets: [
+        { tags: ["Attack"], requiredKind: "deal_damage" },
+        { tags: ["Spell"], requiredKind: "deal_damage" },
+      ],
+    },
+    // Active Skill(s) that deal damage (skillType + kind)
+    {
+      pattern: /Supports Active Skills? that deal damage/i,
+      targets: [{ skillType: "active" as const, requiredKind: "deal_damage" }],
+    },
+    // Attack Skills that deal damage
+    {
+      pattern: /Supports Attack Skills that deal damage/i,
+      targets: [{ tags: ["Attack"], requiredKind: "deal_damage" }],
+    },
+    // Spell Skills that deal damage
+    {
+      pattern: /Supports Spell Skills that deal damage/i,
+      targets: [{ tags: ["Spell"], requiredKind: "deal_damage" }],
     },
     // Pure DoT (after combinations)
     {
@@ -151,6 +183,11 @@ const parseSupportTargets = (
     {
       pattern: /Supports any skill/i,
       targets: ["any"],
+    },
+    // "hit the enemy" variant (singular) - for activation medium
+    {
+      pattern: /Supports skills that hit the enemy/i,
+      targets: ["hit_enemies"],
     },
     {
       pattern: /Supports skills that hit enemies/i,
@@ -196,7 +233,24 @@ const parseSupportTargets = (
           }
         }
       }
-      // Check for "and" pattern between tags (creates separate targets)
+      // Check for comma-separated list with "and" (e.g., "Empower, Defensive, Restoration, Curse, and Warcry Skills")
+      else if (fullClause.includes(",")) {
+        const tagsPart = fullClause.replace(/Skills?$/i, "").trim();
+        // Split by comma (optionally followed by "and"), or standalone "and"
+        // ", and " is a common pattern like "X, Y, and Z"
+        const parts = tagsPart
+          .split(/,\s*(?:and\s+)?|\s+and\s+/i)
+          .map((p) => p.trim())
+          .filter((p) => p.length > 0);
+
+        for (const part of parts) {
+          const tags = parseTagsFromString(part, skillName);
+          if (tags.length > 0) {
+            supportTargets.push({ tags });
+          }
+        }
+      }
+      // Check for simple "and" pattern between tags (creates separate targets)
       // e.g., "Attack and Spell Skills"
       else if (fullClause.includes(" and ")) {
         const tagsPart = fullClause.replace(/Skills?$/i, "").trim();
@@ -224,6 +278,23 @@ const parseSupportTargets = (
     }
   }
 
+  // Helper to parse a single cannot-support clause into a SupportTarget
+  const parseCannotSupportPart = (part: string): SupportTarget | undefined => {
+    const trimmed = part.trim();
+    // Check for skill type patterns first (Passive/Active are skill types, not tags)
+    if (/^Passive$/i.test(trimmed)) {
+      return { skillType: "passive" as const };
+    }
+    if (/^Active$/i.test(trimmed)) {
+      return { skillType: "active" as const };
+    }
+    const tags = parseTagsFromString(trimmed, skillName);
+    if (tags.length > 0) {
+      return { tags };
+    }
+    return undefined;
+  };
+
   // Parse "Cannot support" patterns
   // Use greedy match to capture full clause like "Channeled Skills or Attack Skills"
   const cannotMatch = description.match(
@@ -241,9 +312,24 @@ const parseSupportTargets = (
         .filter((p) => p.length > 0);
 
       for (const part of parts) {
-        const tags = parseTagsFromString(part, skillName);
-        if (tags.length > 0) {
-          cannotSupportTargets.push({ tags });
+        const target = parseCannotSupportPart(part);
+        if (target) {
+          cannotSupportTargets.push(target);
+        }
+      }
+    }
+    // Check for "Skills and" pattern (e.g., "Channeled Skills and Attack Skills", "Passive Skills and Channeled Skills")
+    else if (/Skills?\s+and\s+/i.test(fullClause)) {
+      // Split by "Skills and" to get each target group
+      const parts = fullClause
+        .split(/Skills?\s+and\s+/i)
+        .map((p) => p.replace(/Skills?$/i, "").trim())
+        .filter((p) => p.length > 0);
+
+      for (const part of parts) {
+        const target = parseCannotSupportPart(part);
+        if (target) {
+          cannotSupportTargets.push(target);
         }
       }
     }
@@ -256,16 +342,16 @@ const parseSupportTargets = (
         .filter((p) => p.length > 0);
 
       for (const part of orParts) {
-        const tags = parseTagsFromString(part, skillName);
-        if (tags.length > 0) {
-          cannotSupportTargets.push({ tags });
+        const target = parseCannotSupportPart(part);
+        if (target) {
+          cannotSupportTargets.push(target);
         }
       }
     } else {
       const tagsPart = fullClause.replace(/Skills?$/i, "").trim();
-      const tags = parseTagsFromString(tagsPart, skillName);
-      if (tags.length > 0) {
-        cannotSupportTargets.push({ tags });
+      const target = parseCannotSupportPart(tagsPart);
+      if (target) {
+        cannotSupportTargets.push(target);
       }
     }
   }
@@ -311,7 +397,7 @@ const SKILL_TYPE_CONFIG = {
   "Activation Medium": {
     fileKey: "activation_medium",
     constName: "ActivationMediumSkills",
-    supportType: "none",
+    supportType: "generic",
   },
 } as const;
 
@@ -519,7 +605,7 @@ const main = async (): Promise<void> => {
       }
       activeSkillGroups.get(skillType)?.push(skillEntry);
     } else {
-      // Other base skills (Passive, Activation Medium)
+      // Other base skills (Passive only now - Activation Medium is handled by "generic" supportType)
       const skillEntry: BaseSkill = {
         type: raw.type as BaseSkill["type"],
         name: raw.name,
@@ -541,6 +627,22 @@ const main = async (): Promise<void> => {
     magnificentSupportSkillGroups.size +
     nobleSupportSkillGroups.size;
   console.log(`Grouped into ${totalGroups} skill types`);
+
+  // Validate that all support skills have parseable support targets
+  const allSupportSkills = Array.from(supportSkillGroups.values()).flat();
+  const missingTargets = allSupportSkills.filter(
+    (skill) => skill.supportTargets.length === 0,
+  );
+
+  if (missingTargets.length > 0) {
+    console.error("\nSkills with unparseable support targets:");
+    for (const skill of missingTargets) {
+      console.error(`  - ${skill.name}: "${skill.description[0]}"`);
+    }
+    throw new Error(
+      `${missingTargets.length} support skill(s) have no parseable support targets`,
+    );
+  }
 
   // Create output directory
   const outDir = join(process.cwd(), "src", "data", "skill");

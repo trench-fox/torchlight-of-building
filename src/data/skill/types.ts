@@ -77,8 +77,12 @@ export type InferredSkillKind =
 export type SupportTarget =
   // Multiple skill tags means the target must have all specified tags
   | { tags: SkillTag[] }
+  // Multiple skill tags + requiredKind: must have all tags AND be an active skill with the specified kind
+  | { tags: SkillTag[]; requiredKind: InferredSkillKind }
   // Matches if SkillType matches to skill's type
   | { skillType: "active" | "passive" }
+  // Matches if SkillType matches AND active skill has the specified kind
+  | { skillType: "active" | "passive"; requiredKind: InferredSkillKind }
   // Only applies to active skills. Matches if the active skill's kinds contains this kind
   | InferredSkillKind
   // Can be applied to any skill

@@ -15,10 +15,16 @@ export interface SearchableSelectOption<T = string> {
   sublabel?: string;
 }
 
+export interface SearchableSelectOptionGroup<T = string> {
+  label: string;
+  options: SearchableSelectOption<T>[];
+}
+
 interface SearchableSelectProps<T extends string | number> {
   value: T | undefined;
   onChange: (value: T | undefined) => void;
   options: SearchableSelectOption<T>[];
+  groups?: SearchableSelectOptionGroup<T>[];
   placeholder?: string;
   size?: "sm" | "default" | "lg";
   disabled?: boolean;
@@ -59,6 +65,7 @@ export const SearchableSelect = <T extends string | number>({
   value,
   onChange,
   options,
+  groups,
   placeholder = "Select...",
   size = "default",
   disabled = false,
@@ -72,20 +79,35 @@ export const SearchableSelect = <T extends string | number>({
   const buttonRef = useRef<HTMLButtonElement>(null);
   const inputWrapperRef = useRef<HTMLDivElement>(null);
 
+  const allOptions = useMemo(() => {
+    if (groups) {
+      return groups.flatMap((g) => g.options);
+    }
+    return options;
+  }, [options, groups]);
+
   const selectedOption = useMemo(
-    () => options.find((opt) => opt.value === value),
-    [options, value],
+    () => allOptions.find((opt) => opt.value === value),
+    [allOptions, value],
   );
 
   const filteredOptions = useMemo(() => {
-    if (!query) return options;
     const lowerQuery = query.toLowerCase();
-    return options.filter(
-      (opt) =>
-        opt.label.toLowerCase().includes(lowerQuery) ||
-        opt.sublabel?.toLowerCase().includes(lowerQuery),
-    );
-  }, [options, query]);
+    const filterFn = (opt: SearchableSelectOption<T>) =>
+      !query ||
+      opt.label.toLowerCase().includes(lowerQuery) ||
+      opt.sublabel?.toLowerCase().includes(lowerQuery);
+
+    if (groups) {
+      return groups
+        .map((g) => ({
+          ...g,
+          options: g.options.filter(filterFn),
+        }))
+        .filter((g) => g.options.length > 0);
+    }
+    return options.filter(filterFn);
+  }, [options, groups, query]);
 
   const handleChange = (option: SearchableSelectOption<T> | null) => {
     onChange(option?.value);
@@ -157,8 +179,48 @@ export const SearchableSelect = <T extends string | number>({
             <div className={`${SIZE_CLASSES[size]} text-zinc-500`}>
               No results found
             </div>
+          ) : groups ? (
+            (filteredOptions as SearchableSelectOptionGroup<T>[]).map(
+              (group) => (
+                <div key={group.label}>
+                  <div
+                    className={`${SIZE_CLASSES[size]} text-zinc-500 font-medium border-t border-zinc-700 first:border-t-0`}
+                  >
+                    {group.label}
+                  </div>
+                  {group.options.map((option) => (
+                    <ComboboxOption
+                      key={String(option.value)}
+                      value={option}
+                      className={({ active, selected }) => `
+                        ${SIZE_CLASSES[size]} cursor-pointer pl-4
+                        ${active ? "bg-zinc-700" : ""}
+                        ${selected ? "text-amber-400" : "text-zinc-50"}
+                      `}
+                    >
+                      {({ active, selected }) => (
+                        <div>
+                          {renderOption ? (
+                            renderOption(option, { active, selected })
+                          ) : (
+                            <>
+                              <span>{option.label}</span>
+                              {option.sublabel && (
+                                <span className="text-zinc-500 ml-2 text-xs">
+                                  {option.sublabel}
+                                </span>
+                              )}
+                            </>
+                          )}
+                        </div>
+                      )}
+                    </ComboboxOption>
+                  ))}
+                </div>
+              ),
+            )
           ) : (
-            filteredOptions.map((option) => (
+            (filteredOptions as SearchableSelectOption<T>[]).map((option) => (
               <ComboboxOption
                 key={String(option.value)}
                 value={option}
