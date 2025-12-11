@@ -183,7 +183,7 @@ export const SupportSkills: readonly SupportSkill[] = [
       "Supports skills that deal Damage Over Time or inflict Ailments.\nWhen the supported skill deals Damage Over Time, it inflicts 8 Affliction on the enemy. Effect Cooldown: 1 s\nAffliction grants an additional 26.5% effect to the supported skill",
       "When the supported skill deals Damage Over Time, it inflicts 8 Affliction on the enemy. Effect Cooldown: 1 s\nAffliction grants an additional 26.5% effect to the supported skill",
     ],
-    supportTargets: ["dot_and_ailment"],
+    supportTargets: ["dot", "inflict_ailment"],
     cannotSupportTargets: [],
   },
   {
@@ -923,7 +923,7 @@ export const SupportSkills: readonly SupportSkill[] = [
       "Supports DoT Skills and skills that can inflict Ailment.\n12.5% additional Damage Over Time against enemies with Max Affliction for the supported skill",
       "12.5% additional Damage Over Time against enemies with Max Affliction for the supported skill",
     ],
-    supportTargets: ["dot_and_ailment"],
+    supportTargets: ["dot", "inflict_ailment"],
     cannotSupportTargets: [],
   },
   {
@@ -1570,7 +1570,7 @@ export const SupportSkills: readonly SupportSkill[] = [
       "Supports DoT Skills and skills that can inflict Ailment.\n-10% Duration for the supported skill\n+20% additional Damage Over Time for the supported skill",
       "-10% Duration for the supported skill\n+20% additional Damage Over Time for the supported skill",
     ],
-    supportTargets: ["dot_and_ailment"],
+    supportTargets: ["dot", "inflict_ailment"],
     cannotSupportTargets: [],
   },
   {

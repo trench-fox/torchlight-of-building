@@ -63,20 +63,24 @@ export interface BaseSkill {
   description: string[];
 }
 
-// Multiple skill tags means the target must have all specified tags
-export type SupportTarget =
-  | { tags: SkillTag[] }
-  | { skillType: "active" | "passive" }
-  | "any"
+// Support targets which cannot be identified using easily
+// machine-parseable information such as skill type or tags.
+export type InferredSkillKind =
   | "deal_damage"
   | "dot"
-  | "dot_and_ailment"
   | "hit_enemies"
   | "inflict_ailment"
   | "spell_burst"
   | "summon_minions"
   | "summon_spirit_magus"
   | "summon_synthetic_troops";
+
+// Multiple skill tags means the target must have all specified tags
+export type SupportTarget =
+  | { tags: SkillTag[] }
+  | { skillType: "active" | "passive" }
+  | InferredSkillKind
+  | "any";
 
 export interface SupportSkill extends BaseSkill {
   // support can target skill if any of the targets match

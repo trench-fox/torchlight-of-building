@@ -101,12 +101,12 @@ const parseSupportTargets = (
     // DoT + Ailment combinations (check before pure DoT)
     {
       pattern: /Supports DoT Skills and skills that can inflict Ailment/i,
-      targets: ["dot_and_ailment"],
+      targets: ["dot", "inflict_ailment"],
     },
     {
       pattern:
         /Supports skills that deal Damage Over Time or inflict Ailments/i,
-      targets: ["dot_and_ailment"],
+      targets: ["dot", "inflict_ailment"],
     },
     // Hit enemies + DoT combination
     {
