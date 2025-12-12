@@ -1,5 +1,6 @@
 import type { ActivationMediumSkills } from "./activation_medium";
 import type { ActiveSkills } from "./active";
+import { PassiveSkills } from "./passive";
 import type { SupportSkills } from "./support";
 import type { MagnificentSupportSkills } from "./support_magnificent";
 import type { NobleSupportSkills } from "./support_noble";
@@ -69,6 +70,13 @@ export type MagnificentSupportSkillName =
 export type NobleSupportSkillName = (typeof NobleSupportSkills)[number]["name"];
 export type ActivationMediumSkillNmae =
   (typeof ActivationMediumSkills)[number]["name"];
+
+export type ActiveSkill = (typeof ActiveSkills)[];
+export type PassiveSkill = (typeof PassiveSkills)[];
+export type SupportSkill = (typeof SupportSkills)[];
+export type MagnificentSupportSkill = (typeof MagnificentSupportSkills)[];
+export type NobleSupportSkill = (typeof NobleSupportSkills)[];
+export type ActivationMediumSupportSkill = (typeof ActivationMediumSkills)[];
 
 export interface BaseSkill {
   type: SkillType;
