@@ -4,22 +4,26 @@ import { join } from "node:path";
 import * as cheerio from "cheerio";
 import {
   type BaseActiveSkill,
-  type BaseSkill,
   type BaseMagnificentSupportSkill,
   type BaseNobleSupportSkill,
+  type BaseSkill,
+  type BaseSupportSkill,
   SKILL_TAGS,
   type SkillTag,
-  type BaseSupportSkill,
   type SupportTarget,
 } from "../data/skill/types";
+import { skillModTemplates } from "../tli/skills/support_templates";
 import { readAllTlidbSkills, type TlidbSkillFile } from "./lib/tlidb";
 import { classifyWithRegex } from "./skill_kind_patterns";
+import { getParserForSkill } from "./skills";
+import type { SkillCategory } from "./skills/types";
 
 interface RawSkill {
   type: string;
   name: string;
   tags: string[];
   description: string[];
+  parsedLevelModValues?: Record<number, number>[];
 }
 
 // Set for fast tag validation
@@ -505,12 +509,41 @@ const extractSkillFromTlidbHtml = (
     }
   });
 
+  // Check for registered parser and extract level mod values if available
+  const parser = getParserForSkill(name, file.category as SkillCategory);
+  let parsedLevelModValues: Record<number, number>[] | undefined;
+
+  if (parser !== undefined) {
+    parsedLevelModValues = parser.parser($, name);
+  }
+
   return {
     type: skillType,
     name,
     tags,
     description,
+    parsedLevelModValues,
   };
+};
+
+// Custom serializer that outputs valid TypeScript with numeric keys unquoted
+const toTypeScript = (obj: unknown): string => {
+  if (obj === null) return "null";
+  if (obj === undefined) return "undefined";
+  if (typeof obj === "string") return JSON.stringify(obj);
+  if (typeof obj === "number" || typeof obj === "boolean") return String(obj);
+  if (Array.isArray(obj)) {
+    return `[${obj.map(toTypeScript).join(", ")}]`;
+  }
+  if (typeof obj === "object") {
+    const entries = Object.entries(obj).map(([k, v]) => {
+      // Use unquoted numeric keys, quote others
+      const key = /^\d+$/.test(k) ? k : JSON.stringify(k);
+      return `${key}: ${toTypeScript(v)}`;
+    });
+    return `{ ${entries.join(", ")} }`;
+  }
+  return String(obj);
 };
 
 const generateActiveSkillFile = (
@@ -519,7 +552,7 @@ const generateActiveSkillFile = (
 ): string => {
   return `import type { BaseActiveSkill } from "./types";
 
-export const ${constName} = ${JSON.stringify(skills, null)} as const satisfies readonly (BaseActiveSkill & Record<string, unknown>)[];
+export const ${constName} = ${toTypeScript(skills)} as const satisfies readonly (BaseActiveSkill & Record<string, unknown>)[];
 `;
 };
 
@@ -529,7 +562,7 @@ const generateBaseSkillFile = (
 ): string => {
   return `import type { BaseSkill } from "./types";
 
-export const ${constName} = ${JSON.stringify(skills, null)} as const satisfies readonly (BaseSkill & Record<string, unknown>)[];
+export const ${constName} = ${toTypeScript(skills)} as const satisfies readonly (BaseSkill & Record<string, unknown>)[];
 `;
 };
 
@@ -539,7 +572,7 @@ const generateSupportSkillFile = (
 ): string => {
   return `import type { BaseSupportSkill } from "./types";
 
-export const ${constName} = ${JSON.stringify(skills, null)} as const satisfies readonly (BaseSupportSkill & Record<string, unknown>)[];
+export const ${constName} = ${toTypeScript(skills)} as const satisfies readonly (BaseSupportSkill & Record<string, unknown>)[];
 `;
 };
 
@@ -549,7 +582,7 @@ const generateMagnificentSupportSkillFile = (
 ): string => {
   return `import type { BaseMagnificentSupportSkill } from "./types";
 
-export const ${constName} = ${JSON.stringify(skills, null)} as const satisfies readonly (BaseMagnificentSupportSkill & Record<string, unknown>)[];
+export const ${constName} = ${toTypeScript(skills)} as const satisfies readonly (BaseMagnificentSupportSkill & Record<string, unknown>)[];
 `;
 };
 
@@ -559,7 +592,7 @@ const generateNobleSupportSkillFile = (
 ): string => {
   return `import type { BaseNobleSupportSkill } from "./types";
 
-export const ${constName} = ${JSON.stringify(skills, null)} as const satisfies readonly (BaseNobleSupportSkill & Record<string, unknown>)[];
+export const ${constName} = ${toTypeScript(skills)} as const satisfies readonly (BaseNobleSupportSkill & Record<string, unknown>)[];
 `;
 };
 
@@ -615,6 +648,42 @@ const main = async (): Promise<void> => {
         raw.name,
       );
 
+      // Look up mod templates for this skill
+      const template =
+        skillModTemplates[raw.name as keyof typeof skillModTemplates];
+
+      // Build fixedMods and levelMods from template + parsed values
+      let fixedMods: BaseSupportSkill["fixedMods"];
+      let levelMods: BaseSupportSkill["levelMods"];
+
+      if (template !== undefined) {
+        if (template.fixedMods !== undefined) {
+          fixedMods = template.fixedMods;
+        }
+
+        if (
+          template.levelMods !== undefined &&
+          raw.parsedLevelModValues !== undefined
+        ) {
+          const parsedValues = raw.parsedLevelModValues;
+          if (template.levelMods.length !== parsedValues.length) {
+            throw new Error(
+              `Skill "${raw.name}": template has ${template.levelMods.length} levelMods but parser returned ${parsedValues.length} level arrays`,
+            );
+          }
+
+          levelMods = template.levelMods.map((modTemplate, i) => {
+            const levels = parsedValues[i];
+            if (levels === undefined) {
+              throw new Error(
+                `Skill "${raw.name}": missing parsed levels at index ${i}`,
+              );
+            }
+            return { template: modTemplate, levels };
+          });
+        }
+      }
+
       const skillEntry: BaseSupportSkill = {
         type: raw.type as BaseSupportSkill["type"],
         name: raw.name,
@@ -622,6 +691,8 @@ const main = async (): Promise<void> => {
         description: raw.description,
         supportTargets,
         cannotSupportTargets,
+        ...(fixedMods !== undefined && { fixedMods }),
+        ...(levelMods !== undefined && { levelMods }),
       };
 
       if (!supportSkillGroups.has(skillType)) {

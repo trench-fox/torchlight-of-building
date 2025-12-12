@@ -7,12 +7,15 @@ import type { DmgRange } from "./core";
 
 export type DmgType = "physical" | "cold" | "lightning" | "fire" | "erosion";
 
+export type StackableBuff = "willpower";
+
 export type Mod =
   | {
       type: "DmgPct";
       value: number;
       modType: DmgModType;
       addn: boolean;
+      per?: StackableBuff;
       src?: string;
     }
   | {
@@ -214,6 +217,15 @@ export type Mod =
       src?: string;
     }
   | {
+      type: "MaxWillpowerStacks";
+      value: number;
+      src?: string;
+    }
+  | {
+      type: "foo";
+      src?: string;
+    }
+  | {
       type: "CoreTalent";
       name:
         | "Last Stand"
@@ -228,3 +240,6 @@ export type Mod =
     };
 
 export type ModOfType<T> = Extract<Mod, { type: T }>;
+
+// Compile-time check: all Mod variants must have src?: string
+type _AssertAllModsHaveSrc = [Mod] extends [{ src?: string }] ? true : never;

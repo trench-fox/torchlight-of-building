@@ -7,8 +7,8 @@ import {
 import type {
   BaseActiveSkill,
   BaseSkill,
-  InferredSkillKind,
   BaseSupportSkill,
+  InferredSkillKind,
   SupportTarget,
 } from "@/src/data/skill/types";
 

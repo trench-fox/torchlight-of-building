@@ -1,6 +1,8 @@
+import type { Mod } from "@/src/tli/mod";
+import type { ModWithoutValue } from "@/src/tli/skills/support_templates";
 import type { ActivationMediumSkills } from "./activation_medium";
 import type { ActiveSkills } from "./active";
-import { PassiveSkills } from "./passive";
+import type { PassiveSkills } from "./passive";
 import type { SupportSkills } from "./support";
 import type { MagnificentSupportSkills } from "./support_magnificent";
 import type { NobleSupportSkills } from "./support_noble";
@@ -117,6 +119,11 @@ export interface BaseSupportSkill extends BaseSkill {
   supportTargets: SupportTarget[];
   // cannot support any of the matched targets (takes precedence over supportTargets)
   cannotSupportTargets: SupportTarget[];
+  // mods that are fixed regardless of level
+  fixedMods?: Mod[];
+  // mods that can vary by level (1-40), and require custom parsin from data source
+  // each mod is missing a value property, to be interpolated with the value from the levels record
+  levelMods?: { template: ModWithoutValue; levels: Record<number, number> }[];
 }
 
 export interface BaseMagnificentSupportSkill extends BaseSkill {
