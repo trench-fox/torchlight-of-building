@@ -22,24 +22,28 @@ export type Mod =
       type: "FlatDmgToAtks";
       value: DmgRange;
       dmgType: DmgType;
+      per?: StackableBuff;
       src?: string;
     }
   | {
       type: "FlatDmgToAtksAndSpells";
       value: DmgRange;
       dmgType: DmgType;
+      per?: StackableBuff;
       src?: string;
     }
   | {
       type: "FlatDmgToSpells";
       value: DmgRange;
       dmgType: DmgType;
+      per?: StackableBuff;
       src?: string;
     }
   | {
       type: "CritRatingPct";
       value: number;
       modType: CritRatingModType;
+      per?: StackableBuff;
       src?: string;
     }
   | {
@@ -47,97 +51,115 @@ export type Mod =
       value: number;
       addn: boolean;
       modType: CritDmgModType;
+      per?: StackableBuff;
       src?: string;
     }
   | {
       type: "AspdPct";
       value: number;
       addn: boolean;
+      per?: StackableBuff;
       src?: string;
     }
   | {
       type: "CspdPct";
       value: number;
       addn: boolean;
+      per?: StackableBuff;
       src?: string;
     }
   | {
       type: "AspdAndCspdPct";
       value: number;
       addn: boolean;
+      per?: StackableBuff;
       src?: string;
     }
   | {
       type: "MinionAspdAndCspdPct";
       value: number;
       addn: boolean;
+      per?: StackableBuff;
       src?: string;
     }
   | {
       type: "DblDmg";
       value: number;
+      per?: StackableBuff;
       src?: string;
     }
   | {
       type: "Str";
       value: number;
+      per?: StackableBuff;
       src?: string;
     }
   | {
       type: "StrPct";
       value: number;
+      per?: StackableBuff;
       src?: string;
     }
   | {
       type: "Dex";
       value: number;
+      per?: StackableBuff;
       src?: string;
     }
   | {
       type: "DexPct";
       value: number;
+      per?: StackableBuff;
       src?: string;
     }
   | {
       type: "FervorEff";
       value: number;
+      per?: StackableBuff;
       src?: string;
     }
   | {
       type: "SteepStrikeChance";
       value: number;
+      per?: StackableBuff;
       src?: string;
     }
   | {
       type: "SteepStrikeDmg";
       value: number;
       addn: boolean;
+      per?: StackableBuff;
       src?: string;
     }
   | {
       type: "SweepSlashDmg";
       value: number;
       addn: boolean;
+      per?: StackableBuff;
       src?: string;
     }
   | {
       type: "Fervor";
       value: number;
+      per?: StackableBuff;
       src?: string;
     }
   | {
       type: "CritDmgPerFervor";
       value: number;
+      per?: StackableBuff;
       src?: string;
     }
   | {
       type: "AddnMainHandDmgPct";
       value: number;
+      per?: StackableBuff;
       src?: string;
     }
   | {
       type: "GearAspdPct";
       value: number;
+      per?: StackableBuff;
       src?: string;
     }
   | {
@@ -150,56 +172,67 @@ export type Mod =
         | "fire"
         | "erosion"
         | "elemental";
+      per?: StackableBuff;
       src?: string;
     }
   | {
       type: "GearPhysDmgPct";
       value: number;
+      per?: StackableBuff;
       src?: string;
     }
   | {
       type: "AttackBlockChancePct";
       value: number;
+      per?: StackableBuff;
       src?: string;
     }
   | {
       type: "SpellBlockChancePct";
       value: number;
+      per?: StackableBuff;
       src?: string;
     }
   | {
       type: "MaxLifePct";
       value: number;
+      per?: StackableBuff;
       src?: string;
     }
   | {
       type: "MaxEnergyShieldPct";
       value: number;
+      per?: StackableBuff;
       src?: string;
     }
   | {
       type: "ArmorPct";
       value: number;
+      per?: StackableBuff;
       src?: string;
     }
   | {
       type: "EvasionPct";
       value: number;
+      per?: StackableBuff;
       src?: string;
     }
   | {
       type: "LifeRegainPct";
       value: number;
+      per?: StackableBuff;
       src?: string;
     }
   | {
       type: "EnergyShieldRegainPct";
       value: number;
+      per?: StackableBuff;
       src?: string;
     }
   | {
       type: "MultistrikeChancePct";
       value: number;
+      per?: StackableBuff;
       src?: string;
     }
   | {
@@ -207,6 +240,7 @@ export type Mod =
       from: DmgType;
       to: DmgType;
       value: number;
+      per?: StackableBuff;
       src?: string;
     }
   | {
@@ -214,11 +248,13 @@ export type Mod =
       from: DmgType;
       to: DmgType;
       value: number;
+      per?: StackableBuff;
       src?: string;
     }
   | {
       type: "MaxWillpowerStacks";
       value: number;
+      per?: StackableBuff;
       src?: string;
     }
   | {
@@ -242,4 +278,8 @@ export type Mod =
 export type ModOfType<T> = Extract<Mod, { type: T }>;
 
 // Compile-time check: all Mod variants must have src?: string
-type _AssertAllModsHaveSrc = [Mod] extends [{ src?: string }] ? true : never;
+type _AssertAllModsHaveSrc = Mod["src"];
+
+// Compile-time check: all Mod variants with a value property must have per?: StackableBuff
+type _ModsWithValue = Extract<Mod, { value: unknown }>;
+type _AssertValueHasPer = _ModsWithValue["per"];
