@@ -16,7 +16,8 @@ import { skillModTemplates } from "../tli/skills/support_templates";
 import { readAllTlidbSkills, type TlidbSkillFile } from "./lib/tlidb";
 import { classifyWithRegex } from "./skill_kind_patterns";
 import { getParserForSkill } from "./skills";
-import type { SkillCategory } from "./skills/types";
+import { buildProgressionTableInput } from "./skills/progression_table";
+import type { SkillCategory, SupportParserInput } from "./skills/types";
 
 interface RawSkill {
   type: string;
@@ -514,7 +515,17 @@ const extractSkillFromTlidbHtml = (
   let parsedLevelModValues: Record<number, number>[] | undefined;
 
   if (parser !== undefined) {
-    parsedLevelModValues = parser.parser($, name);
+    const progressionTable = buildProgressionTableInput($);
+    if (progressionTable === undefined) {
+      throw new Error(`No progression table found for "${name}"`);
+    }
+
+    const parserInput: SupportParserInput = {
+      skillName: name,
+      description,
+      progressionTable,
+    };
+    parsedLevelModValues = parser.parser(parserInput);
   }
 
   return {

@@ -1,6 +1,8 @@
-import { hauntParser } from "./parsers/haunt";
-import { steamrollParser } from "./parsers/steamroll";
-import { willpowerParser } from "./parsers/willpower";
+import {
+  hauntParser,
+  steamrollParser,
+  willpowerParser,
+} from "./support_parsers";
 import type { SkillCategory, SkillParserEntry } from "./types";
 
 export const SKILL_PARSERS: SkillParserEntry[] = [

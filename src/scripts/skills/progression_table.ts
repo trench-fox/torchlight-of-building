@@ -1,6 +1,10 @@
 import type { CheerioAPI } from "cheerio";
 import * as cheerio from "cheerio";
-import type { ProgressionRow, ProgressionTable } from "./types";
+import type {
+  ProgressionRow,
+  ProgressionTable,
+  SupportParserInput,
+} from "./types";
 
 const EXPECTED_LEVELS = 40;
 
@@ -98,4 +102,25 @@ export const parseNumericValue = (
 
   // Round to 4 decimal places to avoid floating point artifacts
   return Math.round(num * 10000) / 10000;
+};
+
+export const buildProgressionTableInput = (
+  $: CheerioAPI,
+): SupportParserInput["progressionTable"] | undefined => {
+  const table = extractProgressionTable($);
+  if (table === undefined) {
+    return undefined;
+  }
+
+  const description: Record<number, string> = {};
+  const values: Record<number, string[]> = {};
+
+  for (const row of table.rows) {
+    // Convert descriptionHtml to plain text
+    const descText = cheerio.load(row.descriptionHtml).text().trim();
+    description[row.level] = descText;
+    values[row.level] = row.values;
+  }
+
+  return { description, values };
 };

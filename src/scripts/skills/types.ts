@@ -1,5 +1,3 @@
-import type { CheerioAPI } from "cheerio";
-
 export interface ProgressionRow {
   level: number;
   descriptionHtml: string;
@@ -11,10 +9,17 @@ export interface ProgressionTable {
   rows: ProgressionRow[];
 }
 
-// Parser returns an array of level maps, one for each levelMod in the template
-export type SkillLevelParser = (
-  $: CheerioAPI,
-  skillName: string,
+export interface SupportParserInput {
+  skillName: string;
+  description: string[];
+  progressionTable: {
+    description: Record<number, string>;
+    values: Record<number, string[]>;
+  };
+}
+
+export type SupportLevelParser = (
+  input: SupportParserInput,
 ) => Record<number, number>[];
 
 export type SkillCategory =
@@ -28,5 +33,5 @@ export type SkillCategory =
 export interface SkillParserEntry {
   skillName: string;
   categories: SkillCategory[];
-  parser: SkillLevelParser;
+  parser: SupportLevelParser;
 }
