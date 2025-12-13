@@ -417,6 +417,21 @@ const parseSteepStrikeChance = (
   return { type: "SteepStrikeChance", value };
 };
 
+const parseShadowQuant = (
+  input: string,
+): ModOfType<"ShadowQuant"> | undefined => {
+  // Regex to parse: +2 Shadow Quantity
+  const pattern = /^([+-])?(\d+) shadow quantity$/i;
+  const match = input.match(pattern);
+
+  if (!match) {
+    return undefined;
+  }
+
+  const value = parseInt(match[2], 10);
+  return { type: "ShadowQuant", value };
+};
+
 export const parseMod = (input: string): Mod | undefined => {
   const normalized = input.trim().toLowerCase();
 
@@ -444,6 +459,7 @@ export const parseMod = (input: string): Mod | undefined => {
     // misc
     parseFervorEff,
     parseSteepStrikeChance,
+    parseShadowQuant,
     // parseMultistrikeChancePct,
     // Add more parsers here as they're implemented
   ];

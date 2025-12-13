@@ -10,6 +10,7 @@ export const DMG_MOD_TYPES = [
   "fire",
   "erosion",
   "elemental",
+  "ailment",
 ] as const;
 
 export type DmgModType = (typeof DMG_MOD_TYPES)[number];

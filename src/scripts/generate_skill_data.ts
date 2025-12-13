@@ -652,36 +652,30 @@ const main = async (): Promise<void> => {
       const template =
         skillModTemplates[raw.name as keyof typeof skillModTemplates];
 
-      // Build fixedMods and levelMods from template + parsed values
-      let fixedMods: BaseSupportSkill["fixedMods"];
+      // Build levelMods from template + parsed values
       let levelMods: BaseSupportSkill["levelMods"];
 
-      if (template !== undefined) {
-        if (template.fixedMods !== undefined) {
-          fixedMods = template.fixedMods;
+      if (
+        template !== undefined &&
+        template.levelMods !== undefined &&
+        raw.parsedLevelModValues !== undefined
+      ) {
+        const parsedValues = raw.parsedLevelModValues;
+        if (template.levelMods.length !== parsedValues.length) {
+          throw new Error(
+            `Skill "${raw.name}": template has ${template.levelMods.length} levelMods but parser returned ${parsedValues.length} level arrays`,
+          );
         }
 
-        if (
-          template.levelMods !== undefined &&
-          raw.parsedLevelModValues !== undefined
-        ) {
-          const parsedValues = raw.parsedLevelModValues;
-          if (template.levelMods.length !== parsedValues.length) {
+        levelMods = template.levelMods.map((modTemplate, i) => {
+          const levels = parsedValues[i];
+          if (levels === undefined) {
             throw new Error(
-              `Skill "${raw.name}": template has ${template.levelMods.length} levelMods but parser returned ${parsedValues.length} level arrays`,
+              `Skill "${raw.name}": missing parsed levels at index ${i}`,
             );
           }
-
-          levelMods = template.levelMods.map((modTemplate, i) => {
-            const levels = parsedValues[i];
-            if (levels === undefined) {
-              throw new Error(
-                `Skill "${raw.name}": missing parsed levels at index ${i}`,
-              );
-            }
-            return { template: modTemplate, levels };
-          });
-        }
+          return { template: modTemplate, levels };
+        });
       }
 
       const skillEntry: BaseSupportSkill = {
@@ -691,7 +685,6 @@ const main = async (): Promise<void> => {
         description: raw.description,
         supportTargets,
         cannotSupportTargets,
-        ...(fixedMods !== undefined && { fixedMods }),
         ...(levelMods !== undefined && { levelMods }),
       };
 

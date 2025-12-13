@@ -348,3 +348,11 @@ test("parse steep strike chance", () => {
     value: 0.12,
   });
 });
+
+test("parse shadow quantity", () => {
+  const result = parseMod("+2 Shadow Quantity");
+  expect(result).toEqual({
+    type: "ShadowQuant",
+    value: 2,
+  });
+});

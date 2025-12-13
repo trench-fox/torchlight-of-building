@@ -8,7 +8,6 @@ export type ModWithoutValue = Mod extends infer M
   : never;
 
 export type SkillModTemplate = {
-  fixedMods?: Mod[];
   levelMods?: ModWithoutValue[];
 };
 
@@ -16,9 +15,22 @@ export const skillModTemplates: Partial<
   Record<SupportSkillName, SkillModTemplate>
 > = {
   Willpower: {
-    fixedMods: [{ type: "MaxWillpowerStacks", value: 6 }],
     levelMods: [
+      { type: "MaxWillpowerStacks" },
       { type: "DmgPct", modType: "global", addn: false, per: "willpower" },
+    ],
+  },
+  Haunt: {
+    levelMods: [
+      { type: "ShadowQuant" },
+      { type: "DmgPct", modType: "global", addn: true },
+    ],
+  },
+  Steamroll: {
+    levelMods: [
+      { type: "AspdPct", addn: false },
+      { type: "DmgPct", modType: "melee", addn: true },
+      { type: "DmgPct", modType: "ailment", addn: true },
     ],
   },
 };

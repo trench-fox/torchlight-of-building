@@ -19,10 +19,6 @@ export const getSupportSkillMods = (
 
   const mods: Mod[] = [];
 
-  if (skill.fixedMods !== undefined) {
-    mods.push(...skill.fixedMods);
-  }
-
   if (skill.levelMods !== undefined) {
     for (const levelMod of skill.levelMods) {
       const value = levelMod.levels[level];

@@ -1,4 +1,3 @@
-import type { Mod } from "@/src/tli/mod";
 import type { ModWithoutValue } from "@/src/tli/skills/support_templates";
 import type { ActivationMediumSkills } from "./activation_medium";
 import type { ActiveSkills } from "./active";
@@ -119,10 +118,9 @@ export interface BaseSupportSkill extends BaseSkill {
   supportTargets: SupportTarget[];
   // cannot support any of the matched targets (takes precedence over supportTargets)
   cannotSupportTargets: SupportTarget[];
-  // mods that are fixed regardless of level
-  fixedMods?: Mod[];
-  // mods that can vary by level (1-40), and require custom parsin from data source
+  // mods that can vary by level (1-40), and require custom parsing from data source
   // each mod is missing a value property, to be interpolated with the value from the levels record
+  // for mods with constant values across levels, all 40 levels will have the same value
   levelMods?: { template: ModWithoutValue; levels: Record<number, number> }[];
 }
 
