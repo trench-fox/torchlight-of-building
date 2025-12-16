@@ -55,7 +55,7 @@ export const CalculationsSection = () => {
 
     const input: OffenseInput = {
       loadout,
-      skillName: selectedSkill,
+      mainSkillName: selectedSkill,
       configuration: DEFAULT_CONFIGURATION,
     };
 

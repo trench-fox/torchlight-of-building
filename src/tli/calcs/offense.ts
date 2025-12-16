@@ -611,17 +611,17 @@ const calculateSkillHit = (
   gearDmg: GearDmg,
   flatDmg: DmgRanges,
   allMods: Mod[],
-  skill: BaseActiveSkill,
+  mainSkill: BaseActiveSkill,
   level: number,
 ): SkillHitOverview => {
-  const skillWeaponDR = match(skill.name)
+  const skillWeaponDR = match(mainSkill.name)
     .with("Berserking Blade", () => {
       return multDRs(gearDmg.mainHand, 2.1);
     })
     .with("Frost Spike", () => {
       return multDRs(
         gearDmg.mainHand,
-        getLeveOffenseValue(skill, "WeaponAtkDmgPct", level) as number,
+        getLeveOffenseValue(mainSkill, "WeaponAtkDmgPct", level) as number,
       );
     })
     .with("[Test] Simple Attack", () => {
@@ -633,7 +633,7 @@ const calculateSkillHit = (
     });
   const skillFlatDR = multDRs(
     flatDmg,
-    getLeveOffenseValue(skill, "AddedDmgEffPct", level) as number,
+    getLeveOffenseValue(mainSkill, "AddedDmgEffPct", level) as number,
   );
   const skillBaseDmg = addDRs(skillWeaponDR, skillFlatDR);
 
@@ -646,21 +646,21 @@ const calculateSkillHit = (
     dmgPools.physical,
     "physical",
     allDmgPcts,
-    skill,
+    mainSkill,
   );
-  const cold = calculatePoolTotal(dmgPools.cold, "cold", allDmgPcts, skill);
+  const cold = calculatePoolTotal(dmgPools.cold, "cold", allDmgPcts, mainSkill);
   const lightning = calculatePoolTotal(
     dmgPools.lightning,
     "lightning",
     allDmgPcts,
-    skill,
+    mainSkill,
   );
-  const fire = calculatePoolTotal(dmgPools.fire, "fire", allDmgPcts, skill);
+  const fire = calculatePoolTotal(dmgPools.fire, "fire", allDmgPcts, mainSkill);
   const erosion = calculatePoolTotal(
     dmgPools.erosion,
     "erosion",
     allDmgPcts,
-    skill,
+    mainSkill,
   );
 
   const total = {
@@ -684,7 +684,7 @@ const calculateSkillHit = (
 
 export interface OffenseInput {
   loadout: Loadout;
-  skillName: OffenseSkillName;
+  mainSkillName: OffenseSkillName;
   configuration: Configuration;
 }
 
@@ -729,7 +729,7 @@ const listSkillSlots = (input: OffenseInput): SkillSlot[] => {
 };
 
 const getSkillSlot = (input: OffenseInput): SkillSlot => {
-  const name = input.skillName;
+  const name = input.mainSkillName;
   const slots = listSkillSlots(input);
   const slot = slots.find((s) => s?.skillName === name);
   if (slot === undefined) {
@@ -738,8 +738,8 @@ const getSkillSlot = (input: OffenseInput): SkillSlot => {
   return slot;
 };
 
-const resolveSelectedSkill = (input: OffenseInput): Mod[] => {
-  const name = input.skillName;
+const resolveMainSkill = (input: OffenseInput): Mod[] => {
+  const name = input.mainSkillName;
   const slots = listSkillSlots(input);
   const slot = slots.find((s) => s?.skillName === name);
   if (slot === undefined) {
@@ -747,7 +747,7 @@ const resolveSelectedSkill = (input: OffenseInput): Mod[] => {
   }
 
   return [
-    ...resolveSelectedSkillMods(name, slot.level || 20),
+    ...resolveMainSkillMods(name, slot.level || 20),
     ...resolveSelectedSkillSupportMods(slot),
   ];
 };
@@ -757,11 +757,11 @@ const findActiveSkill = (name: OffenseSkillName): BaseActiveSkill => {
   return ActiveSkills.find((s) => s.name === name) as BaseActiveSkill;
 };
 
-const resolveSelectedSkillMods = (
-  name: OffenseSkillName,
+const resolveMainSkillMods = (
+  mainSkillName: OffenseSkillName,
   level: number,
 ): Mod[] => {
-  const skill = findActiveSkill(name);
+  const skill = findActiveSkill(mainSkillName);
   if (skill.levelMods === undefined) {
     return [];
   }
@@ -809,12 +809,12 @@ const resolveSelectedSkillSupportMods = (slot: SkillSlot): Mod[] => {
 // * filtered based on various criteria
 const resolveMods = (
   input: OffenseInput,
-  offenseSkill: BaseActiveSkill,
+  mainSkill: BaseActiveSkill,
 ): Mod[] => {
   // includes mods from loadout and from base effects, such as from stats
   const allOriginalMods: Mod[] = [
     ...collectMods(input.loadout),
-    ...resolveSelectedSkill(input),
+    ...resolveMainSkill(input),
     {
       type: "DmgPct",
       // .5% additional damage per main stat
@@ -839,13 +839,13 @@ const resolveMods = (
           multModValue(mod, willpowerStacks / div),
         )
         .with("main_stat", () => {
-          if (offenseSkill.mainStats === undefined) {
+          if (mainSkill.mainStats === undefined) {
             throw new Error(
-              `Skill "${offenseSkill.name}" has no mainStats defined`,
+              `Skill "${mainSkill.name}" has no mainStats defined`,
             );
           }
           let totalMainStats = 0;
-          for (const mainStatType of offenseSkill.mainStats) {
+          for (const mainStatType of mainSkill.mainStats) {
             totalMainStats += stats[mainStatType];
           }
           return multModValue(mod, totalMainStats / div);
@@ -864,10 +864,10 @@ const resolveMods = (
 export const calculateOffense = (
   input: OffenseInput,
 ): OffenseSummary | undefined => {
-  const { loadout, skillName, configuration } = input;
-  const offenseSkill = findActiveSkill(skillName);
-  const selectedSkillSlot = getSkillSlot(input);
-  const mods = resolveMods(input, offenseSkill);
+  const { loadout, mainSkillName, configuration } = input;
+  const mainSkill = findActiveSkill(mainSkillName);
+  const mainSkillSlot = getSkillSlot(input);
+  const mods = resolveMods(input, mainSkill);
   const gearDmg = calculateGearDmg(loadout, mods);
   const flatDmg = calculateFlatDmg(mods, "attack");
 
@@ -879,8 +879,8 @@ export const calculateOffense = (
     gearDmg,
     flatDmg,
     mods,
-    offenseSkill,
-    selectedSkillSlot.level || 20,
+    mainSkill,
+    mainSkillSlot.level || 20,
   );
   const avgHitWithCrit =
     skillHit.avg * critChance * critDmgMult + skillHit.avg * (1 - critChance);

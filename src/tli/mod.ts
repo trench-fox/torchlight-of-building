@@ -282,6 +282,11 @@ export type Mod =
       override?: boolean;
     }
   | {
+      type: "SkillEffPct";
+      value: number;
+      src?: string;
+    }
+  | {
       type: "CoreTalent";
       name:
         | "Last Stand"

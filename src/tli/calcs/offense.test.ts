@@ -140,7 +140,7 @@ const createInput = (input: TestInput): OffenseInput => {
 
   return {
     loadout,
-    skillName,
+    mainSkillName: skillName,
     configuration: input.configuration ?? defaultConfiguration,
   };
 };
@@ -1474,7 +1474,7 @@ describe("resolveSelectedSkillSupportMods via calculateOffense", () => {
 
     const actual = calculateOffense({
       loadout,
-      skillName: "[Test] Simple Attack",
+      mainSkillName: "[Test] Simple Attack",
       configuration: defaultConfiguration,
     });
 
@@ -1521,13 +1521,13 @@ describe("resolveSelectedSkillSupportMods via calculateOffense", () => {
 
     const actualL1 = calculateOffense({
       loadout: loadoutL1,
-      skillName: "[Test] Simple Attack",
+      mainSkillName: "[Test] Simple Attack",
       configuration: defaultConfiguration,
     });
 
     const actualL40 = calculateOffense({
       loadout: loadoutL40,
-      skillName: "[Test] Simple Attack",
+      mainSkillName: "[Test] Simple Attack",
       configuration: defaultConfiguration,
     });
 
@@ -1667,7 +1667,7 @@ describe("calculateOffense with damage conversion", () => {
     });
     const actual = calculateOffense({
       loadout,
-      skillName: "Frost Spike",
+      mainSkillName: "Frost Spike",
       configuration: defaultConfiguration,
     });
     validate(actual, { avgHit: 301.5 });
@@ -1709,7 +1709,7 @@ describe("resolveSelectedSkillMods via calculateOffense", () => {
     // those mods will have value 0 after normalization.
     const actual = calculateOffense({
       loadout: createFrostSpikeLoadout(20),
-      skillName: "Frost Spike",
+      mainSkillName: "Frost Spike",
       configuration: defaultConfiguration,
     });
     if (actual === undefined) throw new Error("Expected actual to be defined");
@@ -1752,7 +1752,7 @@ describe("resolveSelectedSkillMods via calculateOffense", () => {
     // No bonuses, so avgHit = 201
     const actual = calculateOffense({
       loadout: createFrostSpikeLoadout(20),
-      skillName: "Frost Spike",
+      mainSkillName: "Frost Spike",
       configuration: defaultConfiguration,
     });
 
@@ -1771,7 +1771,7 @@ describe("resolveSelectedSkillMods via calculateOffense", () => {
     // 100 weapon * 1.49 = 149 phys → converted to cold
     const actual = calculateOffense({
       loadout: createFrostSpikeLoadout(1),
-      skillName: "Frost Spike",
+      mainSkillName: "Frost Spike",
       configuration: defaultConfiguration,
     });
 
