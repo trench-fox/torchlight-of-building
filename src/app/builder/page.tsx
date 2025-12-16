@@ -3,6 +3,7 @@
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useState } from "react";
 import { BuilderLayout } from "../components/builder/BuilderLayout";
+import { CalculationsSection } from "../components/builder/CalculationsSection";
 import { DivinitySection } from "../components/builder/DivinitySection";
 import { EquipmentSection } from "../components/builder/EquipmentSection";
 import { HeroSection } from "../components/builder/HeroSection";
@@ -47,6 +48,7 @@ const BuilderPageContent = () => {
       {activePage === "hero" && <HeroSection />}
       {activePage === "pactspirit" && <PactspiritSection />}
       {activePage === "divinity" && <DivinitySection />}
+      {activePage === "calculations" && <CalculationsSection />}
     </BuilderLayout>
   );
 };

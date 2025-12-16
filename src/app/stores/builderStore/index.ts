@@ -3,6 +3,7 @@ export { useBuilderActions } from "./hooks";
 export { useSaveDataRaw } from "./raw-access";
 export {
   useBuilderState,
+  useCalculationsSelectedSkill,
   useCurrentSaveId,
   useCurrentSaveName,
   useHasUnsavedChanges,

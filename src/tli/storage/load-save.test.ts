@@ -40,6 +40,7 @@ const createMinimalSaveData = (
     slot3: { level: 1, rings: createEmptyRings() },
   },
   divinityPage: { placedSlates: [] },
+  calculationsPage: { selectedSkillName: undefined },
   itemsList: [],
   heroMemoryList: [],
   divinitySlateList: [],

@@ -198,6 +198,10 @@ export interface PactspiritPage {
   slot3: PactspiritSlot;
 }
 
+export interface CalculationsPage {
+  selectedSkillName?: string;
+}
+
 export interface SaveData {
   equipmentPage: GearPage;
   talentPage: TalentPage;
@@ -205,6 +209,7 @@ export interface SaveData {
   heroPage: HeroPage;
   pactspiritPage: PactspiritPage;
   divinityPage: DivinityPage;
+  calculationsPage: CalculationsPage;
   itemsList: Gear[];
   heroMemoryList: HeroMemory[];
   divinitySlateList: DivinitySlate[];

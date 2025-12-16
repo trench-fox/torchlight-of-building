@@ -2,6 +2,7 @@ import { describe, expect, it, vi } from "vitest";
 import { decodeBuildCode, encodeBuildCode } from "./build-code";
 import type { SaveData } from "./save-data";
 import {
+  createEmptyCalculationsPage,
   createEmptyDivinityPage,
   createEmptyHeroPage,
   createEmptyPactspiritPage,
@@ -38,6 +39,7 @@ describe("build-code", () => {
       heroPage: createEmptyHeroPage(),
       pactspiritPage: createEmptyPactspiritPage(),
       divinityPage: createEmptyDivinityPage(),
+      calculationsPage: createEmptyCalculationsPage(),
       itemsList: [],
       heroMemoryList: [],
       divinitySlateList: [],
@@ -71,6 +73,7 @@ describe("build-code", () => {
       heroPage: createEmptyHeroPage(),
       pactspiritPage: createEmptyPactspiritPage(),
       divinityPage: createEmptyDivinityPage(),
+      calculationsPage: createEmptyCalculationsPage(),
       itemsList: [],
       heroMemoryList: [],
       divinitySlateList: [],
@@ -109,6 +112,7 @@ describe("build-code", () => {
       heroPage: createEmptyHeroPage(),
       pactspiritPage: createEmptyPactspiritPage(),
       divinityPage: createEmptyDivinityPage(),
+      calculationsPage: createEmptyCalculationsPage(),
       itemsList: [],
       heroMemoryList: [],
       divinitySlateList: [],
@@ -157,6 +161,7 @@ describe("build-code", () => {
       heroPage: createEmptyHeroPage(),
       pactspiritPage: createEmptyPactspiritPage(),
       divinityPage: createEmptyDivinityPage(),
+      calculationsPage: createEmptyCalculationsPage(),
       itemsList: [
         {
           id: "inv-1",

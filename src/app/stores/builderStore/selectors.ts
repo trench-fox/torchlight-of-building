@@ -55,3 +55,6 @@ export const useCurrentSaveName = (): string | undefined =>
   internalStore((state) => state.currentSaveName);
 
 export const useSavesIndex = () => internalStore((state) => state.savesIndex);
+
+export const useCalculationsSelectedSkill = (): string | undefined =>
+  internalStore((state) => state.saveData.calculationsPage?.selectedSkillName);

@@ -1,5 +1,6 @@
 import { DEBUG_MODE_STORAGE_KEY } from "./constants";
 import type {
+  CalculationsPage,
   DivinityPage,
   HeroPage,
   PactspiritPage,
@@ -52,6 +53,10 @@ export const createEmptyDivinityPage = (): DivinityPage => ({
   placedSlates: [],
 });
 
+export const createEmptyCalculationsPage = (): CalculationsPage => ({
+  selectedSkillName: undefined,
+});
+
 export const createEmptySkillPage = (): SkillPage => ({
   activeSkills: {},
   passiveSkills: {},
@@ -86,6 +91,7 @@ export const createEmptySaveData = (): SaveData => ({
   heroPage: createEmptyHeroPage(),
   pactspiritPage: createEmptyPactspiritPage(),
   divinityPage: createEmptyDivinityPage(),
+  calculationsPage: createEmptyCalculationsPage(),
   itemsList: [],
   heroMemoryList: [],
   divinitySlateList: [],
