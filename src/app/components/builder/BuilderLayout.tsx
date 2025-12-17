@@ -21,6 +21,7 @@ import { ExportModal } from "../modals/ExportModal";
 import { ImportModal } from "../modals/ImportModal";
 import { PageTabs } from "../PageTabs";
 import { Toast } from "../Toast";
+import { StatsPanel } from "./StatsPanel";
 
 interface BuilderLayoutProps {
   children: ReactNode;
@@ -111,7 +112,7 @@ export const BuilderLayout = ({
 
   return (
     <div className="min-h-screen bg-zinc-950 p-6">
-      <div className="mx-auto max-w-6xl">
+      <div className="mx-auto max-w-[1440px]">
         <div className="mb-8 flex items-center justify-between">
           <div className="flex items-center gap-4">
             <button
@@ -173,25 +174,33 @@ export const BuilderLayout = ({
           </div>
         </div>
 
-        <PageTabs activePage={activePage} setActivePage={setActivePage} />
+        <div className="flex gap-6">
+          <aside className="w-64 shrink-0">
+            <StatsPanel />
+          </aside>
 
-        {children}
+          <main className="min-w-0 flex-1">
+            <PageTabs activePage={activePage} setActivePage={setActivePage} />
 
-        <div className="mt-8 flex gap-4">
-          <button
-            type="button"
-            onClick={handleExport}
-            className="flex-1 rounded-lg bg-green-500 px-6 py-3 text-lg font-semibold text-white transition-colors hover:bg-green-600"
-          >
-            Export
-          </button>
-          <button
-            type="button"
-            onClick={() => setImportModalOpen(true)}
-            className="flex-1 rounded-lg bg-amber-500 px-6 py-3 text-lg font-semibold text-zinc-950 transition-colors hover:bg-amber-600"
-          >
-            Import
-          </button>
+            {children}
+
+            <div className="mt-8 flex gap-4">
+              <button
+                type="button"
+                onClick={handleExport}
+                className="flex-1 rounded-lg bg-green-500 px-6 py-3 text-lg font-semibold text-white transition-colors hover:bg-green-600"
+              >
+                Export
+              </button>
+              <button
+                type="button"
+                onClick={() => setImportModalOpen(true)}
+                className="flex-1 rounded-lg bg-amber-500 px-6 py-3 text-lg font-semibold text-zinc-950 transition-colors hover:bg-amber-600"
+              >
+                Import
+              </button>
+            </div>
+          </main>
         </div>
 
         <ExportModal
