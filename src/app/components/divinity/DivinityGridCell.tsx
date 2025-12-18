@@ -18,8 +18,6 @@ interface DivinityGridCellProps {
   slateEdges: SlateEdges | undefined;
   isInvalid: boolean;
   isDragging: boolean;
-  isPreview: boolean;
-  previewSlate: DivinitySlate | undefined;
   onClick: () => void;
   onMouseDown: ((e: React.MouseEvent) => void) | undefined;
 }
@@ -42,25 +40,12 @@ export const DivinityGridCell: React.FC<DivinityGridCellProps> = ({
   slateEdges,
   isInvalid,
   isDragging,
-  isPreview,
-  previewSlate,
   onClick,
   onMouseDown,
 }) => {
-  // Empty out-of-bounds cell (no slate and no preview)
-  if (isOutOfBounds && !slate && !isPreview) {
+  // Empty out-of-bounds cell
+  if (isOutOfBounds && !slate) {
     return <div className="h-12 w-12" />;
-  }
-
-  // Out-of-bounds cell with preview (no existing slate)
-  if (isOutOfBounds && !slate && isPreview && previewSlate) {
-    return (
-      <div
-        className={`relative h-12 w-12 ${GOD_COLORS[previewSlate.god]} opacity-60`}
-      >
-        <div style={invalidOverlayStyle} />
-      </div>
-    );
   }
 
   // Out-of-bounds cell WITH a slate - show the slate with error styling
@@ -84,37 +69,23 @@ export const DivinityGridCell: React.FC<DivinityGridCellProps> = ({
     );
   }
 
-  // Hide the cell completely if it's part of the dragged slate (but not if it's also a preview location)
-  if (isDragging && slate && !isPreview) {
+  // Hide the cell if it's part of the dragged slate
+  if (isDragging && slate) {
     return <div className="h-12 w-12 border border-zinc-700 bg-zinc-800" />;
-  }
-
-  // If dragging over the original location, show as preview
-  if (isDragging && slate && isPreview && previewSlate) {
-    return (
-      <div
-        className={`relative h-12 w-12 ${GOD_COLORS[previewSlate.god]} opacity-60 border-2 border-white`}
-      />
-    );
   }
 
   // Valid grid cell (within mask)
   const getBackgroundClass = (): string => {
-    // Show preview of dragged slate
-    if (isPreview && previewSlate && !slate) {
-      return `${GOD_COLORS[previewSlate.god]} opacity-60`;
-    }
-
     if (slate) {
       return GOD_COLORS[slate.god];
     }
-
     return "bg-zinc-800";
   };
 
   const getBorderClass = (): string => {
-    if (isPreview && !slate) {
-      return "border-2 border-white";
+    // No base border for cells with slates - only show white edges via getOutlineStyle
+    if (slate) {
+      return "";
     }
     return "border border-zinc-700";
   };

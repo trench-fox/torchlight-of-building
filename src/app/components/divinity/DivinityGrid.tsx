@@ -17,6 +17,7 @@ import {
   getOccupiedCells,
   getTransformedCells,
 } from "@/src/app/lib/divinity-shapes";
+import { GOD_COLORS } from "@/src/app/lib/divinity-utils";
 import type { DivinityPage } from "@/src/tli/core";
 import { DivinityGridCell } from "./DivinityGridCell";
 
@@ -40,6 +41,14 @@ export const DivinityGrid: React.FC<DivinityGridProps> = ({
   const [draggedSlateId, setDraggedSlateId] = useState<string | undefined>();
   const [dropTarget, setDropTarget] = useState<
     { row: number; col: number } | undefined
+  >();
+  // Pixel offset from cursor to block's top-left (set on mousedown)
+  const [dragOffset, setDragOffset] = useState<
+    { x: number; y: number } | undefined
+  >();
+  // Current cursor position in pixels relative to grid (for free-form movement)
+  const [dragPosition, setDragPosition] = useState<
+    { x: number; y: number } | undefined
   >();
 
   const overlappingCells = findOverlappingCells(
@@ -133,48 +142,48 @@ export const DivinityGrid: React.FC<DivinityGridProps> = ({
     }
   };
 
-  // Calculate grid cell from mouse position
-  const getCellFromMouseEvent = useCallback(
-    (e: MouseEvent): { row: number; col: number } | undefined => {
-      if (!gridRef.current) return undefined;
-
-      const rect = gridRef.current.getBoundingClientRect();
-      const x = e.clientX - rect.left - 8; // 8px = p-2 padding
-      const y = e.clientY - rect.top - 8;
-
-      const col = Math.floor(x / CELL_SIZE) + DISPLAY_COL_START;
-      const row = Math.floor(y / CELL_SIZE) + DISPLAY_ROW_START;
-
-      return { row, col };
-    },
-    [],
-  );
-
   const handleMouseMove = useCallback(
     (e: MouseEvent) => {
-      if (!draggedSlateId) return;
+      if (!draggedSlateId || !gridRef.current || !dragOffset) return;
 
-      const cell = getCellFromMouseEvent(e);
-      if (cell) {
-        setDropTarget(cell);
-      }
+      const rect = gridRef.current.getBoundingClientRect();
+      const cursorX = e.clientX - rect.left - 8;
+      const cursorY = e.clientY - rect.top - 8;
+
+      // Update pixel position for free-form movement
+      setDragPosition({ x: cursorX, y: cursorY });
+
+      // Calculate drop target based on where block's top-left would land
+      const blockX = cursorX - dragOffset.x;
+      const blockY = cursorY - dragOffset.y;
+      const col = Math.floor(blockX / CELL_SIZE) + DISPLAY_COL_START;
+      const row = Math.floor(blockY / CELL_SIZE) + DISPLAY_ROW_START;
+      setDropTarget({ row, col });
     },
-    [draggedSlateId, getCellFromMouseEvent],
+    [draggedSlateId, dragOffset],
   );
 
   const handleMouseUp = useCallback(
     (e: MouseEvent) => {
-      if (!draggedSlateId) return;
+      if (!draggedSlateId || !gridRef.current || !dragOffset) return;
 
-      const cell = getCellFromMouseEvent(e);
-      if (cell) {
-        onMoveSlate(draggedSlateId, cell);
-      }
+      // Calculate final drop position using offset
+      const rect = gridRef.current.getBoundingClientRect();
+      const cursorX = e.clientX - rect.left - 8;
+      const cursorY = e.clientY - rect.top - 8;
+      const blockX = cursorX - dragOffset.x;
+      const blockY = cursorY - dragOffset.y;
+      const col = Math.floor(blockX / CELL_SIZE) + DISPLAY_COL_START;
+      const row = Math.floor(blockY / CELL_SIZE) + DISPLAY_ROW_START;
+
+      onMoveSlate(draggedSlateId, { row, col });
 
       setDraggedSlateId(undefined);
       setDropTarget(undefined);
+      setDragOffset(undefined);
+      setDragPosition(undefined);
     },
-    [draggedSlateId, getCellFromMouseEvent, onMoveSlate],
+    [draggedSlateId, dragOffset, onMoveSlate],
   );
 
   // Add/remove document-level event listeners when dragging
@@ -192,17 +201,37 @@ export const DivinityGrid: React.FC<DivinityGridProps> = ({
 
   const handleMouseDown = (slateId: string, e: React.MouseEvent) => {
     e.preventDefault();
+    if (!gridRef.current) return;
+
     setDraggedSlateId(slateId);
 
-    // Set initial drop target to current position
     const placement = divinityPage.placedSlates.find(
       (p) => p.slateId === slateId,
     );
     if (placement) {
+      // Set initial drop target to current position
       setDropTarget({
         row: placement.position.row,
         col: placement.position.col,
       });
+
+      // Calculate cursor position relative to grid (excluding padding)
+      const rect = gridRef.current.getBoundingClientRect();
+      const cursorX = e.clientX - rect.left - 8; // 8px = p-2 padding
+      const cursorY = e.clientY - rect.top - 8;
+
+      // Calculate block's top-left pixel position
+      const blockX = (placement.position.col - DISPLAY_COL_START) * CELL_SIZE;
+      const blockY = (placement.position.row - DISPLAY_ROW_START) * CELL_SIZE;
+
+      // Store offset from cursor to block's top-left
+      setDragOffset({
+        x: cursorX - blockX,
+        y: cursorY - blockY,
+      });
+
+      // Set initial drag position
+      setDragPosition({ x: cursorX, y: cursorY });
     }
   };
 
@@ -219,7 +248,6 @@ export const DivinityGrid: React.FC<DivinityGridProps> = ({
       const slateEdges = getSlateEdges(row, col, cellSlateId);
       const isInvalid = invalidCells.has(`${row},${col}`);
       const isDragging = draggedSlateCells.has(`${row},${col}`);
-      const isPreview = previewCells.has(`${row},${col}`);
 
       cells.push(
         <DivinityGridCell
@@ -231,8 +259,6 @@ export const DivinityGrid: React.FC<DivinityGridProps> = ({
           slateEdges={slateEdges}
           isInvalid={isInvalid}
           isDragging={isDragging}
-          isPreview={isPreview}
-          previewSlate={isPreview ? draggedSlate : undefined}
           onClick={() => handleCellClick(row, col)}
           onMouseDown={
             cellSlateId ? (e) => handleMouseDown(cellSlateId, e) : undefined
@@ -247,13 +273,142 @@ export const DivinityGrid: React.FC<DivinityGridProps> = ({
     );
   }
 
+  // Helper to render a slate shape as a single floating block
+  const renderSlateBlock = (
+    slate: NonNullable<typeof draggedSlate>,
+    left: number,
+    top: number,
+    opacity: string,
+    zIndex: number,
+    showInvalidOverlay: boolean,
+  ) => {
+    const shapeCells = getTransformedCells(
+      slate.shape,
+      slate.rotation,
+      slate.flippedH,
+      slate.flippedV,
+    );
+
+    // Find bounding box for the shape
+    const minRow = Math.min(...shapeCells.map(([r]) => r));
+    const maxRow = Math.max(...shapeCells.map(([r]) => r));
+    const minCol = Math.min(...shapeCells.map(([, c]) => c));
+    const maxCol = Math.max(...shapeCells.map(([, c]) => c));
+    const shapeRows = maxRow - minRow + 1;
+    const shapeCols = maxCol - minCol + 1;
+
+    // Calculate edges for each cell
+    const cellSet = new Set(shapeCells.map(([r, c]) => `${r},${c}`));
+    const getCellEdges = (r: number, c: number) => ({
+      top: !cellSet.has(`${r - 1},${c}`),
+      right: !cellSet.has(`${r},${c + 1}`),
+      bottom: !cellSet.has(`${r + 1},${c}`),
+      left: !cellSet.has(`${r},${c - 1}`),
+    });
+
+    return (
+      <div
+        className="pointer-events-none absolute"
+        style={{
+          left: `${left}px`,
+          top: `${top}px`,
+          width: `${shapeCols * CELL_SIZE}px`,
+          height: `${shapeRows * CELL_SIZE}px`,
+          zIndex,
+        }}
+      >
+        {shapeCells.map(([r, c]) => {
+          const edges = getCellEdges(r, c);
+          const borderColor = "rgba(255, 255, 255, 0.7)";
+          const borderWidth = "3px";
+          const borderStyle: React.CSSProperties = { boxSizing: "border-box" };
+          if (edges.top)
+            borderStyle.borderTop = `${borderWidth} solid ${borderColor}`;
+          if (edges.right)
+            borderStyle.borderRight = `${borderWidth} solid ${borderColor}`;
+          if (edges.bottom)
+            borderStyle.borderBottom = `${borderWidth} solid ${borderColor}`;
+          if (edges.left)
+            borderStyle.borderLeft = `${borderWidth} solid ${borderColor}`;
+
+          return (
+            <div
+              key={`${r}-${c}`}
+              className={`absolute ${GOD_COLORS[slate.god]} ${opacity}`}
+              style={{
+                ...borderStyle,
+                left: `${(c - minCol) * CELL_SIZE}px`,
+                top: `${(r - minRow) * CELL_SIZE}px`,
+                width: `${CELL_SIZE}px`,
+                height: `${CELL_SIZE}px`,
+              }}
+            >
+              {showInvalidOverlay && (
+                <div
+                  style={{
+                    position: "absolute",
+                    inset: 0,
+                    backgroundImage: `
+                      linear-gradient(45deg, transparent 40%, rgba(239, 68, 68, 0.9) 40%, rgba(239, 68, 68, 0.9) 60%, transparent 60%),
+                      linear-gradient(-45deg, transparent 40%, rgba(239, 68, 68, 0.9) 40%, rgba(239, 68, 68, 0.9) 60%, transparent 60%)
+                    `,
+                    backgroundSize: "100% 100%",
+                  }}
+                />
+              )}
+            </div>
+          );
+        })}
+      </div>
+    );
+  };
+
+  // Render drop preview at snapped grid position
+  const renderDropPreview = () => {
+    if (!draggedSlate || !dropTarget) return null;
+
+    // Check if any preview cells are invalid
+    const hasInvalidPreview = [...previewCells].some(
+      (cell) =>
+        invalidCells.has(cell) ||
+        outOfBoundsCells.has(cell) ||
+        // Check if overlapping with other slates (not the dragged one)
+        [...overlappingCells].some((oc) => previewCells.has(oc)),
+    );
+
+    const left = (dropTarget.col - DISPLAY_COL_START) * CELL_SIZE + 8; // +8 for padding
+    const top = (dropTarget.row - DISPLAY_ROW_START) * CELL_SIZE + 8;
+
+    return renderSlateBlock(
+      draggedSlate,
+      left,
+      top,
+      "opacity-60",
+      40,
+      hasInvalidPreview,
+    );
+  };
+
+  // Render floating dragged slate as a single unit (follows cursor freely)
+  const renderFloatingSlate = () => {
+    if (!draggedSlate || !dragPosition || !dragOffset) return null;
+
+    // Position at cursor minus offset (block's top-left follows cursor with preserved offset)
+    const left = dragPosition.x - dragOffset.x + 8; // +8 for padding
+    const top = dragPosition.y - dragOffset.y + 8;
+
+    return renderSlateBlock(draggedSlate, left, top, "opacity-80", 50, false);
+  };
+
   return (
     <div className="flex flex-col gap-2">
       <div
         ref={gridRef}
-        className={`inline-block rounded-lg bg-zinc-900 p-2 ${draggedSlateId ? "cursor-grabbing" : ""}`}
+        className={`relative inline-block rounded-lg bg-zinc-900 p-2 ${draggedSlateId ? "cursor-grabbing" : ""}`}
       >
         {rows}
+        {renderDropPreview()}
+        {renderFloatingSlate()}
       </div>
       {hasInvalidState && (
         <div className="flex items-center gap-2 rounded bg-red-900/50 px-3 py-2 text-sm text-red-200">
