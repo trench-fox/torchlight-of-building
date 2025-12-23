@@ -1,5 +1,7 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
+import { ImportModal } from "../components/modals/ImportModal";
+import { decodeBuildCode } from "../lib/build-code";
 import {
   deleteSaveData,
   generateSaveId,
@@ -169,6 +171,7 @@ function SavesPage(): React.ReactNode {
     saves: [],
   });
   const [mounted, setMounted] = useState(false);
+  const [importModalOpen, setImportModalOpen] = useState(false);
 
   useEffect(() => {
     setMounted(true);
@@ -253,6 +256,34 @@ function SavesPage(): React.ReactNode {
     setSavesIndex(newIndex);
   };
 
+  const handleImportBuild = (code: string): boolean => {
+    const decoded = decodeBuildCode(code);
+    if (decoded === null) {
+      return false;
+    }
+
+    const now = Date.now();
+    const newSaveId = generateSaveId();
+    const newMetadata: SaveMetadata = {
+      id: newSaveId,
+      name: "Imported Build",
+      createdAt: now,
+      updatedAt: now,
+    };
+
+    const success = saveSaveData(newSaveId, decoded);
+    if (success) {
+      const newIndex: SavesIndex = {
+        currentSaveId: newSaveId,
+        saves: [...savesIndex.saves, newMetadata],
+      };
+      saveSavesIndex(newIndex);
+      setSavesIndex(newIndex);
+      navigate({ to: "/builder", search: { id: newSaveId } });
+    }
+    return success;
+  };
+
   if (!mounted) {
     return null;
   }
@@ -274,12 +305,20 @@ function SavesPage(): React.ReactNode {
           <h2 className="text-xl font-semibold text-zinc-50">
             Your Builds ({savesIndex.saves.length})
           </h2>
-          <button
-            onClick={handleCreateNew}
-            className="px-4 py-2 bg-amber-500 text-zinc-950 rounded-lg font-medium hover:bg-amber-600 transition-colors"
-          >
-            Create New
-          </button>
+          <div className="flex items-center gap-3">
+            <button
+              onClick={() => setImportModalOpen(true)}
+              className="px-4 py-2 bg-zinc-700 text-zinc-50 rounded-lg font-medium hover:bg-zinc-600 transition-colors"
+            >
+              Import Build
+            </button>
+            <button
+              onClick={handleCreateNew}
+              className="px-4 py-2 bg-amber-500 text-zinc-950 rounded-lg font-medium hover:bg-amber-600 transition-colors"
+            >
+              Create New
+            </button>
+          </div>
         </div>
 
         {savesIndex.saves.length === 0 ? (
@@ -325,6 +364,12 @@ function SavesPage(): React.ReactNode {
             ))}
           </div>
         )}
+
+        <ImportModal
+          isOpen={importModalOpen}
+          onClose={() => setImportModalOpen(false)}
+          onImport={handleImportBuild}
+        />
       </div>
     </div>
   );

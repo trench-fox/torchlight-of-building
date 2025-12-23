@@ -1,6 +1,6 @@
 import { useNavigate } from "@tanstack/react-router";
 import { type ReactNode, useCallback, useEffect, useState } from "react";
-import { decodeBuildCode, encodeBuildCode } from "../../lib/build-code";
+import { encodeBuildCode } from "../../lib/build-code";
 import {
   loadDebugModeFromStorage,
   saveDebugModeToStorage,
@@ -15,7 +15,6 @@ import {
 } from "../../stores/builderStore";
 import { DebugPanel } from "../DebugPanel";
 import { ExportModal } from "../modals/ExportModal";
-import { ImportModal } from "../modals/ImportModal";
 import { PageTabs } from "../PageTabs";
 import { Toast } from "../Toast";
 import { StatsPanel } from "./StatsPanel";
@@ -31,14 +30,13 @@ export const BuilderLayout = ({ children }: BuilderLayoutProps) => {
   const currentSaveId = useCurrentSaveId();
   const hasUnsavedChanges = useHasUnsavedChanges();
   const saveDataForExport = useSaveDataRaw("export");
-  const { save, setSaveData } = useBuilderActions();
+  const { save } = useBuilderActions();
 
   const loadout = useLoadout();
 
   const [debugMode, setDebugMode] = useState(false);
   const [debugPanelExpanded, setDebugPanelExpanded] = useState(true);
   const [exportModalOpen, setExportModalOpen] = useState(false);
-  const [importModalOpen, setImportModalOpen] = useState(false);
   const [buildCode, setBuildCode] = useState("");
   const [toastVisible, setToastVisible] = useState(false);
   const [saveSuccessToastVisible, setSaveSuccessToastVisible] = useState(false);
@@ -88,18 +86,6 @@ export const BuilderLayout = ({ children }: BuilderLayoutProps) => {
     setBuildCode(code);
     setExportModalOpen(true);
   }, [saveDataForExport]);
-
-  const handleImport = useCallback(
-    (code: string): boolean => {
-      const decoded = decodeBuildCode(code);
-      if (decoded) {
-        setSaveData(decoded);
-        return true;
-      }
-      return false;
-    },
-    [setSaveData],
-  );
 
   return (
     <div className="min-h-screen bg-zinc-950 p-6">
@@ -175,20 +161,13 @@ export const BuilderLayout = ({ children }: BuilderLayoutProps) => {
 
             {children}
 
-            <div className="mt-8 flex gap-4">
+            <div className="mt-8">
               <button
                 type="button"
                 onClick={handleExport}
-                className="flex-1 rounded-lg bg-green-500 px-6 py-3 text-lg font-semibold text-white transition-colors hover:bg-green-600"
+                className="w-full rounded-lg bg-green-500 px-6 py-3 text-lg font-semibold text-white transition-colors hover:bg-green-600"
               >
                 Export
-              </button>
-              <button
-                type="button"
-                onClick={() => setImportModalOpen(true)}
-                className="flex-1 rounded-lg bg-amber-500 px-6 py-3 text-lg font-semibold text-zinc-950 transition-colors hover:bg-amber-600"
-              >
-                Import
               </button>
             </div>
           </main>
@@ -198,12 +177,6 @@ export const BuilderLayout = ({ children }: BuilderLayoutProps) => {
           isOpen={exportModalOpen}
           onClose={() => setExportModalOpen(false)}
           buildCode={buildCode}
-        />
-
-        <ImportModal
-          isOpen={importModalOpen}
-          onClose={() => setImportModalOpen(false)}
-          onImport={handleImport}
         />
 
         <Toast
