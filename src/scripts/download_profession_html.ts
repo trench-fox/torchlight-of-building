@@ -51,13 +51,11 @@ const downloadProfessionHTML = async (): Promise<void> => {
   }
 };
 
-if (require.main === module) {
-  downloadProfessionHTML()
-    .then(() => process.exit(0))
-    .catch((error) => {
-      console.error("Script failed:", error);
-      process.exit(1);
-    });
-}
+downloadProfessionHTML()
+  .then(() => process.exit(0))
+  .catch((error) => {
+    console.error("Script failed:", error);
+    process.exit(1);
+  });
 
 export { downloadProfessionHTML };

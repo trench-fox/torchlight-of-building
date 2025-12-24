@@ -274,22 +274,19 @@ export const HeroMemories: readonly HeroMemory[] = [
   {
     type: "Fixed Affix",
     item: "Memory of Origin",
-    affix:
-      '+(20–30)% The target takes 1% additional Damage Over Time for every Affliction pointThe max Affliction is 100">Affliction Effect',
+    affix: "+(20–30)% Affliction Effect",
     tier: 1,
   },
   {
     type: "Fixed Affix",
     item: "Memory of Origin",
-    affix:
-      '+(14–18)% The target takes 1% additional Damage Over Time for every Affliction pointThe max Affliction is 100">Affliction Effect',
+    affix: "+(14–18)% Affliction Effect",
     tier: 2,
   },
   {
     type: "Fixed Affix",
     item: "Memory of Origin",
-    affix:
-      '+(10–12)% The target takes 1% additional Damage Over Time for every Affliction pointThe max Affliction is 100">Affliction Effect',
+    affix: "+(10–12)% Affliction Effect",
     tier: 3,
   },
   {
@@ -715,22 +712,19 @@ export const HeroMemories: readonly HeroMemory[] = [
   {
     type: "Fixed Affix",
     item: "Memory of Discipline",
-    affix:
-      '+(20–30)% The target takes 1% additional Damage Over Time for every Affliction pointThe max Affliction is 100">Affliction Effect',
+    affix: "+(20–30)% Affliction Effect",
     tier: 1,
   },
   {
     type: "Fixed Affix",
     item: "Memory of Discipline",
-    affix:
-      '+(14–18)% The target takes 1% additional Damage Over Time for every Affliction pointThe max Affliction is 100">Affliction Effect',
+    affix: "+(14–18)% Affliction Effect",
     tier: 2,
   },
   {
     type: "Fixed Affix",
     item: "Memory of Discipline",
-    affix:
-      '+(10–12)% The target takes 1% additional Damage Over Time for every Affliction pointThe max Affliction is 100">Affliction Effect',
+    affix: "+(10–12)% Affliction Effect",
     tier: 3,
   },
   {
@@ -1156,22 +1150,19 @@ export const HeroMemories: readonly HeroMemory[] = [
   {
     type: "Fixed Affix",
     item: "Memory of Progress",
-    affix:
-      '+(20–30)% The target takes 1% additional Damage Over Time for every Affliction pointThe max Affliction is 100">Affliction Effect',
+    affix: "+(20–30)% Affliction Effect",
     tier: 1,
   },
   {
     type: "Fixed Affix",
     item: "Memory of Progress",
-    affix:
-      '+(14–18)% The target takes 1% additional Damage Over Time for every Affliction pointThe max Affliction is 100">Affliction Effect',
+    affix: "+(14–18)% Affliction Effect",
     tier: 2,
   },
   {
     type: "Fixed Affix",
     item: "Memory of Progress",
-    affix:
-      '+(10–12)% The target takes 1% additional Damage Over Time for every Affliction pointThe max Affliction is 100">Affliction Effect',
+    affix: "+(10–12)% Affliction Effect",
     tier: 3,
   },
   {
@@ -1465,29 +1456,25 @@ export const HeroMemories: readonly HeroMemory[] = [
   {
     type: "Random Affix",
     item: "Memory of Origin",
-    affix:
-      '+(26–40)% The target takes 1% additional Damage Over Time for every Affliction pointThe max Affliction is 100">Affliction Effect',
+    affix: "+(26–40)% Affliction Effect",
     tier: 0,
   },
   {
     type: "Random Affix",
     item: "Memory of Origin",
-    affix:
-      '+(20–30)% The target takes 1% additional Damage Over Time for every Affliction pointThe max Affliction is 100">Affliction Effect',
+    affix: "+(20–30)% Affliction Effect",
     tier: 1,
   },
   {
     type: "Random Affix",
     item: "Memory of Origin",
-    affix:
-      '+(14–18)% The target takes 1% additional Damage Over Time for every Affliction pointThe max Affliction is 100">Affliction Effect',
+    affix: "+(14–18)% Affliction Effect",
     tier: 2,
   },
   {
     type: "Random Affix",
     item: "Memory of Origin",
-    affix:
-      '+(10–12)% The target takes 1% additional Damage Over Time for every Affliction pointThe max Affliction is 100">Affliction Effect',
+    affix: "+(10–12)% Affliction Effect",
     tier: 3,
   },
   {
@@ -1877,25 +1864,25 @@ export const HeroMemories: readonly HeroMemory[] = [
   {
     type: "Random Affix",
     item: "Memory of Origin",
-    affix: "+18% Attack and Cast Speed+18% Minion Attack and Cast Speed",
+    affix: "+18% Attack and Cast Speed\n+18% Minion Attack and Cast Speed",
     tier: 0,
   },
   {
     type: "Random Affix",
     item: "Memory of Origin",
-    affix: "+14% Attack and Cast Speed+14% Minion Attack and Cast Speed",
+    affix: "+14% Attack and Cast Speed\n+14% Minion Attack and Cast Speed",
     tier: 1,
   },
   {
     type: "Random Affix",
     item: "Memory of Origin",
-    affix: "+10% Attack and Cast Speed+10% Minion Attack and Cast Speed",
+    affix: "+10% Attack and Cast Speed\n+10% Minion Attack and Cast Speed",
     tier: 2,
   },
   {
     type: "Random Affix",
     item: "Memory of Origin",
-    affix: "+6% Attack and Cast Speed+6% Minion Attack and Cast Speed",
+    affix: "+6% Attack and Cast Speed\n+6% Minion Attack and Cast Speed",
     tier: 3,
   },
   {
@@ -2238,28 +2225,28 @@ export const HeroMemories: readonly HeroMemory[] = [
     type: "Random Affix",
     item: "Memory of Origin",
     affix:
-      "+(10–12)% additional Attack and Cast Speed for Combo Starters+(31–40)% Critical Strike Damage for Combo Finishers",
+      "+(10–12)% additional Attack and Cast Speed for Combo Starters\n+(31–40)% Critical Strike Damage for Combo Finishers",
     tier: 0,
   },
   {
     type: "Random Affix",
     item: "Memory of Origin",
     affix:
-      "+(7–9)% additional Attack and Cast Speed for Combo Starters+(25–30)% Critical Strike Damage for Combo Finishers",
+      "+(7–9)% additional Attack and Cast Speed for Combo Starters\n+(25–30)% Critical Strike Damage for Combo Finishers",
     tier: 1,
   },
   {
     type: "Random Affix",
     item: "Memory of Origin",
     affix:
-      "+(5–6)% additional Attack and Cast Speed for Combo Starters+(20–24)% Critical Strike Damage for Combo Finishers",
+      "+(5–6)% additional Attack and Cast Speed for Combo Starters\n+(20–24)% Critical Strike Damage for Combo Finishers",
     tier: 2,
   },
   {
     type: "Random Affix",
     item: "Memory of Origin",
     affix:
-      "+4% additional Attack and Cast Speed for Combo Starters+(15–19)% Critical Strike Damage for Combo Finishers",
+      "+4% additional Attack and Cast Speed for Combo Starters\n+(15–19)% Critical Strike Damage for Combo Finishers",
     tier: 3,
   },
   {
@@ -2313,29 +2300,25 @@ export const HeroMemories: readonly HeroMemory[] = [
   {
     type: "Random Affix",
     item: "Memory of Discipline",
-    affix:
-      '+(26–40)% The target takes 1% additional Damage Over Time for every Affliction pointThe max Affliction is 100">Affliction Effect',
+    affix: "+(26–40)% Affliction Effect",
     tier: 0,
   },
   {
     type: "Random Affix",
     item: "Memory of Discipline",
-    affix:
-      '+(20–30)% The target takes 1% additional Damage Over Time for every Affliction pointThe max Affliction is 100">Affliction Effect',
+    affix: "+(20–30)% Affliction Effect",
     tier: 1,
   },
   {
     type: "Random Affix",
     item: "Memory of Discipline",
-    affix:
-      '+(14–18)% The target takes 1% additional Damage Over Time for every Affliction pointThe max Affliction is 100">Affliction Effect',
+    affix: "+(14–18)% Affliction Effect",
     tier: 2,
   },
   {
     type: "Random Affix",
     item: "Memory of Discipline",
-    affix:
-      '+(10–12)% The target takes 1% additional Damage Over Time for every Affliction pointThe max Affliction is 100">Affliction Effect',
+    affix: "+(10–12)% Affliction Effect",
     tier: 3,
   },
   {
@@ -2725,25 +2708,25 @@ export const HeroMemories: readonly HeroMemory[] = [
   {
     type: "Random Affix",
     item: "Memory of Discipline",
-    affix: "+18% Attack and Cast Speed+18% Minion Attack and Cast Speed",
+    affix: "+18% Attack and Cast Speed\n+18% Minion Attack and Cast Speed",
     tier: 0,
   },
   {
     type: "Random Affix",
     item: "Memory of Discipline",
-    affix: "+14% Attack and Cast Speed+14% Minion Attack and Cast Speed",
+    affix: "+14% Attack and Cast Speed\n+14% Minion Attack and Cast Speed",
     tier: 1,
   },
   {
     type: "Random Affix",
     item: "Memory of Discipline",
-    affix: "+10% Attack and Cast Speed+10% Minion Attack and Cast Speed",
+    affix: "+10% Attack and Cast Speed\n+10% Minion Attack and Cast Speed",
     tier: 2,
   },
   {
     type: "Random Affix",
     item: "Memory of Discipline",
-    affix: "+6% Attack and Cast Speed+6% Minion Attack and Cast Speed",
+    affix: "+6% Attack and Cast Speed\n+6% Minion Attack and Cast Speed",
     tier: 3,
   },
   {
@@ -3086,28 +3069,28 @@ export const HeroMemories: readonly HeroMemory[] = [
     type: "Random Affix",
     item: "Memory of Discipline",
     affix:
-      "+(10–12)% additional Attack and Cast Speed for Combo Starters+(31–40)% Critical Strike Damage for Combo Finishers",
+      "+(10–12)% additional Attack and Cast Speed for Combo Starters\n+(31–40)% Critical Strike Damage for Combo Finishers",
     tier: 0,
   },
   {
     type: "Random Affix",
     item: "Memory of Discipline",
     affix:
-      "+(7–9)% additional Attack and Cast Speed for Combo Starters+(25–30)% Critical Strike Damage for Combo Finishers",
+      "+(7–9)% additional Attack and Cast Speed for Combo Starters\n+(25–30)% Critical Strike Damage for Combo Finishers",
     tier: 1,
   },
   {
     type: "Random Affix",
     item: "Memory of Discipline",
     affix:
-      "+(5–6)% additional Attack and Cast Speed for Combo Starters+(20–24)% Critical Strike Damage for Combo Finishers",
+      "+(5–6)% additional Attack and Cast Speed for Combo Starters\n+(20–24)% Critical Strike Damage for Combo Finishers",
     tier: 2,
   },
   {
     type: "Random Affix",
     item: "Memory of Discipline",
     affix:
-      "+4% additional Attack and Cast Speed for Combo Starters+(15–19)% Critical Strike Damage for Combo Finishers",
+      "+4% additional Attack and Cast Speed for Combo Starters\n+(15–19)% Critical Strike Damage for Combo Finishers",
     tier: 3,
   },
   {
@@ -3161,29 +3144,25 @@ export const HeroMemories: readonly HeroMemory[] = [
   {
     type: "Random Affix",
     item: "Memory of Progress",
-    affix:
-      '+(26–40)% The target takes 1% additional Damage Over Time for every Affliction pointThe max Affliction is 100">Affliction Effect',
+    affix: "+(26–40)% Affliction Effect",
     tier: 0,
   },
   {
     type: "Random Affix",
     item: "Memory of Progress",
-    affix:
-      '+(20–30)% The target takes 1% additional Damage Over Time for every Affliction pointThe max Affliction is 100">Affliction Effect',
+    affix: "+(20–30)% Affliction Effect",
     tier: 1,
   },
   {
     type: "Random Affix",
     item: "Memory of Progress",
-    affix:
-      '+(14–18)% The target takes 1% additional Damage Over Time for every Affliction pointThe max Affliction is 100">Affliction Effect',
+    affix: "+(14–18)% Affliction Effect",
     tier: 2,
   },
   {
     type: "Random Affix",
     item: "Memory of Progress",
-    affix:
-      '+(10–12)% The target takes 1% additional Damage Over Time for every Affliction pointThe max Affliction is 100">Affliction Effect',
+    affix: "+(10–12)% Affliction Effect",
     tier: 3,
   },
   {
@@ -3573,25 +3552,25 @@ export const HeroMemories: readonly HeroMemory[] = [
   {
     type: "Random Affix",
     item: "Memory of Progress",
-    affix: "+18% Attack and Cast Speed+18% Minion Attack and Cast Speed",
+    affix: "+18% Attack and Cast Speed\n+18% Minion Attack and Cast Speed",
     tier: 0,
   },
   {
     type: "Random Affix",
     item: "Memory of Progress",
-    affix: "+14% Attack and Cast Speed+14% Minion Attack and Cast Speed",
+    affix: "+14% Attack and Cast Speed\n+14% Minion Attack and Cast Speed",
     tier: 1,
   },
   {
     type: "Random Affix",
     item: "Memory of Progress",
-    affix: "+10% Attack and Cast Speed+10% Minion Attack and Cast Speed",
+    affix: "+10% Attack and Cast Speed\n+10% Minion Attack and Cast Speed",
     tier: 2,
   },
   {
     type: "Random Affix",
     item: "Memory of Progress",
-    affix: "+6% Attack and Cast Speed+6% Minion Attack and Cast Speed",
+    affix: "+6% Attack and Cast Speed\n+6% Minion Attack and Cast Speed",
     tier: 3,
   },
   {
@@ -3934,28 +3913,28 @@ export const HeroMemories: readonly HeroMemory[] = [
     type: "Random Affix",
     item: "Memory of Progress",
     affix:
-      "+(10–12)% additional Attack and Cast Speed for Combo Starters+(31–40)% Critical Strike Damage for Combo Finishers",
+      "+(10–12)% additional Attack and Cast Speed for Combo Starters\n+(31–40)% Critical Strike Damage for Combo Finishers",
     tier: 0,
   },
   {
     type: "Random Affix",
     item: "Memory of Progress",
     affix:
-      "+(7–9)% additional Attack and Cast Speed for Combo Starters+(25–30)% Critical Strike Damage for Combo Finishers",
+      "+(7–9)% additional Attack and Cast Speed for Combo Starters\n+(25–30)% Critical Strike Damage for Combo Finishers",
     tier: 1,
   },
   {
     type: "Random Affix",
     item: "Memory of Progress",
     affix:
-      "+(5–6)% additional Attack and Cast Speed for Combo Starters+(20–24)% Critical Strike Damage for Combo Finishers",
+      "+(5–6)% additional Attack and Cast Speed for Combo Starters\n+(20–24)% Critical Strike Damage for Combo Finishers",
     tier: 2,
   },
   {
     type: "Random Affix",
     item: "Memory of Progress",
     affix:
-      "+4% additional Attack and Cast Speed for Combo Starters+(15–19)% Critical Strike Damage for Combo Finishers",
+      "+4% additional Attack and Cast Speed for Combo Starters\n+(15–19)% Critical Strike Damage for Combo Finishers",
     tier: 3,
   },
 ];

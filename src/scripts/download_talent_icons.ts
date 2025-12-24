@@ -77,13 +77,11 @@ const downloadTalentIcons = async (): Promise<void> => {
   }
 };
 
-if (require.main === module) {
-  downloadTalentIcons()
-    .then(() => process.exit(0))
-    .catch((error) => {
-      console.error("Script failed:", error);
-      process.exit(1);
-    });
-}
+downloadTalentIcons()
+  .then(() => process.exit(0))
+  .catch((error) => {
+    console.error("Script failed:", error);
+    process.exit(1);
+  });
 
 export { downloadTalentIcons };

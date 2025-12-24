@@ -15,6 +15,9 @@ const TLIDB_HTML_PATH = join(
 const cleanAffixText = (html: string): string => {
   let text = html;
 
+  // Convert <br> tags to newlines before removing other HTML tags
+  text = text.replace(/<br\s*\/?>/gi, "\n");
+
   // Remove <span class="text-mod"> tags but keep content
   text = text.replace(/<span[^>]*class="text-mod"[^>]*>([^<]*)<\/span>/g, "$1");
 
@@ -40,8 +43,15 @@ const cleanAffixText = (html: string): string => {
     .replace(/&#39;/g, "'")
     .replace(/&nbsp;/g, " ");
 
-  // Normalize whitespace
-  text = text.replace(/\s+/g, " ");
+  // Normalize horizontal whitespace (preserve newlines)
+  text = text.replace(/[^\S\n]+/g, " ");
+
+  // Trim whitespace from each line and normalize multiple newlines
+  text = text
+    .split("\n")
+    .map((line) => line.trim())
+    .filter((line) => line.length > 0)
+    .join("\n");
 
   return text.trim();
 };
@@ -150,13 +160,11 @@ const main = async (): Promise<void> => {
   execSync("pnpm format", { stdio: "inherit" });
 };
 
-if (require.main === module) {
-  main()
-    .then(() => process.exit(0))
-    .catch((error) => {
-      console.error("Script failed:", error);
-      process.exit(1);
-    });
-}
+main()
+  .then(() => process.exit(0))
+  .catch((error) => {
+    console.error("Script failed:", error);
+    process.exit(1);
+  });
 
 export { main as generateHeroMemoryData };

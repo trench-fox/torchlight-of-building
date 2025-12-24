@@ -60,13 +60,11 @@ const main = async (): Promise<void> => {
   execSync("pnpm format", { stdio: "inherit" });
 };
 
-if (require.main === module) {
-  main()
-    .then(() => process.exit(0))
-    .catch((error) => {
-      console.error("Script failed:", error);
-      process.exit(1);
-    });
-}
+main()
+  .then(() => process.exit(0))
+  .catch((error) => {
+    console.error("Script failed:", error);
+    process.exit(1);
+  });
 
 export { main as generateTalentData };
