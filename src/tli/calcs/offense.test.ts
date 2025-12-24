@@ -7,7 +7,6 @@ import {
   convertDmg,
   type DmgPools,
   type DmgRanges,
-  type OffenseInput,
   type OffenseResults,
 } from "./offense";
 import type { OffenseSkillName } from "./skill_confs";
@@ -41,6 +40,18 @@ const baseWeapon = {
 
 const emptySkillPage = () => ({
   activeSkills: {},
+  passiveSkills: {},
+});
+
+const simpleAttackSkillPage = () => ({
+  activeSkills: {
+    1: {
+      skillName: "[Test] Simple Attack" as const,
+      enabled: true,
+      level: 20,
+      supportSkills: {},
+    },
+  },
   passiveSkills: {},
 });
 
@@ -84,16 +95,6 @@ const frostbittenEnabledConfig: Configuration = {
   enemyFrostbitten: { enabled: true, points: 0 },
 };
 
-type TestInput = {
-  weapon?: {
-    base_affixes?: Affix[];
-  } | null; // null means no weapon
-  mods?: Affix[]; // customConfiguration - array of affixes
-  talentMods?: Affix[]; // for talent tree selectedCoreTalents
-  skill?: OffenseSkillName;
-  configuration?: Configuration;
-};
-
 type ExpectedOutput = Partial<{
   avgHit: number;
   avgHitWithCrit: number;
@@ -101,58 +102,6 @@ type ExpectedOutput = Partial<{
   critDmgMult: number;
   aspd: number;
 }>;
-
-const createInput = (
-  input: TestInput,
-): { input: OffenseInput; skillName: OffenseSkillName } => {
-  const skillName = input.skill ?? "[Test] Simple Attack";
-
-  const weapon =
-    input.weapon === null
-      ? undefined
-      : input.weapon
-        ? { ...baseWeapon, ...input.weapon }
-        : baseWeapon;
-
-  const loadout = initLoadout({
-    gearPage: {
-      equippedGear: weapon ? { mainHand: weapon } : {},
-      inventory: [],
-    },
-    customConfiguration: input.mods ?? [],
-    skillPage: {
-      activeSkills: {
-        1: {
-          skillName,
-          enabled: true,
-          level: 20,
-          supportSkills: {},
-        },
-      },
-      passiveSkills: {},
-    },
-    ...(input.talentMods && {
-      talentPage: {
-        talentTrees: {
-          tree1: {
-            name: "test",
-            nodes: [],
-            selectedCoreTalents: input.talentMods,
-          },
-        },
-        inventory: { prismList: [], inverseImageList: [] },
-      },
-    }),
-  });
-
-  return {
-    input: {
-      loadout,
-      configuration: input.configuration ?? defaultConfiguration,
-    },
-    skillName,
-  };
-};
 
 const validate = (
   results: OffenseResults,
@@ -167,14 +116,39 @@ const validate = (
 };
 
 describe("basic damage modifiers", () => {
+  const skillName = "[Test] Simple Attack" as const;
+
+  // Bespoke helper: 100 phys weapon + custom mods
+  const createModsInput = (mods: Affix[]) => ({
+    loadout: initLoadout({
+      gearPage: { equippedGear: { mainHand: baseWeapon }, inventory: [] },
+      customConfiguration: mods,
+      skillPage: simpleAttackSkillPage(),
+    }),
+    configuration: defaultConfiguration,
+  });
+
+  // Bespoke helper: weapon with base affixes (adds to 100 phys weapon) + mods
+  const createWeaponModsInput = (weaponAffixes: Affix[], mods: Affix[]) => ({
+    loadout: initLoadout({
+      gearPage: {
+        equippedGear: {
+          mainHand: { ...baseWeapon, base_affixes: weaponAffixes },
+        },
+        inventory: [],
+      },
+      customConfiguration: mods,
+      skillPage: simpleAttackSkillPage(),
+    }),
+    configuration: defaultConfiguration,
+  });
+
   test("calculate offense very basic", () => {
     // base * bonusdmg
     // 100 * 2 = 200
-    const { input, skillName } = createInput({
-      mods: [
-        affix([{ type: "DmgPct", value: 1, modType: "global", addn: false }]),
-      ],
-    });
+    const input = createModsInput([
+      affix([{ type: "DmgPct", value: 1, modType: "global", addn: false }]),
+    ]);
     const results = calculateOffense(input);
     validate(results, skillName, { avgHit: 200 });
   });
@@ -182,12 +156,10 @@ describe("basic damage modifiers", () => {
   test("calculate offense multiple inc dmg", () => {
     // base * (1 + sum of increased)
     // 100 * (1 + 0.5 + 0.3) = 180
-    const { input, skillName } = createInput({
-      mods: [
-        affix([{ type: "DmgPct", value: 0.5, modType: "global", addn: false }]), // +50% increased
-        affix([{ type: "DmgPct", value: 0.3, modType: "global", addn: false }]), // +30% increased
-      ],
-    });
+    const input = createModsInput([
+      affix([{ type: "DmgPct", value: 0.5, modType: "global", addn: false }]), // +50% increased
+      affix([{ type: "DmgPct", value: 0.3, modType: "global", addn: false }]), // +30% increased
+    ]);
     const results = calculateOffense(input);
     validate(results, skillName, { avgHit: 180 });
   });
@@ -195,12 +167,10 @@ describe("basic damage modifiers", () => {
   test("calculate offense multiple addn dmg", () => {
     // base * (1 + more1) * (1 + more2)
     // 100 * 1.5 * 1.2 = 180
-    const { input, skillName } = createInput({
-      mods: [
-        affix([{ type: "DmgPct", value: 0.5, modType: "global", addn: true }]), // +50% more
-        affix([{ type: "DmgPct", value: 0.2, modType: "global", addn: true }]), // +20% more
-      ],
-    });
+    const input = createModsInput([
+      affix([{ type: "DmgPct", value: 0.5, modType: "global", addn: true }]), // +50% more
+      affix([{ type: "DmgPct", value: 0.2, modType: "global", addn: true }]), // +20% more
+    ]);
     const results = calculateOffense(input);
     validate(results, skillName, { avgHit: 180 });
   });
@@ -208,13 +178,11 @@ describe("basic damage modifiers", () => {
   test("calculate offense multiple mix inc and addn dmg", () => {
     // base * (1 + sum of increased) * (1 + more)
     // 100 * (1 + 0.5 + 0.3) * 1.2 = 100 * 1.8 * 1.2 = 216
-    const { input, skillName } = createInput({
-      mods: [
-        affix([{ type: "DmgPct", value: 0.5, modType: "global", addn: false }]), // +50% increased
-        affix([{ type: "DmgPct", value: 0.3, modType: "global", addn: false }]), // +30% increased
-        affix([{ type: "DmgPct", value: 0.2, modType: "global", addn: true }]), // +20% more
-      ],
-    });
+    const input = createModsInput([
+      affix([{ type: "DmgPct", value: 0.5, modType: "global", addn: false }]), // +50% increased
+      affix([{ type: "DmgPct", value: 0.3, modType: "global", addn: false }]), // +30% increased
+      affix([{ type: "DmgPct", value: 0.2, modType: "global", addn: true }]), // +20% more
+    ]);
     const results = calculateOffense(input);
     validate(results, skillName, { avgHit: 216 });
   });
@@ -222,11 +190,9 @@ describe("basic damage modifiers", () => {
   test("calculate offense atk dmg mod", () => {
     // [Test] Simple Attack has "Attack" tag, so attack modifiers apply
     // 100 * (1 + 0.5) = 150
-    const { input, skillName } = createInput({
-      mods: [
-        affix([{ type: "DmgPct", value: 0.5, modType: "attack", addn: false }]),
-      ],
-    }); // +50% increased attack damage
+    const input = createModsInput([
+      affix([{ type: "DmgPct", value: 0.5, modType: "attack", addn: false }]), // +50% increased attack damage
+    ]);
     const results = calculateOffense(input);
     validate(results, skillName, { avgHit: 150 });
   });
@@ -235,39 +201,35 @@ describe("basic damage modifiers", () => {
     // [Test] Simple Attack has "Attack" tag, NOT "Spell" tag
     // So spell modifiers don't apply - only base damage
     // 100 * 1 (no applicable modifiers) = 100
-    const { input, skillName } = createInput({
-      mods: [
-        affix([{ type: "DmgPct", value: 0.5, modType: "spell", addn: false }]),
-      ],
-    }); // +50% increased spell damage
+    const input = createModsInput([
+      affix([{ type: "DmgPct", value: 0.5, modType: "spell", addn: false }]), // +50% increased spell damage
+    ]);
     const results = calculateOffense(input);
     validate(results, skillName, { avgHit: 100 });
   });
 
   test("calculate offense elemental damage", () => {
-    // GearPlusEleMinusPhysDmg removes all physical damage and adds elemental
-    // Physical: 100 * (1 - 1) = 0 (removed by conversion)
+    // 100 phys weapon + 50 elemental (cold/lightning/fire each)
+    // GearPhysDmgPct -1 removes all physical damage
     // Cold/Lightning/Fire: 50 each * 1.5 (elemental bonus) = 75 each
     // Total avg hit: 0 + 75 + 75 + 75 = 225
-    const { input, skillName } = createInput({
-      weapon: {
-        base_affixes: [
-          affix([
-            {
-              type: "FlatGearDmg",
-              modType: "elemental",
-              value: { min: 50, max: 50 },
-            },
-            { type: "GearPhysDmgPct", value: -1 },
-          ]),
-        ],
-      },
-      mods: [
+    const input = createWeaponModsInput(
+      [
+        affix([
+          {
+            type: "FlatGearDmg",
+            modType: "elemental",
+            value: { min: 50, max: 50 },
+          },
+          { type: "GearPhysDmgPct", value: -1 },
+        ]),
+      ],
+      [
         affix([
           { type: "DmgPct", value: 0.5, modType: "elemental", addn: false },
         ]),
       ], // +50% elemental
-    });
+    );
     const results = calculateOffense(input);
     validate(results, skillName, { avgHit: 225 });
   });
@@ -276,33 +238,46 @@ describe("basic damage modifiers", () => {
     // Physical: 100 (no bonuses)
     // Cold: 30 * 1.8 (cold bonus) = 54
     // Total avg hit: 100 + 54 = 154
-    const { input, skillName } = createInput({
-      weapon: {
-        base_affixes: [
-          affix([
-            {
-              type: "FlatGearDmg",
-              value: { min: 30, max: 30 },
-              modType: "cold",
-            },
-          ]),
-        ],
-      },
-      mods: [
-        affix([{ type: "DmgPct", value: 0.8, modType: "cold", addn: false }]),
-      ], // +80% cold damage
-    });
+    const input = createWeaponModsInput(
+      [
+        affix([
+          { type: "FlatGearDmg", value: { min: 30, max: 30 }, modType: "cold" },
+        ]),
+      ],
+      [affix([{ type: "DmgPct", value: 0.8, modType: "cold", addn: false }])], // +80% cold damage
+    );
     const results = calculateOffense(input);
     validate(results, skillName, { avgHit: 154 });
   });
 });
 
 describe("fervor mechanics", () => {
+  const skillName = "[Test] Simple Attack" as const;
+
   const createFervorConfig = (fervor: { enabled: boolean; points: number }) => {
     const config = createDefaultConfiguration();
     config.fervor = fervor;
     return config;
   };
+
+  // Bespoke helper for fervor tests
+  const createFervorInput = (
+    fervor: { enabled: boolean; points: number },
+    affixes?: Affix[],
+  ) => ({
+    loadout: initLoadout({
+      gearPage: {
+        equippedGear: {
+          mainHand: affixes
+            ? { ...baseWeapon, base_affixes: affixes }
+            : baseWeapon,
+        },
+        inventory: [],
+      },
+      skillPage: simpleAttackSkillPage(),
+    }),
+    configuration: createFervorConfig(fervor),
+  });
 
   test("calculate offense with fervor enabled default points", () => {
     // Base damage: 100
@@ -310,9 +285,7 @@ describe("fervor mechanics", () => {
     // Crit chance: 0.05 * (1 + 2.0) = 0.15 (15%)
     // Crit damage: 1.5 (default)
     // AvgHitWithCrit: 100 * 0.15 * 1.5 + 100 * 0.85 = 22.5 + 85 = 107.5
-    const { input, skillName } = createInput({
-      configuration: createFervorConfig({ enabled: true, points: 100 }),
-    });
+    const input = createFervorInput({ enabled: true, points: 100 });
     const results = calculateOffense(input);
     validate(results, skillName, {
       avgHit: 100,
@@ -327,9 +300,7 @@ describe("fervor mechanics", () => {
     // Crit chance: 0.05 * (1 + 1.0) = 0.10 (10%)
     // Crit damage: 1.5 (default)
     // AvgHitWithCrit: 100 * 0.10 * 1.5 + 100 * 0.90 = 15 + 90 = 105
-    const { input, skillName } = createInput({
-      configuration: createFervorConfig({ enabled: true, points: 50 }),
-    });
+    const input = createFervorInput({ enabled: true, points: 50 });
     const results = calculateOffense(input);
     validate(results, skillName, {
       avgHit: 100,
@@ -343,9 +314,7 @@ describe("fervor mechanics", () => {
     // Crit chance: 0.05 * (1 + 0) = 0.05 (5%)
     // Crit damage: 1.5 (default)
     // AvgHitWithCrit: 100 * 0.05 * 1.5 + 100 * 0.95 = 7.5 + 95 = 102.5
-    const { input, skillName } = createInput({
-      configuration: createFervorConfig({ enabled: false, points: 100 }),
-    });
+    const input = createFervorInput({ enabled: false, points: 100 });
     const results = calculateOffense(input);
     validate(results, skillName, {
       avgHit: 100,
@@ -362,14 +331,9 @@ describe("fervor mechanics", () => {
     // Crit chance: 0.05 * (1 + 1.0) = 0.10 (10%)
     // Crit damage: 1.5 (default)
     // AvgHitWithCrit: 100 * 0.10 * 1.5 + 100 * 0.90 = 15 + 90 = 105
-    const { input, skillName } = createInput({
-      weapon: {
-        base_affixes: [
-          affix([{ type: "CritRatingPct", value: 0.5, modType: "global" }]),
-        ], // +50% crit rating
-      },
-      configuration: createFervorConfig({ enabled: true, points: 25 }),
-    });
+    const input = createFervorInput({ enabled: true, points: 25 }, [
+      affix([{ type: "CritRatingPct", value: 0.5, modType: "global" }]),
+    ]);
     const results = calculateOffense(input);
     validate(results, skillName, {
       avgHit: 100,
@@ -384,12 +348,9 @@ describe("fervor mechanics", () => {
     // Crit chance: 0.05 * (1 + 3.0) = 0.20 (20%)
     // Crit damage: 1.5 (default)
     // AvgHitWithCrit: 100 * 0.20 * 1.5 + 100 * 0.80 = 30 + 80 = 110
-    const { input, skillName } = createInput({
-      weapon: {
-        base_affixes: [affix([{ type: "FervorEff", value: 0.5 }])], // +50% fervor effectiveness
-      },
-      configuration: createFervorConfig({ enabled: true, points: 100 }),
-    });
+    const input = createFervorInput({ enabled: true, points: 100 }, [
+      affix([{ type: "FervorEff", value: 0.5 }]),
+    ]);
     const results = calculateOffense(input);
     validate(results, skillName, {
       avgHit: 100,
@@ -405,13 +366,10 @@ describe("fervor mechanics", () => {
     // Crit chance: 0.05 * (1 + 2.4) = 0.17 (17%)
     // Crit damage: 1.5 (default)
     // AvgHitWithCrit: 100 * 0.17 * 1.5 + 100 * 0.83 = 25.5 + 83 = 108.5
-    const { input, skillName } = createInput({
-      weapon: {
-        base_affixes: [affix([{ type: "FervorEff", value: 0.1 }])], // +10% fervor effectiveness
-      },
-      talentMods: [affix([{ type: "FervorEff", value: 0.1 }])], // +10% fervor effectiveness
-      configuration: createFervorConfig({ enabled: true, points: 100 }),
-    });
+    const input = createFervorInput({ enabled: true, points: 100 }, [
+      affix([{ type: "FervorEff", value: 0.1 }]),
+      affix([{ type: "FervorEff", value: 0.1 }]),
+    ]);
     const results = calculateOffense(input);
     validate(results, skillName, {
       avgHit: 100,
@@ -426,12 +384,9 @@ describe("fervor mechanics", () => {
     // Crit chance: 0.05 * (1 + 2.0) = 0.15 (15%)
     // Crit damage: 1.5 (default)
     // AvgHitWithCrit: 100 * 0.15 * 1.5 + 100 * 0.85 = 22.5 + 85 = 107.5
-    const { input, skillName } = createInput({
-      weapon: {
-        base_affixes: [affix([{ type: "FervorEff", value: 1.0 }])], // +100% fervor effectiveness (doubles it)
-      },
-      configuration: createFervorConfig({ enabled: true, points: 50 }),
-    });
+    const input = createFervorInput({ enabled: true, points: 50 }, [
+      affix([{ type: "FervorEff", value: 1.0 }]),
+    ]);
     const results = calculateOffense(input);
     validate(results, skillName, {
       avgHit: 100,
@@ -445,12 +400,9 @@ describe("fervor mechanics", () => {
     // Crit chance: 0.05 * (1 + 0) = 0.05 (5%)
     // Crit damage: 1.5 (default)
     // AvgHitWithCrit: 100 * 0.05 * 1.5 + 100 * 0.95 = 7.5 + 95 = 102.5
-    const { input, skillName } = createInput({
-      weapon: {
-        base_affixes: [affix([{ type: "FervorEff", value: 0.5 }])], // +50% fervor effectiveness
-      },
-      configuration: createFervorConfig({ enabled: false, points: 100 }),
-    });
+    const input = createFervorInput({ enabled: false, points: 100 }, [
+      affix([{ type: "FervorEff", value: 0.5 }]),
+    ]);
     const results = calculateOffense(input);
     validate(results, skillName, {
       avgHit: 100,
@@ -466,22 +418,17 @@ describe("fervor mechanics", () => {
     // CritDmgPerFervor: 0.005 * 100 = 0.5 (50% increased crit damage)
     // Crit damage: 1.5 * (1 + 0.5) = 2.25
     // AvgHitWithCrit: 100 * 0.15 * 2.25 + 100 * 0.85 = 33.75 + 85 = 118.75
-    const { input, skillName } = createInput({
-      weapon: {
-        base_affixes: [
-          affix([
-            {
-              type: "CritDmgPct",
-              value: 0.005,
-              addn: false,
-              modType: "global",
-              per: { stackable: "fervor" },
-            },
-          ]),
-        ], // +0.5% crit dmg per fervor point
-      },
-      configuration: createFervorConfig({ enabled: true, points: 100 }),
-    });
+    const input = createFervorInput({ enabled: true, points: 100 }, [
+      affix([
+        {
+          type: "CritDmgPct",
+          value: 0.005,
+          addn: false,
+          modType: "global",
+          per: { stackable: "fervor" },
+        },
+      ]),
+    ]);
     const results = calculateOffense(input);
     validate(results, skillName, {
       avgHit: 100,
@@ -498,33 +445,26 @@ describe("fervor mechanics", () => {
     // CritDmgPerFervor total: (0.005 * 100) + (0.003 * 100) = 0.5 + 0.3 = 0.8
     // Crit damage: 1.5 * (1 + 0.8) = 2.7
     // AvgHitWithCrit: 100 * 0.15 * 2.7 + 100 * 0.85 = 40.5 + 85 = 125.5
-    const { input, skillName } = createInput({
-      weapon: {
-        base_affixes: [
-          affix([
-            {
-              type: "CritDmgPct",
-              value: 0.005,
-              addn: false,
-              modType: "global",
-              per: { stackable: "fervor" },
-            },
-          ]),
-        ], // +0.5% per point
-      },
-      talentMods: [
-        affix([
-          {
-            type: "CritDmgPct",
-            value: 0.003,
-            addn: false,
-            modType: "global",
-            per: { stackable: "fervor" },
-          },
-        ]),
-      ], // +0.3% per point
-      configuration: createFervorConfig({ enabled: true, points: 100 }),
-    });
+    const input = createFervorInput({ enabled: true, points: 100 }, [
+      affix([
+        {
+          type: "CritDmgPct",
+          value: 0.005,
+          addn: false,
+          modType: "global",
+          per: { stackable: "fervor" },
+        },
+      ]),
+      affix([
+        {
+          type: "CritDmgPct",
+          value: 0.003,
+          addn: false,
+          modType: "global",
+          per: { stackable: "fervor" },
+        },
+      ]),
+    ]);
     const results = calculateOffense(input);
     validate(results, skillName, {
       avgHit: 100,
@@ -541,22 +481,17 @@ describe("fervor mechanics", () => {
     // CritDmgPerFervor: 0.01 * 50 = 0.5 (50% increased crit damage)
     // Crit damage: 1.5 * (1 + 0.5) = 2.25
     // AvgHitWithCrit: 100 * 0.10 * 2.25 + 100 * 0.90 = 22.5 + 90 = 112.5
-    const { input, skillName } = createInput({
-      weapon: {
-        base_affixes: [
-          affix([
-            {
-              type: "CritDmgPct",
-              value: 0.01,
-              addn: false,
-              modType: "global",
-              per: { stackable: "fervor" },
-            },
-          ]),
-        ], // +1% crit dmg per fervor point
-      },
-      configuration: createFervorConfig({ enabled: true, points: 50 }),
-    });
+    const input = createFervorInput({ enabled: true, points: 50 }, [
+      affix([
+        {
+          type: "CritDmgPct",
+          value: 0.01,
+          addn: false,
+          modType: "global",
+          per: { stackable: "fervor" },
+        },
+      ]),
+    ]);
     const results = calculateOffense(input);
     validate(results, skillName, {
       avgHit: 100,
@@ -571,22 +506,17 @@ describe("fervor mechanics", () => {
     // Crit chance: 0.05 (5%, no fervor bonus)
     // Crit damage: 1.5 (no bonus)
     // AvgHitWithCrit: 100 * 0.05 * 1.5 + 100 * 0.95 = 7.5 + 95 = 102.5
-    const { input, skillName } = createInput({
-      weapon: {
-        base_affixes: [
-          affix([
-            {
-              type: "CritDmgPct",
-              value: 0.005,
-              addn: false,
-              modType: "global",
-              per: { stackable: "fervor" },
-            },
-          ]),
-        ], // +0.5% per point
-      },
-      configuration: createFervorConfig({ enabled: false, points: 100 }),
-    });
+    const input = createFervorInput({ enabled: false, points: 100 }, [
+      affix([
+        {
+          type: "CritDmgPct",
+          value: 0.005,
+          addn: false,
+          modType: "global",
+          per: { stackable: "fervor" },
+        },
+      ]),
+    ]);
     const results = calculateOffense(input);
     validate(results, skillName, {
       avgHit: 100,
@@ -605,25 +535,20 @@ describe("fervor mechanics", () => {
     // Total increased crit damage: 0.5 + 0.3 = 0.8 (80%)
     // Crit damage: 1.5 * (1 + 0.8) = 2.7
     // AvgHitWithCrit: 100 * 0.15 * 2.7 + 100 * 0.85 = 40.5 + 85 = 125.5
-    const { input, skillName } = createInput({
-      weapon: {
-        base_affixes: [
-          affix([
-            {
-              type: "CritDmgPct",
-              value: 0.005,
-              addn: false,
-              modType: "global",
-              per: { stackable: "fervor" },
-            },
-          ]), // +0.5% per point
-          affix([
-            { type: "CritDmgPct", value: 0.3, modType: "global", addn: false },
-          ]), // +30% increased
-        ],
-      },
-      configuration: createFervorConfig({ enabled: true, points: 100 }),
-    });
+    const input = createFervorInput({ enabled: true, points: 100 }, [
+      affix([
+        {
+          type: "CritDmgPct",
+          value: 0.005,
+          addn: false,
+          modType: "global",
+          per: { stackable: "fervor" },
+        },
+      ]),
+      affix([
+        { type: "CritDmgPct", value: 0.3, modType: "global", addn: false },
+      ]),
+    ]);
     const results = calculateOffense(input);
     validate(results, skillName, {
       avgHit: 100,
@@ -635,21 +560,61 @@ describe("fervor mechanics", () => {
 });
 
 describe("flat damage to attacks", () => {
+  const skillName = "[Test] Simple Attack" as const;
+
+  // Bespoke helper: 100 phys weapon + custom mods
+  const createModsInput = (mods: Affix[]) => ({
+    loadout: initLoadout({
+      gearPage: { equippedGear: { mainHand: baseWeapon }, inventory: [] },
+      customConfiguration: mods,
+      skillPage: simpleAttackSkillPage(),
+    }),
+    configuration: defaultConfiguration,
+  });
+
+  // Bespoke helper: no weapon, just flat damage mods
+  const createNoWeaponInput = (mods: Affix[]) => ({
+    loadout: initLoadout({
+      gearPage: { equippedGear: {}, inventory: [] },
+      customConfiguration: mods,
+      skillPage: simpleAttackSkillPage(),
+    }),
+    configuration: defaultConfiguration,
+  });
+
+  // Bespoke helper: Frost Spike skill with mods
+  const createFrostSpikeInput = (mods: Affix[]) => ({
+    loadout: initLoadout({
+      gearPage: { equippedGear: { mainHand: baseWeapon }, inventory: [] },
+      customConfiguration: mods,
+      skillPage: {
+        activeSkills: {
+          1: {
+            skillName: "Frost Spike" as const,
+            enabled: true,
+            level: 20,
+            supportSkills: {},
+          },
+        },
+        passiveSkills: {},
+      },
+    }),
+    configuration: defaultConfiguration,
+  });
+
   test("calculate offense with flat physical damage to attacks", () => {
     // Weapon damage: 100
     // Flat damage: 50 (scaled by addedDmgEffPct = 1.0)
     // Total: 100 + 50 = 150
-    const { input, skillName } = createInput({
-      mods: [
-        affix([
-          {
-            type: "FlatDmgToAtks",
-            value: { min: 50, max: 50 },
-            dmgType: "physical",
-          },
-        ]),
-      ],
-    });
+    const input = createModsInput([
+      affix([
+        {
+          type: "FlatDmgToAtks",
+          value: { min: 50, max: 50 },
+          dmgType: "physical",
+        },
+      ]),
+    ]);
     const results = calculateOffense(input);
     validate(results, skillName, { avgHit: 150 });
   });
@@ -658,31 +623,21 @@ describe("flat damage to attacks", () => {
     // Weapon: 100 phys
     // Flat: 20 cold + 30 fire + 10 lightning = 60 elemental
     // Total: 100 + 60 = 160
-    const { input, skillName } = createInput({
-      mods: [
-        affix([
-          {
-            type: "FlatDmgToAtks",
-            value: { min: 20, max: 20 },
-            dmgType: "cold",
-          },
-        ]),
-        affix([
-          {
-            type: "FlatDmgToAtks",
-            value: { min: 30, max: 30 },
-            dmgType: "fire",
-          },
-        ]),
-        affix([
-          {
-            type: "FlatDmgToAtks",
-            value: { min: 10, max: 10 },
-            dmgType: "lightning",
-          },
-        ]),
-      ],
-    });
+    const input = createModsInput([
+      affix([
+        { type: "FlatDmgToAtks", value: { min: 20, max: 20 }, dmgType: "cold" },
+      ]),
+      affix([
+        { type: "FlatDmgToAtks", value: { min: 30, max: 30 }, dmgType: "fire" },
+      ]),
+      affix([
+        {
+          type: "FlatDmgToAtks",
+          value: { min: 10, max: 10 },
+          dmgType: "lightning",
+        },
+      ]),
+    ]);
     const results = calculateOffense(input);
     validate(results, skillName, { avgHit: 160 });
   });
@@ -691,24 +646,22 @@ describe("flat damage to attacks", () => {
     // Weapon: 100 phys
     // Flat: 25 + 25 = 50 phys (stacks additively)
     // Total: 100 + 50 = 150
-    const { input, skillName } = createInput({
-      mods: [
-        affix([
-          {
-            type: "FlatDmgToAtks",
-            value: { min: 25, max: 25 },
-            dmgType: "physical",
-          },
-        ]),
-        affix([
-          {
-            type: "FlatDmgToAtks",
-            value: { min: 25, max: 25 },
-            dmgType: "physical",
-          },
-        ]),
-      ],
-    });
+    const input = createModsInput([
+      affix([
+        {
+          type: "FlatDmgToAtks",
+          value: { min: 25, max: 25 },
+          dmgType: "physical",
+        },
+      ]),
+      affix([
+        {
+          type: "FlatDmgToAtks",
+          value: { min: 25, max: 25 },
+          dmgType: "physical",
+        },
+      ]),
+    ]);
     const results = calculateOffense(input);
     validate(results, skillName, { avgHit: 150 });
   });
@@ -718,20 +671,17 @@ describe("flat damage to attacks", () => {
     // Weapon damage: 100 * 2.01 = 201 (converted to cold)
     // Flat damage: 100 * 2.01 = 201 (converted to cold)
     // Total: 201 + 201 = 402 cold
-    const { input, skillName } = createInput({
-      mods: [
-        affix([
-          {
-            type: "FlatDmgToAtks",
-            value: { min: 100, max: 100 },
-            dmgType: "physical",
-          },
-        ]),
-      ],
-      skill: "Frost Spike",
-    });
+    const input = createFrostSpikeInput([
+      affix([
+        {
+          type: "FlatDmgToAtks",
+          value: { min: 100, max: 100 },
+          dmgType: "physical",
+        },
+      ]),
+    ]);
     const results = calculateOffense(input);
-    validate(results, skillName, { avgHit: 402 });
+    validate(results, "Frost Spike", { avgHit: 402 });
   });
 
   test("calculate offense with flat damage and % damage modifiers", () => {
@@ -739,20 +689,16 @@ describe("flat damage to attacks", () => {
     // Flat: 50 phys
     // Base total: 150
     // After +100% physical: 150 * 2 = 300
-    const { input, skillName } = createInput({
-      mods: [
-        affix([
-          {
-            type: "FlatDmgToAtks",
-            value: { min: 50, max: 50 },
-            dmgType: "physical",
-          },
-        ]),
-        affix([
-          { type: "DmgPct", value: 1.0, modType: "physical", addn: false },
-        ]), // +100% physical damage
-      ],
-    });
+    const input = createModsInput([
+      affix([
+        {
+          type: "FlatDmgToAtks",
+          value: { min: 50, max: 50 },
+          dmgType: "physical",
+        },
+      ]),
+      affix([{ type: "DmgPct", value: 1.0, modType: "physical", addn: false }]), // +100% physical damage
+    ]);
     const results = calculateOffense(input);
     validate(results, skillName, { avgHit: 300 });
   });
@@ -761,17 +707,15 @@ describe("flat damage to attacks", () => {
     // Weapon: 100 phys
     // Flat (FlatDmgToAtksAndSpells): 40 cold
     // Total: 100 + 40 = 140
-    const { input, skillName } = createInput({
-      mods: [
-        affix([
-          {
-            type: "FlatDmgToAtksAndSpells",
-            value: { min: 40, max: 40 },
-            dmgType: "cold",
-          },
-        ]),
-      ],
-    });
+    const input = createModsInput([
+      affix([
+        {
+          type: "FlatDmgToAtksAndSpells",
+          value: { min: 40, max: 40 },
+          dmgType: "cold",
+        },
+      ]),
+    ]);
     const results = calculateOffense(input);
     validate(results, skillName, { avgHit: 140 });
   });
@@ -779,18 +723,15 @@ describe("flat damage to attacks", () => {
   test("calculate offense with flat damage only (no weapon damage)", () => {
     // No weapon equipped, only flat damage
     // Flat: 100 fire * 1.0 (addedDmgEffPct) = 100
-    const { input, skillName } = createInput({
-      weapon: null, // no weapon
-      mods: [
-        affix([
-          {
-            type: "FlatDmgToAtks",
-            value: { min: 100, max: 100 },
-            dmgType: "fire",
-          },
-        ]),
-      ],
-    });
+    const input = createNoWeaponInput([
+      affix([
+        {
+          type: "FlatDmgToAtks",
+          value: { min: 100, max: 100 },
+          dmgType: "fire",
+        },
+      ]),
+    ]);
     const results = calculateOffense(input);
     validate(results, skillName, { avgHit: 100 });
   });
@@ -799,20 +740,16 @@ describe("flat damage to attacks", () => {
     // Weapon: 100 phys (no bonus)
     // Flat: 50 erosion * 1.5 (50% erosion bonus) = 75
     // Total: 100 + 75 = 175
-    const { input, skillName } = createInput({
-      mods: [
-        affix([
-          {
-            type: "FlatDmgToAtks",
-            value: { min: 50, max: 50 },
-            dmgType: "erosion",
-          },
-        ]),
-        affix([
-          { type: "DmgPct", value: 0.5, modType: "erosion", addn: false },
-        ]), // +50% erosion damage
-      ],
-    });
+    const input = createModsInput([
+      affix([
+        {
+          type: "FlatDmgToAtks",
+          value: { min: 50, max: 50 },
+          dmgType: "erosion",
+        },
+      ]),
+      affix([{ type: "DmgPct", value: 0.5, modType: "erosion", addn: false }]), // +50% erosion damage
+    ]);
     const results = calculateOffense(input);
     validate(results, skillName, { avgHit: 175 });
   });
@@ -1301,23 +1238,33 @@ describe("convertDmg", () => {
 
 // Mod normalization tests (per-stack mods like "X per willpower stack")
 describe("mod normalization with per-stack mods", () => {
+  const skillName = "[Test] Simple Attack" as const;
+
+  // Bespoke helper: 100 phys weapon + custom mods
+  const createModsInput = (mods: Affix[]) => ({
+    loadout: initLoadout({
+      gearPage: { equippedGear: { mainHand: baseWeapon }, inventory: [] },
+      customConfiguration: mods,
+      skillPage: simpleAttackSkillPage(),
+    }),
+    configuration: defaultConfiguration,
+  });
+
   test("DmgPct per willpower normalizes to stacks * value", () => {
     // +10% damage per willpower stack with 5 stacks = +50% damage
     // 100 * (1 + 0.5) = 150
-    const { input, skillName } = createInput({
-      mods: [
-        affix([{ type: "MaxWillpowerStacks", value: 5 }]),
-        affix([
-          {
-            type: "DmgPct",
-            value: 0.1,
-            modType: "global",
-            addn: false,
-            per: { stackable: "willpower" },
-          },
-        ]),
-      ],
-    });
+    const input = createModsInput([
+      affix([{ type: "MaxWillpowerStacks", value: 5 }]),
+      affix([
+        {
+          type: "DmgPct",
+          value: 0.1,
+          modType: "global",
+          addn: false,
+          per: { stackable: "willpower" },
+        },
+      ]),
+    ]);
     const results = calculateOffense(input);
     validate(results, skillName, { avgHit: 150 });
   });
@@ -1325,19 +1272,17 @@ describe("mod normalization with per-stack mods", () => {
   test("DmgPct per willpower with zero stacks has no effect", () => {
     // +10% damage per willpower stack with 0 stacks = +0% damage
     // 100 * (1 + 0) = 100
-    const { input, skillName } = createInput({
-      mods: [
-        affix([
-          {
-            type: "DmgPct",
-            value: 0.1,
-            modType: "global",
-            addn: false,
-            per: { stackable: "willpower" },
-          },
-        ]),
-      ],
-    });
+    const input = createModsInput([
+      affix([
+        {
+          type: "DmgPct",
+          value: 0.1,
+          modType: "global",
+          addn: false,
+          per: { stackable: "willpower" },
+        },
+      ]),
+    ]);
     const results = calculateOffense(input);
     validate(results, skillName, { avgHit: 100 });
   });
@@ -1345,21 +1290,19 @@ describe("mod normalization with per-stack mods", () => {
   test("DmgPct per willpower stacks with regular DmgPct", () => {
     // +10% damage per willpower (5 stacks = 50%) + 30% regular = 80% total
     // 100 * (1 + 0.5 + 0.3) = 180
-    const { input, skillName } = createInput({
-      mods: [
-        affix([{ type: "MaxWillpowerStacks", value: 5 }]),
-        affix([
-          {
-            type: "DmgPct",
-            value: 0.1,
-            modType: "global",
-            addn: false,
-            per: { stackable: "willpower" },
-          },
-        ]),
-        affix([{ type: "DmgPct", value: 0.3, modType: "global", addn: false }]),
-      ],
-    });
+    const input = createModsInput([
+      affix([{ type: "MaxWillpowerStacks", value: 5 }]),
+      affix([
+        {
+          type: "DmgPct",
+          value: 0.1,
+          modType: "global",
+          addn: false,
+          per: { stackable: "willpower" },
+        },
+      ]),
+      affix([{ type: "DmgPct", value: 0.3, modType: "global", addn: false }]),
+    ]);
     const results = calculateOffense(input);
     validate(results, skillName, { avgHit: 180 });
   });
@@ -1367,19 +1310,17 @@ describe("mod normalization with per-stack mods", () => {
   test("FlatDmgToAtks per willpower normalizes DmgRange", () => {
     // +10-10 flat phys per willpower stack with 3 stacks = +30-30 flat phys
     // Weapon: 100, Flat: 30, Total: 130
-    const { input, skillName } = createInput({
-      mods: [
-        affix([{ type: "MaxWillpowerStacks", value: 3 }]),
-        affix([
-          {
-            type: "FlatDmgToAtks",
-            value: { min: 10, max: 10 },
-            dmgType: "physical",
-            per: { stackable: "willpower" },
-          },
-        ]),
-      ],
-    });
+    const input = createModsInput([
+      affix([{ type: "MaxWillpowerStacks", value: 3 }]),
+      affix([
+        {
+          type: "FlatDmgToAtks",
+          value: { min: 10, max: 10 },
+          dmgType: "physical",
+          per: { stackable: "willpower" },
+        },
+      ]),
+    ]);
     const results = calculateOffense(input);
     validate(results, skillName, { avgHit: 130 });
   });
@@ -1387,19 +1328,17 @@ describe("mod normalization with per-stack mods", () => {
   test("CritRatingPct per willpower normalizes correctly", () => {
     // +20% crit rating per willpower stack with 2 stacks = +40% crit rating
     // Crit chance: 0.05 * (1 + 0.4) = 0.07 (7%)
-    const { input, skillName } = createInput({
-      mods: [
-        affix([{ type: "MaxWillpowerStacks", value: 2 }]),
-        affix([
-          {
-            type: "CritRatingPct",
-            value: 0.2,
-            modType: "global",
-            per: { stackable: "willpower" },
-          },
-        ]),
-      ],
-    });
+    const input = createModsInput([
+      affix([{ type: "MaxWillpowerStacks", value: 2 }]),
+      affix([
+        {
+          type: "CritRatingPct",
+          value: 0.2,
+          modType: "global",
+          per: { stackable: "willpower" },
+        },
+      ]),
+    ]);
     const results = calculateOffense(input);
     validate(results, skillName, { critChance: 0.07 });
   });
@@ -1410,28 +1349,26 @@ describe("mod normalization with per-stack mods", () => {
     // +10% crit rating per stack = +40% crit rating
     // Crit chance: 0.05 * (1 + 0.4) = 0.07
     // Avg hit: 100 * (1 + 0.2) = 120
-    const { input, skillName } = createInput({
-      mods: [
-        affix([{ type: "MaxWillpowerStacks", value: 4 }]),
-        affix([
-          {
-            type: "DmgPct",
-            value: 0.05,
-            modType: "global",
-            addn: false,
-            per: { stackable: "willpower" },
-          },
-        ]),
-        affix([
-          {
-            type: "CritRatingPct",
-            value: 0.1,
-            modType: "global",
-            per: { stackable: "willpower" },
-          },
-        ]),
-      ],
-    });
+    const input = createModsInput([
+      affix([{ type: "MaxWillpowerStacks", value: 4 }]),
+      affix([
+        {
+          type: "DmgPct",
+          value: 0.05,
+          modType: "global",
+          addn: false,
+          per: { stackable: "willpower" },
+        },
+      ]),
+      affix([
+        {
+          type: "CritRatingPct",
+          value: 0.1,
+          modType: "global",
+          per: { stackable: "willpower" },
+        },
+      ]),
+    ]);
     const results = calculateOffense(input);
     validate(results, skillName, { avgHit: 120, critChance: 0.07 });
   });
@@ -1440,17 +1377,47 @@ describe("mod normalization with per-stack mods", () => {
 // Additional damage per stat tests
 // The calculator automatically adds +0.5% additional damage per main stat
 describe("automatic additional damage from main stats", () => {
+  const skillName = "[Test] Simple Attack" as const;
+
+  // Bespoke helper: 100 phys weapon + custom mods
+  const createModsInput = (mods: Affix[]) => ({
+    loadout: initLoadout({
+      gearPage: { equippedGear: { mainHand: baseWeapon }, inventory: [] },
+      customConfiguration: mods,
+      skillPage: simpleAttackSkillPage(),
+    }),
+    configuration: defaultConfiguration,
+  });
+
+  // Bespoke helper: Frost Spike skill with mods
+  const createFrostSpikeInput = (mods: Affix[]) => ({
+    loadout: initLoadout({
+      gearPage: { equippedGear: { mainHand: baseWeapon }, inventory: [] },
+      customConfiguration: mods,
+      skillPage: {
+        activeSkills: {
+          1: {
+            skillName: "Frost Spike" as const,
+            enabled: true,
+            level: 20,
+            supportSkills: {},
+          },
+        },
+        passiveSkills: {},
+      },
+    }),
+    configuration: defaultConfiguration,
+  });
+
   test("adds additional damage based on skill main stats", () => {
     // [Test] Simple Attack has main stats: dex, str
     // With 100 dex + 100 str = 200 total main stats
     // Additional damage: 200 * 0.5% = 100% additional (addn/more multiplier)
     // Base: 100, with 100% more = 100 * 2 = 200
-    const { input, skillName } = createInput({
-      mods: [
-        affix([{ type: "Stat", statType: "dex", value: 100 }]),
-        affix([{ type: "Stat", statType: "str", value: 100 }]),
-      ],
-    });
+    const input = createModsInput([
+      affix([{ type: "Stat", statType: "dex", value: 100 }]),
+      affix([{ type: "Stat", statType: "str", value: 100 }]),
+    ]);
     const results = calculateOffense(input);
     validate(results, skillName, { avgHit: 200 });
   });
@@ -1460,9 +1427,9 @@ describe("automatic additional damage from main stats", () => {
     // With 100 dex only = 100 total main stats
     // Additional damage: 100 * 0.5% = 50% additional
     // Base: 100, with 50% more = 100 * 1.5 = 150
-    const { input, skillName } = createInput({
-      mods: [affix([{ type: "Stat", statType: "dex", value: 100 }])],
-    });
+    const input = createModsInput([
+      affix([{ type: "Stat", statType: "dex", value: 100 }]),
+    ]);
     const results = calculateOffense(input);
     validate(results, skillName, { avgHit: 150 });
   });
@@ -1471,7 +1438,7 @@ describe("automatic additional damage from main stats", () => {
     // No stat mods = 0 total main stats
     // Additional damage: 0 * 0.5% = 0% additional
     // Base: 100, with 0% more = 100 * 1 = 100
-    const { input, skillName } = createInput({});
+    const input = createModsInput([]);
     const results = calculateOffense(input);
     validate(results, skillName, { avgHit: 100 });
   });
@@ -1481,9 +1448,9 @@ describe("automatic additional damage from main stats", () => {
     // With 100 int only = 0 main stats counted
     // Additional damage: 0 * 0.5% = 0%
     // Base: 100, with 0% more = 100
-    const { input, skillName } = createInput({
-      mods: [affix([{ type: "Stat", statType: "int", value: 100 }])],
-    });
+    const input = createModsInput([
+      affix([{ type: "Stat", statType: "int", value: 100 }]),
+    ]);
     const results = calculateOffense(input);
     validate(results, skillName, { avgHit: 100 });
   });
@@ -1494,27 +1461,22 @@ describe("automatic additional damage from main stats", () => {
     // Additional damage: 200 * 0.5% = 100% additional
     // Frost Spike: 100 weapon * 2.01 = 201 phys → converted to cold
     // With 100% more: 201 * 2 = 402
-    const { input, skillName } = createInput({
-      skill: "Frost Spike",
-      mods: [
-        affix([{ type: "Stat", statType: "dex", value: 100 }]),
-        affix([{ type: "Stat", statType: "int", value: 100 }]),
-      ],
-    });
+    const input = createFrostSpikeInput([
+      affix([{ type: "Stat", statType: "dex", value: 100 }]),
+      affix([{ type: "Stat", statType: "int", value: 100 }]),
+    ]);
     const results = calculateOffense(input);
-    validate(results, skillName, { avgHit: 402 });
+    validate(results, "Frost Spike", { avgHit: 402 });
   });
 
   test("combines with other damage modifiers", () => {
     // [Test] Simple Attack with 100 dex = 50% additional damage
     // Plus 50% increased damage
     // Base: 100, with 50% inc = 150, with 50% more = 150 * 1.5 = 225
-    const { input, skillName } = createInput({
-      mods: [
-        affix([{ type: "Stat", statType: "dex", value: 100 }]),
-        affix([{ type: "DmgPct", value: 0.5, modType: "global", addn: false }]),
-      ],
-    });
+    const input = createModsInput([
+      affix([{ type: "Stat", statType: "dex", value: 100 }]),
+      affix([{ type: "DmgPct", value: 0.5, modType: "global", addn: false }]),
+    ]);
     const results = calculateOffense(input);
     validate(results, skillName, { avgHit: 225 });
   });
@@ -1656,21 +1618,49 @@ describe("resolveSelectedSkillSupportMods via calculateOffense", () => {
 });
 
 describe("calculateOffense with damage conversion", () => {
+  const skillName = "[Test] Simple Attack" as const;
+
+  // Bespoke helper: 100 phys weapon + custom mods
+  const createModsInput = (mods: Affix[]) => ({
+    loadout: initLoadout({
+      gearPage: { equippedGear: { mainHand: baseWeapon }, inventory: [] },
+      customConfiguration: mods,
+      skillPage: simpleAttackSkillPage(),
+    }),
+    configuration: defaultConfiguration,
+  });
+
+  // Bespoke helper: Frost Spike skill with mods
+  const createFrostSpikeInput = (mods: Affix[]) => ({
+    loadout: initLoadout({
+      gearPage: { equippedGear: { mainHand: baseWeapon }, inventory: [] },
+      customConfiguration: mods,
+      skillPage: {
+        activeSkills: {
+          1: {
+            skillName: "Frost Spike" as const,
+            enabled: true,
+            level: 20,
+            supportSkills: {},
+          },
+        },
+        passiveSkills: {},
+      },
+    }),
+    configuration: defaultConfiguration,
+  });
+
   test("100% phys to cold conversion - cold gets both phys% and cold% bonuses", () => {
     // 100 phys → 100 cold via conversion
     // Cold now benefits from: 50% physical bonus + 30% cold bonus = 80% inc
     // 100 * (1 + 0.8) = 180
-    const { input, skillName } = createInput({
-      mods: [
-        affix([
-          { type: "ConvertDmgPct", from: "physical", to: "cold", value: 1 },
-        ]),
-        affix([
-          { type: "DmgPct", value: 0.5, modType: "physical", addn: false },
-        ]),
-        affix([{ type: "DmgPct", value: 0.3, modType: "cold", addn: false }]),
-      ],
-    });
+    const input = createModsInput([
+      affix([
+        { type: "ConvertDmgPct", from: "physical", to: "cold", value: 1 },
+      ]),
+      affix([{ type: "DmgPct", value: 0.5, modType: "physical", addn: false }]),
+      affix([{ type: "DmgPct", value: 0.3, modType: "cold", addn: false }]),
+    ]);
     const results = calculateOffense(input);
     validate(results, skillName, { avgHit: 180 });
   });
@@ -1680,17 +1670,13 @@ describe("calculateOffense with damage conversion", () => {
     // Unconverted phys: 50 * (1 + 0.5) = 75
     // Converted cold: 50 * (1 + 0.5 + 0.3) = 90
     // Total: 75 + 90 = 165
-    const { input, skillName } = createInput({
-      mods: [
-        affix([
-          { type: "ConvertDmgPct", from: "physical", to: "cold", value: 0.5 },
-        ]),
-        affix([
-          { type: "DmgPct", value: 0.5, modType: "physical", addn: false },
-        ]),
-        affix([{ type: "DmgPct", value: 0.3, modType: "cold", addn: false }]),
-      ],
-    });
+    const input = createModsInput([
+      affix([
+        { type: "ConvertDmgPct", from: "physical", to: "cold", value: 0.5 },
+      ]),
+      affix([{ type: "DmgPct", value: 0.5, modType: "physical", addn: false }]),
+      affix([{ type: "DmgPct", value: 0.3, modType: "cold", addn: false }]),
+    ]);
     const results = calculateOffense(input);
     validate(results, skillName, { avgHit: 165 });
   });
@@ -1699,28 +1685,19 @@ describe("calculateOffense with damage conversion", () => {
     // 100 phys → 100 lightning → 100 cold
     // Cold benefits from: 20% physical + 30% lightning + 40% cold = 90% inc
     // 100 * (1 + 0.9) = 190
-    const { input, skillName } = createInput({
-      mods: [
-        affix([
-          {
-            type: "ConvertDmgPct",
-            from: "physical",
-            to: "lightning",
-            value: 1,
-          },
-        ]),
-        affix([
-          { type: "ConvertDmgPct", from: "lightning", to: "cold", value: 1 },
-        ]),
-        affix([
-          { type: "DmgPct", value: 0.2, modType: "physical", addn: false },
-        ]),
-        affix([
-          { type: "DmgPct", value: 0.3, modType: "lightning", addn: false },
-        ]),
-        affix([{ type: "DmgPct", value: 0.4, modType: "cold", addn: false }]),
-      ],
-    });
+    const input = createModsInput([
+      affix([
+        { type: "ConvertDmgPct", from: "physical", to: "lightning", value: 1 },
+      ]),
+      affix([
+        { type: "ConvertDmgPct", from: "lightning", to: "cold", value: 1 },
+      ]),
+      affix([{ type: "DmgPct", value: 0.2, modType: "physical", addn: false }]),
+      affix([
+        { type: "DmgPct", value: 0.3, modType: "lightning", addn: false },
+      ]),
+      affix([{ type: "DmgPct", value: 0.4, modType: "cold", addn: false }]),
+    ]);
     const results = calculateOffense(input);
     validate(results, skillName, { avgHit: 190 });
   });
@@ -1729,16 +1706,14 @@ describe("calculateOffense with damage conversion", () => {
     // 100 phys → 100 cold
     // Cold benefits from: 50% elemental (applies to cold) = 50% inc
     // 100 * (1 + 0.5) = 150
-    const { input, skillName } = createInput({
-      mods: [
-        affix([
-          { type: "ConvertDmgPct", from: "physical", to: "cold", value: 1 },
-        ]),
-        affix([
-          { type: "DmgPct", value: 0.5, modType: "elemental", addn: false },
-        ]),
-      ],
-    });
+    const input = createModsInput([
+      affix([
+        { type: "ConvertDmgPct", from: "physical", to: "cold", value: 1 },
+      ]),
+      affix([
+        { type: "DmgPct", value: 0.5, modType: "elemental", addn: false },
+      ]),
+    ]);
     const results = calculateOffense(input);
     validate(results, skillName, { avgHit: 150 });
   });
@@ -1747,14 +1722,10 @@ describe("calculateOffense with damage conversion", () => {
     // 100 phys, no conversion
     // Physical: 100 * (1 + 0.5) = 150
     // Cold bonus doesn't apply (no cold damage)
-    const { input, skillName } = createInput({
-      mods: [
-        affix([
-          { type: "DmgPct", value: 0.5, modType: "physical", addn: false },
-        ]),
-        affix([{ type: "DmgPct", value: 0.3, modType: "cold", addn: false }]),
-      ],
-    });
+    const input = createModsInput([
+      affix([{ type: "DmgPct", value: 0.5, modType: "physical", addn: false }]),
+      affix([{ type: "DmgPct", value: 0.3, modType: "cold", addn: false }]),
+    ]);
     const results = calculateOffense(input);
     validate(results, skillName, { avgHit: 150 });
   });
@@ -1764,30 +1735,10 @@ describe("calculateOffense with damage conversion", () => {
     // Requires Frost Spike to be in skill slot for levelMods to be resolved
     // 100 phys weapon * 2.01 = 201 phys → 201 cold via skill's conversion
     // Cold damage with 50% cold bonus: 201 * (1 + 0.5) = 301.5
-    const loadout = initLoadout({
-      gearPage: {
-        equippedGear: { mainHand: baseWeapon },
-        inventory: [],
-      },
-      skillPage: {
-        activeSkills: {
-          1: {
-            skillName: "Frost Spike",
-            enabled: true,
-            level: 20,
-            supportSkills: {},
-          },
-        },
-        passiveSkills: {},
-      },
-      customConfiguration: [
-        affix([{ type: "DmgPct", value: 0.5, modType: "cold", addn: false }]),
-      ],
-    });
-    const results = calculateOffense({
-      loadout,
-      configuration: defaultConfiguration,
-    });
+    const input = createFrostSpikeInput([
+      affix([{ type: "DmgPct", value: 0.5, modType: "cold", addn: false }]),
+    ]);
+    const results = calculateOffense(input);
     validate(results, "Frost Spike", { avgHit: 301.5 });
   });
 });
@@ -2977,10 +2928,6 @@ describe("shadow damage", () => {
   // - Each subsequent shadow deals 30% of the previous shadow's damage
   // - Shadow damage bonuses only apply to shadow hits, not the original hit
   //
-  // Example: 100 damage, 3 shadows, 100% shadow damage bonus
-  // Original: 100, Shadow 1: 100*2=200, Shadow 2: 30*2=60, Shadow 3: 9*2=18
-  // Total: 100 + 200 + 60 + 18 = 378
-
   // Frost Spike at level 20: WeaponAtkDmgPct = 2.01
   // Base weapon 100 * 2.01 = 201 base damage
 
@@ -2990,132 +2937,142 @@ describe("shadow damage", () => {
     return config;
   };
 
+  // Bespoke helper: Frost Spike (Shadow Strike skill) with shadow config
+  const createFrostSpikeInput = (
+    numShadowHits: number,
+    mods: Affix[] = [],
+  ) => ({
+    loadout: initLoadout({
+      gearPage: { equippedGear: { mainHand: baseWeapon }, inventory: [] },
+      customConfiguration: mods,
+      skillPage: {
+        activeSkills: {
+          1: {
+            skillName: "Frost Spike" as const,
+            enabled: true,
+            level: 20,
+            supportSkills: {},
+          },
+        },
+        passiveSkills: {},
+      },
+    }),
+    configuration: createShadowConfig(numShadowHits),
+  });
+
+  // Bespoke helper: Simple Attack (non-Shadow Strike skill) with shadow config
+  const createSimpleAttackInput = (
+    numShadowHits: number,
+    mods: Affix[] = [],
+  ) => ({
+    loadout: initLoadout({
+      gearPage: { equippedGear: { mainHand: baseWeapon }, inventory: [] },
+      customConfiguration: mods,
+      skillPage: simpleAttackSkillPage(),
+    }),
+    configuration: createShadowConfig(numShadowHits),
+  });
+
   test("shadow strike skill with 1 shadow hit doubles damage", () => {
     // 1 shadow hit = 100% additional damage (doubles the hit)
-    const { input, skillName } = createInput({
-      skill: "Frost Spike",
-      configuration: createShadowConfig(1),
-    });
+    const input = createFrostSpikeInput(1);
     const results = calculateOffense(input);
-    const actual = results[skillName as ImplementedActiveSkillName];
-
-    expect(actual).toBeDefined();
     // Base: 100 * 2.01 = 201
     // With 1 shadow hit: 201 * (1 + 1.0) = 402
-    expect(actual?.avgHit).toBeCloseTo(402);
+    validate(results, "Frost Spike", { avgHit: 402 });
   });
 
   test("shadow strike skill with 3 shadow hits applies geometric falloff", () => {
     // 3 shadow hits: 1 + 0.3 + 0.09 = 1.39 total shadow damage ratio
-    const { input, skillName } = createInput({
-      skill: "Frost Spike",
-      configuration: createShadowConfig(3),
-    });
+    const input = createFrostSpikeInput(3);
     const results = calculateOffense(input);
-    const actual = results[skillName as ImplementedActiveSkillName];
-
-    expect(actual).toBeDefined();
     // Base: 201
     // Shadow geometric sum: (1 - 0.3^3) / 0.7 ≈ 1.39
-    // Total: 201 * (1 + 1.39) ≈ 480.4
-    expect(actual?.avgHit).toBeCloseTo(480.4, 0);
+    // Total: 201 * (1 + 1.39) ≈ 480.39
+    validate(results, "Frost Spike", { avgHit: 480.39 });
   });
 
   test("shadow damage bonus applies to shadow hits only", () => {
     // 100% shadow damage bonus with 3 shadows
     // Shadow damage gets multiplied by 2, original hit does not
-    const { input, skillName } = createInput({
-      skill: "Frost Spike",
-      mods: [
-        affix([{ type: "ShadowDmgPct", value: 1.0, addn: false }]), // +100% shadow damage
-      ],
-      configuration: createShadowConfig(3),
-    });
+    const input = createFrostSpikeInput(3, [
+      affix([{ type: "ShadowDmgPct", value: 1.0, addn: false }]), // +100% shadow damage
+    ]);
     const results = calculateOffense(input);
-    const actual = results[skillName as ImplementedActiveSkillName];
-
-    expect(actual).toBeDefined();
     // Base: 201
     // Shadow contribution: 1.39 * 2 (100% bonus) = 2.78
-    // Total: 201 * (1 + 2.78) = 759.8
-    expect(actual?.avgHit).toBeCloseTo(759.8, 0);
+    // Total: 201 * (1 + 2.78) ≈ 759.78
+    validate(results, "Frost Spike", { avgHit: 759.78 });
   });
 
   test("zero shadow hits means no shadow damage bonus", () => {
-    const { input, skillName } = createInput({
-      skill: "Frost Spike",
-      configuration: createShadowConfig(0),
-    });
+    const input = createFrostSpikeInput(0);
     const results = calculateOffense(input);
-    const actual = results[skillName as ImplementedActiveSkillName];
-
-    expect(actual).toBeDefined();
     // Base: 201 (no shadow damage)
-    expect(actual?.avgHit).toBeCloseTo(201);
+    validate(results, "Frost Spike", { avgHit: 201 });
   });
 
   test("non-shadow strike skill ignores shadow mechanics", () => {
     // [Test] Simple Attack does not have Shadow Strike tag
-    const { input, skillName } = createInput({
-      skill: "[Test] Simple Attack",
-      mods: [
-        affix([{ type: "ShadowDmgPct", value: 1.0, addn: false }]), // This should have no effect
-      ],
-      configuration: createShadowConfig(3), // This should have no effect
-    });
+    const input = createSimpleAttackInput(3, [
+      affix([{ type: "ShadowDmgPct", value: 1.0, addn: false }]), // This should have no effect
+    ]);
     const results = calculateOffense(input);
-    const actual = results[skillName as ImplementedActiveSkillName];
-
-    expect(actual).toBeDefined();
     // Base: 100 (no shadow mechanics applied)
-    expect(actual?.avgHit).toBeCloseTo(100);
+    validate(results, "[Test] Simple Attack", { avgHit: 100 });
   });
 
   test("shadow damage stacks with regular damage modifiers", () => {
     // +50% global damage AND 3 shadow hits with 100% shadow bonus
-    const { input, skillName } = createInput({
-      skill: "Frost Spike",
-      mods: [
-        affix([{ type: "DmgPct", value: 0.5, modType: "global", addn: false }]), // +50% damage
-        affix([{ type: "ShadowDmgPct", value: 1.0, addn: false }]), // +100% shadow damage
-      ],
-      configuration: createShadowConfig(3),
-    });
+    const input = createFrostSpikeInput(3, [
+      affix([{ type: "DmgPct", value: 0.5, modType: "global", addn: false }]), // +50% damage
+      affix([{ type: "ShadowDmgPct", value: 1.0, addn: false }]), // +100% shadow damage
+    ]);
     const results = calculateOffense(input);
-    const actual = results[skillName as ImplementedActiveSkillName];
-
-    expect(actual).toBeDefined();
     // Base with +50% dmg: 201 * 1.5 = 301.5
     // Shadow contribution: 1.39 * 2 = 2.78
-    // Total: 301.5 * (1 + 2.78) = 1139.7
-    expect(actual?.avgHit).toBeCloseTo(1139.7, 0);
+    // Total: 301.5 * (1 + 2.78) ≈ 1139.67
+    validate(results, "Frost Spike", { avgHit: 1139.67 });
   });
 
   test("ShadowQuant mods contribute to shadow hit count", () => {
-    // +2 Shadow Quantity from mod
-    const { input, skillName } = createInput({
-      skill: "Frost Spike",
-      mods: [affix([{ type: "ShadowQuant", value: 2 }])],
-    });
+    // +2 Shadow Quantity from mod - uses default config with 0 shadow hits
+    const input = {
+      loadout: initLoadout({
+        gearPage: { equippedGear: { mainHand: baseWeapon }, inventory: [] },
+        customConfiguration: [affix([{ type: "ShadowQuant", value: 2 }])],
+        skillPage: {
+          activeSkills: {
+            1: {
+              skillName: "Frost Spike" as const,
+              enabled: true,
+              level: 20,
+              supportSkills: {},
+            },
+          },
+          passiveSkills: {},
+        },
+      }),
+      configuration: defaultConfiguration,
+    };
     const results = calculateOffense(input);
-    const actual = results[skillName as ImplementedActiveSkillName];
-
-    expect(actual).toBeDefined();
     // Base: 201
     // 2 shadow hits: geometric sum = (1 - 0.3^2) / 0.7 = 0.91 / 0.7 = 1.3
     // Total: 201 * (1 + 1.3) = 462.3
-    expect(actual?.avgHit).toBeCloseTo(462.3, 0);
+    validate(results, "Frost Spike", { avgHit: 462.3 });
   });
 });
 
 // Resistance and Armor Penetration tests
 describe("penetration", () => {
+  const skillName = "[Test] Simple Attack" as const;
+
   interface PenConfigInput {
     enemyRes?: number;
     enemyArmor?: number;
   }
 
-  const createPenetrationConfig = (input: PenConfigInput) => {
+  const createPenetrationConfig = (input: PenConfigInput = {}) => {
     const config = createDefaultConfiguration();
     const { enemyRes, enemyArmor } = input;
     if (enemyRes !== undefined) config.enemyRes = enemyRes;
@@ -3123,47 +3080,53 @@ describe("penetration", () => {
     return config;
   };
 
+  // Bespoke input for penetration tests with configurable damage type
+  const createDmgInput = (
+    dmg: number,
+    modType: "physical" | "cold" | "erosion",
+    options: { mods?: Affix[]; res?: number; armor?: number } = {},
+  ) => {
+    const weapon =
+      modType === "physical"
+        ? baseWeapon
+        : {
+            ...baseWeapon,
+            base_affixes: [
+              affix([
+                { type: "FlatGearDmg", modType, value: { min: dmg, max: dmg } },
+                { type: "GearPhysDmgPct", value: -1 },
+              ]),
+            ],
+          };
+    return {
+      loadout: initLoadout({
+        gearPage: { equippedGear: { mainHand: weapon }, inventory: [] },
+        customConfiguration: options.mods ?? [],
+        skillPage: simpleAttackSkillPage(),
+      }),
+      configuration: createPenetrationConfig({
+        enemyRes: options.res,
+        enemyArmor: options.armor,
+      }),
+    };
+  };
+
   test("cold penetration counters cold resistance", () => {
     // 30% resistance, 10% penetration -> effective 20% resistance
-    // 100 damage * (1 - 0.3 + 0.1) = 80
-    const { input, skillName } = createInput({
-      weapon: {
-        base_affixes: [
-          affix([
-            {
-              type: "FlatGearDmg",
-              modType: "cold",
-              value: { min: 100, max: 100 },
-            },
-            { type: "GearPhysDmgPct", value: -1 },
-          ]),
-        ],
-      },
+    // 100 cold * (1 - 0.3 + 0.1) = 80
+    const input = createDmgInput(100, "cold", {
       mods: [affix([{ type: "ResPenPct", value: 0.1, penType: "cold" }])],
-      configuration: createPenetrationConfig({ enemyRes: 0.3 }),
+      res: 0.3,
     });
     const results = calculateOffense(input);
-    // 100 * (1 - 0.3 + 0.1) = 80
     validate(results, skillName, { avgHit: 80 });
   });
 
   test("elemental penetration applies to all elemental types", () => {
     // 30% res, 10% elemental pen -> 20% effective res
-    const { input, skillName } = createInput({
-      weapon: {
-        base_affixes: [
-          affix([
-            {
-              type: "FlatGearDmg",
-              modType: "cold",
-              value: { min: 100, max: 100 },
-            },
-            { type: "GearPhysDmgPct", value: -1 },
-          ]),
-        ],
-      },
+    const input = createDmgInput(100, "cold", {
       mods: [affix([{ type: "ResPenPct", value: 0.1, penType: "elemental" }])],
-      configuration: createPenetrationConfig({ enemyRes: 0.3 }),
+      res: 0.3,
     });
     const results = calculateOffense(input);
     validate(results, skillName, { avgHit: 80 });
@@ -3171,21 +3134,9 @@ describe("penetration", () => {
 
   test("all penetration applies to erosion", () => {
     // erosion damage with "all" penetration
-    const { input, skillName } = createInput({
-      weapon: {
-        base_affixes: [
-          affix([
-            {
-              type: "FlatGearDmg",
-              modType: "erosion",
-              value: { min: 100, max: 100 },
-            },
-            { type: "GearPhysDmgPct", value: -1 },
-          ]),
-        ],
-      },
+    const input = createDmgInput(100, "erosion", {
       mods: [affix([{ type: "ResPenPct", value: 0.1, penType: "all" }])],
-      configuration: createPenetrationConfig({ enemyRes: 0.3 }),
+      res: 0.3,
     });
     const results = calculateOffense(input);
     validate(results, skillName, { avgHit: 80 });
@@ -3193,24 +3144,12 @@ describe("penetration", () => {
 
   test("penetration stacks additively", () => {
     // 30% res, 5% cold pen + 5% elemental pen = 10% total pen
-    const { input, skillName } = createInput({
-      weapon: {
-        base_affixes: [
-          affix([
-            {
-              type: "FlatGearDmg",
-              modType: "cold",
-              value: { min: 100, max: 100 },
-            },
-            { type: "GearPhysDmgPct", value: -1 },
-          ]),
-        ],
-      },
+    const input = createDmgInput(100, "cold", {
       mods: [
         affix([{ type: "ResPenPct", value: 0.05, penType: "cold" }]),
         affix([{ type: "ResPenPct", value: 0.05, penType: "elemental" }]),
       ],
-      configuration: createPenetrationConfig({ enemyRes: 0.3 }),
+      res: 0.3,
     });
     const results = calculateOffense(input);
     // 100 * (1 - 0.3 + 0.1) = 80
@@ -3219,21 +3158,9 @@ describe("penetration", () => {
 
   test("wrong penetration type does not apply", () => {
     // cold damage with fire penetration - should not help
-    const { input, skillName } = createInput({
-      weapon: {
-        base_affixes: [
-          affix([
-            {
-              type: "FlatGearDmg",
-              modType: "cold",
-              value: { min: 100, max: 100 },
-            },
-            { type: "GearPhysDmgPct", value: -1 },
-          ]),
-        ],
-      },
+    const input = createDmgInput(100, "cold", {
       mods: [affix([{ type: "ResPenPct", value: 0.1, penType: "fire" }])],
-      configuration: createPenetrationConfig({ enemyRes: 0.3 }),
+      res: 0.3,
     });
     const results = calculateOffense(input);
     // 100 * (1 - 0.3) = 70 (pen doesn't apply)
@@ -3242,21 +3169,9 @@ describe("penetration", () => {
 
   test("penetration exceeding resistance deals bonus damage", () => {
     // 10% resistance, 30% penetration -> -20% effective resistance = 120% damage
-    const { input, skillName } = createInput({
-      weapon: {
-        base_affixes: [
-          affix([
-            {
-              type: "FlatGearDmg",
-              modType: "cold",
-              value: { min: 100, max: 100 },
-            },
-            { type: "GearPhysDmgPct", value: -1 },
-          ]),
-        ],
-      },
+    const input = createDmgInput(100, "cold", {
       mods: [affix([{ type: "ResPenPct", value: 0.3, penType: "cold" }])],
-      configuration: createPenetrationConfig({ enemyRes: 0.1 }),
+      res: 0.1,
     });
     const results = calculateOffense(input);
     // 100 * (1 - 0.1 + 0.3) = 100 * 1.2 = 120
@@ -3266,9 +3181,7 @@ describe("penetration", () => {
   test("armor reduces physical damage", () => {
     // Formula: armor / (0.9 * armor + 30000)
     // With 27273 armor: 27273 / (0.9 * 27273 + 30000) = 27273 / 54545.7 ≈ 0.5 (50%)
-    const { input, skillName } = createInput({
-      configuration: createPenetrationConfig({ enemyArmor: 27273 }),
-    });
+    const input = createDmgInput(100, "physical", { armor: 27273 });
     const results = calculateOffense(input);
     // 100 phys * (1 - 0.5) = 50
     validate(results, skillName, { avgHit: 50 });
@@ -3277,24 +3190,7 @@ describe("penetration", () => {
   test("armor reduces non-physical damage at 60% rate", () => {
     // Non-physical mitigation = physical mitigation * 0.6
     // With 27273 armor: 50% phys reduction -> 30% non-phys reduction
-    const { input, skillName } = createInput({
-      weapon: {
-        base_affixes: [
-          affix([
-            {
-              type: "FlatGearDmg",
-              modType: "cold",
-              value: { min: 100, max: 100 },
-            },
-            { type: "GearPhysDmgPct", value: -1 },
-          ]),
-        ],
-      },
-      configuration: createPenetrationConfig({
-        enemyArmor: 27273,
-        enemyRes: 0,
-      }),
-    });
+    const input = createDmgInput(100, "cold", { armor: 27273, res: 0 });
     const results = calculateOffense(input);
     // 100 cold * (1 - 0.3) = 70
     validate(results, skillName, { avgHit: 70 });
@@ -3302,9 +3198,9 @@ describe("penetration", () => {
 
   test("armor penetration reduces physical damage mitigation", () => {
     // 50% armor mitigation, 10% armor pen -> 40% effective mitigation
-    const { input, skillName } = createInput({
+    const input = createDmgInput(100, "physical", {
       mods: [affix([{ type: "ArmorPenPct", value: 0.1 }])],
-      configuration: createPenetrationConfig({ enemyArmor: 27273 }),
+      armor: 27273,
     });
     const results = calculateOffense(input);
     // 100 phys * (1 - 0.5 + 0.1) = 60
@@ -3313,24 +3209,10 @@ describe("penetration", () => {
 
   test("armor penetration reduces non-physical damage mitigation equally", () => {
     // 30% non-phys armor mitigation, 10% armor pen -> 20% effective
-    const { input, skillName } = createInput({
-      weapon: {
-        base_affixes: [
-          affix([
-            {
-              type: "FlatGearDmg",
-              modType: "cold",
-              value: { min: 100, max: 100 },
-            },
-            { type: "GearPhysDmgPct", value: -1 },
-          ]),
-        ],
-      },
+    const input = createDmgInput(100, "cold", {
       mods: [affix([{ type: "ArmorPenPct", value: 0.1 }])],
-      configuration: createPenetrationConfig({
-        enemyArmor: 27273,
-        enemyRes: 0,
-      }),
+      armor: 27273,
+      res: 0,
     });
     const results = calculateOffense(input);
     // 100 cold * (1 - 0.3 + 0.1) = 80
@@ -3339,12 +3221,12 @@ describe("penetration", () => {
 
   test("armor penetration stacks additively", () => {
     // 50% armor mitigation, 5% + 5% armor pen -> 40% effective
-    const { input, skillName } = createInput({
+    const input = createDmgInput(100, "physical", {
       mods: [
         affix([{ type: "ArmorPenPct", value: 0.05 }]),
         affix([{ type: "ArmorPenPct", value: 0.05 }]),
       ],
-      configuration: createPenetrationConfig({ enemyArmor: 27273 }),
+      armor: 27273,
     });
     const results = calculateOffense(input);
     // 100 phys * (1 - 0.5 + 0.1) = 60
@@ -3355,53 +3237,21 @@ describe("penetration", () => {
     // Cold damage: 30% resistance, 30% armor mitigation (non-phys at 60% of 50%)
     // Damage = 100 * (1 - res) * (1 - armor_nonphys)
     // Damage = 100 * (1 - 0.3) * (1 - 0.3) = 100 * 0.7 * 0.7 = 49
-    const { input, skillName } = createInput({
-      weapon: {
-        base_affixes: [
-          affix([
-            {
-              type: "FlatGearDmg",
-              modType: "cold",
-              value: { min: 100, max: 100 },
-            },
-            { type: "GearPhysDmgPct", value: -1 },
-          ]),
-        ],
-      },
-      configuration: createPenetrationConfig({
-        enemyArmor: 27273,
-        enemyRes: 0.3,
-      }),
-    });
+    const input = createDmgInput(100, "cold", { armor: 27273, res: 0.3 });
     const results = calculateOffense(input);
-    // 100 * (1 - 0.3) * (1 - 0.3) = 49
     validate(results, skillName, { avgHit: 49 });
   });
 
   test("penetration reduces both resistance and armor effects", () => {
     // 30% res with 10% pen -> 20% res, 30% armor with 10% pen -> 20% armor
     // Damage = 100 * (1 - 0.2) * (1 - 0.2) = 100 * 0.8 * 0.8 = 64
-    const { input, skillName } = createInput({
-      weapon: {
-        base_affixes: [
-          affix([
-            {
-              type: "FlatGearDmg",
-              modType: "cold",
-              value: { min: 100, max: 100 },
-            },
-            { type: "GearPhysDmgPct", value: -1 },
-          ]),
-        ],
-      },
+    const input = createDmgInput(100, "cold", {
       mods: [
         affix([{ type: "ResPenPct", value: 0.1, penType: "cold" }]),
         affix([{ type: "ArmorPenPct", value: 0.1 }]),
       ],
-      configuration: createPenetrationConfig({
-        enemyArmor: 27273,
-        enemyRes: 0.3,
-      }),
+      armor: 27273,
+      res: 0.3,
     });
     const results = calculateOffense(input);
     // 100 * (1 - 0.3 + 0.1) * (1 - 0.3 + 0.1) = 100 * 0.8 * 0.8 = 64
@@ -3410,12 +3260,7 @@ describe("penetration", () => {
 
   test("physical damage only affected by armor, not resistance", () => {
     // Physical damage should ignore elemental resistance
-    const { input, skillName } = createInput({
-      configuration: createPenetrationConfig({
-        enemyArmor: 27273,
-        enemyRes: 0.3,
-      }),
-    });
+    const input = createDmgInput(100, "physical", { armor: 27273, res: 0.3 });
     const results = calculateOffense(input);
     // 100 phys * (1 - 0.5) = 50 (resistance doesn't apply)
     validate(results, skillName, { avgHit: 50 });
