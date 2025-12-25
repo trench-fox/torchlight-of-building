@@ -860,14 +860,21 @@ const multModValue = <T extends ModWithValue>(
 };
 
 const filterModsByCond = (
-  prenormalizedMods: Mod[],
+  mods: Mod[],
+  loadout: Loadout,
   config: Configuration,
 ): Mod[] => {
-  return prenormalizedMods.filter((m) => {
+  return mods.filter((m) => {
     if (!("cond" in m) || m.cond === undefined) return true;
     return match(m.cond)
       .with("enemy_frostbitten", () => config.enemyFrostbitten.enabled)
-      .with("realm_of_mercury", () => config.realmOfMercuryEnabled)
+      .with(
+        "realm_of_mercury",
+        () =>
+          loadout.heroPage.selectedHero ===
+            "Lightbringer Rosa: Unsullied Blade (#2)" &&
+          config.realmOfMercuryEnabled,
+      )
       .exhaustive();
   });
 };
@@ -1067,7 +1074,7 @@ const resolveBuffSkillMods = (
     }
 
     const prenormMods = [...loadoutMods, ...supportMods, ...levelMods];
-    const mods = resolveModsForSkill(prenormMods, skill, config);
+    const mods = resolveModsForSkill(prenormMods, skill, loadout, config);
 
     // === Calculate SkillEffPct multiplier (from support skills + loadout mods) ===
     // todo: add area, cdr, duration, and other buff-skill modifiers
@@ -1292,10 +1299,12 @@ const replaceCoreTalentMods = (mods: Mod[]): Mod[] => {
   return [...withoutCoreTalentMods, ...newMods];
 };
 
-// Normalizes mods for a specific skill, handling "per" properties
+// resolves mods, replacing core talents, removing unmatched conditions,
+//   and normalizing per mods
 const resolveModsForSkill = (
   prenormModsFromParam: Mod[],
   skill: BaseActiveSkill | BasePassiveSkill,
+  loadout: Loadout,
   config: Configuration,
 ): Mod[] => {
   // Create stat-based damage mod
@@ -1304,6 +1313,7 @@ const resolveModsForSkill = (
       ...prenormModsFromParam,
       ...calculateImplicitMods(),
     ]),
+    loadout,
     config,
   );
   const mods = filterOutPerMods(prenormMods);
@@ -1385,6 +1395,7 @@ export const calculateOffense = (input: OffenseInput): OffenseResults => {
     const mods = resolveModsForSkill(
       [...prenormMods, ...perSkillContext.mods],
       perSkillContext.skill,
+      loadout,
       configuration,
     );
 

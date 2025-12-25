@@ -177,6 +177,7 @@ export interface ConfigurationPage {
   crueltyBuffStacks: number;
   enemyRes?: number;
   enemyArmor?: number;
+  realmOfMercuryEnabled: boolean;
 }
 
 export interface EquippedGear {

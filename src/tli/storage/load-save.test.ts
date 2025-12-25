@@ -62,6 +62,7 @@ const createMinimalSaveData = (
     crueltyBuffStacks: 40,
     enemyRes: undefined,
     enemyArmor: undefined,
+    realmOfMercuryEnabled: false,
   },
   calculationsPage: { selectedSkillName: undefined },
   ...overrides,

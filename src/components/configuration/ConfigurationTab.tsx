@@ -147,6 +147,16 @@ export const ConfigurationTab: React.FC<ConfigurationTabProps> = ({
             className="w-14 rounded border border-zinc-700 bg-zinc-800 px-2 py-0.5 text-center text-sm text-zinc-50 focus:border-amber-500 focus:outline-none focus:ring-1 focus:ring-amber-500/30"
           />
 
+          <label className="text-right text-zinc-50">Realm of Mercury</label>
+          <input
+            type="checkbox"
+            checked={config.realmOfMercuryEnabled}
+            onChange={(e) =>
+              onUpdate({ realmOfMercuryEnabled: e.target.checked })
+            }
+            className="h-4 w-4 rounded border-zinc-600 bg-zinc-800 accent-amber-500"
+          />
+
           <label className="text-right text-zinc-50">
             Enemy Resistance %
             <InfoTooltip text="Enemy elemental resistance. Defaults to 50%." />

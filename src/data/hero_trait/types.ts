@@ -9,3 +9,4 @@ export interface BaseHeroTrait {
 
 export type HeroTrait = (typeof HeroTraits)[number];
 export type HeroTraitName = (typeof HeroTraits)[number]["name"];
+export type HeroName = (typeof HeroTraits)[number]["hero"];

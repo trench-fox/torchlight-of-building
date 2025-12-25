@@ -64,6 +64,7 @@ export const createEmptyConfigurationPage = (): ConfigurationPage => ({
   fervorEnabled: false,
   enemyFrostbittenEnabled: false,
   crueltyBuffStacks: 40,
+  realmOfMercuryEnabled: false,
 });
 
 export const createEmptySkillPage = (): SkillPage => ({
