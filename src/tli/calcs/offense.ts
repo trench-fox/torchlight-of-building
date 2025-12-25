@@ -867,7 +867,7 @@ const filterModsByCond = (
   return mods.filter((m) => {
     if (!("cond" in m) || m.cond === undefined) return true;
     return match(m.cond)
-      .with("enemy_frostbitten", () => config.enemyFrostbitten.enabled)
+      .with("enemy_frostbitten", () => config.enemyFrostbittenEnabled)
       .with(
         "realm_of_mercury",
         () =>
@@ -1209,8 +1209,8 @@ const calculateFervor = (mods: Mod[], config: Configuration): FervorCtx => {
   const fervorEffMods = filterMod(mods, "FervorEff");
   const bonusIncEff = calculateInc(fervorEffMods.map((a) => a.value));
   return {
-    enabled: config.fervor.enabled,
-    points: config.fervor.points ?? 100,
+    enabled: config.fervorEnabled,
+    points: config.fervorPoints ?? 100,
     bonusIncEff: bonusIncEff,
   };
 };
@@ -1252,8 +1252,8 @@ const calculateEnemyFrostbitten = (
   config: Configuration,
 ): EnemyFrostbittenCtx => {
   return {
-    enabled: config.enemyFrostbitten.enabled,
-    points: config.enemyFrostbitten.points ?? 0,
+    enabled: config.enemyFrostbittenEnabled,
+    points: config.enemyFrostbittenPoints ?? 0,
   };
 };
 

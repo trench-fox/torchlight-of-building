@@ -1,4 +1,5 @@
 import type {
+  Configuration,
   DivinityGod,
   HeroMemoryType,
   Rotation,
@@ -169,16 +170,7 @@ export interface CalculationsPage {
   selectedSkillName?: string;
 }
 
-export interface ConfigurationPage {
-  fervorEnabled: boolean;
-  fervorPoints?: number;
-  enemyFrostbittenEnabled: boolean;
-  enemyFrostbittenPoints?: number;
-  crueltyBuffStacks: number;
-  enemyRes?: number;
-  enemyArmor?: number;
-  realmOfMercuryEnabled: boolean;
-}
+export type ConfigurationPage = Configuration;
 
 export interface EquippedGear {
   helmet?: Gear;

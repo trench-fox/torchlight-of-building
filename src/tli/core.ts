@@ -41,22 +41,26 @@ export interface DmgRange {
 }
 
 export interface Configuration {
-  fervor: {
-    enabled: boolean;
-    points?: number;
-  };
-  enemyFrostbitten: {
-    enabled: boolean;
-    points?: number;
-  };
+  fervorEnabled: boolean;
+  // default to max
+  fervorPoints?: number;
+  enemyFrostbittenEnabled: boolean;
+  // default to 100
+  enemyFrostbittenPoints?: number;
+  // default to max
   crueltyBuffStacks?: number;
+  // default to max
   numShadowHits?: number;
 
-  // ---hero specific---
+  // --------------------
+  // hero-specific config
+  // --------------------
 
   realmOfMercuryEnabled: boolean;
 
-  // ---enemy defensive stats---
+  // ------------
+  // enemy config
+  // ------------
 
   // default to .5
   enemyRes?: number;

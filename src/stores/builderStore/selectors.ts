@@ -71,19 +71,16 @@ export const useConfiguration = (): Configuration => {
   const defaults = createEmptyConfigurationPage();
 
   return {
-    fervor: {
-      enabled: configPage?.fervorEnabled ?? defaults.fervorEnabled,
-      points: configPage?.fervorPoints,
-    },
-    enemyFrostbitten: {
-      enabled:
-        configPage?.enemyFrostbittenEnabled ?? defaults.enemyFrostbittenEnabled,
-      points: configPage?.enemyFrostbittenPoints,
-    },
+    fervorEnabled: configPage?.fervorEnabled ?? defaults.fervorEnabled,
+    fervorPoints: configPage?.fervorPoints,
+    enemyFrostbittenEnabled:
+      configPage?.enemyFrostbittenEnabled ?? defaults.enemyFrostbittenEnabled,
+    enemyFrostbittenPoints: configPage?.enemyFrostbittenPoints,
     crueltyBuffStacks:
       configPage?.crueltyBuffStacks ?? defaults.crueltyBuffStacks,
     enemyRes: configPage?.enemyRes,
     enemyArmor: configPage?.enemyArmor,
-    realmOfMercuryEnabled: false,
+    realmOfMercuryEnabled:
+      configPage?.realmOfMercuryEnabled ?? defaults.realmOfMercuryEnabled,
   };
 };

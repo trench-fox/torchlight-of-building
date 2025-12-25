@@ -14,8 +14,8 @@ import type { OffenseSkillName } from "./skill_confs";
 type DmgPctMod = Extract<Mod, { type: "DmgPct" }>;
 
 const createDefaultConfiguration = (): Configuration => ({
-  fervor: { enabled: false },
-  enemyFrostbitten: { enabled: false },
+  fervorEnabled: false,
+  enemyFrostbittenEnabled: false,
   enemyArmor: 0,
   enemyRes: 0,
   realmOfMercuryEnabled: false,
@@ -90,10 +90,11 @@ const initLoadout = (pl: Partial<Loadout> = {}): Loadout => {
 
 const defaultConfiguration = createDefaultConfiguration();
 
-// Configuration with enemyFrobitten enabled for tests that need Ice Bond's conditional buff
+// Configuration with enemyFrostbitten enabled for tests that need Ice Bond's conditional buff
 const frostbittenEnabledConfig: Configuration = {
   ...createDefaultConfiguration(),
-  enemyFrostbitten: { enabled: true, points: 0 },
+  enemyFrostbittenEnabled: true,
+  enemyFrostbittenPoints: 0,
 };
 
 type ExpectedOutput = Partial<{
@@ -258,7 +259,8 @@ describe("fervor mechanics", () => {
 
   const createFervorConfig = (fervor: { enabled: boolean; points: number }) => {
     const config = createDefaultConfiguration();
-    config.fervor = fervor;
+    config.fervorEnabled = fervor.enabled;
+    config.fervorPoints = fervor.points;
     return config;
   };
 
@@ -2126,8 +2128,10 @@ describe("resolveBuffSkillMods", () => {
     const results = calculateOffense({
       loadout,
       configuration: {
-        fervor: { enabled: false, points: 0 },
-        enemyFrostbitten: { enabled: false, points: 0 },
+        fervorEnabled: false,
+        fervorPoints: 0,
+        enemyFrostbittenEnabled: false,
+        enemyFrostbittenPoints: 0,
         crueltyBuffStacks: 40,
         realmOfMercuryEnabled: false,
       },

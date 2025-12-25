@@ -19,7 +19,7 @@ export const ConfigurationTab: React.FC<ConfigurationTabProps> = ({
   onUpdate,
 }) => {
   const handleOptionalNumberChange =
-    (field: "fervorPoints" | "enemyFrostbittenPoints") =>
+    (field: "fervorPoints" | "enemyFrostbittenPoints" | "numShadowHits") =>
     (e: React.ChangeEvent<HTMLInputElement>): void => {
       const value = e.target.value;
       if (value === "") {
@@ -155,6 +155,19 @@ export const ConfigurationTab: React.FC<ConfigurationTabProps> = ({
               onUpdate({ realmOfMercuryEnabled: e.target.checked })
             }
             className="h-4 w-4 rounded border-zinc-600 bg-zinc-800 accent-amber-500"
+          />
+
+          <label className="text-right text-zinc-50">
+            Shadow Hits
+            <InfoTooltip text="Defaults to max" />
+          </label>
+          <input
+            type="number"
+            value={config.numShadowHits ?? ""}
+            onChange={handleOptionalNumberChange("numShadowHits")}
+            min={0}
+            max={100}
+            className="w-14 rounded border border-zinc-700 bg-zinc-800 px-2 py-0.5 text-center text-sm text-zinc-50 focus:border-amber-500 focus:outline-none focus:ring-1 focus:ring-amber-500/30"
           />
 
           <label className="text-right text-zinc-50">
