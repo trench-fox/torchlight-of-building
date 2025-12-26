@@ -712,23 +712,6 @@ describe("flat damage to attacks", () => {
     validate(results, skillName, { avgHit: 300 });
   });
 
-  test("calculate offense with FlatDmgToAtksAndSpells on attack skill", () => {
-    // Weapon: 100 phys
-    // Flat (FlatDmgToAtksAndSpells): 40 cold
-    // Total: 100 + 40 = 140
-    const input = createModsInput([
-      affix([
-        {
-          type: "FlatDmgToAtksAndSpells",
-          value: { min: 40, max: 40 },
-          dmgType: "cold",
-        },
-      ]),
-    ]);
-    const results = calculateOffense(input);
-    validate(results, skillName, { avgHit: 140 });
-  });
-
   test("calculate offense with flat damage only (no weapon damage)", () => {
     // No weapon equipped, only flat damage
     // Flat: 100 fire * 1.0 (addedDmgEffPct) = 100

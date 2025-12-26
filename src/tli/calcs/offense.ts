@@ -420,11 +420,8 @@ const calculateFlatDmg = (
   let fire = emptyDamageRange();
   let erosion = emptyDamageRange();
 
-  const affixes = R.concat(
-    filterMod(allMods, "FlatDmgToAtks"),
-    filterMod(allMods, "FlatDmgToAtksAndSpells"),
-  );
-  for (const a of affixes) {
+  const mods = filterMod(allMods, "FlatDmgToAtks");
+  for (const a of mods) {
     match(a.dmgType)
       .with("physical", () => {
         phys = addDR(phys, a.value);
