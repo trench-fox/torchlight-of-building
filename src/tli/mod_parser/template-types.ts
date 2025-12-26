@@ -28,7 +28,8 @@ type ParseOptionalContent<S extends string> =
 type ExtractRequiredCaptures<
   T extends string,
   Acc extends object = NonNullable<unknown>,
-> = T extends `${infer _Before // First, skip any optional section [...] and continue after it
+> = T extends `${
+  infer _Before // First, skip any optional section [...] and continue after it
 }[${infer _Content}]${infer Rest}`
   ? ExtractRequiredCaptures<`${_Before}${Rest}`, Acc>
   : // Now extract {name:type} patterns from what remains
@@ -49,7 +50,8 @@ type ExtractRequiredCaptures<
 type ExtractOptionalCaptures<
   T extends string,
   Acc extends object = NonNullable<unknown>,
-> = T extends `${infer _Before // Find [...] pattern
+> = T extends `${
+  infer _Before // Find [...] pattern
 }[${infer Content}]${infer Rest}`
   ? ExtractOptionalCaptures<Rest, Acc & ParseOptionalContent<Content>>
   : // No more patterns

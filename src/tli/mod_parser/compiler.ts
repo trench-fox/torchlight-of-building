@@ -61,7 +61,6 @@ export const compileTemplate = (
 ): CompiledTemplate => {
   const captureNames: string[] = [];
   const extractors = new Map<string, (match: string) => string | number>();
-  const optionalFlags = new Set<string>();
 
   // Process the template piece by piece
   let regexStr = "";
@@ -118,7 +117,6 @@ export const compileTemplate = (
         if (literalMatch) {
           // For literal words, add as a capture group so we can detect presence
           const word = literalMatch[1];
-          optionalFlags.add(word);
           captureNames.push(word);
           extractors.set(word, (s) => s.toLowerCase());
 
@@ -129,19 +127,12 @@ export const compileTemplate = (
             regexStr += `(?:(${word}))?`;
           }
         } else {
-          // For complex optionals (with captures), mark any captures as optional
-          const captureMatch = content.match(/\{(\w+):/);
-          if (captureMatch) {
-            optionalFlags.add(captureMatch[1]);
-          }
-
           // Recursively compile the optional content, including the pending space
           const innerCompiled = compileInner(
             content,
             enumMappings,
             captureNames,
             extractors,
-            optionalFlags,
           );
           if (pendingSpace) {
             regexStr += `(?:\\s+${innerCompiled})?`;
@@ -201,7 +192,6 @@ export const compileTemplate = (
     regex: new RegExp(`^${regexStr}$`, "i"),
     captureNames,
     extractors,
-    optionalFlags,
   };
 };
 
@@ -211,7 +201,6 @@ const compileInner = (
   enumMappings: Map<string, Record<string, string>>,
   captureNames: string[],
   extractors: Map<string, (match: string) => string | number>,
-  optionalFlags: Set<string>,
 ): string => {
   let regexStr = "";
   let pos = 0;
@@ -291,6 +280,7 @@ const findMatchingParen = (str: string, start: number): number => {
 
 // Escape a single character for regex
 const escapeRegexChar = (char: string): string => {
+  // biome-ignore lint/suspicious/noTemplateCurlyInString: listing regex special chars, not template
   if (".*+?^${}()|[]\\".includes(char)) {
     return "\\" + char;
   }

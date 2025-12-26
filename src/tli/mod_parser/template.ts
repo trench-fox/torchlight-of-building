@@ -73,13 +73,6 @@ const createParser = <TModType extends keyof ModTypeMap>(
       }
     }
 
-    // Set optional flags
-    for (const flag of compiled.optionalFlags) {
-      if (captures[flag] === undefined) {
-        captures[flag] = undefined;
-      }
-    }
-
     // Call any custom extractors that weren't already processed
     // (e.g., for alternation patterns that need the full match)
     for (const [name, extractor] of config.customExtractors) {
@@ -145,12 +138,6 @@ const createMultiModParser = (
       }
     }
 
-    for (const flag of compiled.optionalFlags) {
-      if (captures[flag] === undefined) {
-        captures[flag] = undefined;
-      }
-    }
-
     // Create all mods
     return specs.map((spec) => ({
       type: spec.type,
@@ -168,7 +155,7 @@ const getCaptureType = (template: string, name: string): string | undefined => {
 
 // Create a template builder - internal implementation uses any for flexibility
 // Public API types are enforced through TemplateBuilder interface
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+// biome-ignore lint/suspicious/noExplicitAny: required for generic type accumulation
 const createBuilder = (config: BuilderConfig): TemplateBuilder<any> => ({
   enum(name, mapping) {
     const newMappings = new Map(config.enumMappings);

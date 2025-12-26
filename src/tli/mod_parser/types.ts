@@ -15,7 +15,6 @@ export interface CompiledTemplate {
   regex: RegExp;
   captureNames: string[];
   extractors: Map<string, (match: string) => string | number>;
-  optionalFlags: Set<string>;
 }
 
 // Output specification for a single mod
