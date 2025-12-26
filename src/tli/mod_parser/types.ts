@@ -5,6 +5,11 @@ export interface RuntimeCaptures {
   [key: string]: string | number | boolean | undefined;
 }
 
+// Map of mod type names to their definitions (derived from Mod union)
+export type ModTypeMap = {
+  [M in Mod as M["type"]]: M;
+};
+
 // A compiled template ready to parse
 export interface CompiledTemplate {
   regex: RegExp;
@@ -64,38 +69,4 @@ export interface MultiTemplateBuilder<
     modType: TModType,
     mapper?: (captures: TCaptures) => Omit<ModOfType<TModType>, "type">,
   ): ModParser;
-}
-
-// Map of mod type names to their definitions (for type safety)
-export interface ModTypeMap {
-  DmgPct: ModOfType<"DmgPct">;
-  FlatDmgToAtks: ModOfType<"FlatDmgToAtks">;
-  FlatDmgToSpells: ModOfType<"FlatDmgToSpells">;
-  CritRatingPct: ModOfType<"CritRatingPct">;
-  CritDmgPct: ModOfType<"CritDmgPct">;
-  AspdPct: ModOfType<"AspdPct">;
-  CspdPct: ModOfType<"CspdPct">;
-  AspdAndCspdPct: ModOfType<"AspdAndCspdPct">;
-  MinionAspdAndCspdPct: ModOfType<"MinionAspdAndCspdPct">;
-  DoubleDmgChancePct: ModOfType<"DoubleDmgChancePct">;
-  Stat: ModOfType<"Stat">;
-  StatPct: ModOfType<"StatPct">;
-  FervorEff: ModOfType<"FervorEff">;
-  SteepStrikeChance: ModOfType<"SteepStrikeChance">;
-  GearAspdPct: ModOfType<"GearAspdPct">;
-  AttackBlockChancePct: ModOfType<"AttackBlockChancePct">;
-  SpellBlockChancePct: ModOfType<"SpellBlockChancePct">;
-  MaxLifePct: ModOfType<"MaxLifePct">;
-  MaxEnergyShieldPct: ModOfType<"MaxEnergyShieldPct">;
-  ArmorPct: ModOfType<"ArmorPct">;
-  EvasionPct: ModOfType<"EvasionPct">;
-  LifeRegainPct: ModOfType<"LifeRegainPct">;
-  EnergyShieldRegainPct: ModOfType<"EnergyShieldRegainPct">;
-  AddsDmgAs: ModOfType<"AddsDmgAs">;
-  ResPenPct: ModOfType<"ResPenPct">;
-  ArmorPenPct: ModOfType<"ArmorPenPct">;
-  ShadowQuant: ModOfType<"ShadowQuant">;
-  ShadowDmgPct: ModOfType<"ShadowDmgPct">;
-  MaxMana: ModOfType<"MaxMana">;
-  MaxManaPct: ModOfType<"MaxManaPct">;
 }
