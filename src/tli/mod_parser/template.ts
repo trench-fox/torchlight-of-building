@@ -1,12 +1,13 @@
 import type { Mod, ModOfType } from "../mod";
 import { compileTemplate, validateEnum } from "./compiler";
+import type { ParseTemplate } from "./template-types";
 import type {
-  Captures,
   CompiledTemplate,
   ModParser,
   ModTypeMap,
   MultiOutput,
   MultiTemplateBuilder,
+  RuntimeCaptures,
   TemplateBuilder,
 } from "./types";
 
@@ -24,7 +25,7 @@ const createParser = <TModType extends keyof ModTypeMap>(
   compiled: CompiledTemplate,
   modType: TModType,
   mapper:
-    | ((captures: Captures) => Omit<ModOfType<TModType>, "type">)
+    | ((captures: RuntimeCaptures) => Omit<ModOfType<TModType>, "type">)
     | undefined,
   config: BuilderConfig,
 ): ModParser => ({
@@ -33,7 +34,7 @@ const createParser = <TModType extends keyof ModTypeMap>(
     if (!match) return undefined;
 
     // Extract captures
-    const captures: Captures = {};
+    const captures: RuntimeCaptures = {};
     for (let i = 0; i < compiled.captureNames.length; i++) {
       const name = compiled.captureNames[i];
       const value = match[i + 1];
@@ -99,7 +100,7 @@ const createParser = <TModType extends keyof ModTypeMap>(
 // Create a multi-mod parser
 const createMultiModParser = (
   compiled: CompiledTemplate,
-  specs: MultiOutput[],
+  specs: MultiOutput<RuntimeCaptures>[],
   config: BuilderConfig,
 ): ModParser => ({
   parse(input: string): Mod[] | undefined {
@@ -107,7 +108,7 @@ const createMultiModParser = (
     if (!match) return undefined;
 
     // Extract captures
-    const captures: Captures = {};
+    const captures: RuntimeCaptures = {};
     for (let i = 0; i < compiled.captureNames.length; i++) {
       const name = compiled.captureNames[i];
       const value = match[i + 1];
@@ -165,8 +166,10 @@ const getCaptureType = (template: string, name: string): string | undefined => {
   return match?.[1];
 };
 
-// Create a template builder
-const createBuilder = (config: BuilderConfig): TemplateBuilder => ({
+// Create a template builder - internal implementation uses any for flexibility
+// Public API types are enforced through TemplateBuilder interface
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const createBuilder = (config: BuilderConfig): TemplateBuilder<any> => ({
   enum(name, mapping) {
     const newMappings = new Map(config.enumMappings);
     newMappings.set(name, mapping);
@@ -175,46 +178,68 @@ const createBuilder = (config: BuilderConfig): TemplateBuilder => ({
 
   capture(name, extractor) {
     const newExtractors = new Map(config.customExtractors);
-    newExtractors.set(name, extractor);
+    newExtractors.set(name, extractor as never);
     return createBuilder({ ...config, customExtractors: newExtractors });
   },
 
   output(modType, mapper) {
     const compiled = compileTemplate(config.template, config.enumMappings);
-    return createParser(compiled, modType, mapper, config);
+    return createParser(compiled, modType, mapper as never, config);
   },
 
   outputMany(specs) {
     const compiled = compileTemplate(config.template, config.enumMappings);
-    return createMultiModParser(compiled, specs, config);
+    return createMultiModParser(compiled, specs as never, config);
   },
 });
 
-// Tagged template function
-export const t = (
+/**
+ * Template builder factory.
+ *
+ * Two calling conventions:
+ * 1. Function call (type-safe): t("{value:dec%} damage") - infers capture types
+ * 2. Tagged template (legacy): t`{value:dec%} damage` - no type inference
+ *
+ * For new templates, prefer the function call syntax for type safety.
+ */
+export function t<T extends string>(
+  template: T,
+): TemplateBuilder<ParseTemplate<T>>;
+export function t(
   strings: TemplateStringsArray,
   ...values: unknown[]
-): TemplateBuilder => {
-  // Combine template parts
-  const template = strings.reduce((acc, str, i) => {
-    return acc + str + (values[i] ?? "");
-  }, "");
+): TemplateBuilder<Record<string, unknown>>;
+export function t<T extends string>(
+  templateOrStrings: T | TemplateStringsArray,
+  ...values: unknown[]
+):
+  | TemplateBuilder<ParseTemplate<T>>
+  | TemplateBuilder<Record<string, unknown>> {
+  // Determine if called as tagged template or function
+  const template =
+    typeof templateOrStrings === "string"
+      ? templateOrStrings
+      : (templateOrStrings as TemplateStringsArray).reduce((acc, str, i) => {
+          return acc + str + (values[i] ?? "");
+        }, "");
 
   return createBuilder({
     template,
     enumMappings: new Map(),
     customExtractors: new Map(),
-  });
-};
+  }) as TemplateBuilder<ParseTemplate<T>>;
+}
 
 // Multi-pattern support
-t.multi = (parsers: (TemplateBuilder | ModParser)[]): MultiTemplateBuilder => ({
+t.multi = <TCaptures extends object = Record<string, unknown>>(
+  parsers: (TemplateBuilder<TCaptures> | ModParser)[],
+): MultiTemplateBuilder<TCaptures> => ({
   output(modType, mapper) {
     // Convert builders to parsers if needed
     const resolvedParsers: ModParser[] = parsers.map((p) => {
       if ("parse" in p) return p;
       // Builder without output yet - create with the provided output
-      return p.output(modType, mapper);
+      return (p as TemplateBuilder<TCaptures>).output(modType, mapper);
     });
 
     return {

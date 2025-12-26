@@ -1,7 +1,7 @@
 import type { Mod, ModOfType } from "../mod";
 
-// Captures extracted from a template match
-export interface Captures {
+// Runtime captures type (used internally by parser)
+export interface RuntimeCaptures {
   [key: string]: string | number | boolean | undefined;
 }
 
@@ -16,14 +16,13 @@ export interface CompiledTemplate {
 // Output specification for a single mod
 export interface SingleOutput<TModType extends keyof ModTypeMap> {
   type: TModType;
-  mod: (captures: Captures) => Omit<ModOfType<TModType>, "type">;
+  mod: (captures: RuntimeCaptures) => Omit<ModOfType<TModType>, "type">;
 }
 
-// Output specification for multi-mod templates
-export interface MultiOutput {
+// Output specification for multi-mod templates (loosely typed return)
+export interface MultiOutput<TCaptures extends object = RuntimeCaptures> {
   type: keyof ModTypeMap;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  mod: (captures: Captures) => Record<string, any>;
+  mod: (captures: TCaptures) => Record<string, unknown>;
 }
 
 // A parser that can parse input and return mods
@@ -31,35 +30,39 @@ export interface ModParser {
   parse(input: string): Mod[] | undefined;
 }
 
-// Builder for fluent API
-export interface TemplateBuilder {
+// Builder for fluent API - generic over captures type
+export interface TemplateBuilder<
+  TCaptures extends object = Record<string, unknown>,
+> {
   // Define custom enum mapping for this template
   enum<TName extends string>(
     name: TName,
     mapping: Record<string, string>,
-  ): TemplateBuilder;
+  ): TemplateBuilder<TCaptures>;
 
-  // Custom capture extractor
-  capture<TName extends string>(
+  // Custom capture extractor - adds/overrides the capture type
+  capture<TName extends string, TValue>(
     name: TName,
-    extractor: (match: RegExpMatchArray) => string | number | boolean,
-  ): TemplateBuilder;
+    extractor: (match: RegExpMatchArray) => TValue,
+  ): TemplateBuilder<TCaptures & { [K in TName]: TValue }>;
 
-  // Output single mod
+  // Output single mod - mapper receives typed captures
   output<TModType extends keyof ModTypeMap>(
     modType: TModType,
-    mapper?: (captures: Captures) => Omit<ModOfType<TModType>, "type">,
+    mapper?: (captures: TCaptures) => Omit<ModOfType<TModType>, "type">,
   ): ModParser;
 
   // Output multiple mods from same template
-  outputMany(specs: MultiOutput[]): ModParser;
+  outputMany(specs: MultiOutput<TCaptures>[]): ModParser;
 }
 
 // Multi-pattern builder (for alternate syntaxes)
-export interface MultiTemplateBuilder {
+export interface MultiTemplateBuilder<
+  TCaptures extends object = Record<string, unknown>,
+> {
   output<TModType extends keyof ModTypeMap>(
     modType: TModType,
-    mapper?: (captures: Captures) => Omit<ModOfType<TModType>, "type">,
+    mapper?: (captures: TCaptures) => Omit<ModOfType<TModType>, "type">,
   ): ModParser;
 }
 

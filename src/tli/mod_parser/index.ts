@@ -1,12 +1,40 @@
 import type { Mod } from "../mod";
 import { multi } from "./template";
-import * as crit from "./templates/crit";
-import * as damage from "./templates/damage";
-// Import all templates
-import * as defense from "./templates/defense";
-import * as misc from "./templates/misc";
-import * as speed from "./templates/speed";
-import * as stats from "./templates/stats";
+import {
+  AddsDmgAs,
+  ArmorPct,
+  ArmorPenPct,
+  AspdAndCspdPct,
+  AspdPct,
+  AttackBlockChancePct,
+  CritDmgPct,
+  CritMultiModParsers,
+  CritRatingPct,
+  CspdPct,
+  DamageMultiModParsers,
+  DmgPct,
+  DmgPctPerMana,
+  DoubleDmgChancePct,
+  EnergyShieldRegainPct,
+  EvasionPct,
+  FervorEff,
+  FlatDmgToAtks,
+  FlatDmgToSpells,
+  GearAspdPct,
+  LifeRegainPct,
+  MaxEnergyShieldPct,
+  MaxLifePct,
+  MaxMana,
+  MaxManaPct,
+  MinionAspdAndCspdPct,
+  ResPenPct,
+  ShadowDmgPct,
+  ShadowQuant,
+  SpellBlockChancePct,
+  Stat,
+  StatPct,
+  SteepStrikeChance,
+} from "./templates";
 import type { ModParser } from "./types";
 
 // Collect all parsers in priority order
@@ -15,54 +43,54 @@ import type { ModParser } from "./types";
 
 const allParsers: ModParser[] = [
   // Multi-mod parsers (order matters - more specific first)
-  damage.DamageMultiModParsers,
-  crit.CritMultiModParsers,
+  DamageMultiModParsers,
+  CritMultiModParsers,
 
   // Stackable/per parsers (more specific than base)
-  damage.DmgPctPerMana,
+  DmgPctPerMana,
 
   // Single-mod parsers
   // Offense - damage
-  damage.DmgPct,
-  crit.CritRatingPct,
-  crit.CritDmgPct,
+  DmgPct,
+  CritRatingPct,
+  CritDmgPct,
 
   // Speed
-  speed.MinionAspdAndCspdPct,
-  speed.AspdAndCspdPct,
-  speed.AspdPct,
-  speed.CspdPct,
-  speed.GearAspdPct,
+  MinionAspdAndCspdPct,
+  AspdAndCspdPct,
+  AspdPct,
+  CspdPct,
+  GearAspdPct,
 
   // Misc offense
-  misc.FervorEff,
-  misc.SteepStrikeChance,
-  misc.ShadowQuant,
-  misc.ShadowDmgPct,
-  damage.AddsDmgAs,
-  misc.ResPenPct,
-  misc.ArmorPenPct,
-  misc.DoubleDmgChancePct,
-  damage.FlatDmgToAtks,
-  damage.FlatDmgToSpells,
+  FervorEff,
+  SteepStrikeChance,
+  ShadowQuant,
+  ShadowDmgPct,
+  AddsDmgAs,
+  ResPenPct,
+  ArmorPenPct,
+  DoubleDmgChancePct,
+  FlatDmgToAtks,
+  FlatDmgToSpells,
 
   // Resource
-  misc.MaxMana,
-  misc.MaxManaPct,
+  MaxMana,
+  MaxManaPct,
 
   // Defense
-  defense.AttackBlockChancePct,
-  defense.SpellBlockChancePct,
-  defense.MaxLifePct,
-  defense.MaxEnergyShieldPct,
-  defense.ArmorPct,
-  defense.EvasionPct,
-  defense.EnergyShieldRegainPct,
-  defense.LifeRegainPct,
+  AttackBlockChancePct,
+  SpellBlockChancePct,
+  MaxLifePct,
+  MaxEnergyShieldPct,
+  ArmorPct,
+  EvasionPct,
+  EnergyShieldRegainPct,
+  LifeRegainPct,
 
   // Attributes
-  stats.Stat,
-  stats.StatPct,
+  Stat,
+  StatPct,
 ];
 
 // Combined parser
