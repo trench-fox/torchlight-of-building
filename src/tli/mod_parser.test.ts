@@ -94,6 +94,21 @@ test("parse additional damage per frostbite rating", () => {
   ]);
 });
 
+test("parse additional attack damage to nearby enemies", () => {
+  const result = parseMod(
+    "Deals up to +25% additional Attack Damage to enemies in proximity, and this damage reduces as the distance from the enemy grows",
+  );
+  expect(result).toEqual([
+    {
+      type: "DmgPct",
+      value: 25,
+      modType: "attack",
+      addn: true,
+      cond: "target_enemy_is_in_proximity",
+    },
+  ]);
+});
+
 test("parse decimal damage", () => {
   const result = parseMod("+12.5% fire damage");
   expect(result).toEqual([

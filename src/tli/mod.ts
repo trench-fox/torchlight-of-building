@@ -65,6 +65,7 @@ export type Condition =
   | "has_full_mana"
   | "enemy_paralyzed"
   | "target_enemy_is_nearby"
+  | "target_enemy_is_in_proximity"
   | "has_blocked_recently"
   | "has_elites_nearby"
   | "enemy_has_ailment";

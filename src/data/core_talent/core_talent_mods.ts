@@ -101,6 +101,15 @@ export const CoreTalentMods: Record<CoreTalentName, Affix> = {
     affixLines: [
       {
         text: "Deals up to +25% additional Attack Damage to enemies in proximity, and this damage reduces as the distance from the enemy grows",
+        mods: [
+          {
+            type: "DmgPct",
+            value: 25,
+            modType: "attack",
+            addn: true,
+            cond: "target_enemy_is_in_proximity",
+          },
+        ],
       },
       {
         text: "-15% additional damage taken from enemies in proximity, and this damage reduces as the distance from the enemy grows",

@@ -10,6 +10,7 @@ const HAS_FULL_MANA = "has_full_mana" as const;
 const ENEMY_HAS_AILMENT = "enemy_has_ailment" as const;
 const FROSTBITE_RATING = "frostbite_rating" as const;
 const MANA_CONSUMED_RECENTLY = "mana_consumed_recently" as const;
+const TARGET_ENEMY_IS_IN_PROXIMITY = "target_enemy_is_in_proximity" as const;
 const ALL = "all" as const;
 
 const coreTalentNameSet = new Set(CoreTalentNames.map((name) => name.toLowerCase()));
@@ -85,6 +86,14 @@ export const allParsers = [
     modType: GLOBAL,
     addn: true,
     per: { stackable: FROSTBITE_RATING, amt: c.amt },
+  })),
+  t(
+    "deals up to {value:dec%} additional attack damage to enemies in proximity, and this (effect|damage) reduces as the distance from the enemy grows",
+  ).output("DmgPct", (c) => ({
+    value: c.value,
+    modType: ATTACK,
+    addn: true,
+    cond: TARGET_ENEMY_IS_IN_PROXIMITY,
   })),
   t("{value:dec%} [additional] [{modType:DmgModType}] damage").output("DmgPct", (c) => ({
     value: c.value,
