@@ -29,7 +29,6 @@ import {
   type SupportSkillSlot,
 } from "../core";
 import type {
-  Comparator,
   ConditionThreshold,
   DmgChunkType,
   Mod,
