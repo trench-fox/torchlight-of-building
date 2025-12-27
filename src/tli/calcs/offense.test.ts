@@ -22,7 +22,7 @@ const createDefaultConfiguration = (): Configuration => ({
   crueltyBuffStacks: undefined,
   numShadowHits: undefined,
   manaConsumedRecently: undefined,
-  unsealedManaWholePct: undefined,
+  unsealedManaPct: undefined,
   realmOfMercuryEnabled: false,
   enemyRes: 0,
   enemyArmor: 0,
@@ -157,7 +157,7 @@ describe("basic damage modifiers", () => {
     // base * bonusdmg
     // 100 * 2 = 200
     const input = createModsInput([
-      affix([{ type: "DmgPct", value: 1, modType: "global", addn: false }]),
+      affix([{ type: "DmgPct", value: 100, modType: "global", addn: false }]),
     ]);
     const results = calculateOffense(input);
     validate(results, skillName, { avgHit: 200 });
@@ -167,8 +167,8 @@ describe("basic damage modifiers", () => {
     // base * (1 + sum of increased)
     // 100 * (1 + 0.5 + 0.3) = 180
     const input = createModsInput([
-      affix([{ type: "DmgPct", value: 0.5, modType: "global", addn: false }]), // +50% increased
-      affix([{ type: "DmgPct", value: 0.3, modType: "global", addn: false }]), // +30% increased
+      affix([{ type: "DmgPct", value: 50, modType: "global", addn: false }]), // +50% increased
+      affix([{ type: "DmgPct", value: 30, modType: "global", addn: false }]), // +30% increased
     ]);
     const results = calculateOffense(input);
     validate(results, skillName, { avgHit: 180 });
@@ -178,8 +178,8 @@ describe("basic damage modifiers", () => {
     // base * (1 + more1) * (1 + more2)
     // 100 * 1.5 * 1.2 = 180
     const input = createModsInput([
-      affix([{ type: "DmgPct", value: 0.5, modType: "global", addn: true }]), // +50% more
-      affix([{ type: "DmgPct", value: 0.2, modType: "global", addn: true }]), // +20% more
+      affix([{ type: "DmgPct", value: 50, modType: "global", addn: true }]), // +50% more
+      affix([{ type: "DmgPct", value: 20, modType: "global", addn: true }]), // +20% more
     ]);
     const results = calculateOffense(input);
     validate(results, skillName, { avgHit: 180 });
@@ -189,9 +189,9 @@ describe("basic damage modifiers", () => {
     // base * (1 + sum of increased) * (1 + more)
     // 100 * (1 + 0.5 + 0.3) * 1.2 = 100 * 1.8 * 1.2 = 216
     const input = createModsInput([
-      affix([{ type: "DmgPct", value: 0.5, modType: "global", addn: false }]), // +50% increased
-      affix([{ type: "DmgPct", value: 0.3, modType: "global", addn: false }]), // +30% increased
-      affix([{ type: "DmgPct", value: 0.2, modType: "global", addn: true }]), // +20% more
+      affix([{ type: "DmgPct", value: 50, modType: "global", addn: false }]), // +50% increased
+      affix([{ type: "DmgPct", value: 30, modType: "global", addn: false }]), // +30% increased
+      affix([{ type: "DmgPct", value: 20, modType: "global", addn: true }]), // +20% more
     ]);
     const results = calculateOffense(input);
     validate(results, skillName, { avgHit: 216 });
@@ -201,7 +201,7 @@ describe("basic damage modifiers", () => {
     // [Test] Simple Attack has "Attack" tag, so attack modifiers apply
     // 100 * (1 + 0.5) = 150
     const input = createModsInput([
-      affix([{ type: "DmgPct", value: 0.5, modType: "attack", addn: false }]), // +50% increased attack damage
+      affix([{ type: "DmgPct", value: 50, modType: "attack", addn: false }]), // +50% increased attack damage
     ]);
     const results = calculateOffense(input);
     validate(results, skillName, { avgHit: 150 });
@@ -212,7 +212,7 @@ describe("basic damage modifiers", () => {
     // So spell modifiers don't apply - only base damage
     // 100 * 1 (no applicable modifiers) = 100
     const input = createModsInput([
-      affix([{ type: "DmgPct", value: 0.5, modType: "spell", addn: false }]), // +50% increased spell damage
+      affix([{ type: "DmgPct", value: 50, modType: "spell", addn: false }]), // +50% increased spell damage
     ]);
     const results = calculateOffense(input);
     validate(results, skillName, { avgHit: 100 });
@@ -236,7 +236,7 @@ describe("basic damage modifiers", () => {
       ],
       [
         affix([
-          { type: "DmgPct", value: 0.5, modType: "elemental", addn: false },
+          { type: "DmgPct", value: 50, modType: "elemental", addn: false },
         ]),
       ], // +50% elemental
     );
@@ -254,7 +254,7 @@ describe("basic damage modifiers", () => {
           { type: "FlatGearDmg", value: { min: 30, max: 30 }, modType: "cold" },
         ]),
       ],
-      [affix([{ type: "DmgPct", value: 0.8, modType: "cold", addn: false }])], // +80% cold damage
+      [affix([{ type: "DmgPct", value: 80, modType: "cold", addn: false }])], // +80% cold damage
     );
     const results = calculateOffense(input);
     validate(results, skillName, { avgHit: 154 });
@@ -343,7 +343,7 @@ describe("fervor mechanics", () => {
     // Crit damage: 1.5 (default)
     // AvgHitWithCrit: 100 * 0.10 * 1.5 + 100 * 0.90 = 15 + 90 = 105
     const input = createFervorInput({ enabled: true, points: 25 }, [
-      affix([{ type: "CritRatingPct", value: 0.5, modType: "global" }]),
+      affix([{ type: "CritRatingPct", value: 50, modType: "global" }]),
     ]);
     const results = calculateOffense(input);
     validate(results, skillName, {
@@ -353,14 +353,14 @@ describe("fervor mechanics", () => {
     });
   });
 
-  test("calculate offense with fervor and single FervorEff modifier", () => {
+  test("calculate offense with fervor and single FervorEffPct modifier", () => {
     // Base damage: 100
     // Fervor: 100 points * 2% * (1 + 0.5) = 100 * 0.02 * 1.5 = 3.0 (300% increased crit rating)
     // Crit chance: 0.05 * (1 + 3.0) = 0.20 (20%)
     // Crit damage: 1.5 (default)
     // AvgHitWithCrit: 100 * 0.20 * 1.5 + 100 * 0.80 = 30 + 80 = 110
     const input = createFervorInput({ enabled: true, points: 100 }, [
-      affix([{ type: "FervorEff", value: 0.5 }]),
+      affix([{ type: "FervorEffPct", value: 50 }]),
     ]);
     const results = calculateOffense(input);
     validate(results, skillName, {
@@ -370,16 +370,16 @@ describe("fervor mechanics", () => {
     });
   });
 
-  test("calculate offense with fervor and multiple FervorEff modifiers stacking", () => {
+  test("calculate offense with fervor and multiple FervorEffPct modifiers stacking", () => {
     // Base damage: 100
-    // FervorEff total: 0.1 + 0.1 = 0.2 (20% total)
+    // FervorEffPct total: 0.1 + 0.1 = 0.2 (20% total)
     // Fervor: 100 points * 2% * (1 + 0.2) = 100 * 0.02 * 1.2 = 2.4 (240% increased crit rating)
     // Crit chance: 0.05 * (1 + 2.4) = 0.17 (17%)
     // Crit damage: 1.5 (default)
     // AvgHitWithCrit: 100 * 0.17 * 1.5 + 100 * 0.83 = 25.5 + 83 = 108.5
     const input = createFervorInput({ enabled: true, points: 100 }, [
-      affix([{ type: "FervorEff", value: 0.1 }]),
-      affix([{ type: "FervorEff", value: 0.1 }]),
+      affix([{ type: "FervorEffPct", value: 10 }]),
+      affix([{ type: "FervorEffPct", value: 10 }]),
     ]);
     const results = calculateOffense(input);
     validate(results, skillName, {
@@ -389,14 +389,14 @@ describe("fervor mechanics", () => {
     });
   });
 
-  test("calculate offense with fervor and FervorEff with custom fervor points", () => {
+  test("calculate offense with fervor and FervorEffPct with custom fervor points", () => {
     // Base damage: 100
     // Fervor: 50 points * 2% * (1 + 1.0) = 50 * 0.02 * 2.0 = 2.0 (200% increased crit rating)
     // Crit chance: 0.05 * (1 + 2.0) = 0.15 (15%)
     // Crit damage: 1.5 (default)
     // AvgHitWithCrit: 100 * 0.15 * 1.5 + 100 * 0.85 = 22.5 + 85 = 107.5
     const input = createFervorInput({ enabled: true, points: 50 }, [
-      affix([{ type: "FervorEff", value: 1.0 }]),
+      affix([{ type: "FervorEffPct", value: 100 }]),
     ]);
     const results = calculateOffense(input);
     validate(results, skillName, {
@@ -406,13 +406,13 @@ describe("fervor mechanics", () => {
     });
   });
 
-  test("calculate offense with FervorEff but fervor disabled", () => {
-    // FervorEff has no effect when fervor is disabled
+  test("calculate offense with FervorEffPct but fervor disabled", () => {
+    // FervorEffPct has no effect when fervor is disabled
     // Crit chance: 0.05 * (1 + 0) = 0.05 (5%)
     // Crit damage: 1.5 (default)
     // AvgHitWithCrit: 100 * 0.05 * 1.5 + 100 * 0.95 = 7.5 + 95 = 102.5
     const input = createFervorInput({ enabled: false, points: 100 }, [
-      affix([{ type: "FervorEff", value: 0.5 }]),
+      affix([{ type: "FervorEffPct", value: 50 }]),
     ]);
     const results = calculateOffense(input);
     validate(results, skillName, {
@@ -433,7 +433,7 @@ describe("fervor mechanics", () => {
       affix([
         {
           type: "CritDmgPct",
-          value: 0.005,
+          value: 0.5,
           addn: false,
           modType: "global",
           per: { stackable: "fervor" },
@@ -460,7 +460,7 @@ describe("fervor mechanics", () => {
       affix([
         {
           type: "CritDmgPct",
-          value: 0.005,
+          value: 0.5,
           addn: false,
           modType: "global",
           per: { stackable: "fervor" },
@@ -469,7 +469,7 @@ describe("fervor mechanics", () => {
       affix([
         {
           type: "CritDmgPct",
-          value: 0.003,
+          value: 0.3,
           addn: false,
           modType: "global",
           per: { stackable: "fervor" },
@@ -496,7 +496,7 @@ describe("fervor mechanics", () => {
       affix([
         {
           type: "CritDmgPct",
-          value: 0.01,
+          value: 1,
           addn: false,
           modType: "global",
           per: { stackable: "fervor" },
@@ -521,7 +521,7 @@ describe("fervor mechanics", () => {
       affix([
         {
           type: "CritDmgPct",
-          value: 0.005,
+          value: 0.5,
           addn: false,
           modType: "global",
           per: { stackable: "fervor" },
@@ -550,14 +550,14 @@ describe("fervor mechanics", () => {
       affix([
         {
           type: "CritDmgPct",
-          value: 0.005,
+          value: 0.5,
           addn: false,
           modType: "global",
           per: { stackable: "fervor" },
         },
       ]),
       affix([
-        { type: "CritDmgPct", value: 0.3, modType: "global", addn: false },
+        { type: "CritDmgPct", value: 30, modType: "global", addn: false },
       ]),
     ]);
     const results = calculateOffense(input);
@@ -708,7 +708,7 @@ describe("flat damage to attacks", () => {
           dmgType: "physical",
         },
       ]),
-      affix([{ type: "DmgPct", value: 1.0, modType: "physical", addn: false }]), // +100% physical damage
+      affix([{ type: "DmgPct", value: 100, modType: "physical", addn: false }]), // +100% physical damage
     ]);
     const results = calculateOffense(input);
     validate(results, skillName, { avgHit: 300 });
@@ -742,7 +742,7 @@ describe("flat damage to attacks", () => {
           dmgType: "erosion",
         },
       ]),
-      affix([{ type: "DmgPct", value: 0.5, modType: "erosion", addn: false }]), // +50% erosion damage
+      affix([{ type: "DmgPct", value: 50, modType: "erosion", addn: false }]), // +50% erosion damage
     ]);
     const results = calculateOffense(input);
     validate(results, skillName, { avgHit: 175 });
@@ -797,7 +797,7 @@ describe("convertDmg", () => {
     };
 
     const mods: Mod[] = [
-      { type: "ConvertDmgPct", from: "physical", to: "cold", value: 1.0 },
+      { type: "ConvertDmgPct", from: "physical", to: "cold", value: 100 },
     ];
 
     const result = convertDmg(dmgRanges, mods);
@@ -816,7 +816,7 @@ describe("convertDmg", () => {
     };
 
     const mods: Mod[] = [
-      { type: "ConvertDmgPct", from: "physical", to: "cold", value: 0.5 },
+      { type: "ConvertDmgPct", from: "physical", to: "cold", value: 50 },
     ];
 
     const result = convertDmg(dmgRanges, mods);
@@ -838,8 +838,8 @@ describe("convertDmg", () => {
     };
 
     const mods: Mod[] = [
-      { type: "ConvertDmgPct", from: "physical", to: "cold", value: 0.3 },
-      { type: "ConvertDmgPct", from: "physical", to: "fire", value: 0.5 },
+      { type: "ConvertDmgPct", from: "physical", to: "cold", value: 30 },
+      { type: "ConvertDmgPct", from: "physical", to: "fire", value: 50 },
     ];
 
     const result = convertDmg(dmgRanges, mods);
@@ -861,8 +861,8 @@ describe("convertDmg", () => {
     };
 
     const mods: Mod[] = [
-      { type: "ConvertDmgPct", from: "physical", to: "cold", value: 0.6 },
-      { type: "ConvertDmgPct", from: "physical", to: "fire", value: 0.6 },
+      { type: "ConvertDmgPct", from: "physical", to: "cold", value: 60 },
+      { type: "ConvertDmgPct", from: "physical", to: "fire", value: 60 },
     ];
 
     const result = convertDmg(dmgRanges, mods);
@@ -883,8 +883,8 @@ describe("convertDmg", () => {
     };
 
     const mods: Mod[] = [
-      { type: "ConvertDmgPct", from: "physical", to: "lightning", value: 1.0 },
-      { type: "ConvertDmgPct", from: "lightning", to: "cold", value: 1.0 },
+      { type: "ConvertDmgPct", from: "physical", to: "lightning", value: 100 },
+      { type: "ConvertDmgPct", from: "lightning", to: "cold", value: 100 },
     ];
 
     const result = convertDmg(dmgRanges, mods);
@@ -905,8 +905,8 @@ describe("convertDmg", () => {
     };
 
     const mods: Mod[] = [
-      { type: "ConvertDmgPct", from: "physical", to: "lightning", value: 0.5 },
-      { type: "ConvertDmgPct", from: "lightning", to: "cold", value: 0.5 },
+      { type: "ConvertDmgPct", from: "physical", to: "lightning", value: 50 },
+      { type: "ConvertDmgPct", from: "lightning", to: "cold", value: 50 },
     ];
 
     const result = convertDmg(dmgRanges, mods);
@@ -925,10 +925,10 @@ describe("convertDmg", () => {
     };
 
     const mods: Mod[] = [
-      { type: "ConvertDmgPct", from: "physical", to: "lightning", value: 1.0 },
-      { type: "ConvertDmgPct", from: "lightning", to: "cold", value: 1.0 },
-      { type: "ConvertDmgPct", from: "cold", to: "fire", value: 1.0 },
-      { type: "ConvertDmgPct", from: "fire", to: "erosion", value: 1.0 },
+      { type: "ConvertDmgPct", from: "physical", to: "lightning", value: 100 },
+      { type: "ConvertDmgPct", from: "lightning", to: "cold", value: 100 },
+      { type: "ConvertDmgPct", from: "cold", to: "fire", value: 100 },
+      { type: "ConvertDmgPct", from: "fire", to: "erosion", value: 100 },
     ];
 
     const result = convertDmg(dmgRanges, mods);
@@ -954,7 +954,7 @@ describe("convertDmg", () => {
     };
 
     const mods: Mod[] = [
-      { type: "ConvertDmgPct", from: "physical", to: "fire", value: 1.0 },
+      { type: "ConvertDmgPct", from: "physical", to: "fire", value: 100 },
     ];
 
     const result = convertDmg(dmgRanges, mods);
@@ -976,7 +976,7 @@ describe("convertDmg", () => {
     };
 
     const mods: Mod[] = [
-      { type: "ConvertDmgPct", from: "physical", to: "lightning", value: 1.0 },
+      { type: "ConvertDmgPct", from: "physical", to: "lightning", value: 100 },
     ];
 
     const result = convertDmg(dmgRanges, mods);
@@ -994,7 +994,7 @@ describe("convertDmg", () => {
     };
 
     const mods: Mod[] = [
-      { type: "ConvertDmgPct", from: "physical", to: "fire", value: 1.0 },
+      { type: "ConvertDmgPct", from: "physical", to: "fire", value: 100 },
     ];
 
     const result = convertDmg(dmgRanges, mods);
@@ -1017,7 +1017,7 @@ describe("convertDmg", () => {
     };
 
     const mods: Mod[] = [
-      { type: "ConvertDmgPct", from: "physical", to: "cold", value: 0.5 },
+      { type: "ConvertDmgPct", from: "physical", to: "cold", value: 50 },
     ];
 
     const result = convertDmg(dmgRanges, mods);
@@ -1034,9 +1034,9 @@ describe("convertDmg", () => {
     };
 
     const mods: Mod[] = [
-      { type: "ConvertDmgPct", from: "physical", to: "cold", value: 0.5 },
-      { type: "ConvertDmgPct", from: "physical", to: "fire", value: 0.4 },
-      { type: "ConvertDmgPct", from: "physical", to: "erosion", value: 0.3 },
+      { type: "ConvertDmgPct", from: "physical", to: "cold", value: 50 },
+      { type: "ConvertDmgPct", from: "physical", to: "fire", value: 40 },
+      { type: "ConvertDmgPct", from: "physical", to: "erosion", value: 30 },
     ];
 
     const result = convertDmg(dmgRanges, mods);
@@ -1057,7 +1057,7 @@ describe("convertDmg", () => {
     expect(erosionSum.max).toBeCloseTo(30);
   });
 
-  // AddsDmgAs (Gain as Extra) Tests
+  // AddsDmgAsPct (Gain as Extra) Tests
   // "Gain as Extra" adds damage without removing from source
   // Calculated BEFORE conversion within each damage type's processing
 
@@ -1070,7 +1070,7 @@ describe("convertDmg", () => {
     };
 
     const mods: Mod[] = [
-      { type: "AddsDmgAs", from: "physical", to: "cold", value: 0.2 },
+      { type: "AddsDmgAsPct", from: "physical", to: "cold", value: 20 },
     ];
 
     const result = convertDmg(dmgRanges, mods);
@@ -1092,8 +1092,8 @@ describe("convertDmg", () => {
     };
 
     const mods: Mod[] = [
-      { type: "AddsDmgAs", from: "physical", to: "cold", value: 0.2 },
-      { type: "ConvertDmgPct", from: "physical", to: "fire", value: 1.0 },
+      { type: "AddsDmgAsPct", from: "physical", to: "cold", value: 20 },
+      { type: "ConvertDmgPct", from: "physical", to: "fire", value: 100 },
     ];
 
     const result = convertDmg(dmgRanges, mods);
@@ -1112,8 +1112,8 @@ describe("convertDmg", () => {
     };
 
     const mods: Mod[] = [
-      { type: "AddsDmgAs", from: "physical", to: "cold", value: 0.2 },
-      { type: "ConvertDmgPct", from: "physical", to: "fire", value: 0.5 },
+      { type: "AddsDmgAsPct", from: "physical", to: "cold", value: 20 },
+      { type: "ConvertDmgPct", from: "physical", to: "fire", value: 50 },
     ];
 
     const result = convertDmg(dmgRanges, mods);
@@ -1132,8 +1132,8 @@ describe("convertDmg", () => {
     };
 
     const mods: Mod[] = [
-      { type: "AddsDmgAs", from: "physical", to: "cold", value: 0.2 },
-      { type: "AddsDmgAs", from: "physical", to: "fire", value: 0.3 },
+      { type: "AddsDmgAsPct", from: "physical", to: "cold", value: 20 },
+      { type: "AddsDmgAsPct", from: "physical", to: "fire", value: 30 },
     ];
 
     const result = convertDmg(dmgRanges, mods);
@@ -1153,8 +1153,8 @@ describe("convertDmg", () => {
     };
 
     const mods: Mod[] = [
-      { type: "ConvertDmgPct", from: "physical", to: "lightning", value: 1.0 },
-      { type: "AddsDmgAs", from: "lightning", to: "fire", value: 0.2 },
+      { type: "ConvertDmgPct", from: "physical", to: "lightning", value: 100 },
+      { type: "AddsDmgAsPct", from: "lightning", to: "fire", value: 20 },
     ];
 
     const result = convertDmg(dmgRanges, mods);
@@ -1178,7 +1178,7 @@ describe("convertDmg", () => {
     };
 
     const mods: Mod[] = [
-      { type: "AddsDmgAs", from: "physical", to: "cold", value: 0.2 },
+      { type: "AddsDmgAsPct", from: "physical", to: "cold", value: 20 },
     ];
 
     const result = convertDmg(dmgRanges, mods);
@@ -1202,7 +1202,7 @@ describe("convertDmg", () => {
     };
 
     const mods: Mod[] = [
-      { type: "AddsDmgAs", from: "fire", to: "erosion", value: 0.2 },
+      { type: "AddsDmgAsPct", from: "fire", to: "erosion", value: 20 },
     ];
 
     const result = convertDmg(dmgRanges, mods);
@@ -1213,14 +1213,14 @@ describe("convertDmg", () => {
 
   test("gain as extra from erosion does nothing (not in conversion order)", () => {
     // 100 erosion with 20% gain as fire - should NOT add any fire
-    // Erosion is not in CONVERSION_ORDER, so AddsDmgAs from erosion is not processed
+    // Erosion is not in CONVERSION_ORDER, so AddsDmgAsPct from erosion is not processed
     const dmgRanges: DmgRanges = {
       ...emptyDmgRanges(),
       erosion: { min: 100, max: 100 },
     };
 
     const mods: Mod[] = [
-      { type: "AddsDmgAs", from: "erosion", to: "fire", value: 0.2 },
+      { type: "AddsDmgAsPct", from: "erosion", to: "fire", value: 20 },
     ];
 
     const result = convertDmg(dmgRanges, mods);
@@ -1252,7 +1252,7 @@ describe("mod normalization with per-stack mods", () => {
       affix([
         {
           type: "DmgPct",
-          value: 0.1,
+          value: 10,
           modType: "global",
           addn: false,
           per: { stackable: "willpower" },
@@ -1270,7 +1270,7 @@ describe("mod normalization with per-stack mods", () => {
       affix([
         {
           type: "DmgPct",
-          value: 0.1,
+          value: 10,
           modType: "global",
           addn: false,
           per: { stackable: "willpower" },
@@ -1289,13 +1289,13 @@ describe("mod normalization with per-stack mods", () => {
       affix([
         {
           type: "DmgPct",
-          value: 0.1,
+          value: 10,
           modType: "global",
           addn: false,
           per: { stackable: "willpower" },
         },
       ]),
-      affix([{ type: "DmgPct", value: 0.3, modType: "global", addn: false }]),
+      affix([{ type: "DmgPct", value: 30, modType: "global", addn: false }]),
     ]);
     const results = calculateOffense(input);
     validate(results, skillName, { avgHit: 180 });
@@ -1327,7 +1327,7 @@ describe("mod normalization with per-stack mods", () => {
       affix([
         {
           type: "CritRatingPct",
-          value: 0.2,
+          value: 20,
           modType: "global",
           per: { stackable: "willpower" },
         },
@@ -1348,7 +1348,7 @@ describe("mod normalization with per-stack mods", () => {
       affix([
         {
           type: "DmgPct",
-          value: 0.05,
+          value: 5,
           modType: "global",
           addn: false,
           per: { stackable: "willpower" },
@@ -1357,7 +1357,7 @@ describe("mod normalization with per-stack mods", () => {
       affix([
         {
           type: "CritRatingPct",
-          value: 0.1,
+          value: 10,
           modType: "global",
           per: { stackable: "willpower" },
         },
@@ -1377,7 +1377,7 @@ describe("mod normalization with per-stack mods", () => {
       affix([
         {
           type: "DmgPct",
-          value: 0.1,
+          value: 10,
           modType: "global",
           addn: false,
           per: { stackable: "willpower", limit: 3 },
@@ -1398,7 +1398,7 @@ describe("mod normalization with per-stack mods", () => {
       affix([
         {
           type: "DmgPct",
-          value: 0.1,
+          value: 10,
           modType: "global",
           addn: false,
           per: { stackable: "willpower", limit: 10 },
@@ -1419,10 +1419,10 @@ describe("mod normalization with per-stack mods", () => {
       affix([
         {
           type: "DmgPct",
-          value: 0.1,
+          value: 10,
           modType: "global",
           addn: false,
-          per: { stackable: "willpower", valueLimit: 0.25 },
+          per: { stackable: "willpower", valueLimit: 25 },
         },
       ]),
     ]);
@@ -1440,10 +1440,10 @@ describe("mod normalization with per-stack mods", () => {
       affix([
         {
           type: "DmgPct",
-          value: 0.1,
+          value: 10,
           modType: "global",
           addn: false,
-          per: { stackable: "willpower", valueLimit: 1.0 },
+          per: { stackable: "willpower", valueLimit: 100 },
         },
       ]),
     ]);
@@ -1462,10 +1462,10 @@ describe("mod normalization with per-stack mods", () => {
       affix([
         {
           type: "DmgPct",
-          value: 0.2,
+          value: 20,
           modType: "global",
           addn: false,
-          per: { stackable: "willpower", limit: 5, valueLimit: 0.5 },
+          per: { stackable: "willpower", limit: 5, valueLimit: 50 },
         },
       ]),
     ]);
@@ -1483,7 +1483,7 @@ describe("mod normalization with per-stack mods", () => {
       affix([
         {
           type: "DmgPct",
-          value: 0.3,
+          value: 30,
           modType: "global",
           addn: false,
           per: { stackable: "willpower", amt: 3, limit: 2 },
@@ -1596,7 +1596,7 @@ describe("automatic additional damage from main stats", () => {
     // Base: 100, with 50% inc = 150, with 50% more = 150 * 1.5 = 225
     const input = createModsInput([
       affix([{ type: "Stat", statType: "dex", value: 100 }]),
-      affix([{ type: "DmgPct", value: 0.5, modType: "global", addn: false }]),
+      affix([{ type: "DmgPct", value: 50, modType: "global", addn: false }]),
     ]);
     const results = calculateOffense(input);
     validate(results, skillName, { avgHit: 225 });
@@ -1777,10 +1777,10 @@ describe("calculateOffense with damage conversion", () => {
     // 100 * (1 + 0.8) = 180
     const input = createModsInput([
       affix([
-        { type: "ConvertDmgPct", from: "physical", to: "cold", value: 1 },
+        { type: "ConvertDmgPct", from: "physical", to: "cold", value: 100 },
       ]),
-      affix([{ type: "DmgPct", value: 0.5, modType: "physical", addn: false }]),
-      affix([{ type: "DmgPct", value: 0.3, modType: "cold", addn: false }]),
+      affix([{ type: "DmgPct", value: 50, modType: "physical", addn: false }]),
+      affix([{ type: "DmgPct", value: 30, modType: "cold", addn: false }]),
     ]);
     const results = calculateOffense(input);
     validate(results, skillName, { avgHit: 180 });
@@ -1793,10 +1793,10 @@ describe("calculateOffense with damage conversion", () => {
     // Total: 75 + 90 = 165
     const input = createModsInput([
       affix([
-        { type: "ConvertDmgPct", from: "physical", to: "cold", value: 0.5 },
+        { type: "ConvertDmgPct", from: "physical", to: "cold", value: 50 },
       ]),
-      affix([{ type: "DmgPct", value: 0.5, modType: "physical", addn: false }]),
-      affix([{ type: "DmgPct", value: 0.3, modType: "cold", addn: false }]),
+      affix([{ type: "DmgPct", value: 50, modType: "physical", addn: false }]),
+      affix([{ type: "DmgPct", value: 30, modType: "cold", addn: false }]),
     ]);
     const results = calculateOffense(input);
     validate(results, skillName, { avgHit: 165 });
@@ -1808,16 +1808,19 @@ describe("calculateOffense with damage conversion", () => {
     // 100 * (1 + 0.9) = 190
     const input = createModsInput([
       affix([
-        { type: "ConvertDmgPct", from: "physical", to: "lightning", value: 1 },
+        {
+          type: "ConvertDmgPct",
+          from: "physical",
+          to: "lightning",
+          value: 100,
+        },
       ]),
       affix([
-        { type: "ConvertDmgPct", from: "lightning", to: "cold", value: 1 },
+        { type: "ConvertDmgPct", from: "lightning", to: "cold", value: 100 },
       ]),
-      affix([{ type: "DmgPct", value: 0.2, modType: "physical", addn: false }]),
-      affix([
-        { type: "DmgPct", value: 0.3, modType: "lightning", addn: false },
-      ]),
-      affix([{ type: "DmgPct", value: 0.4, modType: "cold", addn: false }]),
+      affix([{ type: "DmgPct", value: 20, modType: "physical", addn: false }]),
+      affix([{ type: "DmgPct", value: 30, modType: "lightning", addn: false }]),
+      affix([{ type: "DmgPct", value: 40, modType: "cold", addn: false }]),
     ]);
     const results = calculateOffense(input);
     validate(results, skillName, { avgHit: 190 });
@@ -1829,11 +1832,9 @@ describe("calculateOffense with damage conversion", () => {
     // 100 * (1 + 0.5) = 150
     const input = createModsInput([
       affix([
-        { type: "ConvertDmgPct", from: "physical", to: "cold", value: 1 },
+        { type: "ConvertDmgPct", from: "physical", to: "cold", value: 100 },
       ]),
-      affix([
-        { type: "DmgPct", value: 0.5, modType: "elemental", addn: false },
-      ]),
+      affix([{ type: "DmgPct", value: 50, modType: "elemental", addn: false }]),
     ]);
     const results = calculateOffense(input);
     validate(results, skillName, { avgHit: 150 });
@@ -1844,8 +1845,8 @@ describe("calculateOffense with damage conversion", () => {
     // Physical: 100 * (1 + 0.5) = 150
     // Cold bonus doesn't apply (no cold damage)
     const input = createModsInput([
-      affix([{ type: "DmgPct", value: 0.5, modType: "physical", addn: false }]),
-      affix([{ type: "DmgPct", value: 0.3, modType: "cold", addn: false }]),
+      affix([{ type: "DmgPct", value: 50, modType: "physical", addn: false }]),
+      affix([{ type: "DmgPct", value: 30, modType: "cold", addn: false }]),
     ]);
     const results = calculateOffense(input);
     validate(results, skillName, { avgHit: 150 });
@@ -1857,7 +1858,7 @@ describe("calculateOffense with damage conversion", () => {
     // 100 phys weapon * 2.01 = 201 phys → 201 cold via skill's conversion
     // Cold damage with 50% cold bonus: 201 * (1 + 0.5) = 301.5
     const input = createFrostSpikeInput([
-      affix([{ type: "DmgPct", value: 0.5, modType: "cold", addn: false }]),
+      affix([{ type: "DmgPct", value: 50, modType: "cold", addn: false }]),
     ]);
     const results = calculateOffense(input);
     validate(results, "Frost Spike", { avgHit: 301.5 });
@@ -1914,7 +1915,7 @@ describe("resolveSelectedSkillMods via calculateOffense", () => {
     const convertMod = skillMods
       .filter((m) => m.type === "ConvertDmgPct")
       .find((m) => m.from === "physical" && m.to === "cold");
-    expect(convertMod?.value).toBe(1);
+    expect(convertMod?.value).toBe(100);
 
     // Check MaxProjectile mod
     const maxProjMod = skillMods.find((m) => m.type === "MaxProjectile");
@@ -2062,7 +2063,7 @@ describe("resolveBuffSkillMods", () => {
         m.cond === "enemy_frostbitten",
     ) as DmgPctMod | undefined;
     expect(iceBondBuffMod).toBeDefined();
-    expect(iceBondBuffMod?.value).toBeCloseTo(0.33);
+    expect(iceBondBuffMod?.value).toBeCloseTo(33);
   });
 
   test("Bull's Rage provides buff mod when enabled", () => {
@@ -2082,7 +2083,7 @@ describe("resolveBuffSkillMods", () => {
       (m) => m.type === "DmgPct" && m.modType === "melee" && m.addn === true,
     ) as DmgPctMod | undefined;
     expect(bullsRageBuffMod).toBeDefined();
-    expect(bullsRageBuffMod?.value).toBeCloseTo(0.27);
+    expect(bullsRageBuffMod?.value).toBeCloseTo(27);
   });
 
   test("disabled buff skill does not provide buff mod", () => {
@@ -2126,7 +2127,7 @@ describe("resolveBuffSkillMods", () => {
         crueltyBuffStacks: 40,
         numShadowHits: undefined,
         manaConsumedRecently: undefined,
-        unsealedManaWholePct: undefined,
+        unsealedManaPct: undefined,
         realmOfMercuryEnabled: false,
         enemyRes: undefined,
         enemyArmor: undefined,
@@ -2182,8 +2183,8 @@ describe("resolveBuffSkillMods", () => {
         m.cond === "enemy_frostbitten",
     ) as DmgPctMod | undefined;
 
-    expect(buffModL1?.value).toBeCloseTo(0.235);
-    expect(buffModL20?.value).toBeCloseTo(0.33);
+    expect(buffModL1?.value).toBeCloseTo(23.5);
+    expect(buffModL20?.value).toBeCloseTo(33);
   });
 
   test("Mass Effect increases buff skill effect", () => {
@@ -2208,7 +2209,7 @@ describe("resolveBuffSkillMods", () => {
         "cond" in m &&
         m.cond === "enemy_frostbitten",
     ) as DmgPctMod | undefined;
-    expect(iceBondBuffMod?.value).toBeCloseTo(0.33 * 1.4);
+    expect(iceBondBuffMod?.value).toBeCloseTo(33 * 1.4);
   });
 
   test("Well-Fought Battle increases buff skill effect", () => {
@@ -2233,7 +2234,7 @@ describe("resolveBuffSkillMods", () => {
         "cond" in m &&
         m.cond === "enemy_frostbitten",
     ) as DmgPctMod | undefined;
-    expect(iceBondBuffMod?.value).toBeCloseTo(0.33 * 1.3);
+    expect(iceBondBuffMod?.value).toBeCloseTo(33 * 1.3);
   });
 
   test("Ice Bond and Bull's Rage with Mass Effect and Well-Fought Battle - supports only affect their attached skill", () => {
@@ -2284,13 +2285,13 @@ describe("resolveBuffSkillMods", () => {
         "cond" in m &&
         m.cond === "enemy_frostbitten",
     ) as DmgPctMod | undefined;
-    expect(iceBondBuffMod?.value).toBeCloseTo(0.33 * 1.7);
+    expect(iceBondBuffMod?.value).toBeCloseTo(33 * 1.7);
 
     // Check Bull's Rage buff
     const bullsRageBuffMod = actual?.resolvedMods.find(
       (m) => m.type === "DmgPct" && m.modType === "melee" && m.addn === true,
     ) as DmgPctMod | undefined;
-    expect(bullsRageBuffMod?.value).toBeCloseTo(0.27 * 1.7);
+    expect(bullsRageBuffMod?.value).toBeCloseTo(27 * 1.7);
 
     // Verify final avgHit includes both Ice Bond's cold buff and Bull's Rage's melee buff
     expect(actual?.avgHit).toBeCloseTo(201 * 1.561 * 1.459);
@@ -2322,7 +2323,7 @@ describe("resolveBuffSkillMods", () => {
         m.cond === "enemy_frostbitten",
     ) as DmgPctMod | undefined;
     // Should be base 33%, not affected by main skill's Mass Effect
-    expect(iceBondBuffMod?.value).toBeCloseTo(0.33);
+    expect(iceBondBuffMod?.value).toBeCloseTo(33);
   });
 
   test("supports on one buff skill do not affect another buff skill", () => {
@@ -2353,13 +2354,13 @@ describe("resolveBuffSkillMods", () => {
         "cond" in m &&
         m.cond === "enemy_frostbitten",
     ) as DmgPctMod | undefined;
-    expect(iceBondBuffMod?.value).toBeCloseTo(0.33 * 1.4);
+    expect(iceBondBuffMod?.value).toBeCloseTo(33 * 1.4);
 
     // Bull's Rage should NOT be affected by Ice Bond's Mass Effect
     const bullsRageBuffMod = actual?.resolvedMods.find(
       (m) => m.type === "DmgPct" && m.modType === "melee" && m.addn === true,
     ) as DmgPctMod | undefined;
-    expect(bullsRageBuffMod?.value).toBeCloseTo(0.27); // Base value, no boost
+    expect(bullsRageBuffMod?.value).toBeCloseTo(27); // Base value, no boost
   });
 
   test("multiple SkillEffPct supports stack additively", () => {
@@ -2389,7 +2390,7 @@ describe("resolveBuffSkillMods", () => {
         "cond" in m &&
         m.cond === "enemy_frostbitten",
     ) as DmgPctMod | undefined;
-    expect(iceBondBuffMod?.value).toBeCloseTo(0.33 * 1.7);
+    expect(iceBondBuffMod?.value).toBeCloseTo(33 * 1.7);
   });
 
   test("support skill level affects skill effect bonus", () => {
@@ -2433,8 +2434,8 @@ describe("resolveBuffSkillMods", () => {
         m.cond === "enemy_frostbitten",
     ) as DmgPctMod | undefined;
 
-    expect(buffModL1?.value).toBeCloseTo(0.33 * 1.21);
-    expect(buffModL20?.value).toBeCloseTo(0.33 * 1.4);
+    expect(buffModL1?.value).toBeCloseTo(33 * 1.21);
+    expect(buffModL20?.value).toBeCloseTo(33 * 1.4);
   });
 
   test("passive skill Precise: Cruelty provides additional attack damage scaled by AuraEffPct", () => {
@@ -2476,7 +2477,7 @@ describe("resolveBuffSkillMods", () => {
     ) as DmgPctMod | undefined;
     expect(preciseCrueltyBuffMod).toBeDefined();
     // Base 22% scaled by 100% aura effect = 44%
-    expect(preciseCrueltyBuffMod?.value).toBeCloseTo(0.22 * 2);
+    expect(preciseCrueltyBuffMod?.value).toBeCloseTo(22 * 2);
   });
 
   test("Precise: Cruelty AuraEffPct scales with crueltyBuffStacks config", () => {
@@ -2523,7 +2524,7 @@ describe("resolveBuffSkillMods", () => {
     ) as DmgPctMod | undefined;
     expect(preciseCrueltyBuffMod).toBeDefined();
     // Base 22% scaled by 50% aura effect = 33%
-    expect(preciseCrueltyBuffMod?.value).toBeCloseTo(0.22 * 1.5);
+    expect(preciseCrueltyBuffMod?.value).toBeCloseTo(22 * 1.5);
   });
 
   test("AuraEffPct from levelMods does not appear in resolvedMods", () => {
@@ -2575,7 +2576,7 @@ describe("resolveBuffSkillMods", () => {
     const loadout = initLoadout({
       gearPage: { equippedGear: { mainHand: baseWeapon }, inventory: [] },
       customConfiguration: [
-        affix([{ type: "AuraEffPct", value: 0.5, addn: false }]),
+        affix([{ type: "AuraEffPct", value: 50, addn: false }]),
       ],
       skillPage: {
         activeSkills: {
@@ -2609,7 +2610,7 @@ describe("resolveBuffSkillMods", () => {
     ) as DmgPctMod | undefined;
     expect(preciseCrueltyBuffMod).toBeDefined();
     // Base 22% with aura multiplier 3 = 66%
-    expect(preciseCrueltyBuffMod?.value).toBeCloseTo(0.22 * 3);
+    expect(preciseCrueltyBuffMod?.value).toBeCloseTo(22 * 3);
 
     // Verify avgHit: 100 base weapon * (1 + 0.66 addn dmg) = 166
     expect(actual?.avgHit).toBeCloseTo(100 * (1 + 0.22 * 3));
@@ -2633,7 +2634,7 @@ describe("resolveBuffSkillMods", () => {
     const bullsRageBuffMod = actual?.resolvedMods.find(
       (m) => m.type === "DmgPct" && m.modType === "melee" && m.addn === true,
     ) as DmgPctMod | undefined;
-    expect(bullsRageBuffMod?.value).toBeCloseTo(0.27);
+    expect(bullsRageBuffMod?.value).toBeCloseTo(27);
   });
 });
 
@@ -2665,7 +2666,7 @@ describe("Pactspirit Ring Mods", () => {
           rings: {
             innerRing1: ringSlotWithOriginalAffix(
               affix([
-                { type: "DmgPct", value: 0.5, modType: "global", addn: false },
+                { type: "DmgPct", value: 50, modType: "global", addn: false },
               ]),
             ),
             innerRing2: emptyRingSlotState(),
@@ -2718,12 +2719,12 @@ describe("Pactspirit Ring Mods", () => {
           rings: {
             innerRing1: ringSlotWithOriginalAffix(
               affix([
-                { type: "DmgPct", value: 0.3, modType: "global", addn: false },
+                { type: "DmgPct", value: 30, modType: "global", addn: false },
               ]),
             ),
             innerRing2: ringSlotWithOriginalAffix(
               affix([
-                { type: "DmgPct", value: 0.3, modType: "global", addn: false },
+                { type: "DmgPct", value: 30, modType: "global", addn: false },
               ]),
             ),
             innerRing3: emptyRingSlotState(),
@@ -2781,7 +2782,7 @@ describe("Pactspirit Ring Mods", () => {
                 affix: affix([
                   {
                     type: "DmgPct",
-                    value: 0.75,
+                    value: 75,
                     modType: "global",
                     addn: false,
                   },
@@ -2789,7 +2790,7 @@ describe("Pactspirit Ring Mods", () => {
               },
               originalRingName: "Test Ring",
               originalAffix: affix([
-                { type: "DmgPct", value: 0.25, modType: "global", addn: false },
+                { type: "DmgPct", value: 25, modType: "global", addn: false },
               ]),
             },
             innerRing2: emptyRingSlotState(),
@@ -2842,7 +2843,7 @@ describe("Pactspirit Ring Mods", () => {
           rings: {
             innerRing1: ringSlotWithOriginalAffix(
               affix([
-                { type: "DmgPct", value: 0.2, modType: "global", addn: false },
+                { type: "DmgPct", value: 20, modType: "global", addn: false },
               ]),
             ),
             innerRing2: emptyRingSlotState(),
@@ -2862,7 +2863,7 @@ describe("Pactspirit Ring Mods", () => {
           rings: {
             innerRing1: ringSlotWithOriginalAffix(
               affix([
-                { type: "DmgPct", value: 0.3, modType: "global", addn: false },
+                { type: "DmgPct", value: 30, modType: "global", addn: false },
               ]),
             ),
             innerRing2: emptyRingSlotState(),
@@ -2919,7 +2920,7 @@ describe("Divinity Slate Mods", () => {
             flippedV: false,
             affixes: [
               affix([
-                { type: "DmgPct", value: 0.5, modType: "global", addn: false },
+                { type: "DmgPct", value: 50, modType: "global", addn: false },
               ]),
             ],
             metaAffixes: [],
@@ -2967,7 +2968,7 @@ describe("Divinity Slate Mods", () => {
             flippedV: false,
             affixes: [
               affix([
-                { type: "DmgPct", value: 0.5, modType: "global", addn: false },
+                { type: "DmgPct", value: 50, modType: "global", addn: false },
               ]),
             ],
             metaAffixes: [],
@@ -3018,7 +3019,7 @@ describe("Divinity Slate Mods", () => {
             flippedV: false,
             affixes: [
               affix([
-                { type: "DmgPct", value: 0.3, modType: "global", addn: false },
+                { type: "DmgPct", value: 30, modType: "global", addn: false },
               ]),
             ],
             metaAffixes: [],
@@ -3031,7 +3032,7 @@ describe("Divinity Slate Mods", () => {
             flippedV: false,
             affixes: [
               affix([
-                { type: "DmgPct", value: 0.2, modType: "global", addn: false },
+                { type: "DmgPct", value: 20, modType: "global", addn: false },
               ]),
             ],
             metaAffixes: [],
@@ -3126,7 +3127,7 @@ describe("shadow damage", () => {
     // 100% shadow damage bonus with 3 shadows
     // Shadow damage gets multiplied by 2, original hit does not
     const input = createFrostSpikeInput(3, [
-      affix([{ type: "ShadowDmgPct", value: 1.0, addn: false }]), // +100% shadow damage
+      affix([{ type: "ShadowDmgPct", value: 100, addn: false }]), // +100% shadow damage
     ]);
     const results = calculateOffense(input);
     // Base: 201
@@ -3145,7 +3146,7 @@ describe("shadow damage", () => {
   test("non-shadow strike skill ignores shadow mechanics", () => {
     // [Test] Simple Attack does not have Shadow Strike tag
     const input = createSimpleAttackInput(3, [
-      affix([{ type: "ShadowDmgPct", value: 1.0, addn: false }]), // This should have no effect
+      affix([{ type: "ShadowDmgPct", value: 100, addn: false }]), // This should have no effect
     ]);
     const results = calculateOffense(input);
     // Base: 100 (no shadow mechanics applied)
@@ -3155,8 +3156,8 @@ describe("shadow damage", () => {
   test("shadow damage stacks with regular damage modifiers", () => {
     // +50% global damage AND 3 shadow hits with 100% shadow bonus
     const input = createFrostSpikeInput(3, [
-      affix([{ type: "DmgPct", value: 0.5, modType: "global", addn: false }]), // +50% damage
-      affix([{ type: "ShadowDmgPct", value: 1.0, addn: false }]), // +100% shadow damage
+      affix([{ type: "DmgPct", value: 50, modType: "global", addn: false }]), // +50% damage
+      affix([{ type: "ShadowDmgPct", value: 100, addn: false }]), // +100% shadow damage
     ]);
     const results = calculateOffense(input);
     // Base with +50% dmg: 201 * 1.5 = 301.5
@@ -3245,7 +3246,7 @@ describe("penetration", () => {
     // 30% resistance, 10% penetration -> effective 20% resistance
     // 100 cold * (1 - 0.3 + 0.1) = 80
     const input = createDmgInput(100, "cold", {
-      mods: [affix([{ type: "ResPenPct", value: 0.1, penType: "cold" }])],
+      mods: [affix([{ type: "ResPenPct", value: 10, penType: "cold" }])],
       res: 0.3,
     });
     const results = calculateOffense(input);
@@ -3255,7 +3256,7 @@ describe("penetration", () => {
   test("elemental penetration applies to all elemental types", () => {
     // 30% res, 10% elemental pen -> 20% effective res
     const input = createDmgInput(100, "cold", {
-      mods: [affix([{ type: "ResPenPct", value: 0.1, penType: "elemental" }])],
+      mods: [affix([{ type: "ResPenPct", value: 10, penType: "elemental" }])],
       res: 0.3,
     });
     const results = calculateOffense(input);
@@ -3265,7 +3266,7 @@ describe("penetration", () => {
   test("all penetration applies to erosion", () => {
     // erosion damage with "all" penetration
     const input = createDmgInput(100, "erosion", {
-      mods: [affix([{ type: "ResPenPct", value: 0.1, penType: "all" }])],
+      mods: [affix([{ type: "ResPenPct", value: 10, penType: "all" }])],
       res: 0.3,
     });
     const results = calculateOffense(input);
@@ -3276,8 +3277,8 @@ describe("penetration", () => {
     // 30% res, 5% cold pen + 5% elemental pen = 10% total pen
     const input = createDmgInput(100, "cold", {
       mods: [
-        affix([{ type: "ResPenPct", value: 0.05, penType: "cold" }]),
-        affix([{ type: "ResPenPct", value: 0.05, penType: "elemental" }]),
+        affix([{ type: "ResPenPct", value: 5, penType: "cold" }]),
+        affix([{ type: "ResPenPct", value: 5, penType: "elemental" }]),
       ],
       res: 0.3,
     });
@@ -3289,7 +3290,7 @@ describe("penetration", () => {
   test("wrong penetration type does not apply", () => {
     // cold damage with fire penetration - should not help
     const input = createDmgInput(100, "cold", {
-      mods: [affix([{ type: "ResPenPct", value: 0.1, penType: "fire" }])],
+      mods: [affix([{ type: "ResPenPct", value: 10, penType: "fire" }])],
       res: 0.3,
     });
     const results = calculateOffense(input);
@@ -3300,7 +3301,7 @@ describe("penetration", () => {
   test("penetration exceeding resistance deals bonus damage", () => {
     // 10% resistance, 30% penetration -> -20% effective resistance = 120% damage
     const input = createDmgInput(100, "cold", {
-      mods: [affix([{ type: "ResPenPct", value: 0.3, penType: "cold" }])],
+      mods: [affix([{ type: "ResPenPct", value: 30, penType: "cold" }])],
       res: 0.1,
     });
     const results = calculateOffense(input);
@@ -3329,7 +3330,7 @@ describe("penetration", () => {
   test("armor penetration reduces physical damage mitigation", () => {
     // 50% armor mitigation, 10% armor pen -> 40% effective mitigation
     const input = createDmgInput(100, "physical", {
-      mods: [affix([{ type: "ArmorPenPct", value: 0.1 }])],
+      mods: [affix([{ type: "ArmorPenPct", value: 10 }])],
       armor: 27273,
     });
     const results = calculateOffense(input);
@@ -3340,7 +3341,7 @@ describe("penetration", () => {
   test("armor penetration reduces non-physical damage mitigation equally", () => {
     // 30% non-phys armor mitigation, 10% armor pen -> 20% effective
     const input = createDmgInput(100, "cold", {
-      mods: [affix([{ type: "ArmorPenPct", value: 0.1 }])],
+      mods: [affix([{ type: "ArmorPenPct", value: 10 }])],
       armor: 27273,
       res: 0,
     });
@@ -3353,8 +3354,8 @@ describe("penetration", () => {
     // 50% armor mitigation, 5% + 5% armor pen -> 40% effective
     const input = createDmgInput(100, "physical", {
       mods: [
-        affix([{ type: "ArmorPenPct", value: 0.05 }]),
-        affix([{ type: "ArmorPenPct", value: 0.05 }]),
+        affix([{ type: "ArmorPenPct", value: 5 }]),
+        affix([{ type: "ArmorPenPct", value: 5 }]),
       ],
       armor: 27273,
     });
@@ -3377,8 +3378,8 @@ describe("penetration", () => {
     // Damage = 100 * (1 - 0.2) * (1 - 0.2) = 100 * 0.8 * 0.8 = 64
     const input = createDmgInput(100, "cold", {
       mods: [
-        affix([{ type: "ResPenPct", value: 0.1, penType: "cold" }]),
-        affix([{ type: "ArmorPenPct", value: 0.1 }]),
+        affix([{ type: "ResPenPct", value: 10, penType: "cold" }]),
+        affix([{ type: "ArmorPenPct", value: 10 }]),
       ],
       armor: 27273,
       res: 0.3,
@@ -3433,7 +3434,7 @@ describe("double damage chance", () => {
     // doubleDmgMult = 1 + 0.30 = 1.30
     // avgDps = 102.5 * 1.30 * 1.0 = 133.25
     const input = createDoubleDmgInput([
-      affix([{ type: "DoubleDmgChancePct", value: 0.3 }]),
+      affix([{ type: "DoubleDmgChancePct", value: 30 }]),
     ]);
     const results = calculateOffense(input);
     validate(results, skillName, { avgDps: 133.25 });
@@ -3445,8 +3446,8 @@ describe("double damage chance", () => {
     // doubleDmgMult = 1 + 0.35 = 1.35
     // avgDps = 102.5 * 1.35 * 1.0 = 138.375
     const input = createDoubleDmgInput([
-      affix([{ type: "DoubleDmgChancePct", value: 0.2 }]),
-      affix([{ type: "DoubleDmgChancePct", value: 0.15 }]),
+      affix([{ type: "DoubleDmgChancePct", value: 20 }]),
+      affix([{ type: "DoubleDmgChancePct", value: 15 }]),
     ]);
     const results = calculateOffense(input);
     validate(results, skillName, { avgDps: 138.375 });
@@ -3458,8 +3459,8 @@ describe("double damage chance", () => {
     // doubleDmgMult = 1 + 1.0 = 2.0 (capped)
     // avgDps = 102.5 * 2.0 * 1.0 = 205
     const input = createDoubleDmgInput([
-      affix([{ type: "DoubleDmgChancePct", value: 0.7 }]),
-      affix([{ type: "DoubleDmgChancePct", value: 0.5 }]),
+      affix([{ type: "DoubleDmgChancePct", value: 70 }]),
+      affix([{ type: "DoubleDmgChancePct", value: 50 }]),
     ]);
     const results = calculateOffense(input);
     validate(results, skillName, { avgDps: 205 });
@@ -3531,12 +3532,12 @@ describe("resource pool: mana and mercury pts", () => {
         flatManaTo1000,
         {
           type: "MaxMercuryPtsPct",
-          value: 1.0,
+          value: 100,
           per: { stackable: "max_mana", amt: 1000 },
         },
         {
           type: "DmgPct",
-          value: 0.01,
+          value: 1,
           modType: "cold",
           addn: true,
           per: { stackable: "mercury_pt" },
@@ -3557,12 +3558,12 @@ describe("resource pool: mana and mercury pts", () => {
         { type: "MaxMana", value: 1485 },
         {
           type: "MaxMercuryPtsPct",
-          value: 1.0,
+          value: 100,
           per: { stackable: "max_mana", amt: 1000 },
         },
         {
           type: "DmgPct",
-          value: 0.01,
+          value: 1,
           modType: "cold",
           addn: true,
           per: { stackable: "mercury_pt" },
@@ -3583,12 +3584,12 @@ describe("resource pool: mana and mercury pts", () => {
         { type: "MaxMana", value: 1485 },
         {
           type: "MaxMercuryPtsPct",
-          value: 1.0,
-          per: { stackable: "max_mana", amt: 1000, valueLimit: 0.5 },
+          value: 100,
+          per: { stackable: "max_mana", amt: 1000, valueLimit: 50 },
         },
         {
           type: "DmgPct",
-          value: 0.01,
+          value: 1,
           modType: "cold",
           addn: true,
           per: { stackable: "mercury_pt" },
@@ -3610,19 +3611,19 @@ describe("resource pool: mana and mercury pts", () => {
         flatManaTo1000,
         {
           type: "MaxMercuryPtsPct",
-          value: 1.0,
+          value: 100,
           per: { stackable: "max_mana", amt: 1000 },
         },
         {
           type: "DmgPct",
-          value: 0.01,
+          value: 1,
           modType: "cold",
           addn: true,
           per: { stackable: "mercury_pt" },
         },
         {
           type: "DmgPct",
-          value: 0.001,
+          value: 0.1,
           modType: "cold",
           addn: true,
           per: { stackable: "max_mana" },

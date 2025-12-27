@@ -88,8 +88,8 @@ export const allParsers = [
     addn: c.additional !== undefined,
   })),
   t("{value:dec%} gear attack speed").output("GearAspdPct", (c) => ({ value: c.value })),
-  t("{value:dec%} fervor effect").output("FervorEff", (c) => ({ value: c.value })),
-  t("{value:dec%} steep strike chance").output("SteepStrikeChance", (c) => ({ value: c.value })),
+  t("{value:dec%} fervor effect").output("FervorEffPct", (c) => ({ value: c.value })),
+  t("{value:dec%} steep strike chance").output("SteepStrikeChancePct", (c) => ({ value: c.value })),
   t
     .multi([t("{value:int} shadow quantity"), t("shadow quantity {value:int}")])
     .output("ShadowQuant", (c) => ({ value: c.value })),
@@ -97,7 +97,7 @@ export const allParsers = [
     value: c.value,
     addn: c.additional !== undefined,
   })),
-  t("adds {value:dec%} of {from:DmgChunkType} damage (to|as) {to:DmgChunkType} damage").output("AddsDmgAs", (c) => ({
+  t("adds {value:dec%} of {from:DmgChunkType} damage (to|as) {to:DmgChunkType} damage").output("AddsDmgAsPct", (c) => ({
     from: c.from,
     to: c.to,
     value: c.value,

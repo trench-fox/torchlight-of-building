@@ -595,8 +595,8 @@ const convertParsedValuesToLevelValues = (
 };
 
 const createTestActiveSkill = (): BaseActiveSkill => {
-  // 40 levels of value 1 each
-  const constantValues = Array.from({ length: 40 }, () => 1);
+  // 40 levels of value 100 each (100% = deals 100% weapon damage, 100% added damage effectiveness)
+  const constantValues = Array.from({ length: 40 }, () => 100);
   return {
     type: "Active",
     name: "[Test] Simple Attack",

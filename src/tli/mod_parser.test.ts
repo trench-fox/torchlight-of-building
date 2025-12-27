@@ -6,7 +6,7 @@ test("parse basic damage without type (global)", () => {
   expect(result).toEqual([
     {
       type: "DmgPct",
-      value: 0.09,
+      value: 9,
       modType: "global",
       addn: false,
     },
@@ -18,7 +18,7 @@ test("parse typed damage", () => {
   expect(result).toEqual([
     {
       type: "DmgPct",
-      value: 0.18,
+      value: 18,
       modType: "fire",
       addn: false,
     },
@@ -30,7 +30,7 @@ test("parse additional global damage", () => {
   expect(result).toEqual([
     {
       type: "DmgPct",
-      value: 0.09,
+      value: 9,
       modType: "global",
       addn: true,
     },
@@ -42,7 +42,7 @@ test("parse additional typed damage", () => {
   expect(result).toEqual([
     {
       type: "DmgPct",
-      value: 0.09,
+      value: 9,
       modType: "attack",
       addn: true,
     },
@@ -54,7 +54,7 @@ test("parse decimal damage", () => {
   expect(result).toEqual([
     {
       type: "DmgPct",
-      value: 0.125,
+      value: 12.5,
       modType: "fire",
       addn: false,
     },
@@ -71,7 +71,7 @@ test("parse global critical strike rating", () => {
   expect(result).toEqual([
     {
       type: "CritRatingPct",
-      value: 0.1,
+      value: 10,
       modType: "global",
     },
   ]);
@@ -82,7 +82,7 @@ test("parse typed critical strike rating", () => {
   expect(result).toEqual([
     {
       type: "CritRatingPct",
-      value: 0.1,
+      value: 10,
       modType: "attack",
     },
   ]);
@@ -93,7 +93,7 @@ test("parse crit rating with decimal percentage", () => {
   expect(result).toEqual([
     {
       type: "CritRatingPct",
-      value: 0.125,
+      value: 12.5,
       modType: "attack",
     },
   ]);
@@ -109,7 +109,7 @@ test("parse global critical strike damage", () => {
   expect(result).toEqual([
     {
       type: "CritDmgPct",
-      value: 0.05,
+      value: 5,
       modType: "global",
       addn: false,
     },
@@ -121,7 +121,7 @@ test("parse additional critical strike damage", () => {
   expect(result).toEqual([
     {
       type: "CritDmgPct",
-      value: 0.1,
+      value: 10,
       modType: "global",
       addn: true,
     },
@@ -133,7 +133,7 @@ test("parse attack critical strike damage", () => {
   expect(result).toEqual([
     {
       type: "CritDmgPct",
-      value: 0.15,
+      value: 15,
       modType: "attack",
       addn: false,
     },
@@ -145,7 +145,7 @@ test("parse spell critical strike damage", () => {
   expect(result).toEqual([
     {
       type: "CritDmgPct",
-      value: 0.2,
+      value: 20,
       modType: "spell",
       addn: false,
     },
@@ -157,7 +157,7 @@ test("parse additional attack critical strike damage", () => {
   expect(result).toEqual([
     {
       type: "CritDmgPct",
-      value: 0.2,
+      value: 20,
       modType: "attack",
       addn: true,
     },
@@ -169,7 +169,7 @@ test("parse crit damage with decimal percentage", () => {
   expect(result).toEqual([
     {
       type: "CritDmgPct",
-      value: 0.125,
+      value: 12.5,
       modType: "global",
       addn: false,
     },
@@ -186,7 +186,7 @@ test("parse basic attack speed", () => {
   expect(result).toEqual([
     {
       type: "AspdPct",
-      value: 0.06,
+      value: 6,
       addn: false,
     },
   ]);
@@ -197,7 +197,7 @@ test("parse additional attack speed", () => {
   expect(result).toEqual([
     {
       type: "AspdPct",
-      value: 0.06,
+      value: 6,
       addn: true,
     },
   ]);
@@ -208,7 +208,7 @@ test("parse attack speed with decimal percentage", () => {
   expect(result).toEqual([
     {
       type: "AspdPct",
-      value: 0.125,
+      value: 12.5,
       addn: false,
     },
   ]);
@@ -219,7 +219,7 @@ test("parse basic cast speed", () => {
   expect(result).toEqual([
     {
       type: "CspdPct",
-      value: 0.06,
+      value: 6,
       addn: false,
     },
   ]);
@@ -230,7 +230,7 @@ test("parse basic attack and cast speed", () => {
   expect(result).toEqual([
     {
       type: "AspdAndCspdPct",
-      value: 0.06,
+      value: 6,
       addn: false,
     },
   ]);
@@ -241,7 +241,7 @@ test("parse basic minion attack and cast speed", () => {
   expect(result).toEqual([
     {
       type: "MinionAspdAndCspdPct",
-      value: 0.06,
+      value: 6,
       addn: false,
     },
   ]);
@@ -252,7 +252,7 @@ test("parse attack block chance", () => {
   expect(result).toEqual([
     {
       type: "AttackBlockChancePct",
-      value: 0.04,
+      value: 4,
     },
   ]);
 });
@@ -262,7 +262,7 @@ test("parse spell block chance", () => {
   expect(result).toEqual([
     {
       type: "SpellBlockChancePct",
-      value: 0.04,
+      value: 4,
     },
   ]);
 });
@@ -272,7 +272,7 @@ test("parse max life", () => {
   expect(result).toEqual([
     {
       type: "MaxLifePct",
-      value: 0.03,
+      value: 3,
     },
   ]);
 });
@@ -282,7 +282,7 @@ test("parse max energy shield", () => {
   expect(result).toEqual([
     {
       type: "MaxEnergyShieldPct",
-      value: 0.03,
+      value: 3,
     },
   ]);
 });
@@ -292,7 +292,7 @@ test("parse armor", () => {
   expect(result).toEqual([
     {
       type: "ArmorPct",
-      value: 0.05,
+      value: 5,
     },
   ]);
 });
@@ -302,7 +302,7 @@ test("parse evasion", () => {
   expect(result).toEqual([
     {
       type: "EvasionPct",
-      value: 0.05,
+      value: 5,
     },
   ]);
 });
@@ -312,7 +312,7 @@ test("parse life regain", () => {
   expect(result).toEqual([
     {
       type: "LifeRegainPct",
-      value: 0.015,
+      value: 1.5,
     },
   ]);
 });
@@ -322,7 +322,7 @@ test("parse energy shield regain", () => {
   expect(result).toEqual([
     {
       type: "EnergyShieldRegainPct",
-      value: 0.015,
+      value: 1.5,
     },
   ]);
 });
@@ -374,7 +374,7 @@ test("parse percentage strength", () => {
     {
       type: "StatPct",
       statType: "str",
-      value: 0.04,
+      value: 4,
     },
   ]);
 });
@@ -385,7 +385,7 @@ test("parse percentage dexterity", () => {
     {
       type: "StatPct",
       statType: "dex",
-      value: 0.04,
+      value: 4,
     },
   ]);
 });
@@ -396,7 +396,7 @@ test("parse percentage intelligence", () => {
     {
       type: "StatPct",
       statType: "int",
-      value: 0.04,
+      value: 4,
     },
   ]);
 });
@@ -405,8 +405,8 @@ test("parse fervor effect", () => {
   const result = parseMod("+4% Fervor effect");
   expect(result).toEqual([
     {
-      type: "FervorEff",
-      value: 0.04,
+      type: "FervorEffPct",
+      value: 4,
     },
   ]);
 });
@@ -415,8 +415,8 @@ test("parse steep strike chance", () => {
   const result = parseMod("+12% Steep Strike chance");
   expect(result).toEqual([
     {
-      type: "SteepStrikeChance",
-      value: 0.12,
+      type: "SteepStrikeChancePct",
+      value: 12,
     },
   ]);
 });
@@ -435,10 +435,10 @@ test("parse adds damage as", () => {
   const result = parseMod("Adds 18% of Physical Damage to Cold Damage");
   expect(result).toEqual([
     {
-      type: "AddsDmgAs",
+      type: "AddsDmgAsPct",
       from: "physical",
       to: "cold",
-      value: 0.18,
+      value: 18,
     },
   ]);
 });
@@ -447,10 +447,10 @@ test("parse adds damage as with decimal", () => {
   const result = parseMod("Adds 12.5% of Fire Damage to Lightning Damage");
   expect(result).toEqual([
     {
-      type: "AddsDmgAs",
+      type: "AddsDmgAsPct",
       from: "fire",
       to: "lightning",
-      value: 0.125,
+      value: 12.5,
     },
   ]);
 });
@@ -459,10 +459,10 @@ test("parse adds damage as with 'as' keyword", () => {
   const result = parseMod("Adds 18% of Physical Damage as Lightning Damage");
   expect(result).toEqual([
     {
-      type: "AddsDmgAs",
+      type: "AddsDmgAsPct",
       from: "physical",
       to: "lightning",
-      value: 0.18,
+      value: 18,
     },
   ]);
 });
@@ -477,7 +477,7 @@ test("parse cold penetration", () => {
   expect(result).toEqual([
     {
       type: "ResPenPct",
-      value: 0.08,
+      value: 8,
       penType: "cold",
     },
   ]);
@@ -488,7 +488,7 @@ test("parse lightning penetration", () => {
   expect(result).toEqual([
     {
       type: "ResPenPct",
-      value: 0.12,
+      value: 12,
       penType: "lightning",
     },
   ]);
@@ -499,7 +499,7 @@ test("parse fire penetration", () => {
   expect(result).toEqual([
     {
       type: "ResPenPct",
-      value: 0.1,
+      value: 10,
       penType: "fire",
     },
   ]);
@@ -510,7 +510,7 @@ test("parse elemental resistance penetration", () => {
   expect(result).toEqual([
     {
       type: "ResPenPct",
-      value: 0.15,
+      value: 15,
       penType: "elemental",
     },
   ]);
@@ -521,7 +521,7 @@ test("parse erosion resistance penetration", () => {
   expect(result).toEqual([
     {
       type: "ResPenPct",
-      value: 0.1,
+      value: 10,
       penType: "erosion",
     },
   ]);
@@ -532,7 +532,7 @@ test("parse elemental and erosion resistance penetration", () => {
   expect(result).toEqual([
     {
       type: "ResPenPct",
-      value: 0.23,
+      value: 23,
       penType: "all",
     },
   ]);
@@ -543,7 +543,7 @@ test("parse armor dmg mitigation penetration", () => {
   expect(result).toEqual([
     {
       type: "ArmorPenPct",
-      value: 0.08,
+      value: 8,
     },
   ]);
 });
@@ -553,7 +553,7 @@ test("parse armor dmg mitigation penetration with decimal", () => {
   expect(result).toEqual([
     {
       type: "ArmorPenPct",
-      value: 0.125,
+      value: 12.5,
     },
   ]);
 });
@@ -563,7 +563,7 @@ test("parse gear attack speed", () => {
   expect(result).toEqual([
     {
       type: "GearAspdPct",
-      value: 0.08,
+      value: 8,
     },
   ]);
 });
@@ -575,11 +575,11 @@ test("parse gear attack speed with damage penalty", () => {
   expect(result).toEqual([
     {
       type: "GearAspdPct",
-      value: 0.57,
+      value: 57,
     },
     {
       type: "DmgPct",
-      value: -0.12,
+      value: -12,
       addn: true,
       modType: "attack",
     },
@@ -591,7 +591,7 @@ test("parse double damage chance", () => {
   expect(result).toEqual([
     {
       type: "DoubleDmgChancePct",
-      value: 0.31,
+      value: 31,
     },
   ]);
 });
@@ -611,7 +611,7 @@ test("parse percentage max mana", () => {
   expect(result).toEqual([
     {
       type: "MaxManaPct",
-      value: 0.9,
+      value: 90,
       addn: false,
     },
   ]);
@@ -622,7 +622,7 @@ test("parse additional percentage max mana", () => {
   expect(result).toEqual([
     {
       type: "MaxManaPct",
-      value: 0.2,
+      value: 20,
       addn: true,
     },
   ]);
@@ -731,10 +731,10 @@ test("parse spell damage per mana consumed recently with value limit", () => {
   expect(result).toEqual([
     {
       type: "DmgPct",
-      value: 0.07,
+      value: 7,
       modType: "spell",
       addn: false,
-      per: { stackable: "mana_consumed_recently", amt: 100, valueLimit: 4.32 },
+      per: { stackable: "mana_consumed_recently", amt: 100, valueLimit: 432 },
     },
   ]);
 });
@@ -746,12 +746,12 @@ test("parse critical strike rating and damage combined", () => {
   expect(result).toEqual([
     {
       type: "CritRatingPct",
-      value: 0.05,
+      value: 5,
       modType: "global",
     },
     {
       type: "CritDmgPct",
-      value: 0.05,
+      value: 5,
       modType: "global",
       addn: false,
     },
@@ -765,13 +765,13 @@ test("parse critical strike rating and damage per mana consumed recently", () =>
   expect(result).toEqual([
     {
       type: "CritRatingPct",
-      value: 0.05,
+      value: 5,
       modType: "global",
       per: { stackable: "mana_consumed_recently", amt: 720 },
     },
     {
       type: "CritDmgPct",
-      value: 0.05,
+      value: 5,
       modType: "global",
       addn: false,
       per: { stackable: "mana_consumed_recently", amt: 720 },

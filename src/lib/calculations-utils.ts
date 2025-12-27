@@ -52,7 +52,7 @@ export const categorizeModType = (mod: Mod): StatCategory => {
     case "DmgPct":
     case "FlatDmgToAtks":
     case "FlatDmgToSpells":
-    case "AddsDmgAs":
+    case "AddsDmgAsPct":
     case "ConvertDmgPct":
     case "FlatGearDmg":
     case "GearPhysDmgPct":
@@ -64,7 +64,7 @@ export const categorizeModType = (mod: Mod): StatCategory => {
       return "damage";
 
     case "CritRatingPct":
-    case "SteepStrikeChance":
+    case "SteepStrikeChancePct":
       return "critRating";
 
     case "CritDmgPct":
@@ -75,7 +75,7 @@ export const categorizeModType = (mod: Mod): StatCategory => {
     case "GearAspdPct":
       return "aspd";
 
-    case "FervorEff":
+    case "FervorEffPct":
     case "Fervor":
     default:
       return "other";
@@ -103,8 +103,8 @@ export const formatModValue = (mod: Mod): string => {
   if ("value" in mod) {
     const value = mod.value;
     if (typeof value === "number") {
-      if (mod.type.includes("Pct") || mod.type === "FervorEff") {
-        return `${(value * 100).toFixed(1)}%`;
+      if (mod.type.includes("Pct") || mod.type === "FervorEffPct") {
+        return `${value.toFixed(1)}%`;
       }
       return value.toFixed(1);
     }
@@ -158,7 +158,7 @@ export const getModDisplayName = (mod: Mod): string => {
       return `Increased ${getStatDisplayName(mod.statType)}`;
     case "ConvertDmgPct":
       return `Convert ${mod.from} to ${mod.to}`;
-    case "AddsDmgAs":
+    case "AddsDmgAsPct":
       return `Gain ${mod.from} damage as extra ${mod.to}`;
     case "FlatGearDmg":
       return `Weapon ${mod.modType} damage`;
@@ -166,7 +166,7 @@ export const getModDisplayName = (mod: Mod): string => {
       return "Weapon physical damage";
     case "AddnMainHandDmgPct":
       return "Additional main hand damage";
-    case "FervorEff":
+    case "FervorEffPct":
       return "Fervor effectiveness";
     case "Fervor":
       return "Fervor";

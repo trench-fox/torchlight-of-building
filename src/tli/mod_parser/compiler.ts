@@ -36,9 +36,9 @@ const getExtractor = (
 
   switch (baseType) {
     case "int":
-      return isPercent ? (s) => parseInt(s, 10) / 100 : (s) => parseInt(s, 10);
+      return (s) => parseInt(s, 10);
     case "dec":
-      return isPercent ? (s) => parseFloat(s) / 100 : (s) => parseFloat(s);
+      return (s) => parseFloat(s);
     default: {
       // Check if there's a custom enum mapping
       const mapping = enumMappings.get(baseType);

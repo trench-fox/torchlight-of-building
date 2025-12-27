@@ -17,9 +17,7 @@ export const preciseCrueltyParser: SupportLevelParser = (input) => {
         /[+]?([\d.]+)%\s+additional\s+Attack\s+Damage/i,
       );
       if (dmgMatch !== null) {
-        attackDmgPct[level] = parseNumericValue(dmgMatch[1], {
-          asPercentage: true,
-        });
+        attackDmgPct[level] = parseNumericValue(dmgMatch[1]);
       }
 
       // Match "2.5% additional Aura Effect per stack of the buff"
@@ -27,9 +25,7 @@ export const preciseCrueltyParser: SupportLevelParser = (input) => {
         /(\d+(?:\.\d+)?)%\s+additional\s+Aura\s+Effect\s+per\s+stack/i,
       );
       if (auraEffMatch !== null) {
-        auraEffPctPerCrueltyStack[level] = parseNumericValue(auraEffMatch[1], {
-          asPercentage: true,
-        });
+        auraEffPctPerCrueltyStack[level] = parseNumericValue(auraEffMatch[1]);
       }
     }
   }

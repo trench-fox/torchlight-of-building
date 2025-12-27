@@ -7,39 +7,39 @@ const heroTraitModFactories: Partial<Record<HeroTraitName, ModFactory[]>> = {
   // Rosa 2
   "Unsullied Blade": [() => ({ type: "SpellDmgBonusAppliesToAtkDmg" })],
   "Baptism of Purity": [
-    () => ({ type: "MaxManaPct", value: 0.2, addn: true }),
+    () => ({ type: "MaxManaPct", value: 20, addn: true }),
     (i) => ({
-      type: "MercuryBaptism",
-      value: [0.12, 0.2, 0.28, 0.36, 0.44][i],
+      type: "MercuryBaptismDmgPct",
+      value: [12, 20, 28, 36, 44][i],
     }),
   ],
   "Cleanse Filth": [
     (i) => ({
       type: "DmgPct",
-      value: [0.03, 0.035, 0.4, 0.045, 0.05][i],
+      value: [3, 3.5, 4, 4.5, 5][i],
       modType: "elemental",
       addn: true,
       per: {
         stackable: "max_mana",
-        valueLimit: [0.6, 0.7, 0.8, 0.9, 1][i],
+        valueLimit: [60, 70, 80, 90, 100][i],
         amt: 1000,
       },
     }),
-    () => ({ type: "ManaBeforeLife", value: 0.25, cond: "realm_of_mercury" }),
+    () => ({ type: "ManaBeforeLifePct", value: 25, cond: "realm_of_mercury" }),
   ],
   "Utmost Devotion": [
     (i) => ({
       type: "MaxMercuryPtsPct",
-      value: 0.1,
+      value: 10,
       per: {
         stackable: "max_mana",
-        valueLimit: [2, 2.5, 3, 3.5, 4][i],
+        valueLimit: [200, 250, 300, 350, 400][i],
         amt: 1000,
       },
     }),
     (i) => ({
       type: "DmgPct",
-      value: [0.12, 0.16, 0.2, 0.24, 0.28][i],
+      value: [12, 16, 20, 24, 28][i],
       modType: "elemental",
       addn: true,
       per: { stackable: "mercury_pt" },

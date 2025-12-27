@@ -17,9 +17,7 @@ export const iceBondParser: SupportLevelParser = (input) => {
         /[+]?([\d.]+)%\s+additional\s+Cold\s+Damage/i,
       );
       if (match !== null) {
-        coldDmgPctVsFrostbitten[level] = parseNumericValue(match[1], {
-          asPercentage: true,
-        });
+        coldDmgPctVsFrostbitten[level] = parseNumericValue(match[1]);
       }
     }
   }
@@ -44,9 +42,7 @@ export const bullsRageParser: SupportLevelParser = (input) => {
         /[+]?([\d.]+)%\s+additional\s+Melee\s+Skill\s+Damage/i,
       );
       if (match !== null) {
-        meleeDmgPct[level] = parseNumericValue(match[1], {
-          asPercentage: true,
-        });
+        meleeDmgPct[level] = parseNumericValue(match[1]);
       }
     }
   }
@@ -80,17 +76,13 @@ export const frostSpikeParser: SupportLevelParser = (input) => {
 
     // Try dedicated columns
     if (addedDmgEffValue !== undefined && addedDmgEffValue !== "") {
-      addedDmgEffPct[level] = parseNumericValue(addedDmgEffValue, {
-        asPercentage: true,
-      });
+      addedDmgEffPct[level] = parseNumericValue(addedDmgEffValue);
     }
 
     if (damageValue !== undefined && damageValue !== "") {
       const dmgMatch = damageValue.match(/([\d.]+)%/);
       if (dmgMatch !== null) {
-        weaponAtkDmgPct[level] = parseNumericValue(dmgMatch[1], {
-          asPercentage: true,
-        });
+        weaponAtkDmgPct[level] = parseNumericValue(dmgMatch[1]);
       }
     }
   }
@@ -124,9 +116,7 @@ export const frostSpikeParser: SupportLevelParser = (input) => {
       /Converts\s+(\d+)%\s+of the skill's Physical Damage to Cold/i,
     );
     if (convertMatch !== null) {
-      convertPhysicalToColdPct = parseNumericValue(convertMatch[1], {
-        asPercentage: true,
-      });
+      convertPhysicalToColdPct = parseNumericValue(convertMatch[1]);
     }
 
     // MaxProjectile: "max amount of Projectiles that can be fired by this skill is 5"
@@ -159,9 +149,7 @@ export const frostSpikeParser: SupportLevelParser = (input) => {
       /\+(\d+)%\s+additional Damage for every\s+\+1\s+Projectile/i,
     );
     if (dmgPctMatch !== null) {
-      dmgPctPerProjectile = parseNumericValue(dmgPctMatch[1], {
-        asPercentage: true,
-      });
+      dmgPctPerProjectile = parseNumericValue(dmgPctMatch[1]);
     }
   }
 

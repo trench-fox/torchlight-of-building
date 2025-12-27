@@ -97,13 +97,13 @@ export const ConfigurationTab: React.FC<ConfigurationTabProps> = ({
   ): void => {
     const value = e.target.value;
     if (value === "") {
-      onUpdate({ unsealedManaWholePct: undefined });
+      onUpdate({ unsealedManaPct: undefined });
       return;
     }
     const parsed = Number(value);
     if (!Number.isNaN(parsed)) {
       const clamped = Math.max(0, Math.min(100, parsed));
-      onUpdate({ unsealedManaWholePct: clamped });
+      onUpdate({ unsealedManaPct: clamped });
     }
   };
 
@@ -240,7 +240,7 @@ export const ConfigurationTab: React.FC<ConfigurationTabProps> = ({
           </label>
           <input
             type="number"
-            value={config.unsealedManaWholePct ?? ""}
+            value={config.unsealedManaPct ?? ""}
             onChange={handleUnsealedManaChange}
             min={0}
             max={100}

@@ -24,11 +24,11 @@ export const CoreTalentMods: Record<CoreTalentName, Affix> = {
     affixLines: [
       {
         text: "-10% Attack Speed",
-        mods: [{ type: "AspdPct", value: -0.1, addn: false }],
+        mods: [{ type: "AspdPct", value: -10, addn: false }],
       },
       {
         text: "+30% additional Attack Damage",
-        mods: [{ type: "DmgPct", value: 0.3, modType: "attack", addn: true }],
+        mods: [{ type: "DmgPct", value: 30, modType: "attack", addn: true }],
       },
       { text: "+30% additional Ailment Damage dealt by attacks" },
     ],
@@ -328,7 +328,7 @@ export const CoreTalentMods: Record<CoreTalentName, Affix> = {
     affixLines: [
       {
         text: "+30% additional Spell Damage",
-        mods: [{ type: "DmgPct", value: 0.3, modType: "spell", addn: true }],
+        mods: [{ type: "DmgPct", value: 30, modType: "spell", addn: true }],
       },
       { text: "+25% additional Skill Cost" },
     ],
@@ -380,7 +380,7 @@ export const CoreTalentMods: Record<CoreTalentName, Affix> = {
       { text: "20% of damage is taken from Mana before life" },
       {
         text: "+12% additional Max Mana",
-        mods: [{ type: "MaxManaPct", value: 0.12, addn: true }],
+        mods: [{ type: "MaxManaPct", value: 12, addn: true }],
       },
     ],
   },
@@ -471,7 +471,7 @@ export const CoreTalentMods: Record<CoreTalentName, Affix> = {
     affixLines: [
       {
         text: "+25% additional Cold Damage",
-        mods: [{ type: "DmgPct", value: 0.25, modType: "cold", addn: true }],
+        mods: [{ type: "DmgPct", value: 25, modType: "cold", addn: true }],
       },
       { text: "+25% additional Minion Cold Damage" },
       { text: "Skills no longer cost Mana" },
@@ -488,7 +488,7 @@ export const CoreTalentMods: Record<CoreTalentName, Affix> = {
     affixLines: [
       {
         text: "+30% additional Physical Damage",
-        mods: [{ type: "DmgPct", value: 0.3, modType: "physical", addn: true }],
+        mods: [{ type: "DmgPct", value: 30, modType: "physical", addn: true }],
       },
       { text: "Enemies +20% Injury Buffer" },
     ],
@@ -510,7 +510,7 @@ export const CoreTalentMods: Record<CoreTalentName, Affix> = {
     affixLines: [
       {
         text: "+25% additional Melee Damage",
-        mods: [{ type: "DmgPct", value: 0.25, modType: "melee", addn: true }],
+        mods: [{ type: "DmgPct", value: 25, modType: "melee", addn: true }],
       },
       { text: "Melee Skill has reversed knockback direction" },
     ],
@@ -525,9 +525,7 @@ export const CoreTalentMods: Record<CoreTalentName, Affix> = {
     affixLines: [
       {
         text: "+33% additional Physical Damage",
-        mods: [
-          { type: "DmgPct", value: 0.33, modType: "physical", addn: true },
-        ],
+        mods: [{ type: "DmgPct", value: 33, modType: "physical", addn: true }],
       },
       { text: "+30% additional Minion Physical Damage" },
       { text: "-1% additional Elemental Damage for every 3 level(s)." },
@@ -559,7 +557,7 @@ export const CoreTalentMods: Record<CoreTalentName, Affix> = {
       { text: "-20% additional damage for Weapons" },
       {
         text: "+40% additional Attack Damage",
-        mods: [{ type: "DmgPct", value: 0.4, modType: "attack", addn: true }],
+        mods: [{ type: "DmgPct", value: 40, modType: "attack", addn: true }],
       },
     ],
   },
@@ -588,7 +586,7 @@ export const CoreTalentMods: Record<CoreTalentName, Affix> = {
       { text: "Have Fervor" },
       {
         text: "+12% Fervor effect",
-        mods: [{ type: "FervorEff", value: 0.12 }],
+        mods: [{ type: "FervorEffPct", value: 12 }],
       },
     ],
   },
@@ -661,7 +659,7 @@ export const CoreTalentMods: Record<CoreTalentName, Affix> = {
     affixLines: [
       {
         text: "+35% additional Erosion Damage",
-        mods: [{ type: "DmgPct", value: 0.35, modType: "erosion", addn: true }],
+        mods: [{ type: "DmgPct", value: 35, modType: "erosion", addn: true }],
       },
       { text: "-10% Elemental Resistance" },
     ],
@@ -683,7 +681,7 @@ export const CoreTalentMods: Record<CoreTalentName, Affix> = {
     affixLines: [
       {
         text: "+15% additional Erosion Damage",
-        mods: [{ type: "DmgPct", value: 0.15, modType: "erosion", addn: true }],
+        mods: [{ type: "DmgPct", value: 15, modType: "erosion", addn: true }],
       },
       { text: "15% additional damage applied to Life" },
     ],
@@ -905,7 +903,7 @@ export const CoreTalentMods: Record<CoreTalentName, Affix> = {
     affixLines: [
       {
         text: "-10% additional Minion Attack and Cast Speed",
-        mods: [{ type: "MinionAspdAndCspdPct", value: -0.1, addn: true }],
+        mods: [{ type: "MinionAspdAndCspdPct", value: -10, addn: true }],
       },
       { text: "Spirit Magi +50% chance to use an Enhanced Skill" },
     ],

@@ -39,7 +39,7 @@ export type Stackable =
   | "max_mana"
   | "mana_consumed_recently"
   | "mercury_pt"
-  | "unsealed_mana_whole_pct";
+  | "unsealed_mana_pct";
 
 export type StatType = "str" | "dex" | "int";
 
@@ -75,12 +75,11 @@ interface ModDefinitions {
   CspdPct: { value: number; addn: boolean };
   AspdAndCspdPct: { value: number; addn: boolean };
   MinionAspdAndCspdPct: { value: number; addn: boolean };
-  DblDmg: { value: number };
   DoubleDmgChancePct: { value: number };
   Stat: { value: number; statType: StatType };
   StatPct: { value: number; statType: StatType };
-  FervorEff: { value: number };
-  SteepStrikeChance: { value: number };
+  FervorEffPct: { value: number };
+  SteepStrikeChancePct: { value: number };
   SteepStrikeDmg: { value: number; addn: boolean };
   SweepSlashDmg: { value: number; addn: boolean };
   Fervor: { value: number };
@@ -107,7 +106,7 @@ interface ModDefinitions {
   EnergyShieldRegainPct: { value: number };
   MultistrikeChancePct: { value: number };
   ConvertDmgPct: { from: DmgChunkType; to: DmgChunkType; value: number };
-  AddsDmgAs: { from: DmgChunkType; to: DmgChunkType; value: number };
+  AddsDmgAsPct: { from: DmgChunkType; to: DmgChunkType; value: number };
   MaxWillpowerStacks: { value: number };
   ShadowQuant: { value: number };
   ShadowDmgPct: { value: number; addn: boolean };
@@ -118,11 +117,11 @@ interface ModDefinitions {
   SealedManaCompPct: { value: number; addn?: boolean };
   ResPenPct: { value: number; penType: ResPenType };
   ArmorPenPct: { value: number };
-  ManaBeforeLife: { value: number };
+  ManaBeforeLifePct: { value: number };
   SpellDmgBonusAppliesToAtkDmg: object;
   MaxMana: { value: number };
   MaxManaPct: { value: number; addn: boolean };
-  MercuryBaptism: { value: number };
+  MercuryBaptismDmgPct: { value: number };
   MaxMercuryPtsPct: { value: number };
   CoreTalent: { name: CoreTalentName };
 }

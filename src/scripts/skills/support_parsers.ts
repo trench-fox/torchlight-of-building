@@ -28,9 +28,7 @@ export const hauntParser: SupportLevelParser = (input) => {
       throw new Error(`${skillName} level ${level}: missing damage value`);
     }
 
-    dmgPct[level] = parseNumericValue(dmgValue, {
-      asPercentage: true,
-    });
+    dmgPct[level] = parseNumericValue(dmgValue);
   }
 
   validateAllLevels(dmgPct, skillName);
@@ -56,7 +54,7 @@ export const steamrollParser: SupportLevelParser = (input) => {
   if (aspdMatch === null) {
     throw new Error(`${skillName}: could not find Attack Speed value`);
   }
-  const aspdPctValue = parseNumericValue(aspdMatch[1], { asPercentage: true });
+  const aspdPctValue = parseNumericValue(aspdMatch[1]);
 
   // Extract melee and ailment damage from progression table
   const meleeDmgPct: Record<number, number> = {};
@@ -78,12 +76,8 @@ export const steamrollParser: SupportLevelParser = (input) => {
       );
     }
 
-    meleeDmgPct[level] = parseNumericValue(meleeDmgValue, {
-      asPercentage: true,
-    });
-    ailmentDmgPct[level] = parseNumericValue(ailmentDmgValue, {
-      asPercentage: true,
-    });
+    meleeDmgPct[level] = parseNumericValue(meleeDmgValue);
+    ailmentDmgPct[level] = parseNumericValue(ailmentDmgValue);
   }
 
   validateAllLevels(meleeDmgPct, skillName);
@@ -108,9 +102,7 @@ export const quickDecisionParser: SupportLevelParser = (input) => {
       throw new Error(`${skillName} level ${level}: missing speed value`);
     }
 
-    aspdAndCspdPct[level] = parseNumericValue(speedValue, {
-      asPercentage: true,
-    });
+    aspdAndCspdPct[level] = parseNumericValue(speedValue);
   }
 
   validateAllLevels(aspdAndCspdPct, skillName);
@@ -145,9 +137,7 @@ export const willpowerParser: SupportLevelParser = (input) => {
       );
     }
 
-    dmgPctPerWillpower[level] = parseNumericValue(dmgMatch[1], {
-      asPercentage: true,
-    });
+    dmgPctPerWillpower[level] = parseNumericValue(dmgMatch[1]);
   }
 
   validateAllLevels(dmgPctPerWillpower, skillName);
@@ -172,9 +162,7 @@ export const criticalStrikeDamageIncreaseParser: SupportLevelParser = (
       throw new Error(`${skillName} level ${level}: missing crit damage value`);
     }
 
-    critDmgPct[level] = parseNumericValue(critDmgValue, {
-      asPercentage: true,
-    });
+    critDmgPct[level] = parseNumericValue(critDmgValue);
   }
 
   validateAllLevels(critDmgPct, skillName);
@@ -196,9 +184,7 @@ export const criticalStrikeRatingIncreaseParser: SupportLevelParser = (
       throw new Error(`${skillName} level ${level}: missing crit rating value`);
     }
 
-    critRatingPct[level] = parseNumericValue(critRatingValue, {
-      asPercentage: true,
-    });
+    critRatingPct[level] = parseNumericValue(critRatingValue);
   }
 
   validateAllLevels(critRatingPct, skillName);
@@ -220,9 +206,7 @@ export const enhancedAilmentParser: SupportLevelParser = (input) => {
       );
     }
 
-    ailmentDmgPct[level] = parseNumericValue(ailmentDmgValue, {
-      asPercentage: true,
-    });
+    ailmentDmgPct[level] = parseNumericValue(ailmentDmgValue);
   }
 
   validateAllLevels(ailmentDmgPct, skillName);
@@ -243,9 +227,7 @@ export const wellFoughtBattleParser: SupportLevelParser = (input) => {
       );
     }
 
-    skillEffPctPerSkillUse[level] = parseNumericValue(skillEffValue, {
-      asPercentage: true,
-    });
+    skillEffPctPerSkillUse[level] = parseNumericValue(skillEffValue);
   }
 
   validateAllLevels(skillEffPctPerSkillUse, skillName);
@@ -266,9 +248,7 @@ export const massEffectParser: SupportLevelParser = (input) => {
       );
     }
 
-    skillEffPctPerCharges[level] = parseNumericValue(skillEffValue, {
-      asPercentage: true,
-    });
+    skillEffPctPerCharges[level] = parseNumericValue(skillEffValue);
   }
 
   validateAllLevels(skillEffPctPerCharges, skillName);

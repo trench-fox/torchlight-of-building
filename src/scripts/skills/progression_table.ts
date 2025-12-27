@@ -85,10 +85,7 @@ export const extractTextModValues = (html: string): string[] => {
   return values;
 };
 
-export const parseNumericValue = (
-  value: string,
-  options?: { asPercentage?: boolean },
-): number => {
+export const parseNumericValue = (value: string): number => {
   const cleaned = value.replace(/^\+/, "").trim();
 
   // Handle fraction notation (e.g., "31/2" = 15.5)
@@ -105,10 +102,6 @@ export const parseNumericValue = (
 
   if (Number.isNaN(num)) {
     throw new Error(`Failed to parse numeric value: "${value}"`);
-  }
-
-  if (options?.asPercentage === true) {
-    num = num / 100;
   }
 
   // Round to 4 decimal places to avoid floating point artifacts

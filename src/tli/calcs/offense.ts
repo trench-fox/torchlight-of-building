@@ -77,13 +77,13 @@ const sumByValue = (mods: Extract<Mod, { value: number }>[]): number => {
 };
 
 const calculateInc = (bonuses: number[]) => {
-  return R.pipe(bonuses, R.sum());
+  return R.pipe(bonuses, R.sum()) / 100;
 };
 
 const calculateAddn = (bonuses: number[]) => {
   return R.pipe(
     bonuses,
-    R.reduce((b1, b2) => b1 * (1 + b2), 1),
+    R.reduce((b1, b2) => b1 * (1 + b2 / 100), 1),
   );
 };
 
@@ -301,13 +301,13 @@ export const convertDmg = (dmgRanges: DmgRanges, allMods: Mod[]): DmgPools => {
   for (const sourceType of CONVERSION_ORDER) {
     // Step 1: Process "Gain as Extra" mods (calculated BEFORE conversion)
     // This adds extra damage to target pools but does NOT remove from source
-    const addsDmgAsMods = filterMod(allMods, "AddsDmgAs").filter(
+    const addsDmgAsMods = filterMod(allMods, "AddsDmgAsPct").filter(
       (m) => m.from === sourceType,
     );
     for (const chunk of pools[sourceType]) {
       for (const mod of addsDmgAsMods) {
         pools[mod.to].push({
-          range: multDR(chunk.range, mod.value),
+          range: multDR(chunk.range, mod.value / 100),
           history: [...chunk.history, sourceType],
         });
       }
@@ -319,7 +319,7 @@ export const convertDmg = (dmgRanges: DmgRanges, allMods: Mod[]): DmgPools => {
     );
     if (convMods.length === 0) continue;
 
-    const totalPct = R.sumBy(convMods, (m) => m.value);
+    const totalPct = R.sumBy(convMods, (m) => m.value) / 100;
     const proration = totalPct > 1 ? 1 / totalPct : 1;
     const unconvertedPct = Math.max(0, 1 - totalPct);
 
@@ -337,7 +337,7 @@ export const convertDmg = (dmgRanges: DmgRanges, allMods: Mod[]): DmgPools => {
 
       // Converted damage goes to target pools with updated history
       for (const mod of convMods) {
-        const convertPct = mod.value * proration;
+        const convertPct = (mod.value / 100) * proration;
         pools[mod.to].push({
           range: multDR(chunk.range, convertPct),
           history: [...chunk.history, sourceType],
@@ -405,7 +405,7 @@ const calculateGearDmg = (loadout: Loadout, allMods: Mod[]): GearDmg => {
 
   let addnMHDmgMult = 1;
   filterMod(allMods, "AddnMainHandDmgPct").forEach((a) => {
-    addnMHDmgMult *= 1 + a.value;
+    addnMHDmgMult *= 1 + a.value / 100;
   });
 
   phys = multDR(phys, 1 + physBonusPct);
@@ -654,7 +654,7 @@ const calculateAddnDmgFromShadows = (
     return {
       type: "DmgPct",
       addn: true,
-      value: 1,
+      value: 100, // 100% additional damage (doubles the hit)
       modType: "global",
       src: `Shadow Strike: ${numShadowHits} hits`,
     };
@@ -670,7 +670,7 @@ const calculateAddnDmgFromShadows = (
   return {
     type: "DmgPct",
     addn: true,
-    value: geometricSum,
+    value: geometricSum * 100, // Convert to whole percentage
     modType: "global",
     src: `Shadow Strike: ${numShadowHits} hits`,
   };
@@ -705,15 +705,16 @@ const calculatePenetration = (
   ]);
   const firePenMods = filterPenMods(elePenMods, ["all", "elemental", "fire"]);
   const erosionPenMods = filterPenMods(elePenMods, ["all", "erosion"]);
-  const enemyColdResMult = 1 - enemyRes + sumByValue(coldPenMods);
-  const enemyLightningResMult = 1 - enemyRes + sumByValue(lightningPenMods);
-  const enemyFireResMult = 1 - enemyRes + sumByValue(firePenMods);
-  const enemyErosionResMult = 1 - enemyRes + sumByValue(erosionPenMods);
+  const enemyColdResMult = 1 - enemyRes + sumByValue(coldPenMods) / 100;
+  const enemyLightningResMult =
+    1 - enemyRes + sumByValue(lightningPenMods) / 100;
+  const enemyFireResMult = 1 - enemyRes + sumByValue(firePenMods) / 100;
+  const enemyErosionResMult = 1 - enemyRes + sumByValue(erosionPenMods) / 100;
 
   const enemyArmorDmgMitigation = calculateEnemyArmorDmgMitigation(
     calculateEnemyArmor(config),
   );
-  const totalArmorPenPct = sumByValue(filterMod(mods, "ArmorPenPct"));
+  const totalArmorPenPct = sumByValue(filterMod(mods, "ArmorPenPct")) / 100;
   const enemyArmorPhysMult =
     1 - enemyArmorDmgMitigation.phys + totalArmorPenPct;
   const enemyArmorNonPhysMult =
@@ -754,12 +755,12 @@ const calculateSkillHit = (
 ): SkillHitOverview => {
   const skillWeaponDR = match(skill.name)
     .with("Berserking Blade", () => {
-      return multDRs(gearDmg.mainHand, 2.1);
+      return multDRs(gearDmg.mainHand, 210 / 100);
     })
     .with("Frost Spike", () => {
       return multDRs(
         gearDmg.mainHand,
-        getLeveOffenseValue(skill, "WeaponAtkDmgPct", level) as number,
+        (getLeveOffenseValue(skill, "WeaponAtkDmgPct", level) as number) / 100,
       );
     })
     .with("[Test] Simple Attack", () => {
@@ -771,7 +772,7 @@ const calculateSkillHit = (
     });
   const skillFlatDR = multDRs(
     flatDmg,
-    getLeveOffenseValue(skill, "AddedDmgEffPct", level) as number,
+    (getLeveOffenseValue(skill, "AddedDmgEffPct", level) as number) / 100,
   );
   const skillBaseDmg = addDRs(skillWeaponDR, skillFlatDR);
 
@@ -983,7 +984,7 @@ const calculateImplicitMods = (): Mod[] => {
     {
       type: "DmgPct",
       // .5% additional damage per main stat
-      value: 0.005,
+      value: 0.5,
       modType: "global",
       addn: true,
       per: { stackable: "main_stat" },
@@ -991,18 +992,18 @@ const calculateImplicitMods = (): Mod[] => {
     },
     {
       type: "AspdPct",
-      value: 0.02,
+      value: 2,
       addn: true,
-      per: { stackable: "unsealed_mana_whole_pct", amt: 10 },
+      per: { stackable: "unsealed_mana_pct", amt: 10 },
       cond: "realm_of_mercury",
       src: "Realm of Mercury",
     },
     {
       type: "DmgPct",
-      value: 0.03,
+      value: 3,
       modType: "elemental",
       addn: true,
-      per: { stackable: "unsealed_mana_whole_pct", amt: 10 },
+      per: { stackable: "unsealed_mana_pct", amt: 10 },
       cond: "realm_of_mercury",
       src: "Realm of Mercury",
     },
@@ -1016,7 +1017,7 @@ const calculateStats = (mods: Mod[]): Stats => {
   const calcFinalStat = (statType: StatType): number => {
     const flat = sumByValue(statMods.filter((m) => m.statType === statType));
     const mult =
-      1 + sumByValue(statPctMods.filter((m) => m.statType === statType));
+      1 + sumByValue(statPctMods.filter((m) => m.statType === statType)) / 100;
     return flat * mult;
   };
   return {
@@ -1243,7 +1244,7 @@ interface FervorCtx {
 }
 
 const calculateFervor = (mods: Mod[], config: Configuration): FervorCtx => {
-  const fervorEffMods = filterMod(mods, "FervorEff");
+  const fervorEffMods = filterMod(mods, "FervorEffPct");
   const bonusIncEff = calculateInc(fervorEffMods.map((a) => a.value));
   return {
     enabled: config.fervorEnabled,
@@ -1253,7 +1254,7 @@ const calculateFervor = (mods: Mod[], config: Configuration): FervorCtx => {
 };
 
 const calculateFervorCritRateMod = (fervor: FervorCtx): Mod => {
-  const fervorPerPoint = 0.02 * (1 + fervor.bonusIncEff);
+  const fervorPerPoint = 2 * (1 + fervor.bonusIncEff);
   const fervorBonus = fervor.points * fervorPerPoint;
 
   return {
@@ -1329,17 +1330,6 @@ const calculateEnemyArmorDmgMitigation = (
   const phys = armor / (0.9 * armor + 30000);
   const nonPhys = phys * 0.6;
   return { phys, nonPhys };
-};
-
-// replaces CoreTalent mods with their equivalent regular mods
-const replaceCoreTalentMods = (mods: Mod[]): Mod[] => {
-  // todo: implement some core talent replacements
-  const coreTalentNames = mods
-    .filter((m) => m.type === "CoreTalent")
-    .map((m) => m.name);
-  const newMods: Mod[] = coreTalentNames.flatMap((_m) => []);
-  const withoutCoreTalentMods = mods.filter((m) => m.type !== "CoreTalent");
-  return [...withoutCoreTalentMods, ...newMods];
 };
 
 const resolveBuffSkillEffMults = (
@@ -1434,13 +1424,9 @@ const resolveModsForOffenseSkill = (
     ),
   );
 
-  const unsealedManaWholePct = config.unsealedManaWholePct ?? 0;
+  const unsealedManaPct = config.unsealedManaPct ?? 0;
   mods.push(
-    ...normalizeStackables(
-      prenormMods,
-      "unsealed_mana_whole_pct",
-      unsealedManaWholePct,
-    ),
+    ...normalizeStackables(prenormMods, "unsealed_mana_pct", unsealedManaPct),
   );
 
   return mods;

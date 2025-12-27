@@ -63,7 +63,7 @@ const createMinimalSaveData = (
     crueltyBuffStacks: 40,
     numShadowHits: undefined,
     manaConsumedRecently: undefined,
-    unsealedManaWholePct: undefined,
+    unsealedManaPct: undefined,
     realmOfMercuryEnabled: false,
     enemyRes: undefined,
     enemyArmor: undefined,

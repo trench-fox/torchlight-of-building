@@ -55,7 +55,7 @@ export interface Configuration {
   // default to 0
   manaConsumedRecently: number | undefined;
   // default to 0
-  unsealedManaWholePct: number | undefined;
+  unsealedManaPct: number | undefined;
 
   // --------------------
   // hero-specific config
