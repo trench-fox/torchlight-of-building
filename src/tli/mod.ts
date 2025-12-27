@@ -62,7 +62,9 @@ export type Condition =
   | "realm_of_mercury"
   | "has_focus_blessing"
   | "has_agility_blessing"
-  | "enemy_paralyzed";
+  | "has_full_mana"
+  | "enemy_paralyzed"
+  | "target_enemy_is_nearby";
 
 // Common fields automatically added to all mod types
 interface ModBase {

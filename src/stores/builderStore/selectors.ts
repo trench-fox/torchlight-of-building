@@ -86,5 +86,12 @@ export const useConfiguration = (): Configuration => {
     enemyRes: configPage.enemyRes,
     enemyArmor: configPage.enemyArmor,
     enemyParalyzed: configPage.enemyParalyzed,
+    hasFullMana: configPage.hasFullMana,
+    targetEnemyIsNearby: configPage.targetEnemyIsNearby,
+    numEnemiesNearby: configPage.numEnemiesNearby,
+    numEnemiesAffectedByWarcry: configPage.numEnemiesAffectedByWarcry,
+    hasBlockedRecently: configPage.hasBlockedRecently,
+    hasElitesNearby: configPage.hasElitesNearby,
+    enemyHasAilment: configPage.enemyHasAilment,
   };
 };

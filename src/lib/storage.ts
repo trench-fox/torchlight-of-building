@@ -78,6 +78,13 @@ export const createEmptyConfigurationPage = (): ConfigurationPage => ({
   enemyRes: undefined,
   enemyArmor: undefined,
   enemyParalyzed: false,
+  hasFullMana: false,
+  targetEnemyIsNearby: false,
+  numEnemiesNearby: 0,
+  numEnemiesAffectedByWarcry: 0,
+  hasBlockedRecently: false,
+  hasElitesNearby: false,
+  enemyHasAilment: false,
 });
 
 export const createEmptySkillPage = (): SkillPage => ({

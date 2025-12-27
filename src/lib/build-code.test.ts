@@ -218,6 +218,6 @@ describe("build-code", () => {
     const code = encodeBuildCode(loadout);
 
     // Empty loadout should be fairly small
-    expect(code.length).toBeLessThan(500);
+    expect(code.length).toBeLessThan(600);
   });
 });

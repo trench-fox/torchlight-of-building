@@ -904,6 +904,8 @@ const filterModsByCond = (
       .with("has_focus_blessing", () => config.hasFocusBlessing)
       .with("has_agility_blessing", () => config.hasAgilityBlessing)
       .with("enemy_paralyzed", () => config.enemyParalyzed)
+      .with("has_full_mana", () => config.hasFullMana)
+      .with("target_enemy_is_nearby", () => config.targetEnemyIsNearby)
       .exhaustive();
   });
 };

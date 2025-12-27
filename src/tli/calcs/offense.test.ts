@@ -31,6 +31,13 @@ const createDefaultConfiguration = (): Configuration => ({
   enemyRes: 0,
   enemyArmor: 0,
   enemyParalyzed: false,
+  hasFullMana: false,
+  targetEnemyIsNearby: false,
+  numEnemiesNearby: 0,
+  numEnemiesAffectedByWarcry: 0,
+  hasBlockedRecently: false,
+  hasElitesNearby: false,
+  enemyHasAilment: false,
 });
 
 // Helper to create Affix objects from mods for tests
@@ -2141,6 +2148,13 @@ describe("resolveBuffSkillMods", () => {
         enemyRes: undefined,
         enemyArmor: undefined,
         enemyParalyzed: false,
+        hasFullMana: false,
+        targetEnemyIsNearby: false,
+        numEnemiesNearby: 0,
+        numEnemiesAffectedByWarcry: 0,
+        hasBlockedRecently: false,
+        hasElitesNearby: false,
+        enemyHasAilment: false,
       },
     });
     const actual = results.skills["[Test] Simple Attack"];

@@ -342,6 +342,74 @@ export const ConfigurationTab: React.FC<ConfigurationTabProps> = ({
             onChange={(e) => onUpdate({ enemyParalyzed: e.target.checked })}
             className="h-4 w-4 rounded border-zinc-600 bg-zinc-800 accent-amber-500"
           />
+
+          <label className="text-right text-zinc-50">Has Full Mana</label>
+          <input
+            type="checkbox"
+            checked={config.hasFullMana}
+            onChange={(e) => onUpdate({ hasFullMana: e.target.checked })}
+            className="h-4 w-4 rounded border-zinc-600 bg-zinc-800 accent-amber-500"
+          />
+
+          <label className="text-right text-zinc-50">Target Enemy Is Nearby</label>
+          <input
+            type="checkbox"
+            checked={config.targetEnemyIsNearby}
+            onChange={(e) => onUpdate({ targetEnemyIsNearby: e.target.checked })}
+            className="h-4 w-4 rounded border-zinc-600 bg-zinc-800 accent-amber-500"
+          />
+
+          <label className="text-right text-zinc-50">Enemies Nearby</label>
+          <input
+            type="number"
+            value={config.numEnemiesNearby}
+            onChange={(e) => {
+              const parsed = Number(e.target.value);
+              if (!Number.isNaN(parsed)) {
+                onUpdate({ numEnemiesNearby: Math.max(0, parsed) });
+              }
+            }}
+            min={0}
+            className="w-14 rounded border border-zinc-700 bg-zinc-800 px-2 py-0.5 text-center text-sm text-zinc-50 focus:border-amber-500 focus:outline-none focus:ring-1 focus:ring-amber-500/30"
+          />
+
+          <label className="text-right text-zinc-50">Enemies Affected by Warcry</label>
+          <input
+            type="number"
+            value={config.numEnemiesAffectedByWarcry}
+            onChange={(e) => {
+              const parsed = Number(e.target.value);
+              if (!Number.isNaN(parsed)) {
+                onUpdate({ numEnemiesAffectedByWarcry: Math.max(0, parsed) });
+              }
+            }}
+            min={0}
+            className="w-14 rounded border border-zinc-700 bg-zinc-800 px-2 py-0.5 text-center text-sm text-zinc-50 focus:border-amber-500 focus:outline-none focus:ring-1 focus:ring-amber-500/30"
+          />
+
+          <label className="text-right text-zinc-50">Has Blocked Recently</label>
+          <input
+            type="checkbox"
+            checked={config.hasBlockedRecently}
+            onChange={(e) => onUpdate({ hasBlockedRecently: e.target.checked })}
+            className="h-4 w-4 rounded border-zinc-600 bg-zinc-800 accent-amber-500"
+          />
+
+          <label className="text-right text-zinc-50">Has Elites Nearby</label>
+          <input
+            type="checkbox"
+            checked={config.hasElitesNearby}
+            onChange={(e) => onUpdate({ hasElitesNearby: e.target.checked })}
+            className="h-4 w-4 rounded border-zinc-600 bg-zinc-800 accent-amber-500"
+          />
+
+          <label className="text-right text-zinc-50">Enemy Has Ailment</label>
+          <input
+            type="checkbox"
+            checked={config.enemyHasAilment}
+            onChange={(e) => onUpdate({ enemyHasAilment: e.target.checked })}
+            className="h-4 w-4 rounded border-zinc-600 bg-zinc-800 accent-amber-500"
+          />
         </div>
       </div>
     </div>

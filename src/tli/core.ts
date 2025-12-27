@@ -61,7 +61,24 @@ export interface Configuration {
   hasFocusBlessing: boolean;
   // default to max
   agilityBlessings: number | undefined;
+  // default to max
   hasAgilityBlessing: boolean;
+  // default to false
+  hasFullMana: boolean;
+  // default to false
+  enemyParalyzed: boolean;
+  // default to false
+  targetEnemyIsNearby: boolean;
+  // default to 0
+  numEnemiesNearby: number;
+  // default to 0
+  numEnemiesAffectedByWarcry: number;
+  // default to false
+  hasBlockedRecently: boolean;
+  // default to false
+  hasElitesNearby: boolean;
+  // default to false
+  enemyHasAilment: boolean;
 
   // --------------------
   // hero-specific config
@@ -77,8 +94,6 @@ export interface Configuration {
   enemyRes: number | undefined;
   // default to 27273 (effective phys dmg mitigation of 50%)
   enemyArmor: number | undefined;
-  // default to false
-  enemyParalyzed: boolean;
 }
 
 export interface Gear {
