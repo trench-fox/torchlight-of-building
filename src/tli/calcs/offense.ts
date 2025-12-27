@@ -28,7 +28,15 @@ import {
   type SkillSlot,
   type SupportSkillSlot,
 } from "../core";
-import type { DmgChunkType, Mod, ModOfType, Stackable, StatType } from "../mod";
+import type {
+  Comparator,
+  ConditionThreshold,
+  DmgChunkType,
+  Mod,
+  ModOfType,
+  Stackable,
+  StatType,
+} from "../mod";
 import { getActiveSkillMods } from "../skills/active_mods";
 import { getPassiveSkillMods } from "../skills/passive_mods";
 import { getSupportSkillMods } from "../skills/support_mods";
@@ -891,7 +899,7 @@ const filterModsByCond = (
   config: Configuration,
 ): Mod[] => {
   return mods.filter((m) => {
-    if (!("cond" in m) || m.cond === undefined) return true;
+    if (m.cond === undefined) return true;
     return match(m.cond)
       .with("enemy_frostbitten", () => config.enemyFrostbittenEnabled)
       .with(
@@ -906,6 +914,41 @@ const filterModsByCond = (
       .with("enemy_paralyzed", () => config.enemyParalyzed)
       .with("has_full_mana", () => config.hasFullMana)
       .with("target_enemy_is_nearby", () => config.targetEnemyIsNearby)
+      .exhaustive();
+  });
+};
+
+const condThresholdSatisfied = (
+  actualValue: number,
+  condThreshold: ConditionThreshold,
+): boolean => {
+  const { value: condValue, comparator } = condThreshold;
+  return match(comparator)
+    .with("lt", () => actualValue < condValue)
+    .with("lte", () => actualValue <= condValue)
+    .with("eq", () => actualValue === condValue)
+    .with("gt", () => actualValue > condValue)
+    .with("gte", () => actualValue >= condValue)
+    .exhaustive();
+};
+
+const filterModsByCondThreshold = (
+  mods: Mod[],
+  config: Configuration,
+): Mod[] => {
+  return mods.filter((m) => {
+    if (m.condThreshold === undefined) return true;
+    const condThreshold = m.condThreshold;
+    return match(condThreshold.target)
+      .with("num_enemies_nearby", () =>
+        condThresholdSatisfied(config.numEnemiesNearby, condThreshold),
+      )
+      .with("num_enemies_affected_by_warcry", () =>
+        condThresholdSatisfied(
+          config.numEnemiesAffectedByWarcry,
+          condThreshold,
+        ),
+      )
       .exhaustive();
   });
 };
@@ -1386,7 +1429,10 @@ const resolveBuffSkillEffMults = (
   const buffSkillEffMods = unresolvedModsFromParam.filter(
     (m) => m.type === "AuraEffPct" || m.type === "SkillEffPct",
   );
-  const prenormMods = filterModsByCond(buffSkillEffMods, loadout, config);
+  const prenormMods = filterModsByCondThreshold(
+    filterModsByCond(buffSkillEffMods, loadout, config),
+    config,
+  );
 
   const mods = filterOutPerMods(prenormMods);
   const skillUse = 3;
@@ -1452,7 +1498,10 @@ const resolveModsForOffenseSkill = (
   config: Configuration,
 ): Mod[] => {
   const { stats, maxMana, mercuryPts } = resourcePool;
-  const prenormMods = filterModsByCond(prenormModsFromParam, loadout, config);
+  const prenormMods = filterModsByCondThreshold(
+    filterModsByCond(prenormModsFromParam, loadout, config),
+    config,
+  );
   const mods = filterOutPerMods(prenormMods);
 
   const totalMainStats = calculateTotalMainStats(skill, stats);

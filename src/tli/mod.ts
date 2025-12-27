@@ -66,10 +66,25 @@ export type Condition =
   | "enemy_paralyzed"
   | "target_enemy_is_nearby";
 
+export type ConditionThresholdTarget =
+  | "num_enemies_nearby"
+  | "num_enemies_affected_by_warcry";
+
+export type Comparator = "lt" | "lte" | "eq" | "gt" | "gte";
+
+// e.g. "greater than 1 nearby enemy" would be {target: "num_enemies_nearby", comparator: "gt", value: 1}
+//   and would be satisfied if configuration's `numEnemiesNearby` > 1
+export interface ConditionThreshold {
+  target: ConditionThresholdTarget;
+  comparator: Comparator;
+  value: number;
+}
+
 // Common fields automatically added to all mod types
 interface ModBase {
   per?: PerStackable;
   cond?: Condition;
+  condThreshold?: ConditionThreshold;
   src?: string;
 }
 

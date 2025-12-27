@@ -351,11 +351,15 @@ export const ConfigurationTab: React.FC<ConfigurationTabProps> = ({
             className="h-4 w-4 rounded border-zinc-600 bg-zinc-800 accent-amber-500"
           />
 
-          <label className="text-right text-zinc-50">Target Enemy Is Nearby</label>
+          <label className="text-right text-zinc-50">
+            Target Enemy Is Nearby
+          </label>
           <input
             type="checkbox"
             checked={config.targetEnemyIsNearby}
-            onChange={(e) => onUpdate({ targetEnemyIsNearby: e.target.checked })}
+            onChange={(e) =>
+              onUpdate({ targetEnemyIsNearby: e.target.checked })
+            }
             className="h-4 w-4 rounded border-zinc-600 bg-zinc-800 accent-amber-500"
           />
 
@@ -373,7 +377,9 @@ export const ConfigurationTab: React.FC<ConfigurationTabProps> = ({
             className="w-14 rounded border border-zinc-700 bg-zinc-800 px-2 py-0.5 text-center text-sm text-zinc-50 focus:border-amber-500 focus:outline-none focus:ring-1 focus:ring-amber-500/30"
           />
 
-          <label className="text-right text-zinc-50">Enemies Affected by Warcry</label>
+          <label className="text-right text-zinc-50">
+            Enemies Affected by Warcry
+          </label>
           <input
             type="number"
             value={config.numEnemiesAffectedByWarcry}
@@ -387,7 +393,9 @@ export const ConfigurationTab: React.FC<ConfigurationTabProps> = ({
             className="w-14 rounded border border-zinc-700 bg-zinc-800 px-2 py-0.5 text-center text-sm text-zinc-50 focus:border-amber-500 focus:outline-none focus:ring-1 focus:ring-amber-500/30"
           />
 
-          <label className="text-right text-zinc-50">Has Blocked Recently</label>
+          <label className="text-right text-zinc-50">
+            Has Blocked Recently
+          </label>
           <input
             type="checkbox"
             checked={config.hasBlockedRecently}

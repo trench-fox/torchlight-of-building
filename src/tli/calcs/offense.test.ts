@@ -3658,3 +3658,172 @@ describe("resource pool: mana and mercury pts", () => {
     validate(results, skillName, { avgHit: 600 });
   });
 });
+
+describe("condThreshold filtering", () => {
+  const skillName = "[Test] Simple Attack" as const;
+
+  const createInput = (
+    mods: Affix[],
+    configOverrides: Partial<Configuration> = {},
+  ) => ({
+    loadout: initLoadout({
+      gearPage: { equippedGear: { mainHand: baseWeapon }, inventory: [] },
+      customConfiguration: mods,
+      skillPage: simpleAttackSkillPage(),
+    }),
+    configuration: { ...createDefaultConfiguration(), ...configOverrides },
+  });
+
+  test("mod without condThreshold is always included", () => {
+    const input = createInput([
+      affix([{ type: "DmgPct", value: 100, modType: "physical", addn: false }]),
+    ]);
+    const results = calculateOffense(input);
+    // 100 phys * 2x = 200
+    validate(results, skillName, { avgHit: 200 });
+  });
+
+  test("num_enemies_nearby gt threshold - satisfied", () => {
+    const input = createInput(
+      [
+        affix([
+          {
+            type: "DmgPct",
+            value: 100,
+            modType: "physical",
+            addn: false,
+            condThreshold: {
+              target: "num_enemies_nearby",
+              comparator: "gt",
+              value: 2,
+            },
+          },
+        ]),
+      ],
+      { numEnemiesNearby: 3 },
+    );
+    const results = calculateOffense(input);
+    // 3 > 2, mod included: 100 * 2x = 200
+    validate(results, skillName, { avgHit: 200 });
+  });
+
+  test("num_enemies_nearby gt threshold - not satisfied", () => {
+    const input = createInput(
+      [
+        affix([
+          {
+            type: "DmgPct",
+            value: 100,
+            modType: "physical",
+            addn: false,
+            condThreshold: {
+              target: "num_enemies_nearby",
+              comparator: "gt",
+              value: 2,
+            },
+          },
+        ]),
+      ],
+      { numEnemiesNearby: 2 },
+    );
+    const results = calculateOffense(input);
+    // 2 > 2 is false, mod excluded: 100 * 1x = 100
+    validate(results, skillName, { avgHit: 100 });
+  });
+
+  test("num_enemies_nearby gte threshold - boundary satisfied", () => {
+    const input = createInput(
+      [
+        affix([
+          {
+            type: "DmgPct",
+            value: 100,
+            modType: "physical",
+            addn: false,
+            condThreshold: {
+              target: "num_enemies_nearby",
+              comparator: "gte",
+              value: 3,
+            },
+          },
+        ]),
+      ],
+      { numEnemiesNearby: 3 },
+    );
+    const results = calculateOffense(input);
+    // 3 >= 3, mod included: 100 * 2x = 200
+    validate(results, skillName, { avgHit: 200 });
+  });
+
+  test("num_enemies_nearby lt threshold", () => {
+    const input = createInput(
+      [
+        affix([
+          {
+            type: "DmgPct",
+            value: 100,
+            modType: "physical",
+            addn: false,
+            condThreshold: {
+              target: "num_enemies_nearby",
+              comparator: "lt",
+              value: 5,
+            },
+          },
+        ]),
+      ],
+      { numEnemiesNearby: 3 },
+    );
+    const results = calculateOffense(input);
+    // 3 < 5, mod included: 100 * 2x = 200
+    validate(results, skillName, { avgHit: 200 });
+  });
+
+  test("num_enemies_nearby eq threshold", () => {
+    const input = createInput(
+      [
+        affix([
+          {
+            type: "DmgPct",
+            value: 100,
+            modType: "physical",
+            addn: false,
+            condThreshold: {
+              target: "num_enemies_nearby",
+              comparator: "eq",
+              value: 5,
+            },
+          },
+        ]),
+      ],
+      { numEnemiesNearby: 5 },
+    );
+    const results = calculateOffense(input);
+    // 5 === 5, mod included: 100 * 2x = 200
+    validate(results, skillName, { avgHit: 200 });
+  });
+
+  test("num_enemies_affected_by_warcry threshold", () => {
+    const input = createInput(
+      [
+        affix([
+          {
+            type: "DmgPct",
+            value: 100,
+            modType: "physical",
+            addn: false,
+            condThreshold: {
+              target: "num_enemies_affected_by_warcry",
+              comparator: "gte",
+              value: 10,
+            },
+          },
+        ]),
+      ],
+      { numEnemiesAffectedByWarcry: 15 },
+    );
+    const results = calculateOffense(input);
+    // 15 >= 10, mod included: 100 * 2x = 200
+    validate(results, skillName, { avgHit: 200 });
+  });
+});
