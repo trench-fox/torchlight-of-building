@@ -3898,3 +3898,72 @@ describe("condThreshold filtering", () => {
     validate(results, skillName, { avgHit: 200 });
   });
 });
+
+describe("added skill levels from mods", () => {
+  const skillName = "[Test] Simple Attack" as const;
+
+  const createInputWithSkillLevelMod = (
+    baseLevel: number,
+    skillLevelMods: AffixLine[],
+  ) => ({
+    loadout: initLoadout({
+      gearPage: { equippedGear: { mainHand: baseWeapon }, inventory: [] },
+      customAffixLines: skillLevelMods,
+      skillPage: {
+        activeSkills: {
+          1: {
+            skillName: "[Test] Simple Attack" as const,
+            enabled: true,
+            level: baseLevel,
+            supportSkills: {},
+          },
+        },
+        passiveSkills: {},
+      },
+    }),
+    configuration: defaultConfiguration,
+  });
+
+  test("SkillLevel mod with 'main' type adds to main skill", () => {
+    const input = createInputWithSkillLevelMod(
+      20,
+      affixLines([{ type: "SkillLevel", value: 5, skillLevelType: "main" }]),
+    );
+    const results = calculateOffense(input);
+    // Base level 20 + 5 = 25, so 100 * 1.1^5 = 161.051
+    validate(results, skillName, { avgHit: 161.051 });
+  });
+
+  test("multiple SkillLevel mods stack additively", () => {
+    const input = createInputWithSkillLevelMod(
+      20,
+      affixLines([
+        { type: "SkillLevel", value: 3, skillLevelType: "main" },
+        { type: "SkillLevel", value: 2, skillLevelType: "main" },
+      ]),
+    );
+    const results = calculateOffense(input);
+    // Base level 20 + 3 + 2 = 25, so 100 * 1.1^5 = 161.051
+    validate(results, skillName, { avgHit: 161.051 });
+  });
+
+  test("SkillLevel mod with 'support' type does not affect main skill", () => {
+    const input = createInputWithSkillLevelMod(
+      20,
+      affixLines([{ type: "SkillLevel", value: 5, skillLevelType: "support" }]),
+    );
+    const results = calculateOffense(input);
+    // Support skill level mod doesn't affect main skill, stays at level 20
+    validate(results, skillName, { avgHit: 100 });
+  });
+
+  test("SkillLevel mod can push skill above level 30 threshold", () => {
+    const input = createInputWithSkillLevelMod(
+      28,
+      affixLines([{ type: "SkillLevel", value: 7, skillLevelType: "main" }]),
+    );
+    const results = calculateOffense(input);
+    // Base level 28 + 7 = 35, so 100 * 1.1^10 * 1.08^5 = 381.106
+    validate(results, skillName, { avgHit: 381.106 });
+  });
+});

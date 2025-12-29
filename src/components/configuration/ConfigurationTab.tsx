@@ -1,4 +1,5 @@
 import type { ConfigurationPage } from "../../lib/save-data";
+import { parseMod } from "../../tli/mod_parser";
 
 interface ConfigurationTabProps {
   config: ConfigurationPage;
@@ -84,6 +85,58 @@ const InfoTooltip: React.FC<{ text: string }> = ({ text }) => (
     </span>
   </span>
 );
+
+const CustomAffixesSection: React.FC<{
+  lines: string[];
+  onChange: (lines: string[]) => void;
+}> = ({ lines, onChange }) => {
+  const textValue = lines.join("\n");
+
+  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const value = e.target.value;
+    if (value === "") {
+      onChange([]);
+      return;
+    }
+    onChange(value.split("\n"));
+  };
+
+  const coloredLines = textValue.split("\n").map((line, i) => {
+    if (line.trim() === "") {
+      return <span key={i}>{"\n"}</span>;
+    }
+    const parsed = parseMod(line);
+    const isValid = parsed !== undefined && parsed.length > 0;
+    return (
+      <span key={i} className={isValid ? "text-blue-400" : "text-red-400"}>
+        {line}
+        {"\n"}
+      </span>
+    );
+  });
+
+  return (
+    <div className="rounded-lg border border-zinc-700 bg-zinc-900 p-6">
+      <div className="mb-3 flex items-center">
+        <label className="text-zinc-50">Custom Affixes</label>
+        <InfoTooltip text="Add custom affix lines (one per line) to include in damage calculations" />
+      </div>
+      <div className="relative h-32">
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 overflow-auto whitespace-pre-wrap break-words rounded-lg border border-transparent bg-zinc-800 p-3 font-mono text-sm"
+        >
+          {coloredLines}
+        </div>
+        <textarea
+          value={textValue}
+          onChange={handleChange}
+          className="absolute inset-0 h-full w-full resize-none rounded-lg border border-zinc-700 bg-transparent p-3 font-mono text-sm text-transparent caret-zinc-50 focus:border-amber-500 focus:outline-none focus:ring-2 focus:ring-amber-500/30"
+        />
+      </div>
+    </div>
+  );
+};
 
 export const ConfigurationTab: React.FC<ConfigurationTabProps> = ({
   config,
@@ -380,27 +433,12 @@ export const ConfigurationTab: React.FC<ConfigurationTabProps> = ({
         </div>
       </div>
 
-      <div className="rounded-lg border border-zinc-700 bg-zinc-900 p-6">
-        <div className="mb-3 flex items-center">
-          <label className="text-zinc-50">Custom Affixes</label>
-          <InfoTooltip text="Add custom affix lines (one per line) to include in damage calculations" />
-        </div>
-        <textarea
-          value={(config.customAffixLines ?? []).join("\n")}
-          onChange={(e) => {
-            const value = e.target.value;
-            if (value === "") {
-              onUpdate({ customAffixLines: undefined });
-              return;
-            }
-            const lines = value
-              .split("\n")
-              .filter((line) => line.trim() !== "");
-            onUpdate({ customAffixLines: lines });
-          }}
-          className="h-32 w-full resize-none rounded-lg border border-zinc-700 bg-zinc-800 p-3 font-mono text-sm text-zinc-50 focus:border-amber-500 focus:outline-none focus:ring-2 focus:ring-amber-500/30"
-        />
-      </div>
+      <CustomAffixesSection
+        lines={config.customAffixLines ?? []}
+        onChange={(lines) =>
+          onUpdate({ customAffixLines: lines.length > 0 ? lines : undefined })
+        }
+      />
     </div>
   );
 };

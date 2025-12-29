@@ -27,6 +27,10 @@ export const ResPenTypes = [
 
 export type ResPenType = (typeof ResPenTypes)[number];
 
+export const SkillLevelTypes = ["main", "support"] as const;
+
+export type SkillLevelType = (typeof SkillLevelTypes)[number];
+
 export type Stackable =
   | "willpower"
   | "main_stat"
@@ -41,6 +45,8 @@ export type Stackable =
   | "mercury_pt"
   | "unsealed_mana_pct"
   | "unsealed_life_pct"
+  | "sealed_mana_pct"
+  | "sealed_life_pct"
   | "focus_blessing"
   | "agility_blessing"
   | "num_enemies_affected_by_warcry"
@@ -159,6 +165,7 @@ interface ModDefinitions {
   MaxMercuryPtsPct: { value: number };
   MaxFocusBlessing: { value: number };
   MaxAgilityBlessing: { value: number };
+  SkillLevel: { value: number; skillLevelType: SkillLevelType };
   CoreTalent: { name: CoreTalentName };
 }
 

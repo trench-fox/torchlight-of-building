@@ -6,6 +6,7 @@ import {
   ActiveSkills,
   type BaseActiveSkill,
   type BasePassiveSkill,
+  type BaseSkill,
   type BaseSupportSkill,
   type ImplementedActiveSkillName,
   type PassiveSkillName,
@@ -1150,7 +1151,6 @@ const resolveBuffSkillMods = (
       continue;
     }
 
-    const level = skillSlot.level || 20;
     const skill = findSkill(
       skillSlot.skillName as ActiveSkillName | PassiveSkillName,
     );
@@ -1158,12 +1158,27 @@ const resolveBuffSkillMods = (
       (skill.type === "Passive" && skill.tags?.includes("Aura")) ?? false;
 
     // Get support skill mods (includes SkillEffPct, AuraEffPct, etc.)
-    const supportMods = resolveSelectedSkillSupportMods(skillSlot);
+    const supportMods = resolveSelectedSkillSupportMods(
+      skillSlot,
+      loadoutMods,
+      loadout,
+      config,
+      derivedCtx,
+    );
 
     // Get level mods from factory based on skill type
     let levelMods: Mod[] = [];
     let rawBuffMods: Mod[] = [];
 
+    const level =
+      (skillSlot.level || 20) +
+      calculateAddedSkillLevels(
+        loadoutMods,
+        skill,
+        loadout,
+        config,
+        derivedCtx,
+      );
     if (skill.type === "Active") {
       const activeMods = getActiveSkillMods(
         skill.name as ActiveSkillName,
@@ -1229,11 +1244,11 @@ const resolveBuffSkillMods = (
   return resolvedMods;
 };
 
-const resolveMainSkillMods = (
-  mainSkillName: OffenseSkillName,
+const resolveSelectedSkillMods = (
+  selectedSkillName: OffenseSkillName,
   level: number,
 ): Mod[] => {
-  const skill = findActiveSkill(mainSkillName);
+  const skill = findActiveSkill(selectedSkillName);
   const skillMods = getActiveSkillMods(skill.name as ActiveSkillName, level);
   if (skillMods.mods === undefined) {
     return [];
@@ -1244,7 +1259,13 @@ const resolveMainSkillMods = (
   }));
 };
 
-const resolveSelectedSkillSupportMods = (slot: SkillSlot): Mod[] => {
+const resolveSelectedSkillSupportMods = (
+  slot: SkillSlot,
+  loadoutMods: Mod[],
+  loadout: Loadout,
+  config: Configuration,
+  derivedCtx: DerivedCtx,
+): Mod[] => {
   const supportSlots = Object.values(slot.supportSkills) as (
     | SupportSkillSlot
     | undefined
@@ -1258,7 +1279,15 @@ const resolveSelectedSkillSupportMods = (slot: SkillSlot): Mod[] => {
       | undefined;
     if (supportSkill === undefined) continue;
 
-    const level = ss.level || 20;
+    const level =
+      (ss.level || 20) +
+      calculateAddedSkillLevels(
+        loadoutMods,
+        supportSkill,
+        loadout,
+        config,
+        derivedCtx,
+      );
     const mods = getSupportSkillMods(
       supportSkill.name as SupportSkillName,
       level,
@@ -1277,13 +1306,16 @@ const resolveSelectedSkillSupportMods = (slot: SkillSlot): Mod[] => {
 interface PerSkillModContext {
   mods: Mod[];
   skill: BaseActiveSkill;
-  skillSlot: SkillSlot;
 }
 
 // Resolves mods specific to a single skill slot
 // Returns undefined if the skill is not implemented (no offense data)
 const resolvePerSkillMods = (
   skillSlot: SkillSlot,
+  loadoutMods: Mod[],
+  loadout: Loadout,
+  config: Configuration,
+  derivedCtx: DerivedCtx,
 ): PerSkillModContext | undefined => {
   const skill = findActiveSkill(skillSlot.skillName as ActiveSkillName);
 
@@ -1292,7 +1324,9 @@ const resolvePerSkillMods = (
     return undefined;
   }
 
-  const level = skillSlot.level || 20;
+  const level =
+    (skillSlot.level || 20) +
+    calculateAddedSkillLevels(loadoutMods, skill, loadout, config, derivedCtx);
 
   // Check if the skill's factory returns offense data
   const skillMods = getActiveSkillMods(skill.name as ActiveSkillName, level);
@@ -1301,16 +1335,21 @@ const resolvePerSkillMods = (
     return undefined;
   }
 
-  const mainSkillMods = resolveMainSkillMods(
+  const selectedSkillMods = resolveSelectedSkillMods(
     skillSlot.skillName as OffenseSkillName,
     level,
   );
-  const supportMods = resolveSelectedSkillSupportMods(skillSlot);
+  const supportMods = resolveSelectedSkillSupportMods(
+    skillSlot,
+    loadoutMods,
+    loadout,
+    config,
+    derivedCtx,
+  );
 
   return {
-    mods: [...mainSkillMods, ...supportMods],
+    mods: [...selectedSkillMods, ...supportMods],
     skill,
-    skillSlot,
   };
 };
 
@@ -1477,11 +1516,83 @@ const calculateNumAgilityBlessings = (
   return baseMaxAgilityBlessings + additionalMaxAgilityBlessings;
 };
 
+const calculateAddedSkillLevels = (
+  loadoutMods: Mod[],
+  skill: BaseSkill,
+  loadout: Loadout,
+  config: Configuration,
+  derivedCtx: DerivedCtx,
+): number => {
+  const prenormMods = filterModsByCondThreshold(
+    filterModsByCond(loadoutMods, loadout, config, derivedCtx),
+    config,
+  );
+  const mods = filterOutPerMods(prenormMods);
+
+  const sealedLifePct = 100 - (config.unsealedLifePct ?? 0);
+  mods.push(
+    ...normalizeStackables(prenormMods, "sealed_life_pct", sealedLifePct),
+  );
+
+  let addedSkillLevels = 0;
+  for (const mod of filterMod(mods, "SkillLevel")) {
+    const matches = match(mod.skillLevelType)
+      .with(
+        "main",
+        () => skill.name === loadout.skillPage.activeSkills[1]?.skillName,
+      )
+      .with("support", () => skill.type === "Support")
+      .exhaustive();
+    if (matches) {
+      addedSkillLevels += mod.value;
+    }
+  }
+  return addedSkillLevels;
+};
+
+/**
+ * every level from 21-30 is +10% additional damage, stacking multiplicately
+ * every level from 31+ is +8% additional damage, stacking multiplicatively
+ */
+const calculateSkillLevelDmgMods = (
+  skillLevel: number,
+): ModOfType<"DmgPct">[] => {
+  if (skillLevel <= 20) {
+    return [];
+  }
+
+  const a = 1.1 ** Math.min(10, skillLevel - 20);
+  if (skillLevel <= 30) {
+    return [
+      { type: "DmgPct", value: (a - 1) * 100, addn: true, modType: "global" },
+    ];
+  }
+
+  const b = 1.08 ** (skillLevel - 30);
+  return [
+    {
+      type: "DmgPct",
+      value: (a - 1) * 100,
+      addn: true,
+      modType: "global",
+      src: "Added skill levels (21-30)",
+    },
+    {
+      type: "DmgPct",
+      value: (b - 1) * 100,
+      addn: true,
+      modType: "global",
+      src: "Added skill levels (30+)",
+    },
+  ];
+};
+
 // resolves mods, replacing core talents, removing unmatched conditions,
 //   and normalizing per mods
 const resolveModsForOffenseSkill = (
   prenormModsFromParam: Mod[],
   skill: BaseActiveSkill | BasePassiveSkill,
+  skillLevel: number,
   resourcePool: ResourcePool,
   loadout: Loadout,
   config: Configuration,
@@ -1492,7 +1603,10 @@ const resolveModsForOffenseSkill = (
     filterModsByCond(prenormModsFromParam, loadout, config, derivedCtx),
     config,
   );
-  const mods = filterOutPerMods(prenormMods);
+  const mods = [
+    ...filterOutPerMods(prenormMods),
+    ...calculateSkillLevelDmgMods(skillLevel),
+  ];
 
   const totalMainStats = calculateTotalMainStats(skill, stats);
   mods.push(...normalizeStackables(prenormMods, "main_stat", totalMainStats));
@@ -1632,14 +1746,30 @@ export const calculateOffense = (input: OffenseInput): OffenseResults => {
   //  Calculate for each implemented skill
   const skills: OffenseResults["skills"] = {};
   for (const slot of enabledSlots) {
-    const perSkillContext = resolvePerSkillMods(slot);
+    const perSkillContext = resolvePerSkillMods(
+      slot,
+      loadoutMods,
+      loadout,
+      config,
+      derivedCtx,
+    );
     if (perSkillContext === undefined) {
       continue; // Skip non-implemented skills
     }
+    const skillLevel =
+      (slot.level || 20) +
+      calculateAddedSkillLevels(
+        loadoutMods,
+        perSkillContext.skill,
+        loadout,
+        config,
+        derivedCtx,
+      );
 
     const mods = resolveModsForOffenseSkill(
       [...unresolvedLoadoutAndBuffMods, ...perSkillContext.mods],
       perSkillContext.skill,
+      skillLevel,
       resourcePool,
       loadout,
       config,
@@ -1653,7 +1783,7 @@ export const calculateOffense = (input: OffenseInput): OffenseResults => {
       flatDmg,
       mods,
       perSkillContext.skill,
-      perSkillContext.skillSlot.level || 20,
+      skillLevel,
       config,
     );
 
