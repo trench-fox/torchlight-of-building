@@ -95,5 +95,6 @@ export const useConfiguration = (): Configuration => {
     hasBlockedRecently: configPage.hasBlockedRecently,
     hasElitesNearby: configPage.hasElitesNearby,
     enemyHasAilment: configPage.enemyHasAilment,
+    hasCritRecently: configPage.hasCritRecently,
   };
 };

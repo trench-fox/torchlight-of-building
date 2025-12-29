@@ -40,6 +40,7 @@ const createDefaultConfiguration = (): Configuration => ({
   hasBlockedRecently: false,
   hasElitesNearby: false,
   enemyHasAilment: false,
+  hasCritRecently: false,
 });
 
 // Helper to create Affix objects from mods for tests
@@ -2225,6 +2226,7 @@ describe("resolveBuffSkillMods", () => {
         hasBlockedRecently: false,
         hasElitesNearby: false,
         enemyHasAilment: false,
+        hasCritRecently: false,
       },
     });
     const actual = results.skills["[Test] Simple Attack"];

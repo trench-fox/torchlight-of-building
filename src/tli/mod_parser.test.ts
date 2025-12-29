@@ -329,6 +329,20 @@ test("parse additional attack speed when only 1 enemy nearby", () => {
   ]);
 });
 
+test("parse additional attack speed if you have dealt a critical strike recently", () => {
+  const result = parseMod(
+    "+6% additional Attack Speed if you have dealt a Critical Strike recently",
+  );
+  expect(result).toEqual([
+    {
+      type: "AspdPct",
+      value: 6,
+      addn: true,
+      cond: "has_crit_recently",
+    },
+  ]);
+});
+
 test("parse attack speed with decimal percentage", () => {
   const result = parseMod("+12.5% attack speed");
   expect(result).toEqual([

@@ -82,6 +82,8 @@ export interface Configuration {
   hasElitesNearby: boolean;
   // default to false
   enemyHasAilment: boolean;
+  // default to false
+  hasCritRecently: boolean;
 
   // --------------------
   // hero-specific config

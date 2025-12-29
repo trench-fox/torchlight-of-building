@@ -87,6 +87,7 @@ export const createEmptyConfigurationPage = (): ConfigurationPage => ({
   hasBlockedRecently: false,
   hasElitesNearby: false,
   enemyHasAilment: false,
+  hasCritRecently: false,
 });
 
 export const createEmptySkillPage = (): SkillPage => ({

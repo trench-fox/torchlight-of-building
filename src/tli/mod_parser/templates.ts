@@ -12,6 +12,7 @@ const HAS_ELITES_NEARBY = "has_elites_nearby" as const;
 const ENEMY_HAS_AILMENT = "enemy_has_ailment" as const;
 const HAS_FOCUS_BLESSING = "has_focus_blessing" as const;
 const HAS_BLOCKED_RECENTLY = "has_blocked_recently" as const;
+const HAS_CRIT_RECENTLY = "has_crit_recently" as const;
 const FROSTBITE_RATING = "frostbite_rating" as const;
 const MANA_CONSUMED_RECENTLY = "mana_consumed_recently" as const;
 const TARGET_ENEMY_IS_IN_PROXIMITY = "target_enemy_is_in_proximity" as const;
@@ -158,6 +159,11 @@ export const allParsers = [
       comparator: "eq" as const,
       value: c.count,
     },
+  })),
+  t("{value:dec%} additional attack speed if you have dealt a critical strike recently").output("AspdPct", (c) => ({
+    value: c.value,
+    addn: true,
+    cond: HAS_CRIT_RECENTLY,
   })),
   t("{value:dec%} [additional] attack speed").output("AspdPct", (c) => ({
     value: c.value,

@@ -78,7 +78,8 @@ export type Condition =
   | "has_blocked_recently"
   | "has_elites_nearby"
   | "enemy_has_ailment"
-  | "has_hasten";
+  | "has_hasten"
+  | "has_crit_recently";
 
 export type ConditionThresholdTarget =
   | "num_enemies_nearby"
