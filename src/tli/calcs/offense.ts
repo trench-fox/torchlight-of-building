@@ -1092,19 +1092,21 @@ const calculateImplicitMods = (): Mod[] => {
 };
 
 const calculateHeroTraitMods = (loadout: Loadout): Mod[] => {
-  const traits = loadout.heroPage.traits;
+  const { traits, memorySlots } = loadout.heroPage;
 
   const mods = [];
-  const traitSlots = [
-    traits.level1,
-    traits.level45,
-    traits.level60,
-    traits.level75,
+  const traitToMemory = [
+    { trait: traits.level1, memory: undefined },
+    { trait: traits.level45, memory: memorySlots.slot45 },
+    { trait: traits.level60, memory: memorySlots.slot60 },
+    { trait: traits.level75, memory: memorySlots.slot75 },
   ];
-  for (const trait of traitSlots) {
+  for (const { trait, memory } of traitToMemory) {
     if (trait !== undefined) {
-      // defaulting to level3 for now
-      mods.push(...getHeroTraitMods(trait.name, 3));
+      const memoryMods = collectModsFromAffixes(memory?.affixes ?? []);
+      const addedLevel = findMod(memoryMods, "HeroTraitLevel")?.value ?? 0;
+      const level = 3 + addedLevel;
+      mods.push(...getHeroTraitMods(trait.name, level));
     }
   }
   return mods;
