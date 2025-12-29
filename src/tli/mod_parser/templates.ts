@@ -228,4 +228,14 @@ export const allParsers = [
   t("max focus blessing stacks \\+{value:int}").output("MaxFocusBlessing", (c) => ({ value: c.value })),
   t("max agility blessing stacks \\+{value:int}").output("MaxAgilityBlessing", (c) => ({ value: c.value })),
   t("has hasten").output("HasHasten", () => ({})),
+  t("\\+{value:int} {skillLevelType:SkillLevelType} skill level").output("SkillLevel", (c) => ({
+    value: c.value,
+    skillLevelType: c.skillLevelType,
+  })),
+  t("for every {amt:dec%} life sealed when at full mana, main skill's level \\+1").output("SkillLevel", (c) => ({
+    value: 1,
+    skillLevelType: "main" as const,
+    per: { stackable: "sealed_life_pct" as const, amt: c.amt },
+    cond: HAS_FULL_MANA,
+  })),
 ];

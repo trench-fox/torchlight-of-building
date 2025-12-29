@@ -1047,3 +1047,40 @@ test("parse has hasten", () => {
     },
   ]);
 });
+
+test("parse support skill level", () => {
+  const result = parseMod("+7 Support Skill Level");
+  expect(result).toEqual([
+    {
+      type: "SkillLevel",
+      value: 7,
+      skillLevelType: "support",
+    },
+  ]);
+});
+
+test("parse main skill level", () => {
+  const result = parseMod("+5 Main Skill Level");
+  expect(result).toEqual([
+    {
+      type: "SkillLevel",
+      value: 5,
+      skillLevelType: "main",
+    },
+  ]);
+});
+
+test("parse main skill level per sealed life at full mana", () => {
+  const result = parseMod(
+    "For every 11% Life Sealed when at Full Mana, Main Skill's level +1",
+  );
+  expect(result).toEqual([
+    {
+      type: "SkillLevel",
+      value: 1,
+      skillLevelType: "main",
+      per: { stackable: "sealed_life_pct", amt: 11 },
+      cond: "has_full_mana",
+    },
+  ]);
+});

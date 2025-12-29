@@ -4,7 +4,12 @@ import type {
   CritRatingModType,
   DmgModType,
 } from "../constants";
-import type { DmgChunkType, ResPenType, StatType } from "../mod";
+import type {
+  DmgChunkType,
+  ResPenType,
+  SkillLevelType,
+  StatType,
+} from "../mod";
 
 /**
  * Maps capture type specifier strings to their TypeScript types.
@@ -24,6 +29,7 @@ export interface CaptureTypeRegistry {
   DmgChunkType: DmgChunkType;
   ResPenType: ResPenType;
   CoreTalentName: CoreTalentName;
+  SkillLevelType: SkillLevelType;
 
   // Special case: StatWord maps to StatType at runtime
   StatWord: StatType;

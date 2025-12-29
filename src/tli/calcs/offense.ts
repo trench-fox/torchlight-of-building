@@ -1547,7 +1547,7 @@ const calculateAddedSkillLevels = (
       addedSkillLevels += mod.value;
     }
   }
-  return addedSkillLevels;
+  return Math.round(addedSkillLevels);
 };
 
 /**
