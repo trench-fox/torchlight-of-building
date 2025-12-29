@@ -53,7 +53,13 @@ export const StatsPanel = () => {
             </div>
           </div>
         </div>
-        <div className="grid grid-cols-2 gap-2">
+        <div className="grid grid-cols-3 gap-2">
+          <div className="rounded bg-zinc-800 p-2">
+            <div className="text-xs text-zinc-500">Max Life</div>
+            <div className="font-medium text-red-400">
+              {formatStatValue.integer(resourcePool.maxLife)}
+            </div>
+          </div>
           <div className="rounded bg-zinc-800 p-2">
             <div className="text-xs text-zinc-500">Max Mana</div>
             <div className="font-medium text-blue-400">

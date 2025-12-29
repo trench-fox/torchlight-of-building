@@ -66,7 +66,7 @@ function CalculationsPage(): React.ReactNode {
         <h3 className="mb-4 text-lg font-semibold text-zinc-50">
           Resource Pool
         </h3>
-        <div className="grid grid-cols-2 gap-4 md:grid-cols-5">
+        <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
           <div className="rounded-lg bg-zinc-800 p-4">
             <div className="text-sm text-zinc-400">Strength</div>
             <div className="text-xl font-semibold text-zinc-50">
@@ -83,6 +83,12 @@ function CalculationsPage(): React.ReactNode {
             <div className="text-sm text-zinc-400">Intelligence</div>
             <div className="text-xl font-semibold text-zinc-50">
               {formatStatValue.integer(resourcePool.stats.int)}
+            </div>
+          </div>
+          <div className="rounded-lg bg-zinc-800 p-4">
+            <div className="text-sm text-zinc-400">Max Life</div>
+            <div className="text-xl font-semibold text-red-400">
+              {formatStatValue.integer(resourcePool.maxLife)}
             </div>
           </div>
           <div className="rounded-lg bg-zinc-800 p-4">

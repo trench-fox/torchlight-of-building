@@ -1725,6 +1725,7 @@ const resolveModsForOffenseSkill = (
 
 export interface ResourcePool {
   stats: Stats;
+  maxLife: number;
   maxMana: number;
   mercuryPts: number;
 }
@@ -1743,7 +1744,14 @@ const calculateResourcePool = (
 
   const stats = calculateStats(mods);
 
+  mods.push(...normalizeStackables(prenormMods, "str", stats.str));
+  mods.push(...normalizeStackables(prenormMods, "dex", stats.dex));
   mods.push(...normalizeStackables(prenormMods, "int", stats.int));
+
+  const maxLifeFromMods = sumByValue(filterMod(mods, "MaxLife"));
+  const maxLifeMult = calculateEffMultiplier(filterMod(mods, "MaxLifePct"));
+  const maxLife =
+    (50 + config.level * 50 + stats.str * 0.2 + maxLifeFromMods) * maxLifeMult;
 
   const maxManaFromMods = sumByValue(filterMod(mods, "MaxMana"));
   const maxManaMult = calculateEffMultiplier(filterMod(mods, "MaxManaPct"));
@@ -1755,7 +1763,7 @@ const calculateResourcePool = (
   const mercuryPts = calculateMercuryPts(mods);
   mods.push(...normalizeStackables(prenormMods, "mercury_pt", mercuryPts));
 
-  return { stats, maxMana, mercuryPts };
+  return { stats, maxLife, maxMana, mercuryPts };
 };
 
 // Calculates offense for all enabled implemented skills

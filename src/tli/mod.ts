@@ -54,6 +54,8 @@ export type Stackable =
   | "focus_blessing"
   | "agility_blessing"
   | "num_enemies_affected_by_warcry"
+  | "str"
+  | "dex"
   | "int";
 
 export type StatType = "str" | "dex" | "int";
@@ -140,7 +142,6 @@ interface ModDefinitions {
   GearPhysDmgPct: { value: number };
   AttackBlockChancePct: { value: number };
   SpellBlockChancePct: { value: number };
-  MaxLifePct: { value: number };
   MaxEnergyShieldPct: { value: number };
   ArmorPct: { value: number };
   EvasionPct: { value: number };
@@ -164,6 +165,8 @@ interface ModDefinitions {
   MovementSpeedPct: { value: number; addn?: boolean };
   MobilitySkillCdrPct: { value: number; addn?: boolean };
   SpellDmgBonusAppliesToAtkDmg: object;
+  MaxLife: { value: number };
+  MaxLifePct: { value: number; addn: boolean };
   MaxMana: { value: number };
   MaxManaPct: { value: number; addn: boolean };
   MercuryBaptismDmgPct: { value: number };
