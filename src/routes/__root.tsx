@@ -30,7 +30,7 @@ function RootLayout(): React.ReactNode {
       </head>
       <body className="antialiased">
         <Outlet />
-        <Analytics />
+        <Analytics basePath="/monitor" />
         <Scripts />
       </body>
     </html>

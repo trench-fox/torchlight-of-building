@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/mt-demo/:match*",
+      "destination": "https://tpob.vercel.app/_vercel/insights/:match*"
+    }
+  ]
+}
