@@ -454,7 +454,7 @@ const calculateGearAspd = (loadout: Loadout, allMods: Mod[]): number => {
   return baseAspd * (1 + gearAspdPctBonus);
 };
 
-const calculateCritRating = (allMods: Mod[]): number => {
+const calculateCritChance = (allMods: Mod[]): number => {
   const critRatingPctMods = filterMod(allMods, "CritRatingPct");
   const mods = critRatingPctMods.map((a) => {
     return {
@@ -466,7 +466,7 @@ const calculateCritRating = (allMods: Mod[]): number => {
   });
 
   const inc = calculateInc(mods.map((v) => v.value));
-  return 0.05 * (1 + inc);
+  return Math.min(0.05 * (1 + inc), 1);
 };
 
 const calculateCritDmg = (allMods: Mod[]): number => {
@@ -1817,7 +1817,7 @@ export const calculateOffense = (input: OffenseInput): OffenseResults => {
     );
 
     const aspd = calculateAspd(loadout, mods);
-    const critChance = calculateCritRating(mods);
+    const critChance = calculateCritChance(mods);
     const critDmgMult = calculateCritDmg(mods);
     const doubleDmgMult = calculateDoubleDmgMult(mods);
 
