@@ -174,13 +174,17 @@ const resolveCoreTalentMods = (mods: Mod[]): Mod[] => {
   return [...mods.filter((m) => m.type !== "CoreTalent"), ...newMods];
 };
 
-interface OffenseSummary {
+export interface OffenseAttackHitSummary {
   critChance: number;
   critDmgMult: number;
   aspd: number;
   avgHit: number;
   avgHitWithCrit: number;
   avgDps: number;
+}
+
+interface OffenseSummary {
+  attackHitSummary?: OffenseAttackHitSummary;
   resolvedMods: Mod[];
 }
 
@@ -409,9 +413,9 @@ const calculateGearDmg = (loadout: Loadout, allMods: Mod[]): GearDmg => {
 
 const calculateFlatDmg = (
   allMods: Mod[],
-  skillType: "attack" | "spell",
+  _skillType: "attack" | "spell",
 ): DmgRanges => {
-  if (skillType === "spell") throw new Error("Spells not implemented yet");
+  // TODO: implement for spells
 
   let phys = emptyDamageRange();
   let cold = emptyDamageRange();
@@ -748,7 +752,7 @@ const calculateSkillHit = (
   skill: BaseActiveSkill,
   level: number,
   config: Configuration,
-): SkillHitOverview => {
+): SkillHitOverview | undefined => {
   const skillWeaponDR = match(skill.name)
     .with("Berserking Blade", () => {
       return multDRs(gearDmg.mainHand, 210 / 100);
@@ -764,8 +768,9 @@ const calculateSkillHit = (
     })
     .otherwise(() => {
       // either it's unimplemented, not an attack
-      return emptyDmgRanges();
+      return;
     });
+  if (skillWeaponDR === undefined) return;
   const skillFlatDR = multDRs(
     flatDmg,
     (getLeveOffenseValue(skill, "AddedDmgEffPct", level) as number) / 100,
@@ -1824,6 +1829,44 @@ export const calculateDefenses = (
   };
 };
 
+const calcAvgSkillHitDps = (
+  mods: Mod[],
+  loadout: Loadout,
+  perSkillContext: PerSkillModContext,
+  skillLevel: number,
+  config: Configuration,
+): OffenseAttackHitSummary | undefined => {
+  const gearDmg = calculateGearDmg(loadout, mods);
+  const flatDmg = calculateFlatDmg(mods, "attack");
+  const skillHit = calculateSkillHit(
+    gearDmg,
+    flatDmg,
+    mods,
+    perSkillContext.skill,
+    skillLevel,
+    config,
+  );
+  if (skillHit === undefined) return;
+
+  const aspd = calculateAspd(loadout, mods);
+  const critChance = calculateCritChance(mods);
+  const critDmgMult = calculateCritDmg(mods);
+  const doubleDmgMult = calculateDoubleDmgMult(mods);
+  const extraMult = calculateExtraOffenseMults(mods, config);
+
+  const avgHitWithCrit =
+    skillHit.avg * critChance * critDmgMult + skillHit.avg * (1 - critChance);
+  const avgDps = avgHitWithCrit * doubleDmgMult * aspd * extraMult;
+  return {
+    critChance,
+    critDmgMult,
+    aspd,
+    avgHit: skillHit.avg,
+    avgHitWithCrit,
+    avgDps,
+  };
+};
+
 // Calculates offense for all enabled implemented skills
 export const calculateOffense = (input: OffenseInput): OffenseResults => {
   const { loadout, configuration: config } = input;
@@ -1889,34 +1932,16 @@ export const calculateOffense = (input: OffenseInput): OffenseResults => {
       derivedCtx,
     );
 
-    const gearDmg = calculateGearDmg(loadout, mods);
-    const flatDmg = calculateFlatDmg(mods, "attack");
-    const skillHit = calculateSkillHit(
-      gearDmg,
-      flatDmg,
+    const attackHitSummary = calcAvgSkillHitDps(
       mods,
-      perSkillContext.skill,
+      loadout,
+      perSkillContext,
       skillLevel,
       config,
     );
 
-    const aspd = calculateAspd(loadout, mods);
-    const critChance = calculateCritChance(mods);
-    const critDmgMult = calculateCritDmg(mods);
-    const doubleDmgMult = calculateDoubleDmgMult(mods);
-    const extraMult = calculateExtraOffenseMults(mods, config);
-
-    const avgHitWithCrit =
-      skillHit.avg * critChance * critDmgMult + skillHit.avg * (1 - critChance);
-    const avgDps = avgHitWithCrit * doubleDmgMult * aspd * extraMult;
-
     skills[slot.skillName as ImplementedActiveSkillName] = {
-      critChance,
-      critDmgMult,
-      aspd,
-      avgHit: skillHit.avg,
-      avgHitWithCrit,
-      avgDps,
+      attackHitSummary,
       resolvedMods: mods,
     };
   }

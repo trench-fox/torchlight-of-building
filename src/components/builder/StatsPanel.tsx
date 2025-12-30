@@ -116,7 +116,7 @@ export const StatsPanel = () => {
         </div>
       </div>
 
-      {offenseSummary ? (
+      {offenseSummary?.attackHitSummary ? (
         <>
           <div className="mb-4 rounded bg-zinc-800 px-3 py-2">
             <div className="text-xs text-zinc-400">Selected Skill</div>
@@ -127,42 +127,48 @@ export const StatsPanel = () => {
             <div className="rounded bg-zinc-800 p-3">
               <div className="text-xs text-zinc-400">Average DPS</div>
               <div className="text-xl font-bold text-amber-400">
-                {formatStatValue.dps(offenseSummary.avgDps)}
+                {formatStatValue.dps(offenseSummary.attackHitSummary.avgDps)}
               </div>
             </div>
 
             <div className="rounded bg-zinc-800 p-3">
               <div className="text-xs text-zinc-400">Avg Hit (no crit)</div>
               <div className="text-lg font-semibold text-zinc-50">
-                {formatStatValue.damage(offenseSummary.avgHit)}
+                {formatStatValue.damage(offenseSummary.attackHitSummary.avgHit)}
               </div>
             </div>
 
             <div className="rounded bg-zinc-800 p-3">
               <div className="text-xs text-zinc-400">Avg Hit (with crit)</div>
               <div className="text-lg font-semibold text-zinc-50">
-                {formatStatValue.damage(offenseSummary.avgHitWithCrit)}
+                {formatStatValue.damage(
+                  offenseSummary.attackHitSummary.avgHitWithCrit,
+                )}
               </div>
             </div>
 
             <div className="rounded bg-zinc-800 p-3">
               <div className="text-xs text-zinc-400">Crit Chance</div>
               <div className="text-lg font-semibold text-zinc-50">
-                {formatStatValue.percentage(offenseSummary.critChance)}
+                {formatStatValue.percentage(
+                  offenseSummary.attackHitSummary.critChance,
+                )}
               </div>
             </div>
 
             <div className="rounded bg-zinc-800 p-3">
               <div className="text-xs text-zinc-400">Crit Multiplier</div>
               <div className="text-lg font-semibold text-zinc-50">
-                {formatStatValue.multiplier(offenseSummary.critDmgMult)}
+                {formatStatValue.multiplier(
+                  offenseSummary.attackHitSummary.critDmgMult,
+                )}
               </div>
             </div>
 
             <div className="rounded bg-zinc-800 p-3">
               <div className="text-xs text-zinc-400">Attack Speed</div>
               <div className="text-lg font-semibold text-zinc-50">
-                {formatStatValue.aps(offenseSummary.aspd)}
+                {formatStatValue.aps(offenseSummary.attackHitSummary.aspd)}
               </div>
             </div>
           </div>

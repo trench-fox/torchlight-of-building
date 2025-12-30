@@ -147,7 +147,7 @@ function CalculationsPage(): React.ReactNode {
         </div>
       </div>
 
-      {offenseSummary && groupedMods && (
+      {offenseSummary?.attackHitSummary && groupedMods && (
         <>
           <div className="rounded-lg border border-amber-500/30 bg-zinc-900 p-6">
             <h3 className="mb-4 text-lg font-semibold text-amber-400">
@@ -157,37 +157,45 @@ function CalculationsPage(): React.ReactNode {
               <div className="rounded-lg bg-zinc-800 p-4">
                 <div className="text-sm text-zinc-400">Average DPS</div>
                 <div className="text-2xl font-bold text-amber-400">
-                  {formatStatValue.dps(offenseSummary.avgDps)}
+                  {formatStatValue.dps(offenseSummary.attackHitSummary.avgDps)}
                 </div>
               </div>
               <div className="rounded-lg bg-zinc-800 p-4">
                 <div className="text-sm text-zinc-400">Avg Hit (no crit)</div>
                 <div className="text-xl font-semibold text-zinc-50">
-                  {formatStatValue.damage(offenseSummary.avgHit)}
+                  {formatStatValue.damage(
+                    offenseSummary.attackHitSummary.avgHit,
+                  )}
                 </div>
               </div>
               <div className="rounded-lg bg-zinc-800 p-4">
                 <div className="text-sm text-zinc-400">Avg Hit (with crit)</div>
                 <div className="text-xl font-semibold text-zinc-50">
-                  {formatStatValue.damage(offenseSummary.avgHitWithCrit)}
+                  {formatStatValue.damage(
+                    offenseSummary.attackHitSummary.avgHitWithCrit,
+                  )}
                 </div>
               </div>
               <div className="rounded-lg bg-zinc-800 p-4">
                 <div className="text-sm text-zinc-400">Crit Chance</div>
                 <div className="text-xl font-semibold text-zinc-50">
-                  {formatStatValue.percentage(offenseSummary.critChance)}
+                  {formatStatValue.percentage(
+                    offenseSummary.attackHitSummary.critChance,
+                  )}
                 </div>
               </div>
               <div className="rounded-lg bg-zinc-800 p-4">
                 <div className="text-sm text-zinc-400">Crit Multiplier</div>
                 <div className="text-xl font-semibold text-zinc-50">
-                  {formatStatValue.multiplier(offenseSummary.critDmgMult)}
+                  {formatStatValue.multiplier(
+                    offenseSummary.attackHitSummary.critDmgMult,
+                  )}
                 </div>
               </div>
               <div className="rounded-lg bg-zinc-800 p-4">
                 <div className="text-sm text-zinc-400">Attack Speed</div>
                 <div className="text-xl font-semibold text-zinc-50">
-                  {formatStatValue.aps(offenseSummary.aspd)}
+                  {formatStatValue.aps(offenseSummary.attackHitSummary.aspd)}
                 </div>
               </div>
             </div>

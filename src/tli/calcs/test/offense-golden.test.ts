@@ -18,7 +18,7 @@ describe("offense golden tests", () => {
       throw new Error("Frost Spike skill not found in results");
     }
 
-    const avgDps = frostSpike.avgDps;
+    const avgDps = frostSpike.attackHitSummary?.avgDps;
     const expectedDps = 12.4e12; // ~12.40 trillion
     const tolerance = 0.01; // 1% tolerance
 
