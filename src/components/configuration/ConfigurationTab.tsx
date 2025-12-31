@@ -522,6 +522,42 @@ export const ConfigurationTab: React.FC<ConfigurationTabProps> = ({
             }
             className="h-4 w-4 rounded border-zinc-600 bg-zinc-800 accent-amber-500"
           />
+
+          <label className="text-right text-zinc-50">
+            Enemy Has Affliction
+          </label>
+          <input
+            type="checkbox"
+            checked={config.enemyHasAffliction}
+            onChange={(e) => onUpdate({ enemyHasAffliction: e.target.checked })}
+            className="h-4 w-4 rounded border-zinc-600 bg-zinc-800 accent-amber-500"
+          />
+
+          {config.enemyHasAffliction && (
+            <>
+              <label className="text-right text-zinc-50">
+                Affliction Points
+                <InfoTooltip text="Defaults to 100" />
+              </label>
+              <NumberInput
+                value={config.afflictionPts}
+                onChange={(v) => onUpdate({ afflictionPts: v })}
+                min={0}
+              />
+            </>
+          )}
+
+          <label className="text-right text-zinc-50">
+            Enemy Has Desecration
+          </label>
+          <input
+            type="checkbox"
+            checked={config.enemyHasDesecration}
+            onChange={(e) =>
+              onUpdate({ enemyHasDesecration: e.target.checked })
+            }
+            className="h-4 w-4 rounded border-zinc-600 bg-zinc-800 accent-amber-500"
+          />
         </div>
       </div>
 

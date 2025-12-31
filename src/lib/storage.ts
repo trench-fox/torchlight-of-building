@@ -94,6 +94,9 @@ export const createEmptyConfigurationPage = (): ConfigurationPage => ({
   sagesInsightColdActivated: false,
   sagesInsightLightningActivated: false,
   sagesInsightErosionActivated: false,
+  enemyHasAffliction: false,
+  afflictionPts: undefined,
+  enemyHasDesecration: false,
 });
 
 export const createEmptySkillPage = (): SkillPage => ({

@@ -93,6 +93,12 @@ export interface Configuration {
   sagesInsightLightningActivated: boolean;
   // default to false
   sagesInsightErosionActivated: boolean;
+  // default to false
+  enemyHasAffliction: boolean;
+  // default to 100
+  afflictionPts: number | undefined;
+  // default to false
+  enemyHasDesecration: boolean;
 
   // --------------------
   // hero-specific config

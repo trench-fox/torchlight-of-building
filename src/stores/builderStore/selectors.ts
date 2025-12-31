@@ -102,5 +102,8 @@ export const useConfiguration = (): Configuration => {
     sagesInsightColdActivated: configPage.sagesInsightColdActivated,
     sagesInsightLightningActivated: configPage.sagesInsightLightningActivated,
     sagesInsightErosionActivated: configPage.sagesInsightErosionActivated,
+    enemyHasAffliction: configPage.enemyHasAffliction,
+    afflictionPts: configPage.afflictionPts,
+    enemyHasDesecration: configPage.enemyHasDesecration,
   };
 };
