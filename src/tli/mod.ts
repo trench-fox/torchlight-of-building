@@ -37,7 +37,12 @@ export const ResTypes = [
 
 export type ResType = (typeof ResTypes)[number];
 
-export const SkillLevelTypes = ["main", "support", "active"] as const;
+export const SkillLevelTypes = [
+  "main",
+  "support",
+  "active",
+  "persistent",
+] as const;
 
 export type SkillLevelType = (typeof SkillLevelTypes)[number];
 
