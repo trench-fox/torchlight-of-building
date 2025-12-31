@@ -835,7 +835,7 @@ function calculatePenetration(
   mods: Mod[],
   config: Configuration,
 ): DmgRanges | NumDmgValues {
-  const enemyRes = calculateEnemyRes(config);
+  const enemyRes = calculateEnemyRes(mods, config);
   const elePenMods = filterMod(mods, "ResPenPct");
   const coldPenMods = filterPenMods(elePenMods, ["all", "elemental", "cold"]);
   const lightningPenMods = filterPenMods(elePenMods, [
@@ -845,11 +845,14 @@ function calculatePenetration(
   ]);
   const firePenMods = filterPenMods(elePenMods, ["all", "elemental", "fire"]);
   const erosionPenMods = filterPenMods(elePenMods, ["all", "erosion"]);
-  const enemyColdResMult = 1 - enemyRes + sumByValue(coldPenMods) / 100;
+  const enemyColdResMult =
+    1 - enemyRes.cold / 100 + sumByValue(coldPenMods) / 100;
   const enemyLightningResMult =
-    1 - enemyRes + sumByValue(lightningPenMods) / 100;
-  const enemyFireResMult = 1 - enemyRes + sumByValue(firePenMods) / 100;
-  const enemyErosionResMult = 1 - enemyRes + sumByValue(erosionPenMods) / 100;
+    1 - enemyRes.lightning / 100 + sumByValue(lightningPenMods) / 100;
+  const enemyFireResMult =
+    1 - enemyRes.fire / 100 + sumByValue(firePenMods) / 100;
+  const enemyErosionResMult =
+    1 - enemyRes.erosion / 100 + sumByValue(erosionPenMods) / 100;
 
   const enemyArmorDmgMitigation = calculateEnemyArmorDmgMitigation(
     calculateEnemyArmor(config),
@@ -1594,9 +1597,26 @@ const calculateMercuryPts = (mods: Mod[]): number => {
   return 100 * mult;
 };
 
-const calculateEnemyRes = (config: Configuration): number => {
-  // enemyRes is stored as decimal (0.5 for 50%)
-  return config.enemyRes ?? 0.5;
+interface EnemyRes {
+  cold: number;
+  lightning: number;
+  fire: number;
+  erosion: number;
+}
+
+const calculateEnemyRes = (mods: Mod[], config: Configuration): EnemyRes => {
+  // enemyRes is stored as whole percentage (50 for 50%)
+  const res = config.enemyRes ?? 50;
+  const enemyResMods = filterMod(mods, "EnemyRes");
+  const sumEnemyResMods = (resTypes: ResType[]) => {
+    return sumByValue(enemyResMods.filter((m) => resTypes.includes(m.resType)));
+  };
+  return {
+    cold: res + sumEnemyResMods(["cold", "elemental"]),
+    lightning: res + sumEnemyResMods(["lightning", "elemental"]),
+    fire: res + sumEnemyResMods(["fire", "elemental"]),
+    erosion: res + sumEnemyResMods(["erosion"]),
+  };
 };
 
 const calculateEnemyArmor = (config: Configuration): number => {

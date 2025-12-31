@@ -230,6 +230,8 @@ interface ModDefinitions {
   AfflictionInflictedPerSec: { value: number };
   AfflictionEffectPct: { value: number };
   CannotInflictWilt: object;
+  // enemy mods
+  EnemyRes: { value: number; resType: ResType };
 }
 
 // Generate the Mod union type from ModDefinitions

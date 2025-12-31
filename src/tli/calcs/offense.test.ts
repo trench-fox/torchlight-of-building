@@ -3570,6 +3570,107 @@ describe("penetration", () => {
     // 100 phys * (1 - 0.5) = 50 (resistance doesn't apply)
     validate(results, skillName, { avgHit: 50 });
   });
+
+  describe("enemy resistance reduction (EnemyRes mod)", () => {
+    test("EnemyRes mod reduces cold resistance", () => {
+      // 30% base resistance, -10% from EnemyRes mod -> 20% effective resistance
+      // 100 cold * (1 - 0.2) = 80
+      const input = createDmgInput(100, "cold", {
+        mods: affixLines([{ type: "EnemyRes", value: -10, resType: "cold" }]),
+        res: 30,
+      });
+      const results = calculateOffense(input);
+      validate(results, skillName, { avgHit: 80 });
+    });
+
+    test("EnemyRes with elemental type applies to cold, lightning, fire", () => {
+      // -10% elemental resistance reduction applies to cold damage
+      // 30% base res - 10% = 20% effective resistance
+      const input = createDmgInput(100, "cold", {
+        mods: affixLines([
+          { type: "EnemyRes", value: -10, resType: "elemental" },
+        ]),
+        res: 30,
+      });
+      const results = calculateOffense(input);
+      validate(results, skillName, { avgHit: 80 });
+    });
+
+    test("EnemyRes with erosion type applies to erosion damage", () => {
+      // -10% erosion resistance reduction
+      // 30% base res - 10% = 20% effective resistance
+      const input = createDmgInput(100, "erosion", {
+        mods: affixLines([
+          { type: "EnemyRes", value: -10, resType: "erosion" },
+        ]),
+        res: 30,
+      });
+      const results = calculateOffense(input);
+      validate(results, skillName, { avgHit: 80 });
+    });
+
+    test("EnemyRes mods stack additively", () => {
+      // 30% base res, -5% cold + -5% elemental = 20% effective
+      const input = createDmgInput(100, "cold", {
+        mods: affixLines([
+          { type: "EnemyRes", value: -5, resType: "cold" },
+          { type: "EnemyRes", value: -5, resType: "elemental" },
+        ]),
+        res: 30,
+      });
+      const results = calculateOffense(input);
+      validate(results, skillName, { avgHit: 80 });
+    });
+
+    test("wrong EnemyRes type does not apply", () => {
+      // -10% fire resistance on cold damage - should not help
+      const input = createDmgInput(100, "cold", {
+        mods: affixLines([{ type: "EnemyRes", value: -10, resType: "fire" }]),
+        res: 30,
+      });
+      const results = calculateOffense(input);
+      // 100 * (1 - 0.3) = 70 (reduction doesn't apply)
+      validate(results, skillName, { avgHit: 70 });
+    });
+
+    test("elemental EnemyRes does not apply to erosion", () => {
+      // -10% elemental resistance on erosion damage - should not help
+      const input = createDmgInput(100, "erosion", {
+        mods: affixLines([
+          { type: "EnemyRes", value: -10, resType: "elemental" },
+        ]),
+        res: 30,
+      });
+      const results = calculateOffense(input);
+      // 100 * (1 - 0.3) = 70 (elemental doesn't apply to erosion)
+      validate(results, skillName, { avgHit: 70 });
+    });
+
+    test("EnemyRes can reduce resistance below zero for bonus damage", () => {
+      // 10% base res, -30% reduction -> -20% effective = 120% damage
+      const input = createDmgInput(100, "cold", {
+        mods: affixLines([{ type: "EnemyRes", value: -30, resType: "cold" }]),
+        res: 10,
+      });
+      const results = calculateOffense(input);
+      // 100 * (1 - (-0.2)) = 100 * 1.2 = 120
+      validate(results, skillName, { avgHit: 120 });
+    });
+
+    test("EnemyRes combines with penetration", () => {
+      // 40% base res, -10% EnemyRes = 30% res, then 10% pen -> 20% effective
+      const input = createDmgInput(100, "cold", {
+        mods: affixLines([
+          { type: "EnemyRes", value: -10, resType: "cold" },
+          { type: "ResPenPct", value: 10, penType: "cold" },
+        ]),
+        res: 40,
+      });
+      const results = calculateOffense(input);
+      // 100 * (1 - 0.3 + 0.1) = 80
+      validate(results, skillName, { avgHit: 80 });
+    });
+  });
 });
 
 describe("double damage chance", () => {
