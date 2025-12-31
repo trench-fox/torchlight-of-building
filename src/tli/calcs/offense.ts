@@ -195,6 +195,7 @@ export interface OffenseAttackHitSummary {
 interface OffenseSummary {
   attackHitSummary?: OffenseAttackHitSummary;
   persistentDpsSummary?: PersistentDpsSummary;
+  totalReapDpsSummary?: TotalReapDpsSummary;
   resolvedMods: Mod[];
 }
 
@@ -1962,7 +1963,7 @@ const calcAvgPersistentDps = (
   perSkillContext: PerSkillModContext,
   skillLevel: number,
   config: Configuration,
-) => {
+): PersistentDpsSummary | undefined => {
   const skill = perSkillContext.skill as BaseActiveSkill;
   const offense: SkillOffenseOfType<"PersistentDmg"> | undefined = match(
     skill.name,
@@ -2000,6 +2001,62 @@ const calcAvgPersistentDps = (
     base: { physical, cold, lightning, fire, erosion },
     total,
     duration: offense.duration,
+  };
+};
+
+const calcReapsPerSecond = (cooldown: number) => {
+  const roundedCooldown = Math.ceil(cooldown * 30) / 30;
+  return 1 / roundedCooldown;
+};
+
+interface ReapDpsSummary {
+  rawCooldown: number;
+  duration: number;
+  reapsPerSecond: number;
+  dmgPerReap: number;
+  reapDps: number;
+}
+
+interface TotalReapDpsSummary {
+  reaps: ReapDpsSummary[];
+  totalReapDps: number;
+  reapDurationMult: number;
+  reapCdrMult: number;
+}
+
+const calcTotalReapDps = (
+  mods: Mod[],
+  persistentDpsSummary: PersistentDpsSummary,
+): TotalReapDpsSummary | undefined => {
+  const dotDuration = persistentDpsSummary.duration;
+  const dotDps = persistentDpsSummary.total;
+  const reapDurationMult = calculateEffMultiplier(
+    filterMod(mods, "ReapDurationPct"),
+  );
+  const reapCdrMult = calculateEffMultiplier(filterMod(mods, "ReapCdrPct"));
+  const reaps = filterMod(mods, "Reap").map((m) => {
+    const duration = Math.min(m.duration * reapDurationMult, dotDuration);
+    const rawCooldown = m.cooldown / reapCdrMult;
+    const reapsPerSecond = calcReapsPerSecond(rawCooldown);
+    const dmgPerReap = dotDps * duration;
+    const reapDps = dmgPerReap * reapsPerSecond;
+    return {
+      rawCooldown,
+      duration,
+      reapsPerSecond,
+      dmgPerReap,
+      reapDps,
+    };
+  });
+  if (reaps.length === 0) {
+    return undefined;
+  }
+  const totalReapDps = R.sumBy(reaps, (r) => r.reapDps);
+  return {
+    reaps,
+    reapDurationMult,
+    reapCdrMult,
+    totalReapDps,
   };
 };
 
@@ -2122,9 +2179,15 @@ export const calculateOffense = (input: OffenseInput): OffenseResults => {
       config,
     );
 
+    const totalReapDpsSummary =
+      persistentDpsSummary !== undefined
+        ? calcTotalReapDps(mods, persistentDpsSummary)
+        : undefined;
+
     skills[slot.skillName as ImplementedActiveSkillName] = {
       attackHitSummary,
       persistentDpsSummary,
+      totalReapDpsSummary,
       resolvedMods: mods,
     };
   }

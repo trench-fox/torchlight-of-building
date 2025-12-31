@@ -4284,3 +4284,180 @@ describe("persistent damage", () => {
     expect(skill?.persistentDpsSummary).toBeUndefined();
   });
 });
+
+describe("reap mechanics", () => {
+  const skillName = "[Test] Simple Persistent Spell" as const;
+
+  const createReapInput = (mods: AffixLine[], config?: Configuration) => ({
+    loadout: initLoadout({
+      gearPage: { equippedGear: {}, inventory: [] },
+      customAffixLines: mods,
+      skillPage: simplePersistentSpellSkillPage(),
+    }),
+    configuration: config ?? defaultConfiguration,
+  });
+
+  test("basic reap damage calculation", () => {
+    // DOT: 100 DPS, 1s duration
+    // Reap: 0.5s duration, 1s cooldown
+    // Expected: dmgPerReap = 100 * 0.5 = 50
+    // reapsPerSecond = 1 / 1 = 1
+    // reapDps = 50 * 1 = 50
+    const input = createReapInput(
+      affixLines([{ type: "Reap", duration: 0.5, cooldown: 1 }]),
+    );
+    const results = calculateOffense(input);
+    const reapSummary = results.skills[skillName]?.totalReapDpsSummary;
+
+    expect(reapSummary).toBeDefined();
+    expect(reapSummary?.reaps).toHaveLength(1);
+    expect(reapSummary?.reaps[0].duration).toBeCloseTo(0.5);
+    expect(reapSummary?.reaps[0].dmgPerReap).toBeCloseTo(50);
+    expect(reapSummary?.reaps[0].reapsPerSecond).toBeCloseTo(1);
+    expect(reapSummary?.reaps[0].reapDps).toBeCloseTo(50);
+    expect(reapSummary?.totalReapDps).toBeCloseTo(50);
+  });
+
+  test("cooldown is rounded up to nearest 1/30 second", () => {
+    // Cooldown of 0.4s should round up to 13/30 ≈ 0.4333s
+    // reapsPerSecond = 1 / (13/30) = 30/13 ≈ 2.3077
+    const input = createReapInput(
+      affixLines([{ type: "Reap", duration: 0.5, cooldown: 0.4 }]),
+    );
+    const results = calculateOffense(input);
+    const reapSummary = results.skills[skillName]?.totalReapDpsSummary;
+
+    const expectedRoundedCooldown = Math.ceil(0.4 * 30) / 30; // 12/30 = 0.4, but ceil(12) = 12, so 12/30 = 0.4
+    const expectedReapsPerSecond = 1 / expectedRoundedCooldown;
+
+    expect(reapSummary?.reaps[0].reapsPerSecond).toBeCloseTo(
+      expectedReapsPerSecond,
+    );
+  });
+
+  test("cooldown rounding for non-aligned values", () => {
+    // Cooldown of 0.35s: ceil(0.35 * 30) = ceil(10.5) = 11, so 11/30 ≈ 0.3667s
+    // reapsPerSecond = 30/11 ≈ 2.727
+    const input = createReapInput(
+      affixLines([{ type: "Reap", duration: 0.5, cooldown: 0.35 }]),
+    );
+    const results = calculateOffense(input);
+    const reapSummary = results.skills[skillName]?.totalReapDpsSummary;
+
+    const expectedRoundedCooldown = Math.ceil(0.35 * 30) / 30; // 11/30
+    const expectedReapsPerSecond = 1 / expectedRoundedCooldown;
+
+    expect(reapSummary?.reaps[0].reapsPerSecond).toBeCloseTo(
+      expectedReapsPerSecond,
+    );
+  });
+
+  test("reap duration is capped at DOT duration", () => {
+    // DOT duration is 1s, reap duration is 2s
+    // Effective reap duration should be capped at 1s
+    const input = createReapInput(
+      affixLines([{ type: "Reap", duration: 2, cooldown: 1 }]),
+    );
+    const results = calculateOffense(input);
+    const reapSummary = results.skills[skillName]?.totalReapDpsSummary;
+
+    expect(reapSummary?.reaps[0].duration).toBeCloseTo(1); // capped at DOT duration
+    expect(reapSummary?.reaps[0].dmgPerReap).toBeCloseTo(100); // 100 DPS * 1s
+  });
+
+  test("ReapDurationPct modifier increases reap duration", () => {
+    // Base reap: 0.5s duration
+    // +100% ReapDurationPct: 0.5 * 2 = 1s duration
+    // dmgPerReap = 100 * 1 = 100
+    const input = createReapInput(
+      affixLines([
+        { type: "Reap", duration: 0.5, cooldown: 1 },
+        { type: "ReapDurationPct", value: 100 },
+      ]),
+    );
+    const results = calculateOffense(input);
+    const reapSummary = results.skills[skillName]?.totalReapDpsSummary;
+
+    expect(reapSummary?.reapDurationMult).toBeCloseTo(2);
+    expect(reapSummary?.reaps[0].duration).toBeCloseTo(1);
+    expect(reapSummary?.reaps[0].dmgPerReap).toBeCloseTo(100);
+  });
+
+  test("ReapCdrPct modifier reduces cooldown", () => {
+    // Base cooldown: 1s
+    // +100% ReapCdrPct: 1 / 2 = 0.5s cooldown
+    // reapsPerSecond = 1 / 0.5 = 2
+    const input = createReapInput(
+      affixLines([
+        { type: "Reap", duration: 0.5, cooldown: 1 },
+        { type: "ReapCdrPct", value: 100 },
+      ]),
+    );
+    const results = calculateOffense(input);
+    const reapSummary = results.skills[skillName]?.totalReapDpsSummary;
+
+    expect(reapSummary?.reapCdrMult).toBeCloseTo(2);
+    expect(reapSummary?.reaps[0].rawCooldown).toBeCloseTo(0.5);
+    expect(reapSummary?.reaps[0].reapsPerSecond).toBeCloseTo(2);
+    expect(reapSummary?.reaps[0].reapDps).toBeCloseTo(100); // 50 dmg * 2 reaps/s
+  });
+
+  test("multiple reap instances stack independently", () => {
+    // Reap 1: 0.5s duration, 1s cooldown -> 50 dmg * 1 reap/s = 50 DPS
+    // Reap 2: 0.3s duration, 0.5s cooldown -> 30 dmg * 2 reaps/s = 60 DPS
+    // Total: 110 DPS
+    const input = createReapInput(
+      affixLines([
+        { type: "Reap", duration: 0.5, cooldown: 1 },
+        { type: "Reap", duration: 0.3, cooldown: 0.5 },
+      ]),
+    );
+    const results = calculateOffense(input);
+    const reapSummary = results.skills[skillName]?.totalReapDpsSummary;
+
+    expect(reapSummary?.reaps).toHaveLength(2);
+    expect(reapSummary?.reaps[0].reapDps).toBeCloseTo(50);
+    expect(reapSummary?.reaps[1].reapDps).toBeCloseTo(60);
+    expect(reapSummary?.totalReapDps).toBeCloseTo(110);
+  });
+
+  test("no reap summary when no Reap mods present", () => {
+    const input = createReapInput([]);
+    const results = calculateOffense(input);
+    const reapSummary = results.skills[skillName]?.totalReapDpsSummary;
+
+    expect(reapSummary).toBeUndefined();
+  });
+
+  test("reap damage scales with DOT damage modifiers", () => {
+    // DOT with +100% damage: 100 * 2 = 200 DPS
+    // Reap 0.5s: 200 * 0.5 = 100 dmgPerReap
+    const input = createReapInput(
+      affixLines([
+        { type: "Reap", duration: 0.5, cooldown: 1 },
+        { type: "DmgPct", value: 100, dmgModType: "global", addn: false },
+      ]),
+    );
+    const results = calculateOffense(input);
+    const reapSummary = results.skills[skillName]?.totalReapDpsSummary;
+
+    expect(reapSummary?.reaps[0].dmgPerReap).toBeCloseTo(100);
+    expect(reapSummary?.totalReapDps).toBeCloseTo(100);
+  });
+
+  test("non-persistent skill has no reap summary", () => {
+    const input = {
+      loadout: initLoadout({
+        gearPage: { equippedGear: { mainHand: baseWeapon }, inventory: [] },
+        customAffixLines: affixLines([
+          { type: "Reap", duration: 0.5, cooldown: 1 },
+        ]),
+        skillPage: simpleAttackSkillPage(),
+      }),
+      configuration: defaultConfiguration,
+    };
+    const results = calculateOffense(input);
+    const skill = results.skills["[Test] Simple Attack"];
+    expect(skill?.totalReapDpsSummary).toBeUndefined();
+  });
+});

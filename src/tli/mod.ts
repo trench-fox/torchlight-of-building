@@ -178,6 +178,9 @@ interface ModDefinitions {
   EnergyShieldRegainPct: { value: number };
   RestoreLifePct: { value: number; interval: number };
   // end defenses
+  Reap: { duration: number; cooldown: number };
+  ReapDurationPct: { value: number };
+  ReapCdrPct: { value: number };
   MultistrikeChancePct: { value: number };
   ConvertDmgPct: { from: DmgChunkType; to: DmgChunkType; value: number };
   AddsDmgAsPct: { from: DmgChunkType; to: DmgChunkType; value: number };
