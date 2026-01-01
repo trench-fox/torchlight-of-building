@@ -1221,6 +1221,16 @@ test("parse have fervor", () => {
   ]);
 });
 
+test("parse fixed fervor rating", () => {
+  const result = parseMod("Has 67 point(s) of fixed Fervor Rating");
+  expect(result).toEqual([
+    {
+      type: "FixedFervorPts",
+      value: 67,
+    },
+  ]);
+});
+
 test("parse generates torment", () => {
   const result = parseMod(
     "Gains a stack of Torment when dealing damage to enemies with max Affliction",

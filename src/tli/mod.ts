@@ -165,6 +165,7 @@ interface ModDefinitions {
   Stat: { value: number; statModType: StatModType };
   StatPct: { value: number; statModType: StatModType };
   HaveFervor: object;
+  FixedFervorPts: { value: number };
   FervorEffPct: { value: number };
   SteepStrikeChancePct: { value: number };
   SteepStrikeDmg: { value: number; addn: boolean };

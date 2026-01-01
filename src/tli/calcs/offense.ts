@@ -1543,30 +1543,17 @@ const resolvePerSkillMods = (
   };
 };
 
-interface FervorCtx {
-  enabled: boolean;
-  points: number;
-  bonusIncEff: number;
-}
-
-const calculateFervor = (mods: Mod[], config: Configuration): FervorCtx => {
-  const haveFervor = findMod(mods, "HaveFervor") !== undefined;
-  const fervorEffMods = filterMod(mods, "FervorEffPct");
-  const bonusIncEff = calculateInc(fervorEffMods.map((a) => a.value));
-  return {
-    enabled: config.fervorEnabled || haveFervor,
-    points: config.fervorPoints ?? 100,
-    bonusIncEff: bonusIncEff,
-  };
-};
-
-const calculateFervorCritRateMod = (fervor: FervorCtx): Mod => {
-  const fervorPerPoint = 2 * (1 + fervor.bonusIncEff);
-  const fervorBonus = fervor.points * fervorPerPoint;
+const calculateFervorCritRateMod = (
+  mods: Mod[],
+  resourcePool: ResourcePool,
+): Mod => {
+  const fervorEffMult = calculateEffMultiplier(filterMod(mods, "FervorEffPct"));
+  const critRatePerPoint = 2 * fervorEffMult;
+  const critRateFromFervor = resourcePool.fervorPts * critRatePerPoint;
 
   return {
     type: "CritRatingPct",
-    value: fervorBonus,
+    value: critRateFromFervor,
     modType: "global",
     src: "fervor",
   };
@@ -1956,10 +1943,11 @@ const resolveModsForOffenseSkill = (
   const projectiles = 0;
   mods.push(...normalizeStackables(prenormMods, "projectile", projectiles));
 
-  const fervor = calculateFervor(mods, config);
-  if (fervor.enabled) {
-    mods.push(calculateFervorCritRateMod(fervor));
-    mods.push(...normalizeStackables(prenormMods, "fervor", fervor.points));
+  if (resourcePool.hasFervor) {
+    mods.push(calculateFervorCritRateMod(mods, resourcePool));
+    mods.push(
+      ...normalizeStackables(prenormMods, "fervor", resourcePool.fervorPts),
+    );
   }
 
   if (skill.tags.includes("Shadow Strike")) {
@@ -2022,6 +2010,8 @@ export interface ResourcePool {
   maxTenacityBlessings: number;
   desecration?: number;
   additionalMaxChanneledStacks: number;
+  hasFervor: boolean;
+  fervorPts: number;
 }
 
 const calculateResourcePool = (
@@ -2069,6 +2059,11 @@ const calculateResourcePool = (
     sumByValue(filterMod(mods, "MaxChannel")),
   );
 
+  const haveFervor = findMod(mods, "HaveFervor") !== undefined;
+  const hasFervor = config.fervorEnabled || haveFervor;
+  const fixedFervorPts = findMod(mods, "FixedFervorPts");
+  const fervorPts = fixedFervorPts?.value ?? config.fervorPoints ?? 100;
+
   return {
     stats,
     maxLife,
@@ -2082,6 +2077,8 @@ const calculateResourcePool = (
     tenacityBlessings,
     desecration,
     additionalMaxChanneledStacks,
+    hasFervor,
+    fervorPts,
   };
 };
 

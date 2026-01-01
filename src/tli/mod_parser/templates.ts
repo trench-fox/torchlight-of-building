@@ -307,6 +307,9 @@ export const allParsers = [
   t("max channeled stacks \\+{value:int}").output("MaxChannel", (c) => ({ value: c.value })),
   t("has hasten").output("HasHasten", () => ({})),
   t("have fervor").output("HaveFervor", () => ({})),
+  t("has {value:int} point\\(s\\) of fixed fervor rating").output("FixedFervorPts", (c) => ({
+    value: c.value,
+  })),
   t("gains a stack of torment when dealing damage to enemies with max affliction").output(
     "GeneratesTorment",
     () => ({}),
