@@ -1262,6 +1262,17 @@ test("parse erosion skill level", () => {
   ]);
 });
 
+test("parse all skills level", () => {
+  const result = parseMod("+1 all skills' level");
+  expect(result).toEqual([
+    {
+      type: "SkillLevel",
+      value: 1,
+      skillLevelType: "all",
+    },
+  ]);
+});
+
 test("parse main skill level per sealed life at full mana", () => {
   const result = parseMod(
     "For every 11% Life Sealed when at Full Mana, Main Skill's level +1",

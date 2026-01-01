@@ -43,6 +43,7 @@ export const SkillLevelTypes = [
   "active",
   "persistent",
   "erosion",
+  "all",
 ] as const;
 
 export type SkillLevelType = (typeof SkillLevelTypes)[number];
