@@ -17,7 +17,10 @@ export const CoreTalentMods: Record<CoreTalentName, Affix> = {
       {
         text: "+100% chance to gain 1 stack(s) of Tenacity Blessing when hitting an enemy",
       },
-      { text: "Max Tenacity Blessing Stacks +1" },
+      {
+        text: "Max Tenacity Blessing Stacks +1",
+        mods: [{ type: "MaxTenacityBlessing", value: 1 }],
+      },
     ],
   },
   "Great Strength": {
@@ -485,6 +488,15 @@ export const CoreTalentMods: Record<CoreTalentName, Affix> = {
       },
       {
         text: "+6% additional damage for every +1 additional Max Channeled Stack(s)",
+        mods: [
+          {
+            type: "DmgPct",
+            value: 6,
+            dmgModType: "global",
+            addn: true,
+            per: { stackable: "additional_max_channel_stack", amt: 1 },
+          },
+        ],
       },
     ],
   },
@@ -781,7 +793,10 @@ export const CoreTalentMods: Record<CoreTalentName, Affix> = {
   },
   "Twisted Belief": {
     affixLines: [
-      { text: "+3 Erosion Skill Level" },
+      {
+        text: "+3 Erosion Skill Level",
+        mods: [{ type: "SkillLevel", value: 3, skillLevelType: "erosion" }],
+      },
       {
         text: "-5% Max Erosion Resistance",
         mods: [{ type: "MaxResistancePct", value: -5, resType: "erosion" }],

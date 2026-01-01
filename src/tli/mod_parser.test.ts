@@ -120,6 +120,21 @@ test("parse additional damage per frostbite rating", () => {
   ]);
 });
 
+test("parse additional damage per additional max channeled stack", () => {
+  const result = parseMod(
+    "+6% additional damage for every +1 additional Max Channeled Stack(s)",
+  );
+  expect(result).toEqual([
+    {
+      type: "DmgPct",
+      value: 6,
+      dmgModType: "global",
+      addn: true,
+      per: { stackable: "additional_max_channel_stack", amt: 1 },
+    },
+  ]);
+});
+
 test("parse additional attack damage to nearby enemies", () => {
   const result = parseMod(
     "Deals up to +25% additional Attack Damage to enemies in proximity, and this damage reduces as the distance from the enemy grows",

@@ -19,6 +19,7 @@ const MANA_CONSUMED_RECENTLY = "mana_consumed_recently" as const;
 const TARGET_ENEMY_IS_IN_PROXIMITY = "target_enemy_is_in_proximity" as const;
 const TARGET_ENEMY_IS_NEARBY = "target_enemy_is_nearby" as const;
 const ALL = "all" as const;
+const ADDITIONAL_MAX_CHANNEL_STACK = "additional_max_channel_stack" as const;
 
 const coreTalentNameSet = new Set(CoreTalentNames.map((name) => name.toLowerCase()));
 
@@ -106,6 +107,15 @@ export const allParsers = [
     addn: true,
     per: { stackable: FROSTBITE_RATING, amt: c.amt },
   })),
+  t("{value:dec%} additional damage for every \\+{amt:int} additional max channeled stack\\(s\\)").output(
+    "DmgPct",
+    (c) => ({
+      value: c.value,
+      dmgModType: GLOBAL,
+      addn: true,
+      per: { stackable: ADDITIONAL_MAX_CHANNEL_STACK, amt: c.amt },
+    }),
+  ),
   t(
     "deals up to {value:dec%} additional attack damage to enemies in proximity, and this (effect|damage) reduces as the distance from the enemy grows",
   ).output("DmgPct", (c) => ({
