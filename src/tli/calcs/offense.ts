@@ -1,4 +1,3 @@
-import { load } from "cheerio";
 import * as R from "remeda";
 import { match } from "ts-pattern";
 import { CoreTalentMods } from "@/src/data/core_talent";
@@ -1034,6 +1033,11 @@ const filterModsByCond = (
             .find((s) => s.tags.includes("Curse")) !== undefined
         );
       })
+      .with(
+        "have_both_sealed_mana_and_life",
+        () =>
+          (config.sealedManaPct ?? 0) > 0 && (config.sealedLifePct ?? 0) > 0,
+      )
       .exhaustive();
   });
 };

@@ -125,7 +125,8 @@ export type Condition =
   | "sages_insight_erosion"
   | "at_max_channeled_stacks"
   | "enemy_at_max_affliction"
-  | "enemy_is_cursed";
+  | "enemy_is_cursed"
+  | "have_both_sealed_mana_and_life";
 
 export type ConditionThresholdTarget =
   | "num_enemies_nearby"

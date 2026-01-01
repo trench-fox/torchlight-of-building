@@ -105,6 +105,21 @@ test("parse damage against cursed enemies (non-additional)", () => {
   ]);
 });
 
+test("parse additional damage when having both sealed mana and life", () => {
+  const result = parseMod(
+    "+10% additional damage when having both Sealed Mana and Life",
+  );
+  expect(result).toEqual([
+    {
+      type: "DmgPct",
+      value: 10,
+      dmgModType: "global",
+      addn: true,
+      cond: "have_both_sealed_mana_and_life",
+    },
+  ]);
+});
+
 test("parse damage when focus blessing is active", () => {
   const result = parseMod("+30% damage when Focus Blessing is active");
   expect(result).toEqual([

@@ -23,6 +23,7 @@ const ALL = "all" as const;
 const ADDITIONAL_MAX_CHANNEL_STACK = "additional_max_channel_stack" as const;
 const AT_MAX_CHANNELED_STACKS = "at_max_channeled_stacks" as const;
 const ENEMY_IS_CURSED = "enemy_is_cursed" as const;
+const HAVE_BOTH_SEALED_MANA_AND_LIFE = "have_both_sealed_mana_and_life" as const;
 
 const coreTalentNameSet = new Set(CoreTalentNames.map((name) => name.toLowerCase()));
 
@@ -95,6 +96,12 @@ export const allParsers = [
     dmgModType: GLOBAL,
     addn: c.additional !== undefined,
     cond: ENEMY_IS_CURSED,
+  })),
+  t("{value:dec%} [additional] damage when having both sealed mana and life").output("DmgPct", (c) => ({
+    value: c.value,
+    dmgModType: GLOBAL,
+    addn: c.additional !== undefined,
+    cond: HAVE_BOTH_SEALED_MANA_AND_LIFE,
   })),
   t("{value:dec%} damage when focus blessing is active").output("DmgPct", (c) => ({
     value: c.value,
