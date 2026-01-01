@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { SaveData } from "@/src/lib/save-data";
+import { getAllAffixes } from "@/src/tli/calcs/affix-collectors";
 import type { Loadout } from "@/src/tli/core";
 import { collectUnparseableAffixes } from "@/src/tli/storage/load-save";
 
@@ -366,7 +367,7 @@ export const DebugPanel: React.FC<DebugPanelProps> = ({
 
   const currentData = view === "saveData" ? saveData : loadout;
   const unparseableAffixes = useMemo(
-    () => collectUnparseableAffixes(loadout),
+    () => collectUnparseableAffixes(getAllAffixes(loadout)),
     [loadout],
   );
 
