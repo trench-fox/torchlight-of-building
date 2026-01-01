@@ -408,4 +408,26 @@ export const allParsers = [
       cond: "sages_insight_erosion" as const,
     })),
   ]),
+  t("{value:int%} all resistance when the enemy has max affliction").outputMany([
+    spec("EnemyRes", (c) => ({
+      value: c.value,
+      resType: "fire" as const,
+      cond: "enemy_at_max_affliction" as const,
+    })),
+    spec("EnemyRes", (c) => ({
+      value: c.value,
+      resType: "cold" as const,
+      cond: "enemy_at_max_affliction" as const,
+    })),
+    spec("EnemyRes", (c) => ({
+      value: c.value,
+      resType: "lightning" as const,
+      cond: "enemy_at_max_affliction" as const,
+    })),
+    spec("EnemyRes", (c) => ({
+      value: c.value,
+      resType: "erosion" as const,
+      cond: "enemy_at_max_affliction" as const,
+    })),
+  ]),
 ];

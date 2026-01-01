@@ -1628,3 +1628,35 @@ test("parse sage's insight erosion", () => {
     },
   ]);
 });
+
+test("parse all resistance reduction when enemy has max affliction", () => {
+  const result = parseMod(
+    "-8% All Resistance when the enemy has max Affliction",
+  );
+  expect(result).toEqual([
+    {
+      type: "EnemyRes",
+      value: -8,
+      resType: "fire",
+      cond: "enemy_at_max_affliction",
+    },
+    {
+      type: "EnemyRes",
+      value: -8,
+      resType: "cold",
+      cond: "enemy_at_max_affliction",
+    },
+    {
+      type: "EnemyRes",
+      value: -8,
+      resType: "lightning",
+      cond: "enemy_at_max_affliction",
+    },
+    {
+      type: "EnemyRes",
+      value: -8,
+      resType: "erosion",
+      cond: "enemy_at_max_affliction",
+    },
+  ]);
+});

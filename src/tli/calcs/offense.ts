@@ -1023,6 +1023,7 @@ const filterModsByCond = (
       )
       .with("sages_insight_erosion", () => config.sagesInsightErosionActivated)
       .with("at_max_channeled_stacks", () => true)
+      .with("enemy_at_max_affliction", () => calcAfflictionPts(config) === 100)
       .exhaustive();
   });
 };
