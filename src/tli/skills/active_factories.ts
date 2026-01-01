@@ -139,4 +139,15 @@ export const activeSkillModFactories: Partial<
       },
     ],
   }),
+  "Entangled Pain": (l, vals) => ({
+    buffMods: [
+      {
+        type: "DmgPct",
+        dmgModType: "damage_over_time",
+        addn: true,
+        isEnemyDebuff: true,
+        value: v(vals.dmgPct, l),
+      },
+    ],
+  }),
 };

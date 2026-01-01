@@ -274,3 +274,24 @@ export const mindControlParser: SupportLevelParser = (input) => {
     restoreLifePctInterval: createConstantLevels(1),
   };
 };
+
+export const entangledPainParser: SupportLevelParser = (input) => {
+  const { skillName, progressionTable } = input;
+
+  const descriptCol = findColumn(progressionTable, "descript", skillName);
+  const dmgPct: Record<number, number> = {};
+
+  for (const [levelStr, text] of Object.entries(descriptCol.rows)) {
+    const level = Number(levelStr);
+    // Match "+20% additional Damage Over Time" or "40.5% additional Damage Over Time"
+    const match = template("{value:dec%} additional damage over time").match(
+      text,
+      skillName,
+    );
+    dmgPct[level] = match.value;
+  }
+
+  validateAllLevels(dmgPct, skillName);
+
+  return { dmgPct };
+};

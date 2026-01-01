@@ -1,6 +1,7 @@
 import {
   bullsRageParser,
   chargingWarcryParser,
+  entangledPainParser,
   frostSpikeParser,
   iceBondParser,
   mindControlParser,
@@ -112,6 +113,11 @@ export const SKILL_PARSERS: SkillParserEntry[] = [
     skillName: "Mind Control",
     categories: ["active"],
     parser: mindControlParser,
+  },
+  {
+    skillName: "Entangled Pain",
+    categories: ["active"],
+    parser: entangledPainParser,
   },
   {
     skillName: "Precise: Cruelty",
