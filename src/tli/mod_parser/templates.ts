@@ -351,6 +351,12 @@ export const allParsers = [
     "GeneratesTorment",
     () => ({}),
   ),
+  t("{value:dec%} chance to gain blur when reaping").output("GeneratesBlur", (c) => ({
+    value: c.value,
+  })),
+  t("gains {value:int} stack\\(s\\) of focus blessing when reaping").output("GeneratesFocusBlessing", (c) => ({
+    value: c.value,
+  })),
   t("{value:dec%} [additional] movement speed").output("MovementSpeedPct", (c) => ({
     value: c.value,
     addn: c.additional !== undefined,

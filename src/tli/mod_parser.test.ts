@@ -1791,3 +1791,23 @@ test("parse additional curse skill area", () => {
     },
   ]);
 });
+
+test("parse chance to gain blur when reaping", () => {
+  const result = parseMod("+5% chance to gain Blur when Reaping");
+  expect(result).toEqual([
+    {
+      type: "GeneratesBlur",
+      value: 5,
+    },
+  ]);
+});
+
+test("parse gains focus blessing when reaping", () => {
+  const result = parseMod("Gains 1 stack(s) of Focus Blessing when Reaping");
+  expect(result).toEqual([
+    {
+      type: "GeneratesFocusBlessing",
+      value: 1,
+    },
+  ]);
+});

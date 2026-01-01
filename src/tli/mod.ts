@@ -248,8 +248,12 @@ interface ModDefinitions {
   MaxAgilityBlessing: { value: number };
   MaxTenacityBlessing: { value: number };
   MaxChannel: { value: number };
+  GeneratesFocusBlessing: { value: number };
+  GeneratesAgilityBlessing: object;
+  GeneratesTenacityBlessing: object;
   GeneratesBarrier: object;
   GeneratesTorment: object;
+  GeneratesBlur: { value: number };
   SkillLevel: { value: number; skillLevelType: SkillLevelType };
   HeroTraitLevel: { value: number; heroTraitLevelType?: HeroTraitLevelType };
   CoreTalent: { name: CoreTalentName };
