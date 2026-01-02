@@ -46,10 +46,17 @@ interface TalentGridProps {
   onDeallocateReflected?: (x: number, y: number) => void;
 }
 
+// Grid spacing constants
+const NODE_SIZE = 80;
+const COL_GAP = 80;
+const ROW_GAP = 40;
+const COL_STRIDE = NODE_SIZE + COL_GAP; // 160px
+const ROW_STRIDE = NODE_SIZE + ROW_GAP; // 120px
+
 // Helper to calculate node center positions for SVG lines
 const getNodeCenter = (x: number, y: number) => ({
-  cx: x * (80 + 80) + 40, // 80px node + 80px gap, center at 40px
-  cy: y * (80 + 80) + 40,
+  cx: x * COL_STRIDE + NODE_SIZE / 2,
+  cy: y * ROW_STRIDE + NODE_SIZE / 2,
 });
 
 // Helper to format prism bonus affixes for display
@@ -87,9 +94,9 @@ export const TalentGrid: React.FC<TalentGridProps> = ({
   onAllocateReflected,
   onDeallocateReflected,
 }) => {
-  // Grid dimensions: 7 cols × 5 rows, 80px nodes, 80px gaps
-  const gridWidth = 7 * 80 + 6 * 80; // 1040px
-  const gridHeight = 5 * 80 + 4 * 80; // 720px
+  // Grid dimensions: 7 cols × 5 rows
+  const gridWidth = 7 * NODE_SIZE + 6 * COL_GAP; // 1040px
+  const gridHeight = 5 * NODE_SIZE + 4 * ROW_GAP; // 560px
 
   // Build a map for quick node lookup by position
   const nodeMap = new Map<string, TalentNode>();
@@ -201,12 +208,13 @@ export const TalentGrid: React.FC<TalentGridProps> = ({
               const minY = Math.max(0, prismY - 1);
               const maxY = Math.min(4, prismY + 1);
 
-              // Calculate pixel positions (160px stride = 80px node + 80px gap)
               const padding = 4;
-              const left = minX * 160 - padding;
-              const top = minY * 160 - padding;
-              const width = (maxX - minX) * 160 + 80 + padding * 2;
-              const height = (maxY - minY) * 160 + 80 + padding * 2;
+              const left = minX * COL_STRIDE - padding;
+              const top = minY * ROW_STRIDE - padding;
+              const width =
+                (maxX - minX) * COL_STRIDE + NODE_SIZE + padding * 2;
+              const height =
+                (maxY - minY) * ROW_STRIDE + NODE_SIZE + padding * 2;
 
               return (
                 <rect
@@ -236,10 +244,12 @@ export const TalentGrid: React.FC<TalentGridProps> = ({
               const maxY = Math.max(...sourcePositions.map((p) => p.y));
 
               const padding = 4;
-              const left = minX * 160 - padding;
-              const top = minY * 160 - padding;
-              const width = (maxX - minX) * 160 + 80 + padding * 2;
-              const height = (maxY - minY) * 160 + 80 + padding * 2;
+              const left = minX * COL_STRIDE - padding;
+              const top = minY * ROW_STRIDE - padding;
+              const width =
+                (maxX - minX) * COL_STRIDE + NODE_SIZE + padding * 2;
+              const height =
+                (maxY - minY) * ROW_STRIDE + NODE_SIZE + padding * 2;
 
               return (
                 <rect
@@ -269,10 +279,12 @@ export const TalentGrid: React.FC<TalentGridProps> = ({
               const maxY = Math.max(...targetPositions.map((p) => p.y));
 
               const padding = 4;
-              const left = minX * 160 - padding;
-              const top = minY * 160 - padding;
-              const width = (maxX - minX) * 160 + 80 + padding * 2;
-              const height = (maxY - minY) * 160 + 80 + padding * 2;
+              const left = minX * COL_STRIDE - padding;
+              const top = minY * ROW_STRIDE - padding;
+              const width =
+                (maxX - minX) * COL_STRIDE + NODE_SIZE + padding * 2;
+              const height =
+                (maxY - minY) * ROW_STRIDE + NODE_SIZE + padding * 2;
 
               return (
                 <rect
@@ -296,9 +308,10 @@ export const TalentGrid: React.FC<TalentGridProps> = ({
           className="relative grid"
           style={{
             zIndex: 1,
-            gridTemplateColumns: "repeat(7, 80px)",
-            gridTemplateRows: "repeat(5, 80px)",
-            gap: "80px",
+            gridTemplateColumns: `repeat(7, ${NODE_SIZE}px)`,
+            gridTemplateRows: `repeat(5, ${NODE_SIZE}px)`,
+            columnGap: `${COL_GAP}px`,
+            rowGap: `${ROW_GAP}px`,
           }}
         >
           {[0, 1, 2, 3, 4].map((y) =>
