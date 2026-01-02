@@ -68,7 +68,7 @@ export const collectUnimplementedItems = (
     slot: SkillSlot | undefined,
     expectedType: "Active Skill" | "Passive Skill",
   ): void => {
-    if (slot === undefined) return;
+    if (slot === undefined || slot.skillName === undefined) return;
     const skill = findSkillByName(slot.skillName);
     if (skill !== undefined && !isSkillImplemented(skill)) {
       addIfUnimplemented(slot.skillName, expectedType);

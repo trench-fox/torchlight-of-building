@@ -1008,7 +1008,7 @@ const filterModsByCond = (
         // assume enemy is cursed if we have an enabled curse skill
         return (
           listActiveSkillSlots(loadout)
-            .filter((s) => s.enabled)
+            .filter((s) => s.enabled && s.skillName !== undefined)
             .map((s) => findActiveSkill(s.skillName as ActiveSkillName))
             .find((s) => s.tags.includes("Curse")) !== undefined
         );
@@ -1366,7 +1366,7 @@ const resolveBuffSkillMods = (
   const resolvedMods: Mod[] = [];
 
   for (const skillSlot of allSkillSlots) {
-    if (!skillSlot.enabled) {
+    if (!skillSlot.enabled || skillSlot.skillName === undefined) {
       continue;
     }
 
@@ -1570,6 +1570,9 @@ const resolvePerSkillMods = (
   config: Configuration,
   derivedCtx: DerivedCtx,
 ): PerSkillModContext | undefined => {
+  if (skillSlot.skillName === undefined) {
+    return undefined;
+  }
   const skill = findActiveSkill(skillSlot.skillName as ActiveSkillName);
 
   // Skip non-implemented skills (those without levelValues)
@@ -2410,7 +2413,9 @@ export const calculateOffense = (input: OffenseInput): OffenseResults => {
   );
 
   const skillSlots = listActiveSkillSlots(loadout);
-  const enabledSlots = skillSlots.filter((s) => s.enabled);
+  const enabledSlots = skillSlots.filter(
+    (s) => s.enabled && s.skillName !== undefined,
+  );
 
   //  Calculate for each implemented skill
   const skills: OffenseResults["skills"] = {};

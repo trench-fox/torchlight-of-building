@@ -86,7 +86,7 @@ export type SupportSkills = z.infer<typeof SupportSkillsSchema>;
 
 // Skill slot (base schema without catch)
 const BaseSkillSlotSchema = z.object({
-  skillName: z.string(),
+  skillName: z.string().optional(),
   enabled: z.boolean(),
   level: z.number().optional(),
   supportSkills: SupportSkillsSchema,

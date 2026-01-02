@@ -22,7 +22,7 @@ export const SkillSelector: React.FC<SkillSelectorProps> = ({
     const skillSlots = Object.values(loadout.skillPage.activeSkills);
 
     return skillSlots
-      .filter((slot) => slot?.enabled)
+      .filter((slot) => slot?.enabled && slot.skillName !== undefined)
       .map((slot) => slot.skillName)
       .filter((name): name is ImplementedActiveSkillName => {
         const skill = ActiveSkills.find((s) => s.name === name);

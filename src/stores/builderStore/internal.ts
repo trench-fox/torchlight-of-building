@@ -583,9 +583,17 @@ export const internalStore = create(
         skillName: string | undefined,
       ) => {
         set((state) => {
+          const existing = state.saveData.skillPage.activeSkills[slot];
           if (skillName === undefined) {
-            state.saveData.skillPage.activeSkills[slot] = undefined;
+            // Clear skill name but keep slot structure
+            if (existing !== undefined) {
+              existing.skillName = undefined;
+            }
+          } else if (existing !== undefined) {
+            // Update skill name, preserve supportSkills
+            existing.skillName = skillName;
           } else {
+            // Create new slot
             state.saveData.skillPage.activeSkills[slot] = {
               skillName,
               enabled: true,
@@ -597,9 +605,17 @@ export const internalStore = create(
 
       setPassiveSkill: (slot: 1 | 2 | 3 | 4, skillName: string | undefined) => {
         set((state) => {
+          const existing = state.saveData.skillPage.passiveSkills[slot];
           if (skillName === undefined) {
-            state.saveData.skillPage.passiveSkills[slot] = undefined;
+            // Clear skill name but keep slot structure
+            if (existing !== undefined) {
+              existing.skillName = undefined;
+            }
+          } else if (existing !== undefined) {
+            // Update skill name, preserve supportSkills
+            existing.skillName = skillName;
           } else {
+            // Create new slot
             state.saveData.skillPage.passiveSkills[slot] = {
               skillName,
               enabled: true,

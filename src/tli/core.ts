@@ -360,7 +360,7 @@ export interface SupportSkills {
 }
 
 export interface SkillSlot {
-  skillName: string;
+  skillName?: string;
   enabled: boolean;
   level?: number; // default 20
   supportSkills: SupportSkills;
