@@ -8,6 +8,7 @@ let closeActiveTooltip: (() => void) | undefined;
 
 interface UseTooltipReturn {
   isVisible: boolean;
+  isPinned: boolean;
   triggerRef: <T extends HTMLElement>(node: T | null) => void;
   triggerRect: DOMRect | undefined;
   tooltipHandlers: {
@@ -16,48 +17,27 @@ interface UseTooltipReturn {
   };
 }
 
-const HIDE_DELAY_MS = 120;
-
 export const useTooltip = (): UseTooltipReturn => {
   const tooltipId = useId();
   const [isVisible, setIsVisible] = useState(false);
+  const [isPinned, setIsPinned] = useState(false);
   const [triggerRect, setTriggerRect] = useState<DOMRect | undefined>(
     undefined,
   );
   const triggerElementRef = useRef<HTMLElement | null>(null);
-
-  const hideTimeoutRef = useRef<ReturnType<typeof setTimeout> | undefined>(
-    undefined,
-  );
   const triggerHoveredRef = useRef(false);
-  const tooltipHoveredRef = useRef(false);
-
-  const cancelHideTimeout = useCallback(() => {
-    if (hideTimeoutRef.current !== undefined) {
-      clearTimeout(hideTimeoutRef.current);
-      hideTimeoutRef.current = undefined;
-    }
-  }, []);
+  const isPinnedRef = useRef(false);
 
   const hide = useCallback(() => {
-    cancelHideTimeout();
     triggerHoveredRef.current = false;
-    tooltipHoveredRef.current = false;
+    isPinnedRef.current = false;
+    setIsPinned(false);
     setIsVisible(false);
     if (activeTooltipId === tooltipId) {
       activeTooltipId = undefined;
       closeActiveTooltip = undefined;
     }
-  }, [cancelHideTimeout, tooltipId]);
-
-  const scheduleHide = useCallback(() => {
-    cancelHideTimeout();
-    hideTimeoutRef.current = setTimeout(() => {
-      if (!triggerHoveredRef.current && !tooltipHoveredRef.current) {
-        hide();
-      }
-    }, HIDE_DELAY_MS);
-  }, [cancelHideTimeout, hide]);
+  }, [tooltipId]);
 
   const show = useCallback(() => {
     // Close any other open tooltip instantly
@@ -74,19 +54,32 @@ export const useTooltip = (): UseTooltipReturn => {
       setTriggerRect(triggerElementRef.current.getBoundingClientRect());
     }
 
-    cancelHideTimeout();
     setIsVisible(true);
-  }, [cancelHideTimeout, hide, tooltipId]);
+  }, [hide, tooltipId]);
+
+  const togglePin = useCallback(() => {
+    if (isPinnedRef.current) {
+      // Unpin and hide
+      hide();
+    } else {
+      // Pin (show if not already visible)
+      isPinnedRef.current = true;
+      setIsPinned(true);
+      show();
+    }
+  }, [hide, show]);
 
   // Refs to always have access to latest callbacks without re-attaching listeners
   const showRef = useRef(show);
-  const scheduleHideRef = useRef(scheduleHide);
+  const hideRef = useRef(hide);
+  const togglePinRef = useRef(togglePin);
 
   // Keep refs in sync with latest callbacks
   useEffect(() => {
     showRef.current = show;
-    scheduleHideRef.current = scheduleHide;
-  }, [show, scheduleHide]);
+    hideRef.current = hide;
+    togglePinRef.current = togglePin;
+  }, [show, hide, togglePin]);
 
   // Stable handlers that read from refs - initialized synchronously
   const handlersRef = useRef({
@@ -96,7 +89,18 @@ export const useTooltip = (): UseTooltipReturn => {
     },
     handleMouseLeave: () => {
       triggerHoveredRef.current = false;
-      scheduleHideRef.current();
+      // Only hide if not pinned
+      if (!isPinnedRef.current) {
+        hideRef.current();
+      }
+    },
+    handleClick: (e: MouseEvent) => {
+      // Only toggle pin if clicking on the trigger itself, not child buttons
+      const target = e.target as HTMLElement;
+      if (target.tagName === "BUTTON") {
+        return;
+      }
+      togglePinRef.current();
     },
   });
 
@@ -111,6 +115,10 @@ export const useTooltip = (): UseTooltipReturn => {
         "mouseleave",
         handlersRef.current.handleMouseLeave,
       );
+      triggerElementRef.current.removeEventListener(
+        "click",
+        handlersRef.current.handleClick,
+      );
     }
 
     // Set up new element
@@ -118,32 +126,53 @@ export const useTooltip = (): UseTooltipReturn => {
     if (node && handlersRef.current) {
       node.addEventListener("mouseenter", handlersRef.current.handleMouseEnter);
       node.addEventListener("mouseleave", handlersRef.current.handleMouseLeave);
+      node.addEventListener("click", handlersRef.current.handleClick);
     }
   }, []);
 
+  // Hide pinned tooltip when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (!isPinnedRef.current) return;
+
+      const target = e.target as Node;
+      if (
+        triggerElementRef.current &&
+        !triggerElementRef.current.contains(target)
+      ) {
+        hideRef.current();
+      }
+    };
+
+    document.addEventListener("click", handleClickOutside);
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, []);
+
+  // These handlers are no-ops now since we hide immediately on mouse leave
+  // But we keep them for API compatibility with the Tooltip component
   const onTooltipMouseEnter = useCallback(() => {
-    tooltipHoveredRef.current = true;
-    cancelHideTimeout();
-  }, [cancelHideTimeout]);
+    // No-op: tooltip hover no longer keeps it visible
+  }, []);
 
   const onTooltipMouseLeave = useCallback(() => {
-    tooltipHoveredRef.current = false;
-    scheduleHide();
-  }, [scheduleHide]);
+    // No-op: hiding is handled by trigger mouse leave
+  }, []);
 
   // Cleanup on unmount
   useEffect(() => {
     return () => {
-      cancelHideTimeout();
       if (activeTooltipId === tooltipId) {
         activeTooltipId = undefined;
         closeActiveTooltip = undefined;
       }
     };
-  }, [cancelHideTimeout, tooltipId]);
+  }, [tooltipId]);
 
   return {
     isVisible,
+    isPinned,
     triggerRef,
     triggerRect,
     tooltipHandlers: {
