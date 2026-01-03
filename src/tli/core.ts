@@ -22,31 +22,13 @@ export interface Affix {
   src?: string;
 }
 
-export interface ActivationMediumMod {
+export interface SupportMod {
   mod: Mod;
 }
 
-export interface ActivationMediumAffix {
+export interface SupportAffix {
   text: string;
-  mods?: ActivationMediumMod[];
-}
-
-export interface MagnificentSupportMod {
-  mod: Mod;
-}
-
-export interface MagnificentSupportAffix {
-  text: string;
-  mods?: MagnificentSupportMod[];
-}
-
-export interface NobleSupportMod {
-  mod: Mod;
-}
-
-export interface NobleSupportAffix {
-  text: string;
-  mods?: NobleSupportMod[];
+  mods?: SupportMod[];
 }
 
 export interface BaseStatLine {
@@ -356,7 +338,7 @@ export interface MagnificentSupportSkillSlot {
   name: MagnificentSupportSkillName;
   tier: 0 | 1 | 2; // lower is better (tier 0 is best)
   rank: 1 | 2 | 3 | 4 | 5; // higher is better (rank 5 is max)
-  affixes: MagnificentSupportAffix[];
+  affixes: SupportAffix[];
 }
 
 export interface NobleSupportSkillSlot {
@@ -364,14 +346,14 @@ export interface NobleSupportSkillSlot {
   name: NobleSupportSkillName;
   tier: 0 | 1 | 2; // lower is better (tier 0 is best)
   rank: 1 | 2 | 3 | 4 | 5; // higher is better (rank 5 is max)
-  affixes: NobleSupportAffix[];
+  affixes: SupportAffix[];
 }
 
 export interface ActivationMediumSkillSlot {
   skillType: "activation_medium";
   name: ActivationMediumSkillNmae;
   tier: 0 | 1 | 2 | 3;
-  affixes: ActivationMediumAffix[];
+  affixes: SupportAffix[];
 }
 
 export type BaseSupportSkillSlot =

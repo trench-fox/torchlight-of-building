@@ -1,13 +1,38 @@
-import type { MagnificentSupportMod, NobleSupportMod } from "../core";
+import type { SupportMod } from "../core";
 import { t } from "../mod_parser";
 
 const GLOBAL = "global" as const;
 
 /**
- * Generic template parsers for magnificent/noble support skill affixes.
- * Each template handles a specific affix pattern across all skills.
+ * Generic template parsers for support skill affixes.
+ * Handles activation medium, magnificent, and noble support skills.
  */
-const allMagnificentNobleParsers = [
+const allSupportParsers = [
+  // Activation medium parsers
+  t("auto-used supported skills {value:int%} additional damage").output(
+    "DmgPct",
+    (c) => ({
+      value: c.value,
+      dmgModType: GLOBAL,
+      addn: true,
+    }),
+  ),
+  t("manually used supported skills {value:int%} additional damage").output(
+    "DmgPct",
+    (c) => ({
+      value: c.value,
+      dmgModType: GLOBAL,
+      addn: true,
+    }),
+  ),
+  t(
+    "{value:int%} additional damage for minions summoned by the supported skill",
+  ).output("MinionDmgPct", (c) => ({
+    value: c.value,
+    addn: true,
+  })),
+
+  // Magnificent/noble parsers
   t("{value:int%} additional damage for the supported skill").output(
     "DmgPct",
     (c) => ({
@@ -46,14 +71,12 @@ const allMagnificentNobleParsers = [
 ];
 
 /**
- * Parse a single magnificent support affix text.
+ * Parse a single support affix text.
  * Returns undefined if no parser matches.
  */
-const parseMagnificentSupportAffix = (
-  text: string,
-): MagnificentSupportMod[] | undefined => {
+const parseSupportAffix = (text: string): SupportMod[] | undefined => {
   const normalized = text.trim().toLowerCase();
-  for (const parser of allMagnificentNobleParsers) {
+  for (const parser of allSupportParsers) {
     const mods = parser.parse(normalized);
     if (mods !== undefined) {
       return mods.map((mod) => ({ mod }));
@@ -62,31 +85,6 @@ const parseMagnificentSupportAffix = (
   return undefined;
 };
 
-/**
- * Parse a single noble support affix text.
- * Returns undefined if no parser matches.
- */
-const parseNobleSupportAffix = (
-  text: string,
-): NobleSupportMod[] | undefined => {
-  const normalized = text.trim().toLowerCase();
-  for (const parser of allMagnificentNobleParsers) {
-    const mods = parser.parse(normalized);
-    if (mods !== undefined) {
-      return mods.map((mod) => ({ mod }));
-    }
-  }
-  return undefined;
-};
-
-export const parseMagnificentSupportAffixes = (
-  affixes: string[],
-): MagnificentSupportMod[][] => {
-  return affixes.map((text) => parseMagnificentSupportAffix(text) ?? []);
-};
-
-export const parseNobleSupportAffixes = (
-  affixes: string[],
-): NobleSupportMod[][] => {
-  return affixes.map((text) => parseNobleSupportAffix(text) ?? []);
+export const parseSupportAffixes = (affixes: string[]): SupportMod[][] => {
+  return affixes.map((text) => parseSupportAffix(text) ?? []);
 };

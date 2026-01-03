@@ -73,11 +73,7 @@ import type {
   TalentTrees,
 } from "../core";
 import { parseMod } from "../mod_parser/index";
-import { parseActivationMediumAffixes } from "../skills/activation_medium_parsers";
-import {
-  parseMagnificentSupportAffixes,
-  parseNobleSupportAffixes,
-} from "../skills/magnificent_noble_parsers";
+import { parseSupportAffixes } from "../skills/support_mod_parsers";
 import {
   convertAffixTextToAffix,
   getPrismAffixesForNode,
@@ -828,7 +824,7 @@ const convertSupportSkillSlot = (
         slot.craftedAffix,
         slot.rank,
       );
-      const parsedMods = parseMagnificentSupportAffixes(affixTexts);
+      const parsedMods = parseSupportAffixes(affixTexts);
       return {
         skillType: "magnificent_support",
         name: slot.name as MagnificentSupportSkillName,
@@ -844,7 +840,7 @@ const convertSupportSkillSlot = (
         slot.craftedAffix,
         slot.rank,
       );
-      const parsedMods = parseNobleSupportAffixes(affixTexts);
+      const parsedMods = parseSupportAffixes(affixTexts);
       return {
         skillType: "noble_support",
         name: slot.name as NobleSupportSkillName,
@@ -855,7 +851,7 @@ const convertSupportSkillSlot = (
     }
     case "activation_medium": {
       const affixTexts = slot.affixes ?? [];
-      const parsedMods = parseActivationMediumAffixes(affixTexts);
+      const parsedMods = parseSupportAffixes(affixTexts);
       return {
         skillType: "activation_medium",
         name: slot.name as ActivationMediumSkillNmae,
