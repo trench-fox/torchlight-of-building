@@ -7,7 +7,7 @@ import mcTheaGolden from "./mc-thea-3-golden-1.json";
 import rosaGolden from "./rosa-2-golden.json";
 
 describe("offense golden tests", () => {
-  it("rosa-2-golden: Frost Spike should calculate ~12.40 trillion DPS", () => {
+  it("rosa-2-golden: Frost Spike should calculate ~14.39 trillion DPS", () => {
     const saveData = rosaGolden as unknown as SaveData;
     const loadout = loadSave(saveData);
     const config = saveData.configurationPage as Configuration;
@@ -20,7 +20,8 @@ describe("offense golden tests", () => {
     }
 
     const avgDps = frostSpike.attackHitSummary?.avgDps;
-    const expectedDps = 12.4e12; // ~12.40 trillion
+    // With projectile damage from frostbite: trunc(100/35) = 2 projectiles × 8% = 16% additional damage
+    const expectedDps = 14.39e12; // ~14.39 trillion
     const tolerance = 0.01; // 1% tolerance
 
     expect(avgDps).toBeGreaterThan(expectedDps * (1 - tolerance));

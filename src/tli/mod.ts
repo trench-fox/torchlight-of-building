@@ -247,6 +247,7 @@ interface ModDefinitions {
   ShadowDmgPct: { value: number; addn: boolean };
   LuckyDmg: object;
   Jump: { value: number };
+  BaseProjectileQuant: { value: number };
   Projectile: { value: number };
   MaxProjectile: { value: number; override?: boolean };
   SkillAreaPct: {

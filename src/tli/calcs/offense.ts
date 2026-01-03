@@ -2034,8 +2034,14 @@ const resolveModsForOffenseSkill = (
     ...normalizeStackables(prenormMods, "frostbite_rating", frostbitten.points),
   );
 
-  // todo: calculate projectile count
-  const projectiles = 0;
+  // Note: BaseProjectileQuant is NOT counted toward "projectile" stackable
+  const maxProjectiles = findMod(mods, "MaxProjectile")?.value;
+  const projectiles = Math.trunc(
+    Math.min(
+      sumByValue(filterMod(mods, "Projectile")),
+      maxProjectiles ?? Infinity,
+    ),
+  );
   mods.push(...normalizeStackables(prenormMods, "projectile", projectiles));
 
   if (resourcePool.hasFervor) {

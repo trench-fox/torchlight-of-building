@@ -51,7 +51,7 @@ export const activeSkillModFactories: Partial<
         value: v(vals.projectilePerFrostbiteRating, l),
         per: { stackable: "frostbite_rating", amt: 35 },
       },
-      { type: "Projectile", value: v(vals.baseProjectile, l) },
+      { type: "BaseProjectileQuant", value: v(vals.baseProjectile, l) },
       {
         type: "DmgPct",
         value: v(vals.dmgPctPerProjectile, l),

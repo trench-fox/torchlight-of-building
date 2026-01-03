@@ -2100,12 +2100,11 @@ describe("resolveSelectedSkillMods via calculateOffense", () => {
     // 1. ConvertDmgPct (100% phys → cold)
     // 2. MaxProjectile (5, override: true)
     // 3. Projectile per frostbite_rating (1 per 35 rating) - normalized, per removed
-    // 4. Projectile (base 2)
+    // 4. BaseProjectileQuant (base 2)
     // 5. DmgPct (8% additional per projectile) - normalized, per removed
     //
     // Note: Mods with `per` property have values normalized (multiplied by stack count)
-    // and `per` is removed. Since willpower/frostbite/projectile stacks default to 0,
-    // those mods will have value 0 after normalization.
+    // and `per` is removed. BaseProjectileQuant does NOT count toward projectile stacks.
     const results = calculateOffense({
       loadout: createFrostSpikeLoadout(20),
       configuration: defaultConfiguration,
@@ -2130,18 +2129,17 @@ describe("resolveSelectedSkillMods via calculateOffense", () => {
     expect(maxProjMod?.value).toBe(5);
     expect((maxProjMod as { override?: boolean }).override).toBe(true);
 
-    // Check Projectile mods (2 total: base projectiles and per-frostbite)
-    // After normalization, per-frostbite mod has value 0 (no stacks)
-    const projMods = skillMods.filter((m) => m.type === "Projectile");
-    expect(projMods.length).toBe(2);
-    // One should have value 2 (base projectiles)
-    expect(projMods.some((m) => m.value === 2)).toBe(true);
-    // One should have value 0 (per frostbite_rating with 0 stacks)
-    expect(projMods.some((m) => m.value === 0)).toBe(true);
+    // Check BaseProjectileQuant mod (base 2 projectiles)
+    const baseProjMod = skillMods.find((m) => m.type === "BaseProjectileQuant");
+    expect(baseProjMod?.value).toBe(2);
+
+    // Check Projectile mod (per frostbite, normalized to 0 with no stacks)
+    const projMod = skillMods.find((m) => m.type === "Projectile");
+    expect(projMod?.value).toBe(0); // 1 per 35 frostbite_rating with 0 stacks
 
     // Check DmgPct per projectile mod (normalized to 0 with no projectile stacks)
     const dmgPctMod = skillMods.find((m) => m.type === "DmgPct");
-    expect(dmgPctMod?.value).toBe(0); // 0.08 * 0 stacks = 0
+    expect(dmgPctMod?.value).toBe(0); // 8% * 0 projectile stacks = 0
     expect((dmgPctMod as { addn?: boolean }).addn).toBe(true);
   });
 

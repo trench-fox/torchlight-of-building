@@ -8,6 +8,7 @@ import { Analytics } from "@vercel/analytics/react";
 import "@fontsource-variable/geist";
 import "@fontsource-variable/geist-mono";
 import "../globals.css";
+import { DisclaimerModal } from "@/src/components/modals/DisclaimerModal";
 
 export const Route = createRootRoute({
   component: RootLayout,
@@ -30,6 +31,7 @@ function RootLayout(): React.ReactNode {
       </head>
       <body className="antialiased">
         <Outlet />
+        <DisclaimerModal />
         <Analytics basePath="/monitor" />
         <Scripts />
       </body>
