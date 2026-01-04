@@ -15,20 +15,6 @@ export const GearTooltipContent: React.FC<{ item: Gear }> = ({ item }) => {
       {isLegendary && (
         <div className="text-xs text-zinc-500 mb-2">{item.equipmentType}</div>
       )}
-      {item.baseStats !== undefined && (
-        <div className="text-xs text-amber-300 mb-2">
-          <ul className="space-y-1">
-            {item.baseStats.baseStatLines.map((line, lineIdx) => (
-              <li
-                key={`${lineIdx}`}
-                className="text-xs text-amber-300 mb2 flex items-center"
-              >
-                <span>{line.text}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
       {affixes.length > 0 ? (
         <div>
           {affixes.map((affix, affixIdx) => (
