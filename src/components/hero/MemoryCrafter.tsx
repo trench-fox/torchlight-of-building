@@ -46,10 +46,14 @@ const AffixSlot = ({
       <SearchableSelect
         value={effectIndex}
         onChange={onSelect}
-        options={affixes.map((affix, idx) => ({
-          value: idx,
-          label: `${affix.replace(/\n/g, " ").substring(0, 50)}...`,
-        }))}
+        options={affixes.map((affix, idx) => {
+          const normalized = affix.replace(/\n/g, " ");
+          const truncated = normalized.length > 50;
+          return {
+            value: idx,
+            label: truncated ? `${normalized.substring(0, 50)}...` : normalized,
+          };
+        })}
         placeholder={`Select ${type === "fixed" ? "Fixed" : "Random"} Affix ${slotIndex + 1}`}
         size="sm"
         className="mb-2"

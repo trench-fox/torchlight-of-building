@@ -201,7 +201,7 @@ export const LegendaryGearModule: React.FC<LegendaryGearModuleProps> = ({
                 Base Stat
               </h3>
               <div className="bg-zinc-800 p-3 rounded-lg border border-zinc-700">
-                <span className="text-amber-400">
+                <span className="text-amber-400 whitespace-pre-line">
                   {selectedLegendary.baseStat}
                 </span>
               </div>
