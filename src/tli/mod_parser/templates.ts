@@ -226,6 +226,15 @@ export const allParsers = [
     value: c.value,
     modType: c.modType ?? "global",
   })),
+  t("{value:+dec%} [{modType:CritDmgModType}] critical strike damage per stack of focus blessing owned").output(
+    "CritDmgPct",
+    (c) => ({
+      value: c.value,
+      addn: false,
+      modType: c.modType ?? "global",
+      per: { stackable: "focus_blessing" as const },
+    }),
+  ),
   t("{value:+dec%} [additional] [{modType:CritDmgModType}] critical strike damage").output("CritDmgPct", (c) => ({
     value: c.value,
     addn: c.additional !== undefined,
@@ -265,6 +274,11 @@ export const allParsers = [
     addn: true,
     cond: HAS_CRIT_RECENTLY,
   })),
+  t("{value:+dec%} additional cast speed if you have dealt a critical strike recently").output("CspdPct", (c) => ({
+    value: c.value,
+    addn: true,
+    cond: HAS_CRIT_RECENTLY,
+  })),
   t("{value:+dec%} [additional] attack speed").output("AspdPct", (c) => ({
     value: c.value,
     addn: c.additional !== undefined,
@@ -298,6 +312,10 @@ export const allParsers = [
       t("{value:+dec%} {penType:ResPenType} penetration"),
     ])
     .output("ResPenPct", (c) => ({ value: c.value, penType: c.penType })),
+  t("damage penetrates {value:dec%} {penType:ResPenType} resistance").output("ResPenPct", (c) => ({
+    value: c.value,
+    penType: c.penType,
+  })),
   t("{value:+dec%} armor dmg mitigation penetration").output("ArmorPenPct", (c) => ({ value: c.value })),
   t("{value:+dec%} chance to deal double damage").output("DoubleDmgChancePct", (c) => ({ value: c.value })),
   t("adds {min:int} - {max:int} {dmgType:DmgChunkType} damage to attacks").output("FlatDmgToAtks", (c) => ({

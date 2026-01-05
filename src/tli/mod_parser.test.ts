@@ -539,6 +539,21 @@ test("parse crit damage with decimal percentage", () => {
   ]);
 });
 
+test("parse spell critical strike damage per stack of focus blessing owned", () => {
+  const result = parseMod(
+    "+5% Spell Critical Strike Damage per stack of Focus Blessing owned",
+  );
+  expect(result).toEqual([
+    {
+      type: "CritDmgPct",
+      value: 5,
+      modType: "spell",
+      addn: false,
+      per: { stackable: "focus_blessing" },
+    },
+  ]);
+});
+
 test("return undefined for invalid crit damage mod type", () => {
   const result = parseMod("+10% Fire Critical Strike Damage");
   expect(result).toBeUndefined();
@@ -650,6 +665,20 @@ test("parse attack and cast speed when at full mana", () => {
       value: 20,
       addn: false,
       cond: "has_full_mana",
+    },
+  ]);
+});
+
+test("parse additional cast speed if you have dealt a critical strike recently", () => {
+  const result = parseMod(
+    "+6% additional Cast Speed if you have dealt a Critical Strike recently",
+  );
+  expect(result).toEqual([
+    {
+      type: "CspdPct",
+      value: 6,
+      addn: true,
+      cond: "has_crit_recently",
     },
   ]);
 });
@@ -1024,6 +1053,17 @@ test("parse elemental and erosion resistance penetration", () => {
       type: "ResPenPct",
       value: 23,
       penType: "all",
+    },
+  ]);
+});
+
+test("parse damage penetrates elemental resistance", () => {
+  const result = parseMod("Damage Penetrates 2% Elemental Resistance");
+  expect(result).toEqual([
+    {
+      type: "ResPenPct",
+      value: 2,
+      penType: "elemental",
     },
   ]);
 });
