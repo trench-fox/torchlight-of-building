@@ -1053,6 +1053,18 @@ const filterModsByCond = (
         "enemy_has_desecration_and_cc",
         () => config.enemyHasDesecration && enemyCcd(config),
       )
+      .with(
+        "enemy_has_cold_infiltration",
+        () => config.targetEnemyHasColdInfiltration,
+      )
+      .with(
+        "enemy_has_lightning_infiltration",
+        () => config.targetEnemyHasLightningInfiltration,
+      )
+      .with(
+        "enemy_has_fire_infiltration",
+        () => config.targetEnemyHasFireInfiltration,
+      )
       .exhaustive();
   });
 };
@@ -1279,6 +1291,34 @@ const calculateImplicitMods = (): Mod[] => {
       addn: true,
       cond: "has_hasten",
       src: "Hasten",
+    },
+    // Infiltrations
+    {
+      type: "DmgPct",
+      value: 13,
+      addn: true,
+      dmgModType: "cold",
+      cond: "enemy_has_cold_infiltration",
+      isEnemyDebuff: true,
+      src: "Cold Infiltration",
+    },
+    {
+      type: "DmgPct",
+      value: 13,
+      addn: true,
+      dmgModType: "lightning",
+      cond: "enemy_has_lightning_infiltration",
+      isEnemyDebuff: true,
+      src: "Lightning Infiltration",
+    },
+    {
+      type: "DmgPct",
+      value: 13,
+      addn: true,
+      dmgModType: "fire",
+      cond: "enemy_has_fire_infiltration",
+      isEnemyDebuff: true,
+      src: "Fire Infiltration",
     },
     // Pactspirit: Portrait of a Fallen Saintess
     {

@@ -136,6 +136,10 @@ export interface Configuration {
   targetEnemyFrozenRecently: boolean;
   // default to false
   targetEnemyHasColdInfiltration: boolean;
+  // default to false
+  targetEnemyHasLightningInfiltration: boolean;
+  // default to false
+  targetEnemyHasFireInfiltration: boolean;
 
   // --------------------
   // hero-specific config
@@ -205,6 +209,8 @@ export const DEFAULT_CONFIGURATION: Configuration = {
   hasSquidnova: false,
   targetEnemyFrozenRecently: false,
   targetEnemyHasColdInfiltration: false,
+  targetEnemyHasLightningInfiltration: false,
+  targetEnemyHasFireInfiltration: false,
   realmOfMercuryEnabled: false,
   baptismOfPurityEnabled: false,
   enemyColdRes: undefined,

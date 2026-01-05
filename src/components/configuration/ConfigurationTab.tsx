@@ -688,6 +688,32 @@ export const ConfigurationTab: React.FC<ConfigurationTabProps> = ({
             }
             className="h-4 w-4 rounded border-zinc-600 bg-zinc-800 accent-amber-500"
           />
+
+          <label className="text-right text-zinc-50">
+            Target Enemy Has Lightning Infiltration
+          </label>
+          <input
+            type="checkbox"
+            checked={config.targetEnemyHasLightningInfiltration}
+            onChange={(e) =>
+              onUpdate({
+                targetEnemyHasLightningInfiltration: e.target.checked,
+              })
+            }
+            className="h-4 w-4 rounded border-zinc-600 bg-zinc-800 accent-amber-500"
+          />
+
+          <label className="text-right text-zinc-50">
+            Target Enemy Has Fire Infiltration
+          </label>
+          <input
+            type="checkbox"
+            checked={config.targetEnemyHasFireInfiltration}
+            onChange={(e) =>
+              onUpdate({ targetEnemyHasFireInfiltration: e.target.checked })
+            }
+            className="h-4 w-4 rounded border-zinc-600 bg-zinc-800 accent-amber-500"
+          />
         </div>
       </div>
 

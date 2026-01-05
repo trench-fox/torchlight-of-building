@@ -148,6 +148,9 @@ export type Condition =
   | "equipped_in_left_ring_slot"
   | "equipped_in_right_ring_slot"
   | "enemy_has_desecration_and_cc"
+  | "enemy_has_cold_infiltration"
+  | "enemy_has_lightning_infiltration"
+  | "enemy_has_fire_infiltration"
   // pactspirits
   | "has_portrait_of_a_fallen_saintess_pactspirit";
 
