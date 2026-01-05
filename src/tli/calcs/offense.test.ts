@@ -4700,7 +4700,10 @@ describe("spell burst", () => {
   const skillName = "[Test] Simple Spell" as const;
   const baseCritMult = 1.025;
 
-  const createSpellBurstInput = (mods: AffixLine[], config?: Configuration) => ({
+  const createSpellBurstInput = (
+    mods: AffixLine[],
+    config?: Configuration,
+  ) => ({
     loadout: initLoadout({
       gearPage: { equippedGear: {}, inventory: [] },
       customAffixLines: mods,

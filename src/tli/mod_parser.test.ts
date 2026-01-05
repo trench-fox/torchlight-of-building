@@ -1385,6 +1385,28 @@ test("parse max spell burst", () => {
   ]);
 });
 
+test("parse spell burst charge speed with additional", () => {
+  const result = parseMod("-20% additional Spell Burst Charge Speed");
+  expect(result).toEqual([
+    {
+      type: "SpellBurstChargeSpeedPct",
+      value: -20,
+      addn: true,
+    },
+  ]);
+});
+
+test("parse spell burst charge speed without additional", () => {
+  const result = parseMod("-20% Spell Burst Charge Speed");
+  expect(result).toEqual([
+    {
+      type: "SpellBurstChargeSpeedPct",
+      value: -20,
+      addn: false,
+    },
+  ]);
+});
+
 test("parse max channeled stacks", () => {
   const result = parseMod("Max Channeled Stacks +1");
   expect(result).toEqual([
