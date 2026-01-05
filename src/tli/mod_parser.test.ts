@@ -725,6 +725,16 @@ test("parse max life", () => {
   ]);
 });
 
+test("parse flat max life", () => {
+  const result = parseMod("+151 Max Life");
+  expect(result).toEqual([
+    {
+      type: "MaxLife",
+      value: 151,
+    },
+  ]);
+});
+
 test("parse max energy shield", () => {
   const result = parseMod("+3% Max Energy Shield");
   expect(result).toEqual([
@@ -732,6 +742,16 @@ test("parse max energy shield", () => {
       type: "MaxEnergyShieldPct",
       value: 3,
       addn: false,
+    },
+  ]);
+});
+
+test("parse flat signed max energy shield", () => {
+  const result = parseMod("+1 Max Energy Shield");
+  expect(result).toEqual([
+    {
+      type: "MaxEnergyShield",
+      value: 1,
     },
   ]);
 });
@@ -997,6 +1017,17 @@ test("parse cold penetration", () => {
     {
       type: "ResPenPct",
       value: 8,
+      penType: "cold",
+    },
+  ]);
+});
+
+test("parse unsigned cold penetration", () => {
+  const result = parseMod("4.5% Cold Penetration");
+  expect(result).toEqual([
+    {
+      type: "ResPenPct",
+      value: 4.5,
       penType: "cold",
     },
   ]);
@@ -1573,6 +1604,20 @@ test("parse additional movement speed", () => {
   ]);
 });
 
+test("parse movement speed per max spell burst stack", () => {
+  const result = parseMod(
+    "+5% Movement Speed per stack of Max Spell Burst, up to +28%",
+  );
+  expect(result).toEqual([
+    {
+      type: "MovementSpeedPct",
+      value: 5,
+      addn: false,
+      per: { stackable: "max_spell_burst", valueLimit: 28 },
+    },
+  ]);
+});
+
 test("parse support skill level", () => {
   const result = parseMod("+7 Support Skill Level");
   expect(result).toEqual([
@@ -2041,6 +2086,28 @@ test("parse skill effect duration", () => {
     {
       type: "SkillEffDurationPct",
       value: 2,
+    },
+  ]);
+});
+
+test("parse unsigned sealed mana compensation", () => {
+  const result = parseMod("4.5% Sealed Mana Compensation");
+  expect(result).toEqual([
+    {
+      type: "SealedManaCompPct",
+      value: 4.5,
+      addn: false,
+    },
+  ]);
+});
+
+test("parse signed sealed mana compensation", () => {
+  const result = parseMod("+9% Sealed Mana Compensation");
+  expect(result).toEqual([
+    {
+      type: "SealedManaCompPct",
+      value: 9,
+      addn: false,
     },
   ]);
 });

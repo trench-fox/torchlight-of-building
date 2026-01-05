@@ -94,6 +94,14 @@ export const allParsers = [
     addn: true,
     per: { stackable: "max_spell_burst" as const, valueLimit: c.limit },
   })),
+  t("{value:+dec%} movement speed per stack of max spell burst, up to {limit:+dec%}").output(
+    "MovementSpeedPct",
+    (c) => ({
+      value: c.value,
+      addn: false,
+      per: { stackable: "max_spell_burst" as const, valueLimit: c.limit },
+    }),
+  ),
   t("{value:+dec%} additional damage for the next skill when mana reaches the max").output("DmgPct", (c) => ({
     value: c.value,
     dmgModType: GLOBAL,
@@ -320,6 +328,10 @@ export const allParsers = [
       t("{value:+dec%} {penType:ResPenType} penetration"),
     ])
     .output("ResPenPct", (c) => ({ value: c.value, penType: c.penType })),
+  t("{value:dec%} {penType:ResPenType} penetration").output("ResPenPct", (c) => ({
+    value: c.value,
+    penType: c.penType,
+  })),
   t("damage penetrates {value:dec%} {penType:ResPenType} resistance").output("ResPenPct", (c) => ({
     value: c.value,
     penType: c.penType,
@@ -345,10 +357,12 @@ export const allParsers = [
   })),
   t("{value:+dec%} attack block chance").output("AttackBlockChancePct", (c) => ({ value: c.value })),
   t("{value:+dec%} spell block chance").output("SpellBlockChancePct", (c) => ({ value: c.value })),
+  t("{value:+dec} max life").output("MaxLife", (c) => ({ value: c.value })),
   t("{value:+dec%} [additional] max life").output("MaxLifePct", (c) => ({
     value: c.value,
     addn: c.additional !== undefined,
   })),
+  t("{value:+dec} max energy shield").output("MaxEnergyShield", (c) => ({ value: c.value })),
   t("{value:+dec%} [additional] max energy shield").output("MaxEnergyShieldPct", (c) => ({
     value: c.value,
     addn: c.additional !== undefined,
@@ -500,6 +514,14 @@ export const allParsers = [
     addn: c.additional !== undefined,
   })),
   t("{value:+dec%} skill effect duration").output("SkillEffDurationPct", (c) => ({ value: c.value })),
+  t("{value:+dec%} [additional] sealed mana compensation").output("SealedManaCompPct", (c) => ({
+    value: c.value,
+    addn: c.additional !== undefined,
+  })),
+  t("{value:dec%} sealed mana compensation").output("SealedManaCompPct", (c) => ({
+    value: c.value,
+    addn: false,
+  })),
   t(
     "additionally settles {value:dec%} of the remaining total damage when reaping, then removes all damage over time acting on the target",
   ).output("ReapPurificationPct", (c) => ({ value: c.value })),
