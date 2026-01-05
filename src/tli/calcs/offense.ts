@@ -2063,6 +2063,21 @@ const resolveModsForOffenseSkill = (
     ),
   );
 
+  // squidnova
+  if (config.hasSquidnova) {
+    const squidNovaEffMult = calculateEffMultiplier(
+      filterMod(mods, "SquidnovaEffPct"),
+    );
+    const squidNovaDmgPctValue = 16 * squidNovaEffMult;
+    mods.push({
+      type: "DmgPct",
+      value: squidNovaDmgPctValue,
+      dmgModType: "hit",
+      addn: true,
+      src: "Squid Nova",
+    });
+  }
+
   // must happen after movement_speed_bonus_pct normalization
   const maxSpellBurst = sumByValue(filterMod(mods, "MaxSpellBurst"));
   mods.push(

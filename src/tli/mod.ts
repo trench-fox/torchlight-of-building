@@ -323,6 +323,8 @@ interface ModDefinitions {
   ReapPurificationPct: { value: number };
   // hero-specific mods
   Blasphemer: object;
+  // pactspirit stuff
+  SquidnovaEffPct: { value: number };
 }
 
 // Generate the Mod union type from ModDefinitions
