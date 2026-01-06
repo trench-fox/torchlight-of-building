@@ -142,6 +142,8 @@ export interface Configuration {
   targetEnemyHasFireInfiltration: boolean;
   // default to 0
   hasHitEnemyWithElementalDmgRecently: number;
+  // default to 0
+  numSpellSkillsUsedRecently: number;
 
   // --------------------
   // hero-specific config
@@ -214,6 +216,7 @@ export const DEFAULT_CONFIGURATION: Configuration = {
   targetEnemyHasLightningInfiltration: false,
   targetEnemyHasFireInfiltration: false,
   hasHitEnemyWithElementalDmgRecently: 0,
+  numSpellSkillsUsedRecently: 0,
   realmOfMercuryEnabled: false,
   baptismOfPurityEnabled: false,
   enemyColdRes: undefined,

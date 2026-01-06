@@ -2155,6 +2155,14 @@ const resolveModsForOffenseSkill = (
     ),
   );
 
+  mods.push(
+    ...normalizeStackables(
+      prenormMods,
+      "num_spell_skills_used_recently",
+      config.numSpellSkillsUsedRecently,
+    ),
+  );
+
   const willpowerStacks = calculateWillpower(prenormMods);
   mods.push(...normalizeStackables(prenormMods, "willpower", willpowerStacks));
 

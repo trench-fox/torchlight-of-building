@@ -726,6 +726,16 @@ export const ConfigurationTab: React.FC<ConfigurationTabProps> = ({
             }
             min={0}
           />
+
+          <label className="text-right text-zinc-50">
+            Spell Skills Used Recently
+            <InfoTooltip text="Number of spell skills used recently. Defaults to 0." />
+          </label>
+          <NumberInput
+            value={config.numSpellSkillsUsedRecently}
+            onChange={(v) => onUpdate({ numSpellSkillsUsedRecently: v ?? 0 })}
+            min={0}
+          />
         </div>
       </div>
 

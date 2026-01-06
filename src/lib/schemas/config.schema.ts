@@ -71,6 +71,7 @@ export const ConfigurationPageSchema = z
     hasHitEnemyWithElementalDmgRecently: z
       .number()
       .catch(d.hasHitEnemyWithElementalDmgRecently),
+    numSpellSkillsUsedRecently: z.number().catch(d.numSpellSkillsUsedRecently),
     realmOfMercuryEnabled: z.boolean().catch(d.realmOfMercuryEnabled),
     baptismOfPurityEnabled: z.boolean().catch(d.baptismOfPurityEnabled),
     enemyColdRes: z.number().optional().catch(d.enemyColdRes),

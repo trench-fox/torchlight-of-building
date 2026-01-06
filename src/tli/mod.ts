@@ -87,6 +87,7 @@ export type Stackable =
   | "level"
   | "max_spell_burst"
   | "has_hit_enemy_with_elemental_dmg_recently"
+  | "num_spell_skills_used_recently"
   // max channel stacks beyond initial skill channel stacks
   | "additional_max_channel_stack"
   | "channel_stack"
