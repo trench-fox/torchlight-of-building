@@ -548,6 +548,17 @@ export const allParsers = [
   t("gains {value:int} stack\\(s\\) of focus blessing when reaping").output("GeneratesFocusBlessing", (c) => ({
     value: c.value,
   })),
+  t("{value:+dec%} additional {modType:DmgModType} damage for every stack of focus blessing").output("DmgPct", (c) => ({
+    value: c.value,
+    dmgModType: c.modType,
+    addn: true,
+    per: { stackable: "focus_blessing" as const },
+  })),
+  t("{value:+dec%} blessing duration").outputMany([
+    spec("FocusBlessingDurationPct", (c) => ({ value: c.value })),
+    spec("AgilityBlessingDurationPct", (c) => ({ value: c.value })),
+    spec("TenacityBlessingDurationPct", (c) => ({ value: c.value })),
+  ]),
   t("{value:+dec%} focus blessing duration").output("FocusBlessingDurationPct", (c) => ({ value: c.value })),
   t("gains {value:int} stack of repentance when gaining any blessing").output("GeneratesRepentance", (c) => ({
     value: c.value,

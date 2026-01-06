@@ -2538,3 +2538,36 @@ test("parse lucky damage with spell burst consumption", () => {
     },
   ]);
 });
+
+test("parse additional cold damage per stack of focus blessing", () => {
+  const result = parseMod(
+    "+13% additional Cold Damage for every stack of Focus Blessing",
+  );
+  expect(result).toEqual([
+    {
+      type: "DmgPct",
+      value: 13,
+      dmgModType: "cold",
+      addn: true,
+      per: { stackable: "focus_blessing" },
+    },
+  ]);
+});
+
+test("parse blessing duration (all types)", () => {
+  const result = parseMod("+30% Blessing Duration");
+  expect(result).toEqual([
+    {
+      type: "FocusBlessingDurationPct",
+      value: 30,
+    },
+    {
+      type: "AgilityBlessingDurationPct",
+      value: 30,
+    },
+    {
+      type: "TenacityBlessingDurationPct",
+      value: 30,
+    },
+  ]);
+});
