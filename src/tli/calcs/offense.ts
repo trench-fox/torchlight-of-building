@@ -742,7 +742,7 @@ function applyDmgBonusesAndPen(
   return calculatePenetration({ dmg: beforePen, mods, config, ignoreArmor });
 }
 
-interface SkillHitOverview {
+interface BaseHitOverview {
   // Damage ranges of a single skill hit, not including crit
   base: {
     physical: DmgRange;
@@ -755,6 +755,23 @@ interface SkillHitOverview {
   // Average damage of a single skill hit, not including crit
   avg: number;
 }
+
+const calcBaseHitOverview = (
+  dmgRanges: DmgRanges,
+  derivedCtx: DerivedCtx,
+): BaseHitOverview => {
+  const { physical, cold, lightning, fire, erosion } = dmgRanges;
+  const min = physical.min + cold.min + lightning.min + fire.min + erosion.min;
+  const max = physical.max + cold.max + lightning.max + fire.max + erosion.max;
+  const total = { min, max };
+  let avg: number;
+  if (derivedCtx.luckyDmg) {
+    avg = (min + 2 * max) / 3;
+  } else {
+    avg = (min + max) / 2;
+  }
+  return { base: { physical, cold, lightning, fire, erosion, total }, avg };
+};
 
 const getLevelOffense = <T extends SkillOffenseType>(
   skill: BaseActiveSkill,
@@ -891,12 +908,15 @@ function calculatePenetration(
     | NumDmgValues;
 }
 
+interface SkillHitOverview extends BaseHitOverview {}
+
 const calculateAtkHit = (
   gearDmg: GearDmg,
   flatDmg: DmgRanges,
   mods: Mod[],
   skill: BaseActiveSkill,
   level: number,
+  derivedCtx: DerivedCtx,
   config: Configuration,
 ): SkillHitOverview | undefined => {
   const skillWeaponDR = match(skill.name as ActiveSkillName)
@@ -931,31 +951,14 @@ const calculateAtkHit = (
 
   // Damage conversion happens after flat damage, before % bonuses
   const dmgPools = convertDmg(skillBaseDmg, mods);
-  const { physical, cold, lightning, fire, erosion } = applyDmgBonusesAndPen({
+  const finalDmgRanges = applyDmgBonusesAndPen({
     dmgPools,
     mods,
     baseDmgModTypes,
     config,
     ignoreArmor: false,
   });
-
-  const total = {
-    min: physical.min + cold.min + lightning.min + fire.min + erosion.min,
-    max: physical.max + cold.max + lightning.max + fire.max + erosion.max,
-  };
-  const totalAvg = (total.min + total.max) / 2;
-
-  return {
-    base: {
-      physical: physical,
-      cold: cold,
-      lightning: lightning,
-      fire: fire,
-      erosion: erosion,
-      total: total,
-    },
-    avg: totalAvg,
-  };
+  return calcBaseHitOverview(finalDmgRanges, derivedCtx);
 };
 
 export interface OffenseInput {
@@ -972,12 +975,14 @@ export interface OffenseResults {
 interface DerivedCtx {
   hasHasten: boolean;
   hasBlasphemer: boolean;
+  luckyDmg: boolean;
 }
 
 const resolveDerivedCtx = (mods: Mod[]): DerivedCtx => {
   const hasHasten = findMod(mods, "HasHasten") !== undefined;
   const hasBlasphemer = findMod(mods, "Blasphemer") !== undefined;
-  return { hasHasten, hasBlasphemer };
+  const luckyDmg = findMod(mods, "LuckyDmg") !== undefined;
+  return { hasHasten, hasBlasphemer, luckyDmg };
 };
 
 const hasPactspirit = (name: PactspiritName, loadout: Loadout): boolean => {
@@ -2536,6 +2541,7 @@ const calcAvgAttackDps = (
   loadout: Loadout,
   perSkillContext: PerSkillModContext,
   skillLevel: number,
+  derivedCtx: DerivedCtx,
   config: Configuration,
 ): OffenseAttackDpsSummary | undefined => {
   const skill = perSkillContext.skill;
@@ -2547,6 +2553,7 @@ const calcAvgAttackDps = (
     mods,
     skill,
     skillLevel,
+    derivedCtx,
     config,
   );
   if (skillHit === undefined) return;
@@ -2588,6 +2595,7 @@ const calcSpellHit = (
   mods: Mod[],
   skill: BaseActiveSkill,
   level: number,
+  derivedCtx: DerivedCtx,
   config: Configuration,
 ): CalcSpellHitOutput | undefined => {
   const implementedSpells: ActiveSkillName[] = [
@@ -2613,32 +2621,15 @@ const calcSpellHit = (
   const baseDmgModTypes = dmgModTypesForSkill(skill);
 
   const dmgPools = convertDmg(skillBaseDR, mods);
-  const { physical, cold, lightning, fire, erosion } = applyDmgBonusesAndPen({
+  const finalDmgRanges = applyDmgBonusesAndPen({
     dmgPools,
     mods,
     baseDmgModTypes,
     config,
     ignoreArmor: false,
   });
-
-  const total = {
-    min: physical.min + cold.min + lightning.min + fire.min + erosion.min,
-    max: physical.max + cold.max + lightning.max + fire.max + erosion.max,
-  };
-  const totalAvg = (total.min + total.max) / 2;
-
-  return {
-    base: {
-      physical: physical,
-      cold: cold,
-      lightning: lightning,
-      fire: fire,
-      erosion: erosion,
-      total: total,
-    },
-    avg: totalAvg,
-    castTime,
-  };
+  const baseHitOverview = calcBaseHitOverview(finalDmgRanges, derivedCtx);
+  return { ...baseHitOverview, castTime };
 };
 
 export interface OffenseSpellDpsSummary {
@@ -2654,11 +2645,19 @@ const calcAvgSpellDps = (
   _loadout: Loadout,
   perSkillContext: PerSkillModContext,
   skillLevel: number,
+  derivedCtx: DerivedCtx,
   config: Configuration,
 ): OffenseSpellDpsSummary | undefined => {
   const skill = perSkillContext.skill;
   const flatDmg = calculateFlatDmg(mods, "spell");
-  const spellHit = calcSpellHit(flatDmg, mods, skill, skillLevel, config);
+  const spellHit = calcSpellHit(
+    flatDmg,
+    mods,
+    skill,
+    skillLevel,
+    derivedCtx,
+    config,
+  );
   if (spellHit === undefined) {
     return undefined;
   }
@@ -2788,6 +2787,7 @@ export const calculateOffense = (input: OffenseInput): OffenseResults => {
       loadout,
       perSkillContext,
       skillLevel,
+      derivedCtx,
       config,
     );
 
@@ -2796,6 +2796,7 @@ export const calculateOffense = (input: OffenseInput): OffenseResults => {
       loadout,
       perSkillContext,
       skillLevel,
+      derivedCtx,
       config,
     );
 

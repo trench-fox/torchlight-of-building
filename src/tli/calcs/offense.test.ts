@@ -5122,3 +5122,50 @@ describe("desecration mechanics", () => {
     expect(resultsWithoutBlasphemer.resourcePool.desecration).toBeUndefined();
   });
 });
+
+describe("lucky damage", () => {
+  const skillName = "[Test] Simple Attack" as const;
+
+  const createLuckyDmgInput = (
+    dmgRange: { min: number; max: number },
+    luckyDmg: boolean,
+  ) => ({
+    loadout: initLoadout({
+      gearPage: { equippedGear: {}, inventory: [] },
+      customAffixLines: affixLines([
+        { type: "FlatDmgToAtks", value: dmgRange, dmgType: "physical" },
+        ...(luckyDmg ? [{ type: "LuckyDmg" as const }] : []),
+      ]),
+      skillPage: simpleAttackSkillPage(),
+    }),
+    configuration: defaultConfiguration,
+  });
+
+  test("lucky damage calculates average as (min + 2*max) / 3", () => {
+    // Lucky damage: best of two rolls
+    // min: 1095, max: 1643
+    // Expected: (1095 + 2*1643) / 3 = 4381 / 3 ≈ 1460.3
+    const input = createLuckyDmgInput({ min: 1095, max: 1643 }, true);
+    const results = calculateOffense(input);
+    const actual = results.skills[skillName];
+    expect(actual?.attackDpsSummary?.avgHit).toBeCloseTo(1460.3, 1);
+  });
+
+  test("lucky damage with wide range", () => {
+    // min: 63, max: 1198
+    // Expected: (63 + 2*1198) / 3 = 2459 / 3 ≈ 819.7
+    const input = createLuckyDmgInput({ min: 63, max: 1198 }, true);
+    const results = calculateOffense(input);
+    const actual = results.skills[skillName];
+    expect(actual?.attackDpsSummary?.avgHit).toBeCloseTo(819.7, 1);
+  });
+
+  test("without lucky damage, average is (min + max) / 2", () => {
+    // Same range as first test, but without lucky damage
+    // Expected: (1095 + 1643) / 2 = 1369
+    const input = createLuckyDmgInput({ min: 1095, max: 1643 }, false);
+    const results = calculateOffense(input);
+    const actual = results.skills[skillName];
+    expect(actual?.attackDpsSummary?.avgHit).toBeCloseTo(1369, 1);
+  });
+});
