@@ -379,7 +379,4 @@ export type Mod = {
   [K in keyof ModDefinitions]: { type: K } & ModDefinitions[K] & ModBase;
 }[keyof ModDefinitions];
 
-export type ModOfType<T extends keyof ModDefinitions> = Extract<
-  Mod,
-  { type: T }
->;
+export type ModT<T extends keyof ModDefinitions> = Extract<Mod, { type: T }>;

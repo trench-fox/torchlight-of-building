@@ -37,7 +37,7 @@ import type {
   ConditionThreshold,
   DmgChunkType,
   Mod,
-  ModOfType,
+  ModT,
   ResType,
   Stackable,
   StatType,
@@ -196,17 +196,17 @@ const emptyDmgRanges = (): DmgRanges => {
 const findMod = <T extends Mod["type"]>(
   mods: Mod[],
   type: T,
-): Extract<Mod, { type: T }> | undefined => {
-  return mods.find((a) => a.type === type) as
-    | Extract<Mod, { type: T }>
-    | undefined;
+): ModT<T> | undefined => {
+  return mods.find((a) => a.type === type) as ModT<T> | undefined;
 };
 
 const filterMods = <T extends Mod["type"]>(
   mods: Mod[],
   type: T,
-): Extract<Mod, { type: T }>[] => {
-  return mods.filter((a) => a.type === type) as Extract<Mod, { type: T }>[];
+  predicate?: (mod: ModT<T>) => boolean,
+): ModT<T>[] => {
+  const filtered = mods.filter((a) => a.type === type) as ModT<T>[];
+  return predicate !== undefined ? filtered.filter(predicate) : filtered;
 };
 
 // A chunk of damage that tracks its conversion history
@@ -572,17 +572,17 @@ const dmgModTypesForSkill = (skill: BaseActiveSkill): DmgModType[] => {
 };
 
 const filterDmgPctMods = (
-  dmgPctMods: Extract<Mod, { type: "DmgPct" }>[],
+  dmgPctMods: ModT<"DmgPct">[],
   dmgModTypes: DmgModType[],
 ) => {
   return dmgPctMods.filter((p) => dmgModTypes.includes(p.dmgModType));
 };
 
-const calculateDmgInc = (mods: Extract<Mod, { type: "DmgPct" }>[]) => {
+const calculateDmgInc = (mods: ModT<"DmgPct">[]) => {
   return calculateInc(mods.filter((m) => !m.addn).map((m) => m.value));
 };
 
-const calculateDmgAddn = (mods: Extract<Mod, { type: "DmgPct" }>[]) => {
+const calculateDmgAddn = (mods: ModT<"DmgPct">[]) => {
   return calculateAddn(mods.filter((m) => m.addn).map((m) => m.value));
 };
 
@@ -590,7 +590,7 @@ const calculateDmgAddn = (mods: Extract<Mod, { type: "DmgPct" }>[]) => {
 const calculateChunkDmg = <T extends DmgRange | number>(
   chunk: DmgChunk<T>,
   currentType: DmgChunkType,
-  allDmgPctMods: Extract<Mod, { type: "DmgPct" }>[],
+  allDmgPctMods: ModT<"DmgPct">[],
   baseDmgModTypes: DmgModType[],
 ): T => {
   // Chunk benefits from bonuses for current type AND all types in its history
@@ -617,7 +617,7 @@ const calculateChunkDmg = <T extends DmgRange | number>(
 const calculatePoolTotal = <T extends DmgRange | number>(
   pool: DmgChunk<T>[],
   poolType: DmgChunkType,
-  allDmgPctMods: Extract<Mod, { type: "DmgPct" }>[],
+  allDmgPctMods: ModT<"DmgPct">[],
   baseDmgModTypes: DmgModType[],
   zero: T,
 ): T => {
@@ -635,7 +635,7 @@ const calculatePoolTotal = <T extends DmgRange | number>(
 // Calculate totals for all damage pools
 const calculateAllPoolTotals = <T extends DmgRange | number>(
   dmgPools: DmgPools<T>,
-  allDmgPcts: Extract<Mod, { type: "DmgPct" }>[],
+  allDmgPcts: ModT<"DmgPct">[],
   baseDmgModTypes: DmgModType[],
   zero: T,
 ): Record<DmgChunkType, T> => ({
@@ -803,7 +803,7 @@ const getLevelOffenseValue = (
 
 const calculateAddnDmgFromShadows = (
   numShadowHits: number,
-): ModOfType<"DmgPct"> | undefined => {
+): ModT<"DmgPct"> | undefined => {
   if (numShadowHits <= 0) return;
   if (numShadowHits === 1) {
     return {
@@ -832,9 +832,9 @@ const calculateAddnDmgFromShadows = (
 };
 
 const filterPenMods = (
-  mods: ModOfType<"ResPenPct">[],
-  penTypes: ModOfType<"ResPenPct">["penType"][],
-): ModOfType<"ResPenPct">[] => {
+  mods: ModT<"ResPenPct">[],
+  penTypes: ModT<"ResPenPct">["penType"][],
+): ModT<"ResPenPct">[] => {
   return mods.filter((m) => penTypes.includes(m.penType));
 };
 
@@ -2021,9 +2021,7 @@ const calculateAddedSkillLevels = (
  * every level from 21-30 is +10% additional damage, stacking multiplicately
  * every level from 31+ is +8% additional damage, stacking multiplicatively
  */
-const calculateSkillLevelDmgMods = (
-  skillLevel: number,
-): ModOfType<"DmgPct">[] => {
+const calculateSkillLevelDmgMods = (skillLevel: number): ModT<"DmgPct">[] => {
   if (skillLevel <= 20) {
     return [];
   }
@@ -2418,7 +2416,7 @@ export const calculateDefenses = (
   const maxResMods = filterMods(mods, "MaxResistancePct");
   const resMods = filterMods(mods, "ResistancePct");
 
-  type ResMod = ModOfType<"MaxResistancePct"> | ModOfType<"ResistancePct">;
+  type ResMod = ModT<"MaxResistancePct"> | ModT<"ResistancePct">;
   const sumResMods = <T extends ResMod>(
     mods: T[],
     resTypes: ResType[],
