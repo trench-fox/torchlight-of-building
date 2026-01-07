@@ -352,6 +352,7 @@ interface ModDefinitions {
   InflictParalysisPct: { value: number };
   FreezeDurationPct: { value: number };
   InflictFrail: object;
+  NumbedEffPct: { value: number };
   // skill-specific
   MindControlMaxLink: { value: number };
   InitialMaxChannel: { value: number };

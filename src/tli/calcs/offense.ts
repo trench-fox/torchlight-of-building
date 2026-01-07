@@ -1314,6 +1314,7 @@ const resolveModsForOffenseSkill = (
     });
   }
 
+  // must happen before max_spell_burst normalization
   const movementSpeedBonusPct =
     (calcEffMult(mods, "MovementSpeedPct") - 1) * 100;
   mods.push(
@@ -1323,6 +1324,23 @@ const resolveModsForOffenseSkill = (
       movementSpeedBonusPct,
     ),
   );
+
+  if (config.enemyNumbed) {
+    const numbedStacks = R.clamp(config.enemyNumbedStacks ?? 10, {
+      min: 0,
+      max: 10,
+    });
+    const numbedEffMult = calcEffMult(mods, "NumbedEffPct");
+    const baseNumbedValPerStack = 5;
+    const numbedVal = baseNumbedValPerStack * numbedEffMult * numbedStacks;
+    mods.push({
+      type: "DmgPct",
+      value: numbedVal,
+      dmgModType: "global",
+      addn: true,
+      src: "Numbed",
+    });
+  }
 
   // squidnova
   if (config.hasSquidnova) {
