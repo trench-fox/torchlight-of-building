@@ -294,6 +294,7 @@ export interface TalentTree {
   selectedCoreTalents?: Affix[];
   selectedCoreTalentNames?: string[]; // Original names for UI display
   additionalCoreTalentPrismAffix?: Affix;
+  replacementPrismCoreTalent?: string; // Ethereal talent name if prism replaces core talents
 }
 
 export interface CraftedPrism {
