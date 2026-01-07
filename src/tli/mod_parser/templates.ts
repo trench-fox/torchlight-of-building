@@ -637,6 +637,8 @@ export const allParsers = [
     value: c.value,
   })),
   t("{value:dec%} chance to gain spell aggression on defeat").output("GeneratesSpellAggression", () => ({})),
+  t("gains spell aggression when casting a spell skill").output("GeneratesSpellAggression", () => ({})),
+  t("{value:+dec%} spell aggression effect").output("SpellAggressionEffPct", (c) => ({ value: c.value })),
   t("{value:dec%} chance to gain a barrier for every {dist:int} m you move").output("GeneratesBarrier", () => ({})),
   t("{value:+dec%} [additional] movement speed").output("MovementSpeedPct", (c) => ({
     value: c.value,

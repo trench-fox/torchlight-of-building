@@ -2522,6 +2522,25 @@ test("parse generates spell aggression on defeat", () => {
   ]);
 });
 
+test("parse gains spell aggression when casting spell skill", () => {
+  const result = parseMod("Gains Spell Aggression when casting a Spell Skill");
+  expect(result).toEqual([
+    {
+      type: "GeneratesSpellAggression",
+    },
+  ]);
+});
+
+test("parse spell aggression effect", () => {
+  const result = parseMod("+22% Spell Aggression Effect");
+  expect(result).toEqual([
+    {
+      type: "SpellAggressionEffPct",
+      value: 22,
+    },
+  ]);
+});
+
 test("parse skill cost", () => {
   const result = parseMod("-4 Skill Cost");
   expect(result).toEqual([
