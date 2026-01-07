@@ -64,7 +64,6 @@ import {
   findMod,
   modExists,
   normalizeStackables,
-  resolveCoreTalentMods,
   sumByValue,
 } from "./mod-utils";
 import type { OffenseSkillName } from "./skill_confs";
@@ -1969,7 +1968,7 @@ const calcAvgSpellBurstDps = (
 export const calculateOffense = (input: OffenseInput): OffenseResults => {
   const { loadout, configuration: config } = input;
   const loadoutMods = [
-    ...resolveCoreTalentMods(collectMods(loadout)),
+    ...collectMods(loadout),
     ...calculateHeroTraitMods(loadout),
   ];
 

@@ -1,7 +1,5 @@
-import { CoreTalentInfoIcon } from "@/src/components/ui/CoreTalentInfoIcon";
 import { ModNotImplementedIcon } from "@/src/components/ui/ModNotImplementedIcon";
 import { TooltipTitle } from "@/src/components/ui/Tooltip";
-import { getCoreTalentNameFromText } from "@/src/lib/core-talent-utils";
 import { getGearAffixes } from "@/src/tli/calcs/affix-collectors";
 import type { Gear } from "@/src/tli/core";
 
@@ -24,22 +22,20 @@ export const GearTooltipContent: React.FC<{ item: Gear }> = ({ item }) => {
                 affixIdx > 0 ? "mt-1.5 pt-1.5 border-t border-zinc-700" : ""
               }
             >
-              {affix.affixLines.map((line, lineIdx) => {
-                const coreTalentName = getCoreTalentNameFromText(line.text);
-                return (
-                  <div
-                    key={lineIdx}
-                    className="text-xs text-zinc-400 flex items-center"
-                  >
-                    <span>{line.text}</span>
-                    {coreTalentName !== undefined ? (
-                      <CoreTalentInfoIcon talentName={coreTalentName} />
-                    ) : (
-                      line.mods === undefined && <ModNotImplementedIcon />
-                    )}
-                  </div>
-                );
-              })}
+              {affix.specialName !== undefined && (
+                <div className="text-xs font-semibold text-amber-400 mb-0.5">
+                  [{affix.specialName}]
+                </div>
+              )}
+              {affix.affixLines.map((line, lineIdx) => (
+                <div
+                  key={lineIdx}
+                  className="text-xs text-zinc-400 flex items-center"
+                >
+                  <span>{line.text}</span>
+                  {line.mods === undefined && <ModNotImplementedIcon />}
+                </div>
+              ))}
               {affix.maxDivinity !== undefined && (
                 <div className="text-xs text-zinc-500">
                   (Max Divinity Effect: {affix.maxDivinity})

@@ -1,5 +1,4 @@
-import { type CoreTalentName, CoreTalentNames } from "../../data/core_talent";
-import type { Mod, PerStackable } from "../mod";
+import type { PerStackable } from "../mod";
 import { StatWordMapping } from "./enums";
 import { spec, t } from "./template";
 
@@ -32,17 +31,7 @@ const MOVEMENT_SPEED_BONUS_PCT = "movement_speed_bonus_pct" as const;
 const HAS_HIT_ENEMY_WITH_ELEMENTAL_DMG_RECENTLY = "has_hit_enemy_with_elemental_dmg_recently" as const;
 const NUM_SPELL_SKILLS_USED_RECENTLY = "num_spell_skills_used_recently" as const;
 
-const coreTalentNameSet = new Set(CoreTalentNames.map((name) => name.toLowerCase()));
-
 export const allParsers = [
-  // Core talent names - matches exact talent name
-  {
-    parse(input: string): Mod[] | undefined {
-      if (!coreTalentNameSet.has(input)) return undefined;
-      const name = CoreTalentNames.find((n) => n.toLowerCase() === input) as CoreTalentName;
-      return [{ type: "CoreTalent", name }];
-    },
-  },
   t("{aspd:+dec%} gear attack speed. {dmg:+dec%} additional attack damage").outputMany([
     spec("GearAspdPct", (c) => ({ value: c.aspd })),
     spec("DmgPct", (c) => ({ value: c.dmg, addn: true, dmgModType: ATTACK })),
