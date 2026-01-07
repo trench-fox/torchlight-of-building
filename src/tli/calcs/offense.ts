@@ -1267,6 +1267,62 @@ const calcInfiltration = (
   };
 };
 
+const pushAttackAggression = (mods: Mod[], config: Configuration): void => {
+  if (!config.hasAttackAggression) {
+    return;
+  }
+  const aspdBase = 5;
+  const dmgBase = 5;
+  const mspdBase = 10;
+  const mult = calcEffMult(mods, "AttackAggressionEffPct");
+  mods.push({
+    type: "AspdPct",
+    value: aspdBase * mult,
+    addn: true,
+    src: "Attack Aggression",
+  });
+  mods.push({
+    type: "DmgPct",
+    value: dmgBase * mult,
+    dmgModType: "attack",
+    addn: true,
+    src: "Attack Aggression",
+  });
+  mods.push({
+    type: "MovementSpeedPct",
+    value: mspdBase * mult,
+    src: "Attack Aggression",
+  });
+};
+
+const pushSpellAggression = (mods: Mod[], config: Configuration): void => {
+  if (!config.hasSpellAggression) {
+    return;
+  }
+  const cspdBase = 7;
+  const dmgBase = 7;
+  const mobilityCdr = 7;
+  const mult = calcEffMult(mods, "SpellAggressionEffPct");
+  mods.push({
+    type: "CspdPct",
+    value: cspdBase * mult,
+    addn: true,
+    src: "Spell Aggression",
+  });
+  mods.push({
+    type: "DmgPct",
+    value: dmgBase * mult,
+    dmgModType: "spell",
+    addn: true,
+    src: "Spell Aggression",
+  });
+  mods.push({
+    type: "MobilitySkillCdrPct",
+    value: mobilityCdr * mult,
+    src: "Spell Aggression",
+  });
+};
+
 interface DerivedOffenseCtx {
   maxSpellBurst: number;
   movementSpeedBonusPct: number;
@@ -1325,7 +1381,12 @@ const resolveModsForOffenseSkill = (
     });
   }
 
+  // must happen before movement speed
+  pushAttackAggression(mods, config);
+  pushSpellAggression(mods, config);
+
   // must happen before max_spell_burst normalization
+  // must happen after attack aggression
   const movementSpeedBonusPct =
     (calcEffMult(mods, "MovementSpeedPct") - 1) * 100;
   mods.push(

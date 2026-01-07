@@ -85,6 +85,8 @@ export const ConfigurationPageSchema = z
     hasUsedMobilitySkillRecently: z
       .boolean()
       .catch(d.hasUsedMobilitySkillRecently),
+    hasAttackAggression: z.boolean().catch(d.hasAttackAggression),
+    hasSpellAggression: z.boolean().catch(d.hasSpellAggression),
     realmOfMercuryEnabled: z.boolean().catch(d.realmOfMercuryEnabled),
     baptismOfPurityEnabled: z.boolean().catch(d.baptismOfPurityEnabled),
     enemyColdRes: z.number().optional().catch(d.enemyColdRes),

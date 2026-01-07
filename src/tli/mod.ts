@@ -337,7 +337,6 @@ interface ModDefinitions {
   GeneratesBarrier: object;
   GeneratesTorment: object;
   GeneratesBlur: { value: number };
-  GeneratesSpellAggression: object;
   MaxRepentance: { value: number };
   GeneratesRepentance: { value: number };
   SkillLevel: { value: number; skillLevelType: SkillLevelType };
@@ -347,6 +346,10 @@ interface ModDefinitions {
   GearBaseAttackSpeed: { value: number };
   SkillCost: { value: number };
   SkillCostPct: { value: number; addn?: boolean };
+  GeneratesAttackAggression: object;
+  AttackAggressionEffPct: { value: number };
+  GeneratesSpellAggression: object;
+  SpellAggressionEffPct: { value: number };
   // infiltrations
   InflictsInfiltration: { infiltrationType: InfiltrationType };
   InfiltrationEffPct: {

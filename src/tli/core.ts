@@ -161,6 +161,10 @@ export interface Configuration {
   chainLightningInstancesOnTarget?: number;
   // default to false
   hasUsedMobilitySkillRecently: boolean;
+  // default to false
+  hasAttackAggression: boolean;
+  // default to false
+  hasSpellAggression: boolean;
 
   // --------------------
   // hero-specific config
@@ -242,6 +246,8 @@ export const DEFAULT_CONFIGURATION: Configuration = {
   numSpellSkillsUsedRecently: 0,
   chainLightningInstancesOnTarget: undefined,
   hasUsedMobilitySkillRecently: false,
+  hasAttackAggression: false,
+  hasSpellAggression: false,
   realmOfMercuryEnabled: false,
   baptismOfPurityEnabled: false,
   enemyColdRes: undefined,
