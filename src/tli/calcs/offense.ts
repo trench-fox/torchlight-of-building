@@ -58,7 +58,6 @@ import {
   type DmgRanges,
   dmgModTypesForSkill,
   emptyDmgRanges,
-  type GearDmg,
   multDRs,
   type NumDmgValues,
 } from "./damage-calc";
@@ -83,12 +82,17 @@ import { multModValue, multValue } from "./util";
 export type { DmgChunk, DmgPools, DmgRanges };
 export { collectMods, convertDmg };
 
-export interface OffenseAttackDpsSummary {
+export interface WeaponAttackSummary {
   critChance: number;
-  critDmgMult: number;
   aspd: number;
   avgHit: number;
   avgHitWithCrit: number;
+}
+
+export interface OffenseAttackDpsSummary {
+  mainhand: WeaponAttackSummary;
+  offhand?: WeaponAttackSummary;
+  critDmgMult: number;
   avgDps: number;
 }
 
@@ -542,7 +546,7 @@ const calculateAddnDmgFromShadows = (
 interface SkillHitOverview extends BaseHitOverview {}
 
 const calculateAtkHit = (
-  gearDmg: GearDmg,
+  gearDmg: DmgRanges,
   flatDmg: DmgRanges,
   mods: Mod[],
   skill: BaseActiveSkill,
@@ -560,7 +564,7 @@ const calculateAtkHit = (
       if (typeof weaponAtkDmgPct !== "number") {
         return undefined;
       }
-      return multDRs(gearDmg.mainHand, weaponAtkDmgPct / 100);
+      return multDRs(gearDmg, weaponAtkDmgPct / 100);
     })
     .with("Thunder Spike", () => {
       const weaponAtkDmgPct = getLevelOffenseValue(
@@ -571,10 +575,10 @@ const calculateAtkHit = (
       if (typeof weaponAtkDmgPct !== "number") {
         return undefined;
       }
-      return multDRs(gearDmg.mainHand, weaponAtkDmgPct / 100);
+      return multDRs(gearDmg, weaponAtkDmgPct / 100);
     })
     .with("[Test] Simple Attack", () => {
-      return gearDmg.mainHand;
+      return gearDmg;
     })
     .otherwise(() => {
       // either it's unimplemented, not an attack
@@ -1928,19 +1932,24 @@ const calcTotalReapDps = (
   };
 };
 
-const calcAvgAttackDps = (
-  mods: Mod[],
-  loadout: Loadout,
-  perSkillContext: PerSkillModContext,
-  skillLevel: number,
-  derivedCtx: DerivedCtx,
-  config: Configuration,
-): OffenseAttackDpsSummary | undefined => {
-  const skill = perSkillContext.skill;
-  const gearDmg = calculateGearDmg(loadout, mods);
+interface CalcWeaponAttackInput {
+  mods: Mod[];
+  skill: BaseActiveSkill;
+  skillLevel: number;
+  derivedCtx: DerivedCtx;
+  config: Configuration;
+  critDmgMult: number;
+}
+
+const calcWeaponAttack = (
+  weapon: Gear,
+  input: CalcWeaponAttackInput,
+): WeaponAttackSummary | undefined => {
+  const { mods, skill, skillLevel, derivedCtx, config, critDmgMult } = input;
+  const gearDmg = calculateGearDmg(weapon, mods);
   const flatDmg = calculateFlatDmg(mods, "attack");
   const skillHit = calculateAtkHit(
-    gearDmg,
+    gearDmg.mainHand,
     flatDmg,
     mods,
     skill,
@@ -1950,23 +1959,63 @@ const calcAvgAttackDps = (
   );
   if (skillHit === undefined) return;
 
-  const aspd = calculateAspd(loadout, mods);
+  const avgHit = skillHit.avg;
+  const aspd = calculateAspd(weapon, mods);
   const critChance = calculateCritChance(mods, skill);
+  const avgHitWithCrit =
+    avgHit * critChance * critDmgMult + avgHit * (1 - critChance);
+  return { avgHit, aspd, critChance, avgHitWithCrit };
+};
+
+const calcAvgAttackDps = (
+  mods: Mod[],
+  loadout: Loadout,
+  perSkillContext: PerSkillModContext,
+  skillLevel: number,
+  derivedCtx: DerivedCtx,
+  config: Configuration,
+): OffenseAttackDpsSummary | undefined => {
+  const skill = perSkillContext.skill;
   const critDmgMult = calculateCritDmg(mods, skill);
+  const mainhand = loadout.gearPage.equippedGear.mainHand;
+  const offhand = loadout.gearPage.equippedGear.offHand;
+  if (mainhand === undefined) {
+    return undefined;
+  }
+  const calcWeaponAttackInput = {
+    mods,
+    skill,
+    skillLevel,
+    derivedCtx,
+    config,
+    critDmgMult,
+  };
+  const mainhandAtk = calcWeaponAttack(mainhand, calcWeaponAttackInput);
+  if (mainhandAtk === undefined) {
+    return undefined;
+  }
+  // Only calculate offhand attack if offhand is a one-handed weapon (not a shield)
+  const offhandAtk =
+    offhand !== undefined && isOneHandedWeapon(offhand)
+      ? calcWeaponAttack(offhand, calcWeaponAttackInput)
+      : undefined;
+
+  let avgDpsWithoutExtras: number;
+  if (offhandAtk === undefined) {
+    avgDpsWithoutExtras = mainhandAtk.aspd * mainhandAtk.avgHitWithCrit;
+  } else {
+    const mainhandAtkInterval = 1 / mainhandAtk.aspd;
+    const offhandAtkInterval = 1 / offhandAtk.aspd;
+    const fullInterval = mainhandAtkInterval + offhandAtkInterval;
+    avgDpsWithoutExtras =
+      (mainhandAtk.avgHitWithCrit + offhandAtk.avgHitWithCrit) / fullInterval;
+  }
+
   const doubleDmgMult = calculateDoubleDmgMult(mods);
   const extraMult = calculateExtraOffenseMults(mods, config);
 
-  const avgHitWithCrit =
-    skillHit.avg * critChance * critDmgMult + skillHit.avg * (1 - critChance);
-  const avgDps = avgHitWithCrit * doubleDmgMult * aspd * extraMult;
-  return {
-    critChance,
-    critDmgMult,
-    aspd,
-    avgHit: skillHit.avg,
-    avgHitWithCrit,
-    avgDps,
-  };
+  const avgDps = avgDpsWithoutExtras * doubleDmgMult * extraMult;
+  return { mainhand: mainhandAtk, offhand: offhandAtk, critDmgMult, avgDps };
 };
 
 interface CalcSpellHitOutput {

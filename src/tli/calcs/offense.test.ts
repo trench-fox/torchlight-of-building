@@ -17,6 +17,7 @@ import {
   type DmgPools,
   type DmgRanges,
   type OffenseResults,
+  type WeaponAttackSummary,
 } from "./offense";
 import type { OffenseSkillName } from "./skill_confs";
 
@@ -126,14 +127,24 @@ const frostbittenEnabledConfig: Configuration = {
   enemyFrostbittenPoints: 0,
 };
 
+// ExpectedOutput supports both flat keys (mapped to mainhand) and top-level keys
 type ExpectedOutput = Partial<{
+  // Flat keys mapped to mainhand for backwards compatibility
   avgHit: number;
   avgHitWithCrit: number;
   critChance: number;
-  critDmgMult: number;
   aspd: number;
+  // Top-level keys
+  critDmgMult: number;
   avgDps: number;
 }>;
+
+const WEAPON_SUMMARY_KEYS: (keyof WeaponAttackSummary)[] = [
+  "avgHit",
+  "avgHitWithCrit",
+  "critChance",
+  "aspd",
+];
 
 const validate = (
   results: OffenseResults,
@@ -143,10 +154,17 @@ const validate = (
   const actual = results.skills[skillName as ImplementedActiveSkillName];
   expect(actual).toBeDefined();
   expect(actual?.attackDpsSummary).toBeDefined();
+  const summary = actual?.attackDpsSummary;
+
   for (const [key, value] of Object.entries(expected)) {
-    expect(
-      actual?.attackDpsSummary?.[key as keyof typeof expected],
-    ).toBeCloseTo(value);
+    // Map legacy flat keys to mainhand
+    if (WEAPON_SUMMARY_KEYS.includes(key as keyof WeaponAttackSummary)) {
+      expect(summary?.mainhand[key as keyof WeaponAttackSummary]).toBeCloseTo(
+        value,
+      );
+    } else if (key === "critDmgMult" || key === "avgDps") {
+      expect(summary?.[key]).toBeCloseTo(value);
+    }
   }
 };
 
@@ -829,9 +847,8 @@ describe("flat damage to attacks", () => {
     validate(results, skillName, { avgHit: 300 });
   });
 
-  test("calculate offense with flat damage only (no weapon damage)", () => {
-    // No weapon equipped, only flat damage
-    // Flat: 100 fire * 1.0 (addedDmgEffPct) = 100
+  test("calculate offense with no weapon returns undefined attack DPS", () => {
+    // No weapon equipped - attack DPS should be undefined
     const input = createNoWeaponInput(
       affixLines([
         {
@@ -842,7 +859,8 @@ describe("flat damage to attacks", () => {
       ]),
     );
     const results = calculateOffense(input);
-    validate(results, skillName, { avgHit: 100 });
+    const actual = results.skills[skillName];
+    expect(actual?.attackDpsSummary).toBeUndefined();
   });
 
   test("calculate offense with flat erosion damage", () => {
@@ -2483,7 +2501,9 @@ describe("resolveBuffSkillMods", () => {
     expect(bullsRageBuffMod?.value).toBeCloseTo(27 * 1.7);
 
     // Verify final avgHit includes both Ice Bond's cold buff and Bull's Rage's melee buff
-    expect(actual?.attackDpsSummary?.avgHit).toBeCloseTo(201 * 1.561 * 1.459);
+    expect(actual?.attackDpsSummary?.mainhand.avgHit).toBeCloseTo(
+      201 * 1.561 * 1.459,
+    );
   });
 
   test("supports on main skill do not affect buff skills", () => {
@@ -2794,7 +2814,9 @@ describe("resolveBuffSkillMods", () => {
     expect(preciseCrueltyBuffMod?.value).toBeCloseTo(22 * 3);
 
     // Verify avgHit: 100 base weapon * (1 + 0.66 addn dmg) = 166
-    expect(actual?.attackDpsSummary?.avgHit).toBeCloseTo(100 * (1 + 0.22 * 3));
+    expect(actual?.attackDpsSummary?.mainhand.avgHit).toBeCloseTo(
+      100 * (1 + 0.22 * 3),
+    );
   });
 
   test("AuraEffPct only affects Aura-tagged skills", () => {
@@ -2871,7 +2893,7 @@ describe("Pactspirit Ring Mods", () => {
     const actual = results.skills["[Test] Simple Attack"];
 
     // 100 base damage * (1 + 0.5) = 150
-    expect(actual?.attackDpsSummary?.avgHit).toBeCloseTo(150);
+    expect(actual?.attackDpsSummary?.mainhand.avgHit).toBeCloseTo(150);
   });
 
   test("multiple pactspirit ring affixes stack additively", () => {
@@ -2934,7 +2956,7 @@ describe("Pactspirit Ring Mods", () => {
     const actual = results.skills["[Test] Simple Attack"];
 
     // 100 base damage * (1 + 0.3 + 0.3) = 160
-    expect(actual?.attackDpsSummary?.avgHit).toBeCloseTo(160);
+    expect(actual?.attackDpsSummary?.mainhand.avgHit).toBeCloseTo(160);
   });
 
   test("installed destiny affix overrides original affix", () => {
@@ -3002,7 +3024,7 @@ describe("Pactspirit Ring Mods", () => {
     const actual = results.skills["[Test] Simple Attack"];
 
     // 100 base damage * (1 + 0.75 from destiny, NOT 0.25 from original) = 175
-    expect(actual?.attackDpsSummary?.avgHit).toBeCloseTo(175);
+    expect(actual?.attackDpsSummary?.mainhand.avgHit).toBeCloseTo(175);
   });
 
   test("rings from multiple pactspirit slots contribute to damage", () => {
@@ -3081,7 +3103,7 @@ describe("Pactspirit Ring Mods", () => {
     const actual = results.skills["[Test] Simple Attack"];
 
     // 100 base damage * (1 + 0.2 + 0.3) = 150
-    expect(actual?.attackDpsSummary?.avgHit).toBeCloseTo(150);
+    expect(actual?.attackDpsSummary?.mainhand.avgHit).toBeCloseTo(150);
   });
 });
 
@@ -3132,7 +3154,7 @@ describe("Divinity Slate Mods", () => {
     const actual = results.skills["[Test] Simple Attack"];
 
     // 100 base damage * (1 + 0.5) = 150
-    expect(actual?.attackDpsSummary?.avgHit).toBeCloseTo(150);
+    expect(actual?.attackDpsSummary?.mainhand.avgHit).toBeCloseTo(150);
   });
 
   test("only placed slates contribute to damage, not inventory-only slates", () => {
@@ -3181,7 +3203,7 @@ describe("Divinity Slate Mods", () => {
     const actual = results.skills["[Test] Simple Attack"];
 
     // 100 base damage * 1 = 100 (no bonus from unplaced slate)
-    expect(actual?.attackDpsSummary?.avgHit).toBeCloseTo(100);
+    expect(actual?.attackDpsSummary?.mainhand.avgHit).toBeCloseTo(100);
   });
 
   test("multiple placed slates stack additively", () => {
@@ -3251,7 +3273,7 @@ describe("Divinity Slate Mods", () => {
     const actual = results.skills["[Test] Simple Attack"];
 
     // 100 base damage * (1 + 0.3 + 0.2) = 150
-    expect(actual?.attackDpsSummary?.avgHit).toBeCloseTo(150);
+    expect(actual?.attackDpsSummary?.mainhand.avgHit).toBeCloseTo(150);
   });
 });
 
@@ -5082,12 +5104,29 @@ describe("desecration mechanics", () => {
 describe("lucky damage", () => {
   const skillName = "[Test] Simple Attack" as const;
 
+  // Zero-damage weapon so we can isolate flat damage calculations
+  const zeroDmgWeapon = {
+    equipmentType: "Two-Handed Sword" as const,
+    baseStats: {
+      baseStatLines: [
+        {
+          text: "0 - 0 physical damage",
+          mods: [{ type: "GearBasePhysDmg" as const, value: 0 }],
+        },
+        {
+          text: "1.0 Attack Speed",
+          mods: [{ type: "GearBaseAttackSpeed" as const, value: 1 }],
+        },
+      ],
+    },
+  };
+
   const createLuckyDmgInput = (
     dmgRange: { min: number; max: number },
     luckyDmg: boolean,
   ) => ({
     loadout: initLoadout({
-      gearPage: { equippedGear: {}, inventory: [] },
+      gearPage: { equippedGear: { mainHand: zeroDmgWeapon }, inventory: [] },
       customAffixLines: affixLines([
         { type: "FlatDmgToAtks", value: dmgRange, dmgType: "physical" },
         ...(luckyDmg ? [{ type: "LuckyDmg" as const }] : []),
@@ -5104,7 +5143,7 @@ describe("lucky damage", () => {
     const input = createLuckyDmgInput({ min: 1095, max: 1643 }, true);
     const results = calculateOffense(input);
     const actual = results.skills[skillName];
-    expect(actual?.attackDpsSummary?.avgHit).toBeCloseTo(1460.3, 1);
+    expect(actual?.attackDpsSummary?.mainhand.avgHit).toBeCloseTo(1460.3, 1);
   });
 
   test("lucky damage with wide range", () => {
@@ -5113,7 +5152,7 @@ describe("lucky damage", () => {
     const input = createLuckyDmgInput({ min: 63, max: 1198 }, true);
     const results = calculateOffense(input);
     const actual = results.skills[skillName];
-    expect(actual?.attackDpsSummary?.avgHit).toBeCloseTo(819.7, 1);
+    expect(actual?.attackDpsSummary?.mainhand.avgHit).toBeCloseTo(819.7, 1);
   });
 
   test("without lucky damage, average is (min + max) / 2", () => {
@@ -5122,6 +5161,282 @@ describe("lucky damage", () => {
     const input = createLuckyDmgInput({ min: 1095, max: 1643 }, false);
     const results = calculateOffense(input);
     const actual = results.skills[skillName];
-    expect(actual?.attackDpsSummary?.avgHit).toBeCloseTo(1369, 1);
+    expect(actual?.attackDpsSummary?.mainhand.avgHit).toBeCloseTo(1369, 1);
+  });
+});
+
+describe("dual wielding", () => {
+  const skillName = "[Test] Simple Attack" as const;
+
+  // Helper to create dual wielding input with two one-handed weapons
+  const createDualWieldInput = (
+    mainhand: { physDmg: number; aspd: number },
+    offhand: { physDmg: number; aspd: number },
+    extraMods: AffixLine[] = [],
+  ) => ({
+    loadout: initLoadout({
+      gearPage: {
+        equippedGear: {
+          mainHand: {
+            equipmentType: "One-Handed Sword" as const,
+            baseStats: {
+              baseStatLines: [
+                {
+                  text: `${mainhand.physDmg} - ${mainhand.physDmg} physical damage`,
+                  mods: [
+                    {
+                      type: "GearBasePhysDmg" as const,
+                      value: mainhand.physDmg,
+                    },
+                  ],
+                },
+                {
+                  text: `${mainhand.aspd} Attack Speed`,
+                  mods: [
+                    {
+                      type: "GearBaseAttackSpeed" as const,
+                      value: mainhand.aspd,
+                    },
+                  ],
+                },
+              ],
+            },
+          },
+          offHand: {
+            equipmentType: "One-Handed Sword" as const,
+            baseStats: {
+              baseStatLines: [
+                {
+                  text: `${offhand.physDmg} - ${offhand.physDmg} physical damage`,
+                  mods: [
+                    {
+                      type: "GearBasePhysDmg" as const,
+                      value: offhand.physDmg,
+                    },
+                  ],
+                },
+                {
+                  text: `${offhand.aspd} Attack Speed`,
+                  mods: [
+                    {
+                      type: "GearBaseAttackSpeed" as const,
+                      value: offhand.aspd,
+                    },
+                  ],
+                },
+              ],
+            },
+          },
+        },
+        inventory: [],
+      },
+      customAffixLines: extraMods,
+      skillPage: simpleAttackSkillPage(),
+    }),
+    configuration: defaultConfiguration,
+  });
+
+  // Helper to create mainhand-only input (for comparison)
+  const createMainhandOnlyInput = (
+    mainhand: { physDmg: number; aspd: number },
+    extraMods: AffixLine[] = [],
+  ) => ({
+    loadout: initLoadout({
+      gearPage: {
+        equippedGear: {
+          mainHand: {
+            equipmentType: "One-Handed Sword" as const,
+            baseStats: {
+              baseStatLines: [
+                {
+                  text: `${mainhand.physDmg} - ${mainhand.physDmg} physical damage`,
+                  mods: [
+                    {
+                      type: "GearBasePhysDmg" as const,
+                      value: mainhand.physDmg,
+                    },
+                  ],
+                },
+                {
+                  text: `${mainhand.aspd} Attack Speed`,
+                  mods: [
+                    {
+                      type: "GearBaseAttackSpeed" as const,
+                      value: mainhand.aspd,
+                    },
+                  ],
+                },
+              ],
+            },
+          },
+        },
+        inventory: [],
+      },
+      customAffixLines: extraMods,
+      skillPage: simpleAttackSkillPage(),
+    }),
+    configuration: defaultConfiguration,
+  });
+
+  // Helper to create weapon + shield input
+  const createWeaponAndShieldInput = (
+    mainhand: { physDmg: number; aspd: number },
+    extraMods: AffixLine[] = [],
+  ) => ({
+    loadout: initLoadout({
+      gearPage: {
+        equippedGear: {
+          mainHand: {
+            equipmentType: "One-Handed Sword" as const,
+            baseStats: {
+              baseStatLines: [
+                {
+                  text: `${mainhand.physDmg} - ${mainhand.physDmg} physical damage`,
+                  mods: [
+                    {
+                      type: "GearBasePhysDmg" as const,
+                      value: mainhand.physDmg,
+                    },
+                  ],
+                },
+                {
+                  text: `${mainhand.aspd} Attack Speed`,
+                  mods: [
+                    {
+                      type: "GearBaseAttackSpeed" as const,
+                      value: mainhand.aspd,
+                    },
+                  ],
+                },
+              ],
+            },
+          },
+          offHand: {
+            equipmentType: "Shield (STR)" as const,
+            baseStats: { baseStatLines: [] },
+          },
+        },
+        inventory: [],
+      },
+      customAffixLines: extraMods,
+      skillPage: simpleAttackSkillPage(),
+    }),
+    configuration: defaultConfiguration,
+  });
+
+  test("basic dual wielding with same weapons", () => {
+    // Both weapons: 100 phys dmg, 1.0 base aspd
+    // Dual wielding gives +10% additional attack speed
+    // Final aspd: 1.0 * 1.1 = 1.1
+    // Mainhand attack interval: 1 / 1.1 = 0.909s
+    // Offhand attack interval: 1 / 1.1 = 0.909s
+    // Full cycle: 1.818s
+    // avgHitWithCrit per weapon: 100 * (0.05 * 1.5 + 0.95) = 100 * 1.025 = 102.5
+    // avgDps = (102.5 + 102.5) / 1.818 = 112.75
+    const input = createDualWieldInput(
+      { physDmg: 100, aspd: 1.0 },
+      { physDmg: 100, aspd: 1.0 },
+    );
+    const results = calculateOffense(input);
+    const summary = results.skills[skillName]?.attackDpsSummary;
+
+    expect(summary?.mainhand.avgHit).toBeCloseTo(100);
+    expect(summary?.mainhand.aspd).toBeCloseTo(1.1);
+    expect(summary?.offhand?.avgHit).toBeCloseTo(100);
+    expect(summary?.offhand?.aspd).toBeCloseTo(1.1);
+    expect(summary?.avgDps).toBeCloseTo(112.75);
+  });
+
+  test("dual wielding with different attack speeds", () => {
+    // Mainhand: 100 phys dmg, 2.0 base aspd
+    // Offhand: 100 phys dmg, 1.0 base aspd
+    // Dual wielding gives +10% additional attack speed to both
+    // Final mainhand aspd: 2.0 * 1.1 = 2.2, interval = 0.455s
+    // Final offhand aspd: 1.0 * 1.1 = 1.1, interval = 0.909s
+    // Full cycle: 0.455s + 0.909s = 1.364s
+    // avgHitWithCrit per weapon: 102.5
+    // avgDps = (102.5 + 102.5) / 1.364 = 150.37
+    const input = createDualWieldInput(
+      { physDmg: 100, aspd: 2.0 },
+      { physDmg: 100, aspd: 1.0 },
+    );
+    const results = calculateOffense(input);
+    const summary = results.skills[skillName]?.attackDpsSummary;
+
+    expect(summary?.mainhand.aspd).toBeCloseTo(2.2); // 2.0 * 1.1 dual wield bonus
+    expect(summary?.offhand?.aspd).toBeCloseTo(1.1); // 1.0 * 1.1 dual wield bonus
+    expect(summary?.avgDps).toBeCloseTo(150.37, 1);
+  });
+
+  test("dual wielding with different damage values", () => {
+    // Mainhand: 150 phys dmg, 1.0 base aspd
+    // Offhand: 50 phys dmg, 1.0 base aspd
+    // Dual wielding gives +10% additional attack speed
+    // Final aspd: 1.0 * 1.1 = 1.1 for both
+    // Full cycle: 1/1.1 + 1/1.1 = 1.818s
+    // Mainhand avgHitWithCrit: 150 * 1.025 = 153.75
+    // Offhand avgHitWithCrit: 50 * 1.025 = 51.25
+    // avgDps = (153.75 + 51.25) / 1.818 = 112.75
+    const input = createDualWieldInput(
+      { physDmg: 150, aspd: 1.0 },
+      { physDmg: 50, aspd: 1.0 },
+    );
+    const results = calculateOffense(input);
+    const summary = results.skills[skillName]?.attackDpsSummary;
+
+    expect(summary?.mainhand.avgHit).toBeCloseTo(150);
+    expect(summary?.offhand?.avgHit).toBeCloseTo(50);
+    expect(summary?.avgDps).toBeCloseTo(112.75);
+  });
+
+  test("mainhand-only DPS matches expected calculation", () => {
+    // Mainhand: 100 phys dmg, 1.0 aspd
+    // avgHitWithCrit: 102.5
+    // avgDps = 102.5 * 1.0 = 102.5
+    const input = createMainhandOnlyInput({ physDmg: 100, aspd: 1.0 });
+    const results = calculateOffense(input);
+    const summary = results.skills[skillName]?.attackDpsSummary;
+
+    expect(summary?.mainhand.avgHit).toBeCloseTo(100);
+    expect(summary?.mainhand.aspd).toBeCloseTo(1.0);
+    expect(summary?.offhand).toBeUndefined();
+    expect(summary?.avgDps).toBeCloseTo(102.5);
+  });
+
+  test("weapon with shield is not dual wielding", () => {
+    // Mainhand: 100 phys dmg, 1.0 aspd + Shield
+    // Should not have offhand weapon stats
+    // avgDps should be same as mainhand-only: 102.5
+    const input = createWeaponAndShieldInput({ physDmg: 100, aspd: 1.0 });
+    const results = calculateOffense(input);
+    const summary = results.skills[skillName]?.attackDpsSummary;
+
+    expect(summary?.mainhand.avgHit).toBeCloseTo(100);
+    expect(summary?.mainhand.aspd).toBeCloseTo(1.0);
+    expect(summary?.offhand).toBeUndefined();
+    expect(summary?.avgDps).toBeCloseTo(102.5);
+  });
+
+  test("dual wielding crit damage is shared", () => {
+    // Both weapons same stats, add crit damage modifier
+    // +100% crit damage -> critDmgMult = 2.5
+    // Dual wielding gives +10% additional attack speed
+    // Final aspd: 1.0 * 1.1 = 1.1, full cycle = 1.818s
+    // avgHitWithCrit: 100 * (0.05 * 2.5 + 0.95) = 100 * 1.075 = 107.5
+    // avgDps = (107.5 + 107.5) / 1.818 = 118.25
+    const input = createDualWieldInput(
+      { physDmg: 100, aspd: 1.0 },
+      { physDmg: 100, aspd: 1.0 },
+      affixLines([
+        { type: "CritDmgPct", value: 100, modType: "global", addn: false },
+      ]),
+    );
+    const results = calculateOffense(input);
+    const summary = results.skills[skillName]?.attackDpsSummary;
+
+    expect(summary?.critDmgMult).toBeCloseTo(2.5);
+    expect(summary?.mainhand.avgHitWithCrit).toBeCloseTo(107.5);
+    expect(summary?.offhand?.avgHitWithCrit).toBeCloseTo(107.5);
+    expect(summary?.avgDps).toBeCloseTo(118.25);
   });
 });

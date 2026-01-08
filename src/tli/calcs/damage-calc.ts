@@ -6,7 +6,7 @@ import type {
   CritRatingModType,
   DmgModType,
 } from "../constants";
-import type { Configuration, DmgRange, Loadout } from "../core";
+import type { Configuration, DmgRange, Gear } from "../core";
 import type { DmgChunkType, Mod, ModT, ResType } from "../mod";
 import { getGearAffixes } from "./affix-collectors";
 import {
@@ -547,13 +547,9 @@ export function applyDmgBonusesAndPen(
 // === Gear Damage Calculations ===
 
 // currently only calculating mainhand
-export const calculateGearDmg = (loadout: Loadout, allMods: Mod[]): GearDmg => {
-  const mainhand = loadout.gearPage.equippedGear.mainHand;
-  if (mainhand === undefined) {
-    return emptyGearDmg();
-  }
-  const mainhandMods = collectModsFromAffixes(getGearAffixes(mainhand));
-  const basePhysDmgMod = mainhand.baseStats?.baseStatLines
+export const calculateGearDmg = (gear: Gear, allMods: Mod[]): GearDmg => {
+  const mainhandMods = collectModsFromAffixes(getGearAffixes(gear));
+  const basePhysDmgMod = gear.baseStats?.baseStatLines
     .flatMap((l) => l.mods ?? [])
     .find((m) => m.type === "GearBasePhysDmg");
   const basePhysDmg =
@@ -662,11 +658,10 @@ export const calculateFlatDmg = (
   return { physical: phys, cold, lightning, fire, erosion };
 };
 
-export const calculateGearAspd = (loadout: Loadout, allMods: Mod[]): number => {
-  const baseAspdMod =
-    loadout.gearPage.equippedGear.mainHand?.baseStats?.baseStatLines
-      .flatMap((l) => l.mods ?? [])
-      .find((m) => m.type === "GearBaseAttackSpeed");
+export const calculateGearAspd = (weapon: Gear, allMods: Mod[]): number => {
+  const baseAspdMod = weapon.baseStats?.baseStatLines
+    .flatMap((l) => l.mods ?? [])
+    .find((m) => m.type === "GearBaseAttackSpeed");
   const baseAspd =
     baseAspdMod?.type === "GearBaseAttackSpeed" ? baseAspdMod.value : 0;
   const gearAspdPctBonus = calculateInc(
@@ -751,8 +746,8 @@ export const calculateDoubleDmgMult = (mods: Mod[]): number => {
 
 // === Attack Speed ===
 
-export const calculateAspd = (loadout: Loadout, allMods: Mod[]): number => {
-  const gearAspd = calculateGearAspd(loadout, allMods);
+export const calculateAspd = (weapon: Gear, allMods: Mod[]): number => {
+  const gearAspd = calculateGearAspd(weapon, allMods);
   const aspdPctMods = filterMods(allMods, "AspdPct");
   const inc = calculateInc(
     aspdPctMods.filter((m) => !m.addn).map((v) => v.value),
