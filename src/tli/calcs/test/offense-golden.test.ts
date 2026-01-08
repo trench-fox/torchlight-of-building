@@ -5,6 +5,7 @@ import { loadSave } from "../../storage/load-save";
 import { calculateOffense } from "../offense";
 import bing2Golden from "./bing-2-golden-1.json";
 import bing2Golden2 from "./bing-2-golden-2.json";
+import bing2Golden3 from "./bing-2-golden-3.json";
 import mcTheaGolden from "./mc-thea-3-golden-1.json";
 import rosaGolden from "./rosa-2-golden.json";
 
@@ -186,5 +187,56 @@ describe("offense golden tests", () => {
     expect(lightningRes).toEqual({ max: 60, potential: 61, actual: 60 });
     expect(fireRes).toEqual({ max: 60, potential: 60, actual: 60 });
     expect(erosionRes).toEqual({ max: 60, potential: 63, actual: 60 });
+  });
+
+  it("bing-2-golden-3: Chain Lightning should calculate expected spell/burst DPS values", () => {
+    const saveData = bing2Golden3 as unknown as SaveData;
+    const loadout = loadSave(saveData);
+    const config = saveData.configurationPage as Configuration;
+
+    const results = calculateOffense({ loadout, configuration: config });
+
+    const chainLightning = results.skills["Chain Lightning"];
+    if (chainLightning === undefined) {
+      throw new Error("Chain Lightning skill not found in results");
+    }
+
+    const tolerance = 0.01; // 1% tolerance
+
+    // Spell DPS: ~34.38 billion
+    const spellDps = chainLightning.spellDpsSummary?.avgDps;
+    const expectedSpellDps = 34.38e9;
+    expect(spellDps).toBeGreaterThan(expectedSpellDps * (1 - tolerance));
+    expect(spellDps).toBeLessThan(expectedSpellDps * (1 + tolerance));
+
+    // Spell Burst DPS: ~1.04 trillion
+    const spellBurstDps = chainLightning.spellBurstDpsSummary?.avgDps;
+    const expectedSpellBurstDps = 1.04e12;
+    expect(spellBurstDps).toBeGreaterThan(
+      expectedSpellBurstDps * (1 - tolerance),
+    );
+    expect(spellBurstDps).toBeLessThan(expectedSpellBurstDps * (1 + tolerance));
+
+    // Ingenuity Overload DPS: ~189.43 billion
+    const ingenuityDps =
+      chainLightning.spellBurstDpsSummary?.ingenuityOverload?.avgDps;
+    const expectedIngenuityDps = 189.43e9;
+    expect(ingenuityDps).toBeGreaterThan(
+      expectedIngenuityDps * (1 - tolerance),
+    );
+    expect(ingenuityDps).toBeLessThan(expectedIngenuityDps * (1 + tolerance));
+
+    // Total DPS: ~1.27 trillion
+    const totalDps = chainLightning.totalDps;
+    const expectedTotalDps = 1.27e12;
+    expect(totalDps).toBeGreaterThan(expectedTotalDps * (1 - tolerance));
+    expect(totalDps).toBeLessThan(expectedTotalDps * (1 + tolerance));
+
+    // Resistance checks (erosion-focused build with 90% max erosion res)
+    const { coldRes, lightningRes, fireRes, erosionRes } = results.defenses;
+    expect(coldRes).toEqual({ max: 60, potential: 9, actual: 9 });
+    expect(lightningRes).toEqual({ max: 60, potential: 9, actual: 9 });
+    expect(fireRes).toEqual({ max: 60, potential: 9, actual: 9 });
+    expect(erosionRes).toEqual({ max: 90, potential: 275, actual: 90 });
   });
 });
