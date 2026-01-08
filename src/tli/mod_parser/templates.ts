@@ -390,6 +390,11 @@ export const allParsers = [
     addn: true,
     cond: HAS_CRIT_RECENTLY,
   })),
+  t("{value:+dec%} additional attack speed while dual wielding").output("AspdPct", (c) => ({
+    value: c.value,
+    addn: true,
+    cond: "is_dual_wielding" as const,
+  })),
   t("{value:+dec%} additional cast speed if you have dealt a critical strike recently").output("CspdPct", (c) => ({
     value: c.value,
     addn: true,
@@ -591,6 +596,7 @@ export const allParsers = [
     value: c.value,
     addn: true as const,
   })),
+  t("{value:+dec%} chance to multistrike").output("MultistrikeChancePct", (c) => ({ value: c.value })),
   t("Multistrikes deal {value:dec%} increasing damage").output("MultistrikeIncDmgPct", (c) => ({ value: c.value })),
   t(
     "{value:dec%} of the bonuses and additional bonuses to cast speed is also applied to spell burst charge speed",
@@ -610,6 +616,7 @@ export const allParsers = [
     "GeneratesTorment",
     () => ({}),
   ),
+  t("gains a stack of fortitude when using a melee skill").output("GeneratesFortitude", () => ({})),
   t("{value:+dec%} chance to gain blur when reaping").output("GeneratesBlur", (c) => ({ value: c.value })),
   t("gains {value:int} stack\\(s\\) of focus blessing when reaping").output("GeneratesFocusBlessing", () => ({})),
   t("gains {value:int} stack\\(s\\) of focus blessing when activating spell burst").output(
@@ -651,6 +658,10 @@ export const allParsers = [
     addn: c.additional !== undefined,
   })),
   t("{value:+int} all skills' level").output("SkillLevel", (c) => ({ value: c.value, skillLevelType: "all" as const })),
+  t("{value:+int} to attack skill level").output("SkillLevel", (c) => ({
+    value: c.value,
+    skillLevelType: "attack" as const,
+  })),
   t("{value:+int} {skillLevelType:SkillLevelType} skill level").output("SkillLevel", (c) => ({
     value: c.value,
     skillLevelType: c.skillLevelType,

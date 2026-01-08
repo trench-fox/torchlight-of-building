@@ -7,6 +7,7 @@
     "dev": "vite dev",
     "build": "vite build",
     "check": "biome check --write --diagnostic-level=warn",
+    "check:ci": "biome check --diagnostic-level=warn",
     "lint": "biome lint --write --diagnostic-level=warn",
     "test": "vitest run",
     "typecheck": "tsc --noEmit",

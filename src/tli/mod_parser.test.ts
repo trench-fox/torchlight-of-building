@@ -683,13 +683,10 @@ test("parse energy shield regain", () => {
   expect(result).toEqual([{ type: "EnergyShieldRegainPct", value: 1.5 }]);
 });
 
-// test("parse multistrike chance", () => {
-//   const result = parseMod("+32% chance to Multistrike");
-//   expect(result).toEqual([{
-//     type: "MultistrikeChancePct",
-//     value: 0.32,
-//   }]);
-// });
+test("parse multistrike chance", () => {
+  const result = parseMod("+32% chance to Multistrike");
+  expect(result).toEqual([{ type: "MultistrikeChancePct", value: 32 }]);
+});
 
 test("parse flat strength", () => {
   const result = parseMod("+6 Strength");
@@ -2162,4 +2159,25 @@ test("parse joined force add offhand to mainhand", () => {
   expect(result).toEqual([
     { type: "JoinedForceAddOffhandToMainhandPct", value: 60 },
   ]);
+});
+
+test("parse attack skill level", () => {
+  const result = parseMod("+1 to Attack Skill Level");
+  expect(result).toEqual([
+    { type: "SkillLevel", value: 1, skillLevelType: "attack" },
+  ]);
+});
+
+test("parse additional attack speed while dual wielding", () => {
+  const result = parseMod("+6% additional Attack Speed while Dual Wielding");
+  expect(result).toEqual([
+    { type: "AspdPct", value: 6, addn: true, cond: "is_dual_wielding" },
+  ]);
+});
+
+test("parse generates fortitude when using melee skill", () => {
+  const result = parseMod(
+    "Gains a stack of Fortitude when using a Melee Skill",
+  );
+  expect(result).toEqual([{ type: "GeneratesFortitude" }]);
 });

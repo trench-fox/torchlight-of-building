@@ -1248,6 +1248,7 @@ const calculateAddedSkillLevels = (
       )
       .with("support", () => skill.type === "Support")
       .with("active", () => skill.type === "Active")
+      .with("attack", () => skill.tags.includes("Attack"))
       .with("persistent", () => skill.tags.includes("Persistent"))
       .with("erosion", () => skill.tags.includes("Erosion"))
       .with("spell", () => skill.tags.includes("Spell"))

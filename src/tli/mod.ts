@@ -62,6 +62,7 @@ export const SkillLevelTypes = [
   "main",
   "support",
   "active",
+  "attack",
   "persistent",
   "erosion",
   "spell",
@@ -347,6 +348,7 @@ interface ModDefinitions {
   GeneratesFocusBlessing: object;
   GeneratesAgilityBlessing: object;
   GeneratesTenacityBlessing: object;
+  GeneratesFortitude: object;
   MaxChannel: { value: number };
   GeneratesBarrier: object;
   GeneratesTorment: object;
