@@ -2426,3 +2426,23 @@ test("parse flat gear erosion damage", () => {
     { type: "FlatGearDmg", value: { min: 15, max: 45 }, modType: "erosion" },
   ]);
 });
+
+test("parse disable main stat damage", () => {
+  const result = parseMod(
+    "The main stat base no longer additionally increases damage",
+  );
+  expect(result).toEqual([{ type: "DisableMainStatDmg" }]);
+});
+
+test("parse additional lightning damage per dexterity", () => {
+  const result = parseMod("+9% additional Lightning Damage per 10 Dexterity");
+  expect(result).toEqual([
+    {
+      type: "DmgPct",
+      value: 9,
+      dmgModType: "lightning",
+      addn: true,
+      per: { stackable: "dex", amt: 10 },
+    },
+  ]);
+});

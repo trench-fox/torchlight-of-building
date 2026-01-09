@@ -309,14 +309,6 @@ const calculateHeroTraitMods = (loadout: Loadout): Mod[] => {
 // includes any mods that always apply, but don't come from loadout, like damage from stats, non-skill buffs, etc
 const calculateImplicitMods = (): Mod[] => {
   return [
-    {
-      type: "DmgPct",
-      value: 0.5,
-      dmgModType: "global",
-      addn: true,
-      per: { stackable: "main_stat" },
-      src: "Additional Damage from skill Main Stat (.5% per stat)",
-    },
     // dual wield
     {
       type: "AspdPct",
@@ -1620,6 +1612,20 @@ const pushTradeoff = (mods: Mod[], resourcePool: ResourcePool) => {
   }
 };
 
+const pushMainStatDmgPct = (mods: Mod[], totalMainStats: number): void => {
+  if (findMod(mods, "DisableMainStatDmg") !== undefined) {
+    return;
+  }
+  const value = 0.5 * totalMainStats;
+  mods.push({
+    type: "DmgPct",
+    value,
+    dmgModType: "global",
+    addn: true,
+    src: "Additional Damage from skill Main Stat (.5% per stat)",
+  });
+};
+
 interface DerivedOffenseCtx {
   maxSpellBurst: number;
   spellBurstChargeSpeedBonusPct: number;
@@ -1670,6 +1676,9 @@ const resolveModsForOffenseSkill = (
   normalize("main_stat", totalMainStats);
   normalize("highest_stat", highestStat);
   normalize("stat", sumStats);
+  pushNormalizedStackable(mods, prenormMods, "str", stats.str);
+  pushNormalizedStackable(mods, prenormMods, "dex", stats.dex);
+  pushNormalizedStackable(mods, prenormMods, "int", stats.int);
   const { mainHand, offHand } = loadout.gearPage.equippedGear;
   normalize(
     "num_unique_weapon_types_equipped",
@@ -1678,6 +1687,7 @@ const resolveModsForOffenseSkill = (
   );
 
   pushTradeoff(mods, resourcePool);
+  pushMainStatDmgPct(mods, totalMainStats);
   pushWhimsy(mods, config);
   pushAttackAggression(mods, config); // must happen before movement speed
   pushSpellAggression(mods, config); // must happen before spell burst charge speed calculation

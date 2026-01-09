@@ -85,6 +85,9 @@ export type Stackable =
   | "main_stat"
   | "stat"
   | "highest_stat"
+  | "str"
+  | "dex"
+  | "int"
   | "frostbite_rating"
   | "projectile"
   | "jump"
@@ -106,9 +109,6 @@ export type Stackable =
   | "desecration"
   | "torment"
   | "num_enemies_affected_by_warcry"
-  | "str"
-  | "dex"
-  | "int"
   | "level"
   | "max_spell_burst"
   | "spell_burst_charge_speed_bonus_pct"
@@ -427,6 +427,7 @@ interface ModDefinitions {
   SquidnovaEffPct: { value: number };
   GeneratesSquidnova: object;
   // legendary gear
+  DisableMainStatDmg: object;
 }
 
 // Generate the Mod union type from ModDefinitions

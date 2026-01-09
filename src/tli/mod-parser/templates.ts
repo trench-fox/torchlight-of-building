@@ -1447,4 +1447,19 @@ export const allParsers = [
       | "erosion"
       | "elemental",
   })),
+  // Legendary gear mods
+  t("the main stat base no longer additionally increases damage").output(
+    "DisableMainStatDmg",
+    () => ({}),
+  ),
+  t(
+    "{value:+dec%} additional {dmgType:DmgChunkType} damage per {amt:int} {stat:StatWord}",
+  )
+    .enum("StatWord", StatWordMapping)
+    .output("DmgPct", (c) => ({
+      value: c.value,
+      dmgModType: c.dmgType,
+      addn: true,
+      per: { stackable: c.stat, amt: c.amt },
+    })),
 ];
