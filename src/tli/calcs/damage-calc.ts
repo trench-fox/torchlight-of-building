@@ -746,8 +746,10 @@ export const calculateCritChance = (
       modTypes.includes(m.modType),
     ),
   );
+  const gearCritRatingMult = calcEffMult(allMods, "GearCritRatingPct");
   const baseCritRating = 500;
-  const baseCritChance = (baseCritRating + addedFlatCritRating) / 100 / 100;
+  const baseCritChance =
+    (baseCritRating * gearCritRatingMult + addedFlatCritRating) / 100 / 100;
 
   const critRatingPctMods = filterMods(allMods, "CritRatingPct").filter((m) =>
     modTypes.includes(m.modType),
