@@ -188,8 +188,15 @@ export const CoreTalentMods: Record<CoreTalentName, Affix> = {
     affixLines: [
       {
         text: "-90% additional Min Physical Damage, and +80% additional Max Physical Damage",
+        mods: [
+          { type: "AddnMinDmgPct", value: -90, addn: true },
+          { type: "AddnMaxDmgPct", value: 80, addn: true },
+        ],
       },
-      { text: "-40% additional min damage" },
+      {
+        text: "-40% additional min damage",
+        mods: [{ type: "AddnMinDmgPct", value: -40, addn: true }],
+      },
       {
         text: "+40% additional max damage",
         mods: [{ type: "AddnMaxDmgPct", value: 40, addn: true }],

@@ -2245,3 +2245,37 @@ test("parse conductive", () => {
   );
   expect(result).toEqual([{ type: "Conductive", value: 11 }]);
 });
+
+test("parse additional min damage", () => {
+  const result = parseMod("-40% additional min damage");
+  expect(result).toEqual([{ type: "AddnMinDmgPct", value: -40, addn: true }]);
+});
+
+test("parse combined additional min and max physical damage", () => {
+  const result = parseMod(
+    "-90% additional Min Physical Damage, and +80% additional Max Physical Damage",
+  );
+  expect(result).toEqual([
+    { type: "AddnMinDmgPct", value: -90, addn: true },
+    { type: "AddnMaxDmgPct", value: 80, addn: true },
+  ]);
+});
+
+test("parse generates agility blessing when using mobility skills", () => {
+  const result = parseMod(
+    "Gains a stack Agility Blessing when using Mobility Skills",
+  );
+  expect(result).toEqual([{ type: "GeneratesAgilityBlessing" }]);
+});
+
+test("parse inflicts numbed stacks", () => {
+  const result = parseMod("Inflicts 1 additional stack(s) of Numbed");
+  expect(result).toEqual([{ type: "InflictNumbed" }]);
+});
+
+test("parse unsigned projectile speed", () => {
+  const result = parseMod("4.5% Projectile Speed");
+  expect(result).toEqual([
+    { type: "ProjectileSpeedPct", value: 4.5, addn: false },
+  ]);
+});

@@ -556,7 +556,17 @@ export const allParsers = [
     "AddnMaxMinionDmgPct",
     (c) => ({ value: c.value }),
   ),
+  t(
+    "{minValue:+dec%} additional min physical damage, and {maxValue:+dec%} additional max physical damage",
+  ).outputMany([
+    spec("AddnMinDmgPct", (c) => ({ value: c.minValue, addn: true as const })),
+    spec("AddnMaxDmgPct", (c) => ({ value: c.maxValue, addn: true as const })),
+  ]),
   t("{value:+dec%} additional max damage").output("AddnMaxDmgPct", (c) => ({
+    value: c.value,
+    addn: true as const,
+  })),
+  t("{value:+dec%} additional min damage").output("AddnMinDmgPct", (c) => ({
     value: c.value,
     addn: true as const,
   })),
@@ -1031,6 +1041,10 @@ export const allParsers = [
     "ProjectileSpeedPct",
     (c) => ({ value: c.value, addn: c.additional !== undefined }),
   ),
+  t("{value:dec%} projectile speed").output("ProjectileSpeedPct", (c) => ({
+    value: c.value,
+    addn: false,
+  })),
   t("{value:+int} all skills' level").output("SkillLevel", (c) => ({
     value: c.value,
     skillLevelType: "all" as const,
@@ -1277,6 +1291,10 @@ export const allParsers = [
     "GeneratesAgilityBlessing",
     () => ({}),
   ),
+  t("gains a stack agility blessing when using mobility skills").output(
+    "GeneratesAgilityBlessing",
+    () => ({}),
+  ),
   // Blur generation (ignoring condition)
   t(
     "{value:+dec%} chance to gain blur when inflicting crowd control effects",
@@ -1285,6 +1303,11 @@ export const allParsers = [
   t("{value:+dec%} numbed effect").output("NumbedEffPct", (c) => ({
     value: c.value,
   })),
+  // Inflicts Numbed
+  t("inflicts {value:int} additional stack\\(s\\) of numbed").output(
+    "InflictNumbed",
+    () => ({}),
+  ),
   // Numbed chance
   t("{value:+dec%} numbed chance").output("NumbedChancePct", (c) => ({
     value: c.value,
