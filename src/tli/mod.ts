@@ -376,6 +376,7 @@ interface ModDefinitions {
   AttackAggressionEffPct: { value: number };
   GeneratesSpellAggression: object;
   SpellAggressionEffPct: { value: number };
+  MainSkillSupportedBy: { skillName: string; level: number };
   // infiltrations
   InflictsInfiltration: { infiltrationType: InfiltrationType };
   InfiltrationEffPct: {
@@ -423,6 +424,8 @@ interface ModDefinitions {
   WhimsyEssenceRecoverySpeedPct: { value: number };
   WhimsySignalEffPct: { value: number };
   RestoreWhimsyEssenceOnSpellBurst: { value: number };
+  // erika1
+  WindStalker: object;
   // pactspirit stuff
   SquidnovaEffPct: { value: number };
   GeneratesSquidnova: object;

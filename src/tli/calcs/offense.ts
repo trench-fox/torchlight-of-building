@@ -1626,6 +1626,21 @@ const pushMainStatDmgPct = (mods: Mod[], totalMainStats: number): void => {
   });
 };
 
+const pushErika1 = (mods: Mod[], config: Configuration): void => {
+  if (modExists(mods, "WindStalker")) {
+    const stacks = config.stalkerStacks ?? 3;
+    // This assumes that the player's multistrike chance is >= 100%
+    // Therefore, it's an overestimation if not. However, if your
+    // multistrike is below, 100%, why tf are you using e1
+    mods.push({
+      type: "DmgPct",
+      dmgModType: "global",
+      addn: true,
+      value: 13 * stacks,
+    });
+  }
+};
+
 interface DerivedOffenseCtx {
   maxSpellBurst: number;
   spellBurstChargeSpeedBonusPct: number;

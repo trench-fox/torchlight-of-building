@@ -4,6 +4,11 @@ import type { Mod } from "../mod";
 type ModFactory = (levelIndex: number) => Mod[];
 
 const heroTraitModFactories: Partial<Record<HeroTraitName, ModFactory>> = {
+  // Cateye Erika: Wind Stalker (#1)
+  "Wind Stalker": () => [
+    { type: "MovementSpeedPct", value: 20 },
+    { type: "WindStalker" },
+  ],
   // Escapist Bing: Creative Genius (#2)
   "Creative Genius": () => [{ type: "MaxSpellBurst", value: 1 }],
   "Inspiration Overflow": (i) => [
