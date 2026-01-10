@@ -1626,7 +1626,7 @@ const pushMainStatDmgPct = (mods: Mod[], totalMainStats: number): void => {
   });
 };
 
-const pushErika1 = (mods: Mod[], config: Configuration): void => {
+const _pushErika1 = (mods: Mod[], config: Configuration): void => {
   if (modExists(mods, "WindStalker")) {
     const stacks = config.stalkerStacks ?? 3;
     // This assumes that the player's multistrike chance is >= 100%
