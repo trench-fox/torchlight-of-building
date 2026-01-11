@@ -14,7 +14,7 @@ import { activeSkillModFactories } from "./active-factories";
 export const getActiveSkillMods = (
   skillName: ActiveSkillName,
   level: number,
-): { offense?: SkillOffense[]; mods?: Mod[]; buffMods?: Mod[] } => {
+): { offense?: SkillOffense; mods?: Mod[]; buffMods?: Mod[] } => {
   const clampedLevel = clamp(level, { min: 1, max: 40 });
   const factory = activeSkillModFactories[skillName];
   if (factory === undefined) {

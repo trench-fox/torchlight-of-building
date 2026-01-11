@@ -181,34 +181,12 @@ export interface BaseActivationMediumSkill extends BaseSkill {
   affixDefs?: Record<0 | 1 | 2 | 3, ActivationMediumAffixDef[]>;
 }
 
-export type SkillOffense =
-  | { type: "WeaponAtkDmgPct"; value: number }
-  | { type: "AddedDmgEffPct"; value: number }
-  | {
-      type: "PersistentDmg";
-      value: number;
-      dmgType: DmgChunkType;
-      duration: number;
-    }
-  | {
-      type: "SpellDmg";
-      value: DmgRange;
-      dmgType: DmgChunkType;
-      castTime: number;
-    };
-
-export type SkillOffenseType = SkillOffense["type"];
-
-export type SkillOffenseOfType<T extends SkillOffenseType> = Extract<
-  SkillOffense,
-  { type: T }
->;
-
-export type SkillOffenseTemplate = SkillOffense extends infer M
-  ? M extends SkillOffense
-    ? Omit<M, "value">
-    : never
-  : never;
+export interface SkillOffense {
+  weaponAtkDmgPct?: { value: number };
+  addedDmgEffPct?: { value: number };
+  persistentDmg?: { value: number; dmgType: DmgChunkType; duration: number };
+  spellDmg?: { value: DmgRange; dmgType: DmgChunkType; castTime: number };
+}
 
 export interface BaseActiveSkill extends BaseSkill {
   mainStats?: ("str" | "dex" | "int")[];

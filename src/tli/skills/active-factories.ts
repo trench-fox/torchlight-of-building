@@ -13,49 +13,47 @@ export const activeSkillModFactories: Partial<
 > = {
   // Test skill for unit tests - has constant offense values
   "[Test] Simple Attack": (l, vals) => ({
-    offense: [
-      { type: "WeaponAtkDmgPct", value: v(vals.weaponAtkDmgPct, l) },
-      { type: "AddedDmgEffPct", value: v(vals.addedDmgEffPct, l) },
-    ],
+    offense: {
+      weaponAtkDmgPct: { value: v(vals.weaponAtkDmgPct, l) },
+      addedDmgEffPct: { value: v(vals.addedDmgEffPct, l) },
+    },
   }),
   // Test skill for persistent damage testing
   "[Test] Simple Persistent Spell": (l, vals) => ({
-    offense: [
-      {
-        type: "PersistentDmg",
+    offense: {
+      persistentDmg: {
         value: v(vals.persistentDamage, l),
         dmgType: "physical",
         duration: 1,
       },
-    ],
+    },
   }),
   // Test skill for spell damage testing
   "[Test] Simple Spell": (l, vals) => ({
-    offense: [
-      { type: "AddedDmgEffPct", value: v(vals.addedDmgEffPct, l) },
-      {
-        type: "SpellDmg",
+    offense: {
+      addedDmgEffPct: { value: v(vals.addedDmgEffPct, l) },
+      spellDmg: {
         value: { min: v(vals.spellDmgMin, l), max: v(vals.spellDmgMax, l) },
         dmgType: "physical",
         castTime: v(vals.castTime, l),
       },
-    ],
+    },
   }),
   "Thunder Spike": (l, vals) => ({
-    offense: [
-      { type: "WeaponAtkDmgPct", value: v(vals.weaponAtkDmgPct, l) },
-      { type: "AddedDmgEffPct", value: v(vals.addedDmgEffPct, l) },
-    ],
+    offense: {
+      weaponAtkDmgPct: { value: v(vals.weaponAtkDmgPct, l) },
+      addedDmgEffPct: { value: v(vals.addedDmgEffPct, l) },
+    },
     mods: [
       { type: "ConvertDmgPct", value: 100, from: "physical", to: "lightning" },
       { type: "InflictNumbed" },
     ],
   }),
   "Frost Spike": (l, vals) => ({
-    offense: [
-      { type: "WeaponAtkDmgPct", value: v(vals.weaponAtkDmgPct, l) },
-      { type: "AddedDmgEffPct", value: v(vals.addedDmgEffPct, l) },
-    ],
+    offense: {
+      weaponAtkDmgPct: { value: v(vals.weaponAtkDmgPct, l) },
+      addedDmgEffPct: { value: v(vals.addedDmgEffPct, l) },
+    },
     mods: [
       {
         type: "ConvertDmgPct",
@@ -84,15 +82,14 @@ export const activeSkillModFactories: Partial<
     ],
   }),
   "Mind Control": (l, vals) => ({
-    offense: [
-      { type: "AddedDmgEffPct", value: v(vals.addedDmgEffPct, l) },
-      {
-        type: "PersistentDmg",
+    offense: {
+      addedDmgEffPct: { value: v(vals.addedDmgEffPct, l) },
+      persistentDmg: {
         value: v(vals.persistentDamage, l),
         dmgType: "erosion",
         duration: 2,
       },
-    ],
+    },
     mods: [
       { type: "InitialMaxChannel", value: v(vals.initialMaxChannel, l) },
       {
@@ -234,15 +231,14 @@ export const activeSkillModFactories: Partial<
     ],
   }),
   "Chain Lightning": (l, vals) => ({
-    offense: [
-      { type: "AddedDmgEffPct", value: v(vals.addedDmgEffPct, l) },
-      {
-        type: "SpellDmg",
+    offense: {
+      addedDmgEffPct: { value: v(vals.addedDmgEffPct, l) },
+      spellDmg: {
         value: { min: v(vals.spellDmgMin, l), max: v(vals.spellDmgMax, l) },
         dmgType: "lightning",
         castTime: v(vals.castTime, l),
       },
-    ],
+    },
     mods: [{ type: "Jump", value: v(vals.jump, l) }],
   }),
   "Secret Origin Unleash": (l, vals) => ({

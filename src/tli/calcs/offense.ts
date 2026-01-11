@@ -12,9 +12,6 @@ import {
   type ImplementedActiveSkillName,
   type PassiveSkillName,
   PassiveSkills,
-  type SkillOffense,
-  type SkillOffenseOfType,
-  type SkillOffenseType,
   SupportSkills,
 } from "../../data/skill";
 import type { DmgModType } from "../constants";
@@ -474,34 +471,6 @@ const calcBaseHitOverview = (
   return { base: { physical, cold, lightning, fire, erosion, total }, avg };
 };
 
-const getLevelOffense = <T extends SkillOffenseType>(
-  skill: BaseActiveSkill,
-  skillOffenseType: T,
-  level: number,
-): Extract<SkillOffense, { type: T }> | undefined => {
-  const skillMods = getActiveSkillMods(skill.name as ActiveSkillName, level);
-  if (skillMods.offense === undefined) {
-    console.error(`Skill "${skill.name}" has no levelOffense data`);
-    return undefined;
-  }
-  const offense = skillMods.offense.find((o) => o.type === skillOffenseType);
-  if (offense === undefined) {
-    console.error(
-      `Skill "${skill.name}" has no ${skillOffenseType} in levelOffense`,
-    );
-    return undefined;
-  }
-  return offense as Extract<SkillOffense, { type: T }>;
-};
-
-const getLevelOffenseValue = (
-  skill: BaseActiveSkill,
-  skillOffenseType: SkillOffenseType,
-  level: number,
-): number | DmgRange | undefined => {
-  return getLevelOffense(skill, skillOffenseType, level)?.value ?? undefined;
-};
-
 const calculateAddnDmgFromShadows = (
   numShadowHits: number,
 ): ModT<"DmgPct"> | undefined => {
@@ -543,25 +512,20 @@ const calculateAtkHit = (
   derivedCtx: DerivedCtx,
   config: Configuration,
 ): SkillHitOverview | undefined => {
+  const skillMods = getActiveSkillMods(skill.name as ActiveSkillName, level);
+  const offense = skillMods.offense;
+
   const skillWeaponDR = match(skill.name as ActiveSkillName)
     .with("Frost Spike", () => {
-      const weaponAtkDmgPct = getLevelOffenseValue(
-        skill,
-        "WeaponAtkDmgPct",
-        level,
-      );
-      if (typeof weaponAtkDmgPct !== "number") {
+      const weaponAtkDmgPct = offense?.weaponAtkDmgPct?.value;
+      if (weaponAtkDmgPct === undefined) {
         return undefined;
       }
       return multDRs(gearDmg, weaponAtkDmgPct / 100);
     })
     .with("Thunder Spike", () => {
-      const weaponAtkDmgPct = getLevelOffenseValue(
-        skill,
-        "WeaponAtkDmgPct",
-        level,
-      );
-      if (typeof weaponAtkDmgPct !== "number") {
+      const weaponAtkDmgPct = offense?.weaponAtkDmgPct?.value;
+      if (weaponAtkDmgPct === undefined) {
         return undefined;
       }
       return multDRs(gearDmg, weaponAtkDmgPct / 100);
@@ -576,8 +540,8 @@ const calculateAtkHit = (
   if (skillWeaponDR === undefined) {
     return;
   }
-  const addedDmgEffPct = getLevelOffenseValue(skill, "AddedDmgEffPct", level);
-  if (typeof addedDmgEffPct !== "number") {
+  const addedDmgEffPct = offense?.addedDmgEffPct?.value;
+  if (addedDmgEffPct === undefined) {
     return undefined;
   }
   const skillFlatDR = multDRs(flatDmg, addedDmgEffPct / 100);
@@ -2031,21 +1995,25 @@ const calcAvgPersistentDps = (
 ): PersistentDpsSummary | undefined => {
   const { mods, perSkillContext, skillLevel, config } = input;
   const skill = perSkillContext.skill as BaseActiveSkill;
-  const offense: SkillOffenseOfType<"PersistentDmg"> | undefined = match(
-    skill.name as ActiveSkillName,
-  )
-    .with("[Test] Simple Persistent Spell", () => {
-      return getLevelOffense(skill, "PersistentDmg", skillLevel);
-    })
-    .with("Mind Control", () => {
-      return getLevelOffense(skill, "PersistentDmg", skillLevel);
-    })
-    .otherwise(() => {
-      return undefined;
-    });
-  if (offense === undefined) return;
 
-  const baseDmg: NumDmgValues = { [offense.dmgType]: offense.value };
+  const implementedPersistentSkills: ActiveSkillName[] = [
+    "[Test] Simple Persistent Spell",
+    "Mind Control",
+  ];
+  if (!implementedPersistentSkills.includes(skill.name as ActiveSkillName)) {
+    return undefined;
+  }
+
+  const skillMods = getActiveSkillMods(
+    skill.name as ActiveSkillName,
+    skillLevel,
+  );
+  const persistentDmg = skillMods.offense?.persistentDmg;
+  if (persistentDmg === undefined) return;
+
+  const baseDmg: NumDmgValues = {
+    [persistentDmg.dmgType]: persistentDmg.value,
+  };
   const baseDmgModTypes: DmgModType[] = dmgModTypesForSkill(skill);
 
   const dmgPools = convertDmg(baseDmg, mods);
@@ -2064,7 +2032,8 @@ const calcAvgPersistentDps = (
   const erosion = dmgValues.erosion ?? 0;
   const total = physical + cold + lightning + fire + erosion;
 
-  const duration = offense.duration * calcEffMult(mods, "SkillEffDurationPct");
+  const duration =
+    persistentDmg.duration * calcEffMult(mods, "SkillEffDurationPct");
 
   return {
     base: { physical, cold, lightning, fire, erosion },
@@ -2259,17 +2228,20 @@ const calcSpellHit = (
     "[Test] Simple Spell",
     "Chain Lightning",
   ];
-  const offense = implementedSpells.includes(skill.name as ActiveSkillName)
-    ? getLevelOffense(skill, "SpellDmg", level)
-    : undefined;
-  if (offense === undefined) {
+  if (!implementedSpells.includes(skill.name as ActiveSkillName)) {
     return undefined;
   }
-  const { value: skillSpellDR, dmgType, castTime } = offense;
+
+  const skillMods = getActiveSkillMods(skill.name as ActiveSkillName, level);
+  const spellDmg = skillMods.offense?.spellDmg;
+  if (spellDmg === undefined) {
+    return undefined;
+  }
+  const { value: skillSpellDR, dmgType, castTime } = spellDmg;
   const skillSpellDRs = { ...emptyDmgRanges(), [dmgType]: skillSpellDR };
 
-  const addedDmgEffPct = getLevelOffenseValue(skill, "AddedDmgEffPct", level);
-  if (typeof addedDmgEffPct !== "number") {
+  const addedDmgEffPct = skillMods.offense?.addedDmgEffPct?.value;
+  if (addedDmgEffPct === undefined) {
     return undefined;
   }
   const skillFlatDRs = multDRs(flatDmg, addedDmgEffPct / 100);
