@@ -151,11 +151,6 @@ export const ActiveSkills = [
         38, 39, 40, 40.5, 41, 41.5, 42, 42.5, 43, 43.5, 44, 44.5, 45, 45.5, 46,
         46.5, 47, 47.5, 48, 48.5, 49, 49.5,
       ],
-      inflictFrostbitePct: [
-        10, 10.5, 11, 11.5, 12, 12.5, 13, 13.5, 14, 14.5, 15, 15.5, 16, 16.5,
-        17, 17.5, 18, 18.5, 19, 19.5, 20, 20.5, 21, 21.5, 22, 22.5, 23, 23.5,
-        24, 24.5, 25, 25.5, 26, 26.5, 27, 27.5, 28, 28.5, 29, 29.5,
-      ],
     },
   },
   {
@@ -380,19 +375,19 @@ export const ActiveSkills = [
     kinds: ["deal_damage", "hit_enemies"],
     levelValues: {
       addedDmgEffPct: [
-        163, 164, 164, 165, 166, 166, 167, 168, 169, 169, 170, 171, 172, 172,
-        173, 174, 174, 175, 176, 177, 177, 177, 177, 177, 177, 177, 177, 177,
-        177, 177, 177, 177, 177, 177, 177, 177, 177, 177, 177, 177,
+        136, 136, 136, 136, 136, 136, 136, 136, 136, 136, 136, 136, 136, 136,
+        136, 136, 136, 136, 136, 136, 136, 136, 136, 136, 136, 136, 136, 136,
+        136, 136, 136, 136, 136, 136, 136, 136, 136, 136, 136, 136,
       ],
       spellDmgMin: [
-        1, 1, 2, 2, 3, 4, 4, 6, 7, 9, 11, 13, 16, 19, 23, 32, 38, 53, 80, 95,
-        95, 95, 95, 95, 95, 95, 95, 95, 95, 95, 95, 95, 95, 95, 95, 95, 95, 95,
-        95, 95,
+        1, 1, 1, 2, 3, 3, 4, 5, 6, 7, 9, 11, 13, 15, 18, 25, 30, 41, 61, 73, 73,
+        73, 73, 73, 73, 73, 73, 73, 73, 73, 73, 73, 73, 73, 73, 73, 73, 73, 73,
+        73,
       ],
       spellDmgMax: [
-        23, 26, 34, 47, 60, 74, 84, 106, 138, 168, 217, 256, 311, 367, 437, 617,
-        729, 1009, 1512, 1811, 1811, 1811, 1811, 1811, 1811, 1811, 1811, 1811,
-        1811, 1811, 1811, 1811, 1811, 1811, 1811, 1811, 1811, 1811, 1811, 1811,
+        19, 21, 28, 39, 49, 60, 69, 86, 111, 135, 174, 204, 246, 289, 343, 482,
+        568, 782, 1168, 1393, 1393, 1393, 1393, 1393, 1393, 1393, 1393, 1393,
+        1393, 1393, 1393, 1393, 1393, 1393, 1393, 1393, 1393, 1393, 1393, 1393,
       ],
       castTime: [
         0.65, 0.65, 0.65, 0.65, 0.65, 0.65, 0.65, 0.65, 0.65, 0.65, 0.65, 0.65,
@@ -529,9 +524,9 @@ export const ActiveSkills = [
         46.5, 47, 47.5, 48, 48.5, 49, 49.5,
       ],
       inflictWiltPct: [
-        10, 10.5, 11, 11.5, 12, 12.5, 13, 13.5, 14, 14.5, 15, 15.5, 16, 16.5,
-        17, 17.5, 18, 18.5, 19, 19.5, 20, 20.5, 21, 21.5, 22, 22.5, 23, 23.5,
-        24, 24.5, 25, 25.5, 26, 26.5, 27, 27.5, 28, 28.5, 29, 29.5,
+        10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10,
+        10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10,
+        10, 10, 10, 10,
       ],
     },
   },
@@ -563,6 +558,16 @@ export const ActiveSkills = [
       "Casts the skill and gains Euphoria:\nGains 19.5 Command\n+10% Command Return Speed per Second while the skill lasts\n7.8% additional Minion Damage while the skill lasts\n+20% Minion Movement Speed while the skill lasts",
     ],
     kinds: ["summon_minions"],
+  },
+  {
+    type: "Active",
+    name: "Blind",
+    tags: ["Spell", "Area", "Persistent", "Curse"],
+    description: [
+      "Casts the skill and Curses enemies within the target area. Enemies Cursed will be Blinded and gains -1% additional Movement Speed.",
+      "Casts the skill and Curses enemies within the target area.\n-20% additional Movement Speed for Cursed enemies\nCursed enemies will become Blinded\nLasts 5s.",
+    ],
+    kinds: [],
   },
   {
     type: "Active",
@@ -926,6 +931,24 @@ export const ActiveSkills = [
     ],
     mainStats: ["int"],
     kinds: ["deal_damage", "dot"],
+  },
+  {
+    type: "Active",
+    name: "Gale Slash",
+    tags: ["Attack", "Melee", "Area", "Physical", "Combo", "Persistent"],
+    description: [
+      "Combo Starter 1: Charges forward, dealing 392% Weapon Attack Damage to enemies in the path.",
+      "Combo Starter 2: Launches a spinning attack while moving forward, dealing 392% Weapon Attack Damage.",
+      "Combo Finisher: Leaps and pummels the ground ahead, dealing 392% Weapon Attack Damage.",
+      "Combo Starter 1:\nDeals 392% Weapon Attack Damage.\nCharges forward 3.5m. If the enemy is too far away, instead charges 6m\n+20% additional Attack Speed for the Combo Starter 1 of this skill",
+      "Combo Starter 2:\nDeals 392% Weapon Attack Damage\nMove forward 2.5m\nWhen the Starter 2 hits, it knocks back enemies in the direction the skill was cast",
+      "Combo Finisher:\nDeals 392% Weapon Attack Damage\nJump forward 4m\n-50% additional Attack Speed for the Combo Finisher of this skill",
+      "+30% Combo Finisher Amplification for this skill\nThis skill's Attack Speed bonus falls off at a rate equal to that of a normal Mobility Skill\n0.2% additional damage for this skill for every +1% Attack Speed",
+      "After casting this skill's Starter, gains 1 stack of Wind Wake for every 1 Combo Point(s) gained from the Starter\n+5% movement distance for this skill's Starter for each Combo Point. Stacks up to 4 time(s)\nThis skill cannot be triggered\nThis skill cannot be supported by Activation Medium Skills",
+      "+20% additional Attack Speed for the Combo Starter 1 of this skill\n-50% additional Attack Speed for the Combo Finisher of this skill\nAfter casting this skill's Starter, gains 1 stack of Wind Wake for every 1 Combo Point(s) gained from the Starter\n+5% movement distance for this skill's Starter for each Combo Point. Stacks up to 4 time(s)\n+30% Combo Finisher Amplification for this skill\n1.5% additional Critical Strike Rating for this skill for each stack of buff\nThis skill cannot be triggered\n0.2% additional damage for this skill for every +1% Attack Speed",
+    ],
+    mainStats: ["str", "dex"],
+    kinds: ["deal_damage", "hit_enemies"],
   },
   {
     type: "Active",
@@ -1808,6 +1831,16 @@ export const ActiveSkills = [
   },
   {
     type: "Active",
+    name: "Shockwave Warcry",
+    tags: ["Warcry", "Area", "Persistent"],
+    description: [
+      "释放该技能发出战吼，嘲讽周围敌人。该技能每影响一个敌人，连携终结技额外 3.1% 伤害和异常伤害，持续 3 秒。\n战吼持续时，每释放一次连携终结技，连携技能 6% 技能范围，上限 5 层。",
+      "Casts the skill and lets out a Warcry:\nTaunts Nearby enemies.\n5.95% additional damage and Ailment Damage for Combo Finishers for each enemy affected, stacking up to 8 time(s)\nWhile the skill lasts, +6% Skill Area for Combo skills for each Combo Finisher cast. Stacks up to 5 time(s)\nLasts for 3s",
+    ],
+    kinds: [],
+  },
+  {
+    type: "Active",
     name: "Sparkle",
     tags: ["Spell", "Projectile", "Lightning", "Area", "Horizontal"],
     description: [
@@ -1815,6 +1848,22 @@ export const ActiveSkills = [
       "Sparkle:\nDeals 43-810 SpellLightning Damage\nProjectiles hit once every 0.25s\nProjectile Duration: 1.5s",
     ],
     mainStats: ["int"],
+    kinds: ["deal_damage", "hit_enemies"],
+  },
+  {
+    type: "Active",
+    name: "Spectral Slash",
+    tags: ["Attack", "Melee", "Area", "Physical", "Combo", "Persistent"],
+    description: [
+      "Combo Starter 1: Launches a Steep Strike forward, dealing 448% Weapon Attack Damage to the first enemy hit and inflicting Mark.",
+      "Combo Starter 2: Launches a Steep Strike forward, dealing 448% Weapon Attack Damage and spreading the enemy's Mark.",
+      "Combo Finisher: Pummels the ground ahead, dealing 145% Weapon Attack Damage, and generates several clones that launch a Steep Strike to enemies with Mark, dealing 145% Weapon Attack Damage.",
+      "Combo Starter 1:\nDeals 448% Weapon Attack Damage\nThis skill can only hit 1 enemy\nOn hit, inflicts Mark to the enemy\nWhen defeating an enemy, this skill directly spreads the target's Mark to other enemies within 8m",
+      "Combo Starter 2:\nDeals 448% Weapon Attack Damage\nOn hit, spreads the target's Mark to other enemies within 8m (affected by Skill Area)",
+      "Combo Finisher:\nDeals 145% Weapon Attack Damage\nGenerates 1 additional Clone for every Combo Point consumed, up to 4 Clone(s)\nThe falloff coefficient of the Clones' Shotgun Effect is 70%\nRemoves Mark from enemies after the skill ends",
+      "-40% additional Attack Speed for the Combo Finisher of this skill\n+30% Combo Finisher Amplification for this skill",
+    ],
+    mainStats: ["str"],
     kinds: ["deal_damage", "hit_enemies"],
   },
   {

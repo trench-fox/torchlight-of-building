@@ -469,7 +469,6 @@ export const bitingColdParser: SupportLevelParser = (input) => {
 
   const descriptCol = findColumn(progressionTable, "descript", skillName);
   const dmgPct: Record<number, number> = {};
-  const inflictFrostbitePct: Record<number, number> = {};
 
   for (const [levelStr, text] of Object.entries(descriptCol.rows)) {
     const level = Number(levelStr);
@@ -479,21 +478,11 @@ export const bitingColdParser: SupportLevelParser = (input) => {
       skillName,
     );
     dmgPct[level] = dmgMatch.value;
-
-    const frostbiteMatch = findMatch(
-      text,
-      ts(
-        "{value:?dec%} chance to be frostbitten when you are hit by a cursed enemy",
-      ),
-      skillName,
-    );
-    inflictFrostbitePct[level] = frostbiteMatch.value;
   }
 
   validateAllLevels(dmgPct, skillName);
-  validateAllLevels(inflictFrostbitePct, skillName);
 
-  return { dmgPct, inflictFrostbitePct };
+  return { dmgPct };
 };
 
 export const timidParser: SupportLevelParser = (input) => {
@@ -771,7 +760,7 @@ export const berserkingBladeParser: SupportLevelParser = (input) => {
 
   const maxBerserkingBladeStacks = findMatch(
     descript,
-    ts("stacks up to {value:int} times"),
+    ts("Stacks up to {value:int} time\\(s\\)"),
     skillName,
   ).value;
 

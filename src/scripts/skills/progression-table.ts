@@ -46,7 +46,14 @@ export const extractProgressionTable = (
 
         if (header === "descript") {
           // For Descript columns, preserve structure by converting <br/> and <hr> to \n
-          let html = $(cell).html() ?? "";
+          // First, remove hyperlink elements that have tooltip data-bs-title attributes
+          // containing HTML that would pollute the text extraction
+          const cellClone = $(cell).clone();
+          cellClone.find("e.Hyperlink").each((_, el) => {
+            const text = $(el).text();
+            $(el).replaceWith(text);
+          });
+          let html = cellClone.html() ?? "";
           // Convert <br/> and <hr> to \n (both act as line separators)
           html = html.replace(/<br\s*\/?>/gi, "\n");
           html = html.replace(/<hr[^>]*\/?>/gi, "\n");

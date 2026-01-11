@@ -450,6 +450,27 @@ export const MagnificentSupportSkills = [
   },
   {
     type: "Support (Magnificent)",
+    name: "Gale Slash: Dominance (Magnificent)",
+    tags: ["Physical"],
+    description: [
+      "Supports Gale Slash.\nThis skill can only be installed in the third Support Skill Slot of each Active Skill.\n+20% additional damage for the supported skill\nGains 2 Combo Point(s) on Critical Strikes from the Combo Starter of the supported skill. Each skill cast can only trigger this effect once",
+      "Gains 2 Combo Point(s) on Critical Strikes from the Combo Starter of the supported skill. Each skill cast can only trigger this effect once",
+      "+(22–24)% additional damage for the supported skill",
+    ],
+    supportTarget: "Gale Slash",
+  },
+  {
+    type: "Support (Magnificent)",
+    name: "Gale Slash: Onslaught (Magnificent)",
+    tags: ["Physical"],
+    description: [
+      "Supports Gale Slash.\nThis skill can only be installed in the third Support Skill Slot of each Active Skill.\n+20% additional damage for the supported skill",
+      "+(7.5–7.8)% additional damage (multiplies) for the supported skill for every 5 m moved recently. Stacks up to 5 time(s)",
+    ],
+    supportTarget: "Gale Slash",
+  },
+  {
+    type: "Support (Magnificent)",
     name: "Ghost Blade Einherjar: Prestige (Magnificent)",
     tags: ["Erosion"],
     description: [
@@ -933,6 +954,17 @@ export const MagnificentSupportSkills = [
       "+(28–30)% additional damage for the supported skill",
     ],
     supportTarget: "Sparkle",
+  },
+  {
+    type: "Support (Magnificent)",
+    name: "Spectral Slash: Detonation (Magnificent)",
+    tags: ["Physical"],
+    description: [
+      "Supports Spectral Slash.\nThis skill can only be installed in the third Support Skill Slot of each Active Skill.\n+20% additional damage for the supported skill\nWhen the supported skill's Clones defeat an enemy, there is a 50% chance to cause an Explosion, dealing 80% Hit Damage",
+      "When the supported skill's Clones defeat an enemy, there is a 50% chance to cause an Explosion, dealing 80% Hit Damage",
+      "+(22–24)% additional damage for the supported skill",
+    ],
+    supportTarget: "Spectral Slash",
   },
   {
     type: "Support (Magnificent)",

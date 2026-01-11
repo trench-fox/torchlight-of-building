@@ -2503,7 +2503,7 @@ describe("resolveBuffSkillMods", () => {
         "cond" in m &&
         m.cond === "enemy_frostbitten",
     ) as DmgPctMod | undefined;
-    expect(iceBondBuffMod?.value).toBeCloseTo(33 * 1.3);
+    expect(iceBondBuffMod?.value).toBeCloseTo(38.1975);
   });
 
   test("Ice Bond and Bull's Rage with Mass Effect and Well-Fought Battle - supports only affect their attached skill", () => {
@@ -2515,7 +2515,7 @@ describe("resolveBuffSkillMods", () => {
     // Ice Bond at level 20: 33% base cold damage (modType: "cold")
     // Bull's Rage at level 20: 27% base melee damage (modType: "melee")
     // Mass Effect at level 20: 20% per charge * 2 charges = 40% skill effect
-    // Well-Fought Battle at level 20: 10% per use * 3 uses = 30% skill effect
+    // Well-Fought Battle at level 20: 5.25% per use * 3 uses = 15.75% skill effect
     //
     // Ice Bond buff = 33% * 1.7 = 56.1% additional cold damage
     // Bull's Rage buff = 27% * 1.7 = 45.9% additional melee damage
@@ -2552,17 +2552,17 @@ describe("resolveBuffSkillMods", () => {
         "cond" in m &&
         m.cond === "enemy_frostbitten",
     ) as DmgPctMod | undefined;
-    expect(iceBondBuffMod?.value).toBeCloseTo(33 * 1.7);
+    expect(iceBondBuffMod?.value).toBeCloseTo(51.3975);
 
     // Check Bull's Rage buff
     const bullsRageBuffMod = actual?.resolvedMods.find(
       (m) => m.type === "DmgPct" && m.dmgModType === "melee" && m.addn === true,
     ) as DmgPctMod | undefined;
-    expect(bullsRageBuffMod?.value).toBeCloseTo(27 * 1.7);
+    expect(bullsRageBuffMod?.value).toBeCloseTo(42.0525);
 
     // Verify final avgHit includes both Ice Bond's cold buff and Bull's Rage's melee buff
     expect(actual?.attackDpsSummary?.mainhand.avgHit).toBeCloseTo(
-      201 * 1.561 * 1.459,
+      201 * 1.514 * 1.4205,
     );
   });
 
@@ -2655,7 +2655,7 @@ describe("resolveBuffSkillMods", () => {
         "cond" in m &&
         m.cond === "enemy_frostbitten",
     ) as DmgPctMod | undefined;
-    expect(iceBondBuffMod?.value).toBeCloseTo(33 * 1.7);
+    expect(iceBondBuffMod?.value).toBeCloseTo(51.3975);
   });
 
   test("support skill level affects skill effect bonus", () => {
@@ -4643,16 +4643,16 @@ describe("spell damage", () => {
     const skill = results.skills["Chain Lightning"];
     expect(skill).toBeDefined();
     expect(skill?.spellDpsSummary).toBeDefined();
-    // avg damage = (95 + 1811) / 2 = 953
+    // avg damage = (95 + 1371) / 2 = 733
     // castsPerSec = 1 / 0.65 ≈ 1.538
-    // With base crit: avgHitWithCrit = 953 * 1.025 = 976.825
-    // avgDps = 976.825 * 1.538 ≈ 1502.8
+    // With base crit: avgHitWithCrit = 733 * 1.025 = 751.325
+    // avgDps = 751.325 * 1.538 ≈ 1155.5
     expect(skill?.spellDpsSummary?.castsPerSec).toBeCloseTo(1 / 0.65);
     expect(skill?.spellDpsSummary?.avgHitWithCrit).toBeCloseTo(
-      953 * baseCritMult,
+      733 * baseCritMult,
     );
     expect(skill?.spellDpsSummary?.avgDps).toBeCloseTo(
-      953 * baseCritMult * (1 / 0.65),
+      733 * baseCritMult * (1 / 0.65),
     );
   });
 });

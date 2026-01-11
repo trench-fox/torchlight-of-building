@@ -32,6 +32,10 @@ export const SupportSkills = [
     ],
     supportTargets: ["hit_enemies"],
     cannotSupportTargets: [],
+    fixedAffixes: [
+      "The supported skill gains 11% of its damage as Base Wilt Damage",
+      "Adds 7.7% of Main-Hand Weapon Damage to Base Wilt Damage for the supported skill",
+    ],
     templates: [
       {
         template: "Adds {value} - 2 Erosion Damage to the supported skill",
@@ -39,25 +43,6 @@ export const SupportSkills = [
           2, 3, 4, 5, 6, 7, 8, 9, 11, 13, 15, 17, 20, 25, 35, 50, 60, 70, 85,
           104, 105, 106, 107, 108, 109, 111, 112, 113, 114, 115, 116, 117, 119,
           120, 121, 122, 123, 125, 126, 127,
-        ],
-      },
-      {
-        template:
-          "The supported skill gains {value}% of its damage as Base Wilt Damage",
-        levelValues: [
-          11, 11.3, 11.6, 11.9, 12.2, 12.5, 12.8, 13.1, 13.4, 13.7, 14, 14.3,
-          14.6, 14.9, 15.2, 15.5, 15.8, 16.1, 16.4, 16.7, 17, 17.3, 17.6, 17.9,
-          18.2, 18.5, 18.8, 19.1, 19.4, 19.7, 20, 20.3, 20.6, 20.9, 21.2, 21.5,
-          21.8, 22.1, 22.4, 22.7,
-        ],
-      },
-      {
-        template:
-          "Adds {value}% of Main-Hand Weapon Damage to Base Wilt Damage for the supported skill",
-        levelValues: [
-          7.7, 7.8, 7.9, 8, 8.1, 8.2, 8.3, 8.4, 8.5, 8.6, 8.7, 8.8, 8.9, 9, 9.1,
-          9.2, 9.3, 9.4, 9.5, 9.6, 9.7, 9.8, 9.9, 10, 10.1, 10.2, 10.3, 10.4,
-          10.5, 10.6, 10.7, 10.8, 10.9, 11, 11.1, 11.2, 11.3, 11.4, 11.5, 11.6,
         ],
       },
     ],
@@ -72,6 +57,10 @@ export const SupportSkills = [
     ],
     supportTargets: ["hit_enemies"],
     cannotSupportTargets: [],
+    fixedAffixes: [
+      "The supported skill gains 13.4% of its damage as Base Ignite Damage",
+      "Adds 8.7% of Main-Hand Weapon Damage to Base Ignite Damage for the supported skill",
+    ],
     templates: [
       {
         template: "The supported skill adds {value} - 3 Fire Damage",
@@ -79,26 +68,6 @@ export const SupportSkills = [
           1, 2, 3, 4, 4, 5, 6, 6, 8, 9, 11, 12, 14, 18, 25, 35, 42, 49, 60, 73,
           74, 74, 75, 76, 77, 77, 78, 79, 80, 81, 81, 82, 83, 84, 85, 86, 86,
           87, 88, 89,
-        ],
-      },
-      {
-        template:
-          "The supported skill gains {value}% of its damage as Base Ignite Damage",
-        levelValues: [
-          13.4, 13.8, 14.2, 14.6, 15, 15.4, 15.8, 16.2, 16.6, 17, 17.4, 17.8,
-          18.2, 18.6, 19, 19.4, 19.8, 20.2, 20.6, 21, 21.4, 21.8, 22.2, 22.6,
-          23, 23.4, 23.8, 24.2, 24.6, 25, 25.4, 25.8, 26.2, 26.6, 27, 27.4,
-          27.8, 28.2, 28.6, 29,
-        ],
-      },
-      {
-        template:
-          "Adds {value}% of Main-Hand Weapon Damage to Base Ignite Damage for the supported skill",
-        levelValues: [
-          8.7, 8.9, 9.1, 9.3, 9.5, 9.7, 9.9, 10.1, 10.3, 10.5, 10.7, 10.9, 11.1,
-          11.3, 11.5, 11.7, 11.9, 12.1, 12.3, 12.5, 12.7, 12.9, 13.1, 13.3,
-          13.5, 13.7, 13.9, 14.1, 14.3, 14.5, 14.7, 14.9, 15.1, 15.3, 15.5,
-          15.7, 15.9, 16.1, 16.3, 16.5,
         ],
       },
     ],
@@ -134,6 +103,10 @@ export const SupportSkills = [
     ],
     supportTargets: ["hit_enemies"],
     cannotSupportTargets: [],
+    fixedAffixes: [
+      "The supported skill gains 23.5% of its damage as Base Trauma Damage",
+      "Adds 12.4% of the Main-Hand Weapon's damage to Base Trauma Damage for the supported skill",
+    ],
     templates: [
       {
         template: "Supported skills add {value} - 3 physical damage",
@@ -141,25 +114,6 @@ export const SupportSkills = [
           2, 2, 3, 4, 5, 5, 6, 7, 8, 10, 11, 13, 15, 19, 26, 38, 45, 53, 64, 78,
           79, 80, 80, 81, 82, 83, 84, 85, 85, 86, 87, 88, 89, 90, 91, 92, 93,
           93, 94, 95,
-        ],
-      },
-      {
-        template:
-          "The supported skill gains {value}% of its damage as Base Trauma Damage",
-        levelValues: [
-          23.5, 24, 24.5, 25, 25.5, 26, 26.5, 27, 27.5, 28, 28.5, 29, 29.5, 30,
-          30.5, 31, 31.5, 32, 32.5, 33, 33.5, 34, 34.5, 35, 35.5, 36, 36.5, 37,
-          37.5, 38, 38.5, 39, 39.5, 40, 40.5, 41, 41.5, 42, 42.5, 43,
-        ],
-      },
-      {
-        template:
-          "Adds {value}% of the Main-Hand Weapon's damage to Base Trauma Damage for the supported skill",
-        levelValues: [
-          12.4, 12.8, 13.2, 13.6, 14, 14.4, 14.8, 15.2, 15.6, 16, 16.4, 16.8,
-          17.2, 17.6, 18, 18.4, 18.8, 19.2, 19.6, 20, 20.4, 20.8, 21.2, 21.6,
-          22, 22.4, 22.8, 23.2, 23.6, 24, 24.4, 24.8, 25.2, 25.6, 26, 26.4,
-          26.8, 27.2, 27.6, 28,
         ],
       },
     ],
@@ -176,25 +130,8 @@ export const SupportSkills = [
     cannotSupportTargets: [],
     fixedAffixes: [
       "The supported skill inflicts 1 additional stack(s) of Ignite",
-    ],
-    templates: [
-      {
-        template:
-          "For each stack of Ignite an enemy has, the supported skill deals 6.2% additional Ignite Damage to the enemy, up to 24.8% .",
-        levelValues: [
-          31, 6.4, 6.6, 6.8, 7, 7.2, 7.4, 7.6, 7.8, 8, 8.2, 8.4, 8.6, 8.8, 9,
-          9.2, 9.4, 9.6, 9.8, 10, 51, 10.4, 10.6, 10.8, 11, 11.2, 11.4, 11.6,
-          11.8, 12, 12.2, 12.4, 12.6, 12.8, 13, 13.2, 13.4, 13.6, 13.8, 14,
-        ],
-      },
-      {
-        template: "{value}% Ignite chance for the supported skill",
-        levelValues: [
-          20.5, 21, 21.5, 22, 22.5, 23, 23.5, 24, 24.5, 25, 25.5, 26, 26.5, 27,
-          27.5, 28, 28.5, 29, 29.5, 30, 30.5, 31, 31.5, 32, 32.5, 33, 33.5, 34,
-          34.5, 35, 35.5, 36, 36.5, 37, 37.5, 38, 38.5, 39, 39.5, 40,
-        ],
-      },
+      "For each stack of Ignite an enemy has, the supported skill deals 6.2% additional Ignite Damage to the enemy, up to 24.8% .",
+      "20.5% Ignite chance for the supported skill",
     ],
   },
   {
@@ -373,6 +310,31 @@ export const SupportSkills = [
           0.775, 0.8, 0.825, 0.85, 0.875, 0.9, 0.925, 0.95, 0.975, 1, 1.025,
           1.05, 1.075, 1.1, 1.125, 1.15, 1.175, 1.2, 1.225, 1.25, 1.275, 1.3,
           1.325, 1.35, 1.375, 1.4, 1.425, 1.45, 1.475,
+        ],
+      },
+    ],
+  },
+  {
+    type: "Support",
+    name: "Blinding",
+    tags: [],
+    description: [
+      "Supports skills that hit enemies.\n+10% chance to inflict Blind when the supported skill hits targets\n+5% Blinding Duration caused by the supported skill",
+      "+10% chance to inflict Blind when the supported skill hits targets\n+5% Blinding Duration caused by the supported skill",
+    ],
+    supportTargets: ["hit_enemies"],
+    cannotSupportTargets: [],
+    fixedAffixes: [
+      "+10% chance to inflict Blind when the supported skill hits targets",
+    ],
+    templates: [
+      {
+        template: "+{value}% Blinding Duration caused by the supported skill",
+        levelValues: [
+          5, 6.75, 8.5, 10.25, 12, 13.75, 15.5, 17.25, 19, 20.75, 22.5, 24.25,
+          26, 27.75, 29.5, 31.25, 33, 34.75, 36.5, 38.25, 40, 41.75, 43.5,
+          45.25, 47, 48.75, 50.5, 52.25, 54, 55.75, 57.5, 59.25, 61, 62.75,
+          64.5, 66.25, 68, 69.75, 71.5, 73.25,
         ],
       },
     ],
@@ -640,17 +602,8 @@ export const SupportSkills = [
     ],
     supportTargets: [{ tags: ["Restoration"] }],
     cannotSupportTargets: [],
-    templates: [
-      {
-        template:
-          "The supported skill gains {value} Charging Progress when suffering Severe Injury. Interval: 4s",
-        levelValues: [
-          10, 10.3, 10.6, 10.9, 11.2, 11.5, 11.8, 12.1, 12.4, 12.7, 13, 13.3,
-          13.6, 13.9, 14.2, 14.5, 14.8, 15.1, 15.4, 15.7, 16, 16.2, 16.4, 16.6,
-          16.8, 17, 17.2, 17.4, 17.6, 17.8, 18, 18.2, 18.4, 18.6, 18.8, 19,
-          19.2, 19.4, 19.6, 19.8,
-        ],
-      },
+    fixedAffixes: [
+      "The supported skill gains 10 Charging Progress when suffering Severe Injury. Interval: 4s",
     ],
   },
   {
@@ -706,23 +659,9 @@ export const SupportSkills = [
     ],
     supportTargets: ["hit_enemies"],
     cannotSupportTargets: [],
-    templates: [
-      {
-        template: "{value}% additional Trauma Damage for the supported skill",
-        levelValues: [
-          15.5, 16, 16.5, 17, 17.5, 18, 18.5, 19, 19.5, 20, 20.5, 21, 21.5, 22,
-          22.5, 23, 23.5, 24, 24.5, 25, 25.5, 26, 26.5, 27, 27.5, 28, 28.5, 29,
-          29.5, 30, 30.5, 31, 31.5, 32, 32.5, 33, 33.5, 34, 34.5, 35,
-        ],
-      },
-      {
-        template: "{value}% chance for the supported skill to inflict Trauma",
-        levelValues: [
-          20.5, 21, 21.5, 22, 22.5, 23, 23.5, 24, 24.5, 25, 25.5, 26, 26.5, 27,
-          27.5, 28, 28.5, 29, 29.5, 30, 30.5, 31, 31.5, 32, 32.5, 33, 33.5, 34,
-          34.5, 35, 35.5, 36, 36.5, 37, 37.5, 38, 38.5, 39, 39.5, 40,
-        ],
-      },
+    fixedAffixes: [
+      "15.5% additional Trauma Damage for the supported skill",
+      "20.5% chance for the supported skill to inflict Trauma",
     ],
   },
   {
@@ -998,16 +937,7 @@ export const SupportSkills = [
     ],
     supportTargets: ["hit_enemies"],
     cannotSupportTargets: [],
-    templates: [
-      {
-        template: "{value}% additional Ailment Damage for the supported skill",
-        levelValues: [
-          15.5, 16, 16.5, 17, 17.5, 18, 18.5, 19, 19.5, 20, 20.5, 21, 21.5, 22,
-          22.5, 23, 23.5, 24, 24.5, 25, 25.5, 26, 26.5, 27, 27.5, 28, 28.5, 29,
-          29.5, 30, 30.5, 31, 31.5, 32, 32.5, 33, 33.5, 34, 34.5, 35,
-        ],
-      },
-    ],
+    fixedAffixes: ["15.5% additional Ailment Damage for the supported skill"],
   },
   {
     type: "Support",
@@ -1178,6 +1108,21 @@ export const SupportSkills = [
           58.4, 58.6, 58.8, 59,
         ],
       },
+    ],
+  },
+  {
+    type: "Support",
+    name: "Freeze Chance",
+    tags: ["Cold"],
+    description: [
+      "Supports skills that deal damage.\n15.5% additional Cold Damage for the supported skill\n+50% Frostbite chance for the supported skill",
+      "15.5% additional Cold Damage for the supported skill\n+50% Frostbite chance for the supported skill",
+    ],
+    supportTargets: ["deal_damage"],
+    cannotSupportTargets: [],
+    fixedAffixes: [
+      "15.5% additional Cold Damage for the supported skill",
+      "+50% Frostbite chance for the supported skill",
     ],
   },
   {
@@ -1353,24 +1298,9 @@ export const SupportSkills = [
     ],
     supportTargets: ["hit_enemies"],
     cannotSupportTargets: [],
-    templates: [
-      {
-        template:
-          "{value}% additional Lightning Damage for the supported skill",
-        levelValues: [
-          15.5, 16, 16.5, 17, 17.5, 18, 18.5, 19, 19.5, 20, 20.5, 21, 21.5, 22,
-          22.5, 23, 23.5, 24, 24.5, 25, 25.5, 26, 26.5, 27, 27.5, 28, 28.5, 29,
-          29.5, 30, 30.5, 31, 31.5, 32, 32.5, 33, 33.5, 34, 34.5, 35,
-        ],
-      },
-      {
-        template: "{value}% Numbed chance for the supported skill",
-        levelValues: [
-          20.5, 21, 21.5, 22, 22.5, 23, 23.5, 24, 24.5, 25, 25.5, 26, 26.5, 27,
-          27.5, 28, 28.5, 29, 29.5, 30, 30.5, 31, 31.5, 32, 32.5, 33, 33.5, 34,
-          34.5, 35, 35.5, 36, 36.5, 37, 37.5, 38, 38.5, 39, 39.5, 40,
-        ],
-      },
+    fixedAffixes: [
+      "15.5% additional Lightning Damage for the supported skill",
+      "20.5% Numbed chance for the supported skill",
     ],
   },
   {
@@ -1411,25 +1341,10 @@ export const SupportSkills = [
     ],
     supportTargets: ["hit_enemies"],
     cannotSupportTargets: [],
-    fixedAffixes: ["-10% additional Wilt Damage for the supported skill"],
-    templates: [
-      {
-        template:
-          "{value}% chance for the supported skill to inflict 1 additional stacks of Wilt",
-        levelValues: [
-          29.5, 30, 30.5, 31, 31.5, 32, 32.5, 33, 33.5, 34, 34.5, 35, 35.5, 36,
-          36.5, 37, 37.5, 38, 38.5, 39, 39.5, 40, 40.5, 41, 41.5, 42, 42.5, 43,
-          43.5, 44, 44.5, 45, 45.5, 46, 46.5, 47, 47.5, 48, 48.5, 49,
-        ],
-      },
-      {
-        template: "{value}% Wilt chance for the supported skill",
-        levelValues: [
-          20.5, 21, 21.5, 22, 22.5, 23, 23.5, 24, 24.5, 25, 25.5, 26, 26.5, 27,
-          27.5, 28, 28.5, 29, 29.5, 30, 30.5, 31, 31.5, 32, 32.5, 33, 33.5, 34,
-          34.5, 35, 35.5, 36, 36.5, 37, 37.5, 38, 38.5, 39, 39.5, 40,
-        ],
-      },
+    fixedAffixes: [
+      "29.5% chance for the supported skill to inflict 1 additional stacks of Wilt",
+      "20.5% Wilt chance for the supported skill",
+      "-10% additional Wilt Damage for the supported skill",
     ],
   },
   {
@@ -1541,17 +1456,7 @@ export const SupportSkills = [
     cannotSupportTargets: [],
     fixedAffixes: [
       "Converts 100% of the supported skill's Lightning Damage to Cold Damage",
-    ],
-    templates: [
-      {
-        template:
-          "{value}% additional Lightning Damage for the supported skill",
-        levelValues: [
-          15.5, 16, 16.5, 17, 17.5, 18, 18.5, 19, 19.5, 20, 20.5, 21, 21.5, 22,
-          22.5, 23, 23.5, 24, 24.5, 25, 25.5, 26, 26.5, 27, 27.5, 28, 28.5, 29,
-          29.5, 30, 30.5, 31, 31.5, 32, 32.5, 33, 33.5, 34, 34.5, 35,
-        ],
-      },
+      "15.5% additional Lightning Damage for the supported skill",
     ],
   },
   {
@@ -1650,6 +1555,30 @@ export const SupportSkills = [
           "Supports skills that summon Synthetic Troops.\n+1 to Max Summonable Minions for the supported skill\nGains a buff when Minions summoned by the supported skill land a Critical Strike. Lasts 4 s. Interval per Minion: 8 s\nWhile the buff lasts, 7.15% additional Damage, stacking up to 42.9% , for every 10 point(s) of Command the Summoner has\nWhile the buff is active, 3.5% Attack and Cast Speed for every 10 Command the summoner has, up to +21%",
           "Supports skills that summon Synthetic Troops.\n+1 to Max Summonable Minions for the supported skill\nGains a buff when Minions summoned by the supported skill land a Critical Strike. Lasts 4 s. Interval per Minion: 8 s\nWhile the buff lasts, 7.2% additional Damage, stacking up to 43.2% , for every 10 point(s) of Command the Summoner has\nWhile the buff is active, 3.5% Attack and Cast Speed for every 10 Command the summoner has, up to +21%",
           "Supports skills that summon Synthetic Troops.\n+1 to Max Summonable Minions for the supported skill\nGains a buff when Minions summoned by the supported skill land a Critical Strike. Lasts 4 s. Interval per Minion: 8 s\nWhile the buff lasts, 7.25% additional Damage, stacking up to 43.5% , for every 10 point(s) of Command the Summoner has\nWhile the buff is active, 3.5% Attack and Cast Speed for every 10 Command the summoner has, up to +21%",
+        ],
+      },
+    ],
+  },
+  {
+    type: "Support",
+    name: "Manifold Entanglement",
+    tags: ["Spell"],
+    description: [
+      "Supports Active Spell Skills.\nCannot support Channeled Skills, Sentry Skills or skills that summon Minions.\nCreates Tangles equal to Max Tangle Quantity when you use the supported skill\n+1% additional damage for the supported skill",
+      "Creates Tangles equal to Max Tangle Quantity when you use the supported skill\n+1% additional damage for the supported skill",
+    ],
+    supportTargets: [{ skillType: "active", tags: ["Spell"] }],
+    cannotSupportTargets: [{ tags: ["Channeled"] }],
+    fixedAffixes: [
+      "Creates Tangles equal to Max Tangle Quantity when you use the supported skill",
+    ],
+    templates: [
+      {
+        template: "+{value}% additional damage for the supported skill",
+        levelValues: [
+          1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
+          21, 21.5, 22, 22.5, 23, 23.5, 24, 24.5, 25, 25.5, 26, 26.5, 27, 27.5,
+          28, 28.5, 29, 29.5, 30, 30.5,
         ],
       },
     ],
@@ -1871,17 +1800,8 @@ export const SupportSkills = [
     ],
     supportTargets: [{ tags: ["Spell"] }],
     cannotSupportTargets: [],
-    templates: [
-      {
-        template:
-          "{value}% additional damage for the supported skill for every stack of Focus Blessing, stacking up to 8 times",
-        levelValues: [
-          3.05, 3.1, 3.15, 3.2, 3.25, 3.3, 3.35, 3.4, 3.45, 3.5, 3.55, 3.6,
-          3.65, 3.7, 3.75, 3.8, 3.85, 3.9, 3.95, 4, 4.05, 4.1, 4.15, 4.2, 4.25,
-          4.3, 4.35, 4.4, 4.45, 4.5, 4.55, 4.6, 4.65, 4.7, 4.75, 4.8, 4.85, 4.9,
-          4.95, 5,
-        ],
-      },
+    fixedAffixes: [
+      "3.05% additional damage for the supported skill for every stack of Focus Blessing, stacking up to 8 times",
     ],
   },
   {
@@ -2162,17 +2082,9 @@ export const SupportSkills = [
     ],
     supportTargets: [{ tags: ["Aura"] }],
     cannotSupportTargets: [],
-    fixedAffixes: ["-12% Sealed Mana Compensation for the supported skill"],
-    templates: [
-      {
-        template:
-          "{value}% Aura Effect for each ally affected by the supported skill, up to 7 time(s)",
-        levelValues: [
-          3.1, 3.2, 3.3, 3.4, 3.5, 3.6, 3.7, 3.8, 3.9, 4, 4.1, 4.2, 4.3, 4.4,
-          4.5, 4.6, 4.7, 4.8, 4.9, 5, 5.1, 5.2, 5.3, 5.4, 5.5, 5.6, 5.7, 5.8,
-          5.9, 6, 6.1, 6.2, 6.3, 6.4, 6.5, 6.6, 6.7, 6.8, 6.9, 7,
-        ],
-      },
+    fixedAffixes: [
+      "3.1% Aura Effect for each ally affected by the supported skill, up to 7 time(s)",
+      "-12% Sealed Mana Compensation for the supported skill",
     ],
   },
   {
@@ -2263,16 +2175,8 @@ export const SupportSkills = [
     ],
     supportTargets: [{ tags: ["Aura"] }],
     cannotSupportTargets: [],
-    templates: [
-      {
-        template:
-          "For every Aura that affects you, the supported skill {value}% Aura Effect, up to 5 time(s)",
-        levelValues: [
-          4.1, 4.2, 4.3, 4.4, 4.5, 4.6, 4.7, 4.8, 4.9, 5, 5.1, 5.2, 5.3, 5.4,
-          5.5, 5.6, 5.7, 5.8, 5.9, 6, 6.1, 6.2, 6.3, 6.4, 6.5, 6.6, 6.7, 6.8,
-          6.9, 7, 7.1, 7.2, 7.3, 7.4, 7.5, 7.6, 7.7, 7.8, 7.9, 8,
-        ],
-      },
+    fixedAffixes: [
+      "For every Aura that affects you, the supported skill 4.1% Aura Effect, up to 5 time(s)",
     ],
   },
   {
@@ -2697,17 +2601,7 @@ export const SupportSkills = [
     cannotSupportTargets: [],
     fixedAffixes: [
       "+1 Combo Points gained from Combo Starters for the supported skill",
-    ],
-    templates: [
-      {
-        template: "{value}% additional damage for the supported skill",
-        levelValues: [
-          4.4, 4.8, 5.2, 5.6, 6, 6.4, 6.8, 7.2, 7.6, 8, 8.4, 8.8, 9.2, 9.6, 10,
-          10.4, 10.8, 11.2, 11.6, 12, 12.4, 12.6, 12.8, 13, 13.2, 13.4, 13.6,
-          13.8, 14, 14.2, 14.4, 14.6, 14.8, 15, 15.2, 15.4, 15.6, 15.8, 16,
-          16.2,
-        ],
-      },
+      "4.4% additional damage for the supported skill",
     ],
   },
   {
@@ -3015,6 +2909,28 @@ export const SupportSkills = [
   },
   {
     type: "Support",
+    name: "Spell Tangle",
+    tags: ["Spell"],
+    description: [
+      "Supports Active Spell Skills.\nCannot support Channeled Skills, Sentry Skills or skills that summon Minions.\nThis skill can only be installed in the first Support Skill Slot of each Active Skill.\nThe supported skill is cast as a Spell Tangle\n15.5% additional damage for the supported skill",
+      "The supported skill is cast as a Spell Tangle\n15.5% additional damage for the supported skill",
+    ],
+    supportTargets: [{ skillType: "active", tags: ["Spell"] }],
+    cannotSupportTargets: [{ tags: ["Channeled"] }],
+    fixedAffixes: ["The supported skill is cast as a Spell Tangle"],
+    templates: [
+      {
+        template: "{value}% additional damage for the supported skill",
+        levelValues: [
+          15.5, 16, 16.5, 17, 17.5, 18, 18.5, 19, 19.5, 20, 20.5, 21, 21.5, 22,
+          22.5, 23, 23.5, 24, 24.5, 25, 25.5, 26, 26.5, 27, 27.5, 28, 28.5, 29,
+          29.5, 30, 30.5, 31, 31.5, 32, 32.5, 33, 33.5, 34, 34.5, 35,
+        ],
+      },
+    ],
+  },
+  {
+    type: "Support",
     name: "Steamroll",
     tags: ["Attack", "Melee", "Area"],
     description: [
@@ -3101,17 +3017,8 @@ export const SupportSkills = [
     ],
     supportTargets: [{ tags: ["Empower"] }],
     cannotSupportTargets: [{ tags: ["Summon"] }],
-    templates: [
-      {
-        template:
-          "The supported skill {value}% Effect every time it is cast, up to 3 time(s)",
-        levelValues: [
-          5.25, 5.5, 5.75, 6, 6.25, 6.5, 6.75, 7, 7.25, 7.5, 7.75, 8, 8.25, 8.5,
-          8.75, 9, 9.25, 9.5, 9.75, 10, 10.25, 10.5, 10.75, 11, 11.25, 11.5,
-          11.75, 12, 12.25, 12.5, 12.75, 13, 13.25, 13.5, 13.75, 14, 14.25,
-          14.5, 14.75, 15,
-        ],
-      },
+    fixedAffixes: [
+      "The supported skill 5.25% Effect every time it is cast, up to 3 time(s)",
     ],
   },
   {

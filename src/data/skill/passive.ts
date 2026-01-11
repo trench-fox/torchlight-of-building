@@ -14,6 +14,15 @@ export const PassiveSkills = [
   },
   {
     type: "Passive",
+    name: "Ailment Amplification",
+    tags: ["Aura", "Area"],
+    description: [
+      "Activates the Aura, you and allies within a certain area gain the following buff:\n14% additional Ailment Damage. 10% chance to inflict Ailments. 10% Ailment Duration.",
+      "Activates the Aura, you and allies within a certain area gain the following buff:\n23.5% additional Ailment Damage\n+10% chance to inflict Damaging Ailments\n+10% Ailment Duration",
+    ],
+  },
+  {
+    type: "Passive",
     name: "Charged Flames",
     tags: ["Aura", "Area", "Fire"],
     description: [
@@ -41,9 +50,9 @@ export const PassiveSkills = [
         18.9, 19.2, 19.5,
       ],
       inflictWiltPct: [
-        15.5, 16, 16.5, 17, 17.5, 18, 18.5, 19, 19.5, 20, 20.5, 21, 21.5, 22,
-        22.5, 23, 23.5, 24, 24.5, 25, 25.5, 26, 26.5, 27, 27.5, 28, 28.5, 29,
-        29.5, 30, 30.5, 31, 31.5, 32, 32.5, 33, 33.5, 34, 34.5, 35,
+        10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10,
+        10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10,
+        10, 10, 10, 10,
       ],
       BaseWiltFlatDmg: [
         2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2,
@@ -210,6 +219,15 @@ export const PassiveSkills = [
       "Acute Strike:\nDeals 479% Weapon Attack Damage.",
     ],
     mainStats: ["str"],
+  },
+  {
+    type: "Passive",
+    name: "Precise: Ailment Amplification",
+    tags: ["Aura", "Area"],
+    description: [
+      "Activates the Aura, you and allies within a certain area gain the following buff:\n15.5% additional Ailment Damage. 17% chance to inflict Ailments. 10% Ailment Duration.",
+      "Activates the Aura, you and allies within a certain area gain the following buff:\n+25% additional Ailment Damage\n+17% chance to inflict Damaging Ailments\n+10% Ailment Duration",
+    ],
   },
   {
     type: "Passive",

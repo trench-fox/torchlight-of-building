@@ -45,7 +45,7 @@ const SKILL_TYPES = [
     listPath: "Active_Skill",
     outputDir: "active",
     tabId: "ActiveSkillTag",
-    expectedCount: 148,
+    expectedCount: 151,
   },
   {
     name: "Support",
@@ -59,28 +59,28 @@ const SKILL_TYPES = [
     listPath: "Passive_Skill",
     outputDir: "passive",
     tabId: "PassiveSkillTag",
-    expectedCount: 53,
+    expectedCount: 55,
   },
   {
     name: "Activation Medium",
     listPath: "Activation_Medium_Skill",
     outputDir: "activation_medium",
     tabId: "ActivationMediumSkillTag",
-    expectedCount: 27,
+    expectedCount: 28,
   },
   {
     name: "Noble Support",
     listPath: "Noble_Support_Skill",
     outputDir: "noble_support",
     tabId: "ExclusiveSupportSkillTag",
-    expectedCount: 137,
+    expectedCount: 141,
   },
   {
     name: "Magnificent Support",
     listPath: "Magnificent_Support_Skill",
     outputDir: "magnificent_support",
     tabId: "ExclusiveSupportSkillTag",
-    expectedCount: 130,
+    expectedCount: 131,
   },
 ] as const;
 
@@ -106,12 +106,17 @@ const extractSkillLinks = (html: string, tabId: string): string[] => {
 
   const startIdx = tabMatch.index;
   const afterStart = html.slice(startIdx);
-  const nextTabMatch = afterStart.match(
+
+  // Skip past the opening tag we matched to avoid matching it again
+  const skipLen = tabMatch[0].length;
+  const afterOpening = afterStart.slice(skipLen);
+
+  const nextTabMatch = afterOpening.match(
     /<div\s+id="[^"]+"\s+class="tab-pane[^"]*"[^>]*>/,
   );
   const endIdx =
     nextTabMatch?.index !== undefined
-      ? startIdx + nextTabMatch.index
+      ? startIdx + skipLen + nextTabMatch.index
       : html.length;
 
   const tabContent = html.slice(startIdx, endIdx);
@@ -364,6 +369,15 @@ const parseSupportTargets = (
     {
       pattern: /Supports skills that summon Minions/i,
       targets: ["summon_minions"],
+    },
+    // Skill type + tag patterns (e.g., "Active Spell Skills")
+    {
+      pattern: /Supports? Active Spell Skills?/i,
+      targets: [{ skillType: "active" as const, tags: ["Spell"] }],
+    },
+    {
+      pattern: /Supports? Active Attack Skills?/i,
+      targets: [{ skillType: "active" as const, tags: ["Attack"] }],
     },
     // Skill type patterns (Active/Passive are skill types, not tags)
     {

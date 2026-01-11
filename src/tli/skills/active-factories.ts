@@ -203,11 +203,6 @@ export const activeSkillModFactories: Partial<
         isEnemyDebuff: true,
         value: v(vals.dmgPct, l),
       },
-      {
-        type: "InflictFrostbitePct",
-        isEnemyDebuff: true,
-        value: v(vals.inflictFrostbitePct, l),
-      },
     ],
   }),
   Timid: (l, vals) => ({

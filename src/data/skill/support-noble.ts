@@ -520,6 +520,28 @@ export const NobleSupportSkills = [
   },
   {
     type: "Support (Noble)",
+    name: "Gale Slash: Brutality (Noble)",
+    tags: ["Physical"],
+    description: [
+      "Supports Gale Slash.\nThis skill can only be installed in the fifth Support Skill Slot of each Active Skill.\n+20% additional damage for the supported skill\nGains 3 Combo Point(s) after casting the Combo Starter 1 of the supported skill. Cooldown: 4 s",
+      "Gains 3 Combo Point(s) after casting the Combo Starter 1 of the supported skill. Cooldown: 4 s",
+      "+(7.7–8.0)% additional Critical Strike Damage for the Combo Finisher of the supported skill for each Combo Point consumed, stacking up to 12 time(s)",
+    ],
+    supportTarget: "Gale Slash",
+  },
+  {
+    type: "Support (Noble)",
+    name: "Gale Slash: Soaring (Noble)",
+    tags: ["Physical"],
+    description: [
+      "Supports Gale Slash.\nThis skill can only be installed in the fifth Support Skill Slot of each Active Skill.\n+20% additional damage for the supported skill\n-10% additional Attack Speed for the supported skill\nThe movement distance of the supported skill's Combo Starter 2 is increased to 3.5 m\nThe max jump distance of the supported skill's Combo Finisher is increased to 7 m\nThe supported skill's Combo Finisher now deals an instance of damage again after a brief delay",
+      "-10% additional Attack Speed for the supported skill\nThe movement distance of the supported skill's Combo Starter 2 is increased to 3.5 m\nThe max jump distance of the supported skill's Combo Finisher is increased to 7 m\nThe supported skill's Combo Finisher now deals an instance of damage again after a brief delay",
+      "(-15.0–-14.0)% additional damage for the supported skill",
+    ],
+    supportTarget: "Gale Slash",
+  },
+  {
+    type: "Support (Noble)",
     name: "Ghost Blade Einherjar: Eruption (Noble)",
     tags: ["Erosion"],
     description: [
@@ -1069,6 +1091,28 @@ export const NobleSupportSkills = [
       "+(6–8)% additional damage for the supported skill",
     ],
     supportTarget: "Sparkle",
+  },
+  {
+    type: "Support (Noble)",
+    name: "Spectral Slash: Legion (Noble)",
+    tags: ["Physical"],
+    description: [
+      "Supports Spectral Slash.\nThis skill can only be installed in the fifth Support Skill Slot of each Active Skill.\n+20% additional damage for the supported skill\nThe supported skill's Combo Finisher generates 1 additional Clone for each enemy within 15 m, up to 5",
+      "The supported skill's Combo Finisher generates 1 additional Clone for each enemy within 15 m, up to 5",
+      "+(10–12)% additional damage for the supported skill",
+    ],
+    supportTarget: "Spectral Slash",
+  },
+  {
+    type: "Support (Noble)",
+    name: "Spectral Slash: Synchrony (Noble)",
+    tags: ["Physical"],
+    description: [
+      "Supports Spectral Slash.\nThis skill can only be installed in the fifth Support Skill Slot of each Active Skill.\n+20% additional damage for the supported skill\nThe Combo Finisher of the supported skill is changed to generate 3 Clone(s) around you. These Clones slam the ground in place and create a series of 3 Explosions forward.\n+108% additional Hit Damage for the Combo Finisher of the supported skill",
+      "The Combo Finisher of the supported skill is changed to generate 3 Clone(s) around you. These Clones slam the ground in place and create a series of 3 Explosions forward.\n+108% additional Hit Damage for the Combo Finisher of the supported skill",
+      "+(30–32)% additional damage for the supported skill",
+    ],
+    supportTarget: "Spectral Slash",
   },
   {
     type: "Support (Noble)",

@@ -11,7 +11,7 @@ import mcTheaGolden from "./mc-thea-3-golden-1.json";
 import rosaGolden from "./rosa-2-golden.json";
 
 describe("offense golden tests", () => {
-  it("rosa-2-golden: Frost Spike should calculate ~13.66 trillion DPS", () => {
+  it("rosa-2-golden: Frost Spike should calculate ~12.69 trillion DPS", () => {
     const saveData = rosaGolden as unknown as SaveData;
     const loadout = loadSave(saveData);
     const config = saveData.configurationPage as Configuration;
@@ -24,7 +24,7 @@ describe("offense golden tests", () => {
     }
 
     const avgDps = frostSpike.attackDpsSummary?.avgDps;
-    const expectedDps = 13.66e12; // ~13.66 trillion
+    const expectedDps = 12.69e12; // ~12.69 trillion
     const tolerance = 0.01; // 1% tolerance
 
     expect(avgDps).toBeGreaterThan(expectedDps * (1 - tolerance));
@@ -101,32 +101,32 @@ describe("offense golden tests", () => {
 
     const tolerance = 0.01; // 1% tolerance
 
-    // Spell DPS: ~52.82 million
+    // Spell DPS: ~35.94 million
     const spellDps = chainLightning.spellDpsSummary?.avgDps;
-    const expectedSpellDps = 52.82e6;
+    const expectedSpellDps = 35.94e6;
     expect(spellDps).toBeGreaterThan(expectedSpellDps * (1 - tolerance));
     expect(spellDps).toBeLessThan(expectedSpellDps * (1 + tolerance));
 
-    // Spell Burst DPS: ~243.63 million
+    // Spell Burst DPS: ~165.78 million
     const spellBurstDps = chainLightning.spellBurstDpsSummary?.avgDps;
-    const expectedSpellBurstDps = 243.63e6;
+    const expectedSpellBurstDps = 165.78e6;
     expect(spellBurstDps).toBeGreaterThan(
       expectedSpellBurstDps * (1 - tolerance),
     );
     expect(spellBurstDps).toBeLessThan(expectedSpellBurstDps * (1 + tolerance));
 
-    // Ingenuity Overload DPS: ~51.11 million
+    // Ingenuity Overload DPS: ~34.77 million
     const ingenuityDps =
       chainLightning.spellBurstDpsSummary?.ingenuityOverload?.avgDps;
-    const expectedIngenuityDps = 51.11e6;
+    const expectedIngenuityDps = 34.77e6;
     expect(ingenuityDps).toBeGreaterThan(
       expectedIngenuityDps * (1 - tolerance),
     );
     expect(ingenuityDps).toBeLessThan(expectedIngenuityDps * (1 + tolerance));
 
-    // Total DPS: ~347.55 million
+    // Total DPS: ~236.49 million
     const totalDps = chainLightning.totalDps;
-    const expectedTotalDps = 347.55e6;
+    const expectedTotalDps = 236.49e6;
     expect(totalDps).toBeGreaterThan(expectedTotalDps * (1 - tolerance));
     expect(totalDps).toBeLessThan(expectedTotalDps * (1 + tolerance));
 
@@ -152,32 +152,32 @@ describe("offense golden tests", () => {
 
     const tolerance = 0.01; // 1% tolerance
 
-    // Spell DPS: ~681.05 million
+    // Spell DPS: ~433.97 million
     const spellDps = chainLightning.spellDpsSummary?.avgDps;
-    const expectedSpellDps = 681.05e6;
+    const expectedSpellDps = 433.97e6;
     expect(spellDps).toBeGreaterThan(expectedSpellDps * (1 - tolerance));
     expect(spellDps).toBeLessThan(expectedSpellDps * (1 + tolerance));
 
-    // Spell Burst DPS: ~3.52 billion
+    // Spell Burst DPS: ~2.24 billion
     const spellBurstDps = chainLightning.spellBurstDpsSummary?.avgDps;
-    const expectedSpellBurstDps = 3.52e9;
+    const expectedSpellBurstDps = 2.24e9;
     expect(spellBurstDps).toBeGreaterThan(
       expectedSpellBurstDps * (1 - tolerance),
     );
     expect(spellBurstDps).toBeLessThan(expectedSpellBurstDps * (1 + tolerance));
 
-    // Ingenuity Overload DPS: ~612.33 million
+    // Ingenuity Overload DPS: ~390.10 million
     const ingenuityDps =
       chainLightning.spellBurstDpsSummary?.ingenuityOverload?.avgDps;
-    const expectedIngenuityDps = 612.33e6;
+    const expectedIngenuityDps = 390.1e6;
     expect(ingenuityDps).toBeGreaterThan(
       expectedIngenuityDps * (1 - tolerance),
     );
     expect(ingenuityDps).toBeLessThan(expectedIngenuityDps * (1 + tolerance));
 
-    // Total DPS: ~4.81 billion
+    // Total DPS: ~3.06 billion
     const totalDps = chainLightning.totalDps;
-    const expectedTotalDps = 4.81e9;
+    const expectedTotalDps = 3.06e9;
     expect(totalDps).toBeGreaterThan(expectedTotalDps * (1 - tolerance));
     expect(totalDps).toBeLessThan(expectedTotalDps * (1 + tolerance));
 
@@ -203,32 +203,32 @@ describe("offense golden tests", () => {
 
     const tolerance = 0.01; // 1% tolerance
 
-    // Spell DPS: ~25.97 billion
+    // Spell DPS: ~16.04 billion
     const spellDps = chainLightning.spellDpsSummary?.avgDps;
-    const expectedSpellDps = 25.97e9;
+    const expectedSpellDps = 16.04e9;
     expect(spellDps).toBeGreaterThan(expectedSpellDps * (1 - tolerance));
     expect(spellDps).toBeLessThan(expectedSpellDps * (1 + tolerance));
 
-    // Spell Burst DPS: ~789.29 billion
+    // Spell Burst DPS: ~487.42 billion
     const spellBurstDps = chainLightning.spellBurstDpsSummary?.avgDps;
-    const expectedSpellBurstDps = 789.29e9;
+    const expectedSpellBurstDps = 487.42e9;
     expect(spellBurstDps).toBeGreaterThan(
       expectedSpellBurstDps * (1 - tolerance),
     );
     expect(spellBurstDps).toBeLessThan(expectedSpellBurstDps * (1 + tolerance));
 
-    // Ingenuity Overload DPS: ~143.09 billion
+    // Ingenuity Overload DPS: ~88.36 billion
     const ingenuityDps =
       chainLightning.spellBurstDpsSummary?.ingenuityOverload?.avgDps;
-    const expectedIngenuityDps = 143.09e9;
+    const expectedIngenuityDps = 88.36e9;
     expect(ingenuityDps).toBeGreaterThan(
       expectedIngenuityDps * (1 - tolerance),
     );
     expect(ingenuityDps).toBeLessThan(expectedIngenuityDps * (1 + tolerance));
 
-    // Total DPS: ~958.35 billion
+    // Total DPS: ~591.82 billion
     const totalDps = chainLightning.totalDps;
-    const expectedTotalDps = 958.35e9;
+    const expectedTotalDps = 591.82e9;
     expect(totalDps).toBeGreaterThan(expectedTotalDps * (1 - tolerance));
     expect(totalDps).toBeLessThan(expectedTotalDps * (1 + tolerance));
 
@@ -254,15 +254,15 @@ describe("offense golden tests", () => {
 
     const tolerance = 0.01; // 1% tolerance
 
-    // Attack DPS: ~381.89 billion
+    // Attack DPS: ~371.01 billion
     const attackDps = thunderSpike.attackDpsSummary?.avgDps;
-    const expectedAttackDps = 381.89e9;
+    const expectedAttackDps = 371.01e9;
     expect(attackDps).toBeGreaterThan(expectedAttackDps * (1 - tolerance));
     expect(attackDps).toBeLessThan(expectedAttackDps * (1 + tolerance));
 
-    // Total DPS: ~381.89 billion
+    // Total DPS: ~371.01 billion
     const totalDps = thunderSpike.totalDps;
-    const expectedTotalDps = 381.89e9;
+    const expectedTotalDps = 371.01e9;
     expect(totalDps).toBeGreaterThan(expectedTotalDps * (1 - tolerance));
     expect(totalDps).toBeLessThan(expectedTotalDps * (1 + tolerance));
 
