@@ -448,7 +448,6 @@ const main = async (options: Options): Promise<void> => {
 
     // Step 3: Merge with codex data
     const codexInfo = codexLegendaryMap.get(tlidbData.name);
-    console.log(tlidbData.name);
     if (!codexInfo) {
       console.warn(`No codex data found for: ${tlidbData.name} - skipping`);
       skippedCount++;
