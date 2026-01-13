@@ -273,13 +273,13 @@ msgstr "德鲁伊"
 
 #. js-lingui-explicit-id
 #: src/data/translate/talents.ts:56
-msgid "Acquaintance"
-msgstr "似曾相识"
+msgid "Cultivation"
+msgstr "栽培"
 
 #. js-lingui-explicit-id
 #: src/data/translate/talents.ts:57
-msgid "Cultivation"
-msgstr "栽培"
+msgid "Full Load"
+msgstr "满载"
 
 #. js-lingui-explicit-id
 #: src/data/translate/talents.ts:58
@@ -348,8 +348,8 @@ msgstr "奇幻莫测"
 
 #. js-lingui-explicit-id
 #: src/data/translate/talents.ts:71
-msgid "Winter"
-msgstr "凛冬"
+msgid "Quick Wits"
+msgstr "随机应变"
 
 #. js-lingui-explicit-id
 #: src/data/translate/talents.ts:72
@@ -358,8 +358,8 @@ msgstr "秘术师"
 
 #. js-lingui-explicit-id
 #: src/data/translate/talents.ts:73
-msgid "Full Load"
-msgstr "满载"
+msgid "Acquaintance"
+msgstr "似曾相识"
 
 #. js-lingui-explicit-id
 #: src/data/translate/talents.ts:74
@@ -713,7 +713,7 @@ msgstr "生命通道"
 
 #. js-lingui-explicit-id
 #: src/data/translate/talents.ts:144
-msgid "No Lose Ends"
+msgid "No Loose Ends"
 msgstr "善始善终"
 
 #. js-lingui-explicit-id
@@ -855,3 +855,4 @@ msgstr "迎头痛击"
 #: src/data/translate/talents.ts:172
 msgid "Open Wounds"
 msgstr "伤口撕裂"
+
