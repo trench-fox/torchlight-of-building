@@ -3,7 +3,7 @@ import { mkdir, writeFile } from "node:fs/promises";
 import { join } from "node:path";
 import * as cheerio from "cheerio";
 import type { God, Talent, Tree, Type } from "../data/talent/types";
-import { cleanEffectText, readCodexHtml } from "./lib/codex";
+import { cleanTalentEffectText, readCodexHtml } from "./lib/codex";
 
 const extractTalentData = (html: string): Talent[] => {
   const $ = cheerio.load(html);
@@ -20,12 +20,19 @@ const extractTalentData = (html: string): Talent[] => {
       return;
     }
 
+    // Process the effect cell with cheerio to remove tooltips before extracting HTML
+    const effectCell = $(tds[4]);
+    // Replace tooltip spans with just their text content
+    effectCell.find("span.tooltip").each((_, el) => {
+      $(el).replaceWith($(el).text());
+    });
+
     const item: Talent = {
       god: $(tds[0]).text().trim() as God,
       tree: $(tds[1]).text().trim() as Tree,
       type: $(tds[2]).text().trim() as Type,
       name: $(tds[3]).text().trim(),
-      effect: cleanEffectText($(tds[4]).html() || ""),
+      effect: cleanTalentEffectText(effectCell.html() || ""),
     };
 
     items.push(item);
