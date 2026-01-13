@@ -3,7 +3,11 @@ import { mkdir, writeFile } from "node:fs/promises";
 import { join } from "node:path";
 import * as cheerio from "cheerio";
 import type { Destiny } from "../data/destiny/types";
-import { cleanEffectText, readCodexHtml } from "./lib/codex";
+import {
+  cleanEffectText,
+  cleanEffectTextNew,
+  readCodexHtml,
+} from "./lib/codex";
 
 const extractDestinyData = (html: string): Destiny[] => {
   const $ = cheerio.load(html);
@@ -20,10 +24,17 @@ const extractDestinyData = (html: string): Destiny[] => {
       return;
     }
 
+    // Process the effect cell with cheerio to remove tooltips before extracting HTML
+    const effectCell = $(tds[2]);
+    // Replace tooltip spans with just their text content
+    effectCell.find("span.tooltip").each((_, el) => {
+      $(el).replaceWith($(el).text());
+    });
+
     const item: Destiny = {
       type: $(tds[0]).text().trim(),
       name: $(tds[1]).text().trim(),
-      affix: cleanEffectText($(tds[2]).html() || ""),
+      affix: cleanEffectTextNew(effectCell.html() || ""),
     };
 
     items.push(item);
