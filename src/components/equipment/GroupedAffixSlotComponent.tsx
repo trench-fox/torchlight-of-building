@@ -2,7 +2,6 @@ import { SearchableSelect } from "@/src/components/ui/SearchableSelect";
 import { craft } from "@/src/tli/crafting/craft";
 import type { BaseGearAffix } from "@/src/tli/gear-data-types";
 import {
-  type CollapsedAffixGroup,
   type GroupableAffixType,
   getAffixForPercentage,
   getOptionsWithHeaders,
