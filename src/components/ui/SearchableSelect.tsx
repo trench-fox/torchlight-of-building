@@ -305,28 +305,26 @@ export const SearchableSelect = <T extends string | number>({
                   ${active ? "bg-zinc-700" : ""}
                   ${selected ? "text-amber-400" : "text-zinc-50"}
                 `}
-              >
-                {({ active, selected }) => (
-                  <div
-                    onMouseEnter={(e) => handleOptionMouseEnter(option, e)}
-                    onMouseLeave={handleOptionMouseLeave}
-                  >
-                    {renderOption ? (
-                      renderOption(option, { active, selected })
-                    ) : (
-                      <>
-                        <span>{option.label}</span>
-                        {option.sublabel && (
-                          <span className="text-zinc-500 ml-2 text-xs">
-                            {option.sublabel}
-                          </span>
-                        )}
-                      </>
-                    )}
-                  </div>
-                )}
-              </ComboboxOption>
-            ))
+                >
+                  {({ active, selected }) => (
+                    <div>
+                      {renderOption ? (
+                        renderOption(option, { active, selected })
+                      ) : (
+                        <>
+                          <span>{option.label}</span>
+                          {option.sublabel && (
+                            <span className="text-zinc-500 ml-2 text-xs">
+                              {option.sublabel}
+                            </span>
+                          )}
+                        </>
+                      )}
+                    </div>
+                  )}
+                </ComboboxOption>
+              );
+            })
           )}
         </ComboboxOptions>
 
