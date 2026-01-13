@@ -3,7 +3,11 @@ import { mkdir, writeFile } from "node:fs/promises";
 import { join } from "node:path";
 import * as cheerio from "cheerio";
 import type { Destiny } from "../data/destiny/types";
-import { cleanEffectText, readCodexHtml } from "./lib/codex";
+import {
+  cleanEffectText,
+  cleanEffectTextNew,
+  readCodexHtml,
+} from "./lib/codex";
 
 const extractDestinyData = (html: string): Destiny[] => {
   const $ = cheerio.load(html);
@@ -23,7 +27,7 @@ const extractDestinyData = (html: string): Destiny[] => {
     const item: Destiny = {
       type: $(tds[0]).text().trim(),
       name: $(tds[1]).text().trim(),
-      affix: cleanEffectText($(tds[2]).html() || ""),
+      affix: cleanEffectTextNew($(tds[2]).html() || ""),
     };
 
     items.push(item);
