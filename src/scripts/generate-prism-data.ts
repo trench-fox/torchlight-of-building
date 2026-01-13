@@ -3,7 +3,11 @@ import { mkdir, writeFile } from "node:fs/promises";
 import { join } from "node:path";
 import * as cheerio from "cheerio";
 import type { Prism } from "../data/prism/types";
-import { cleanEffectText, readCodexHtml } from "./lib/codex";
+import {
+  cleanEffectText,
+  cleanEffectTextNew,
+  readCodexHtml,
+} from "./lib/codex";
 
 const extractPrismData = (html: string): Prism[] => {
   const $ = cheerio.load(html);
@@ -36,7 +40,10 @@ const extractPrismData = (html: string): Prism[] => {
       const name = tooltipSpan.text().trim();
       const rawAffix = tooltipSpan.attr("data-title") || "";
       if (name !== "" && rawAffix !== "") {
-        item.replacementCoreTalent = { name, affix: cleanEffectText(rawAffix) };
+        item.replacementCoreTalent = {
+          name,
+          affix: cleanEffectTextNew(rawAffix),
+        };
       }
     }
 
