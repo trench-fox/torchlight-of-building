@@ -3,7 +3,11 @@ import { mkdir, writeFile } from "node:fs/promises";
 import { join } from "node:path";
 import * as cheerio from "cheerio";
 import type { Blend } from "../data/blend/types";
-import { cleanEffectText, readCodexHtml } from "./lib/codex";
+import {
+  cleanEffectText,
+  cleanEffectTextNew,
+  readCodexHtml,
+} from "./lib/codex";
 
 const extractBlendData = (html: string): Blend[] => {
   const $ = cheerio.load(html);
@@ -20,11 +24,18 @@ const extractBlendData = (html: string): Blend[] => {
       return;
     }
 
+    // Process the effect cell with cheerio to remove tooltips before extracting HTML
+    const effectCell = $(tds[2]);
+    // Replace tooltip spans with just their text content
+    effectCell.find("span.tooltip").each((_, el) => {
+      $(el).replaceWith($(el).text());
+    });
+
     const item: Blend = {
       type: $(tds[0]).text().trim(),
       affix:
         `[${$(tds[1]).text().trim()}] ` +
-        cleanEffectText($(tds[2]).html() || ""),
+        cleanEffectTextNew(effectCell.html() || ""),
     };
 
     items.push(item);
