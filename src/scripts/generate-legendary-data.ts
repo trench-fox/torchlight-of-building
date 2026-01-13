@@ -190,7 +190,7 @@ const extractCodexLegendaryData = (
 
     const equipmentSlot = $(tds[0]).text().trim() as EquipmentSlot;
     const equipmentType = $(tds[1]).text().trim() as EquipmentType;
-    const name = $(tds[2]).text().trim();
+    const name = $($(tds[2]).find("span.name").get(0)).text().trim();
 
     if (name) {
       legendaryMap.set(name, { equipmentSlot, equipmentType });
