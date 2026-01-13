@@ -3,7 +3,11 @@ import { mkdir, writeFile } from "node:fs/promises";
 import { join } from "node:path";
 import * as cheerio from "cheerio";
 import type { Prism } from "../data/prism/types";
-import { cleanEffectText, readCodexHtml } from "./lib/codex";
+import {
+  cleanEffectText,
+  cleanEffectTextNew,
+  readCodexHtml,
+} from "./lib/codex";
 
 const extractPrismData = (html: string): Prism[] => {
   const $ = cheerio.load(html);
@@ -20,15 +24,21 @@ const extractPrismData = (html: string): Prism[] => {
       return;
     }
 
-    const affixTd = $(tds[2]);
+    // Process the effect cell with cheerio to remove tooltips before extracting HTML
+    const effectCell = $(tds[2]);
+    // Replace tooltip spans with just their text content
+    effectCell.find("span.tooltip").each((_, el) => {
+      $(el).replaceWith($(el).text());
+    });
+
     const item: Prism = {
       type: $(tds[0]).text().trim(),
       rarity: $(tds[1]).text().trim(),
-      affix: cleanEffectText(affixTd.html() || ""),
+      affix: cleanEffectTextNew(effectCell.html() || ""),
     };
 
     // Extract replacement core talent if present
-    const tooltipSpan = affixTd.find("span.tooltip");
+    const tooltipSpan = effectCell.find("span.tooltip");
     if (
       tooltipSpan.length > 0 &&
       item.affix.includes("Replaces the Core Talent")
