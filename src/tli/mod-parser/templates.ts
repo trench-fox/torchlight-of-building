@@ -937,6 +937,7 @@ export const allParsers = [
     value: c.value,
     statModType: "all" as const,
   })),
+  // TODO - Remove this old parser once we figure out if it's unused S11 moved to use the format below
   t("max focus blessing stacks {value:+int}").output(
     "MaxFocusBlessing",
     (c) => ({ value: c.value }),
@@ -946,6 +947,18 @@ export const allParsers = [
     (c) => ({ value: c.value }),
   ),
   t("max tenacity blessing stacks {value:+int}").output(
+    "MaxTenacityBlessing",
+    (c) => ({ value: c.value }),
+  ),
+  t("{value:+int} to max focus blessing stacks").output(
+    "MaxFocusBlessing",
+    (c) => ({ value: c.value }),
+  ),
+  t("{value:+int} to max agility blessing stacks").output(
+    "MaxAgilityBlessing",
+    (c) => ({ value: c.value }),
+  ),
+  t("{value:+int} to max tenacity blessing stacks").output(
     "MaxTenacityBlessing",
     (c) => ({ value: c.value }),
   ),
@@ -1006,7 +1019,11 @@ export const allParsers = [
     value: c.value,
     cond: "equipped_in_left_ring_slot" as const,
   })),
+  // TODO - Remove this old parser once we figure out if it's unused S11 moved to use the format below
   t("max channeled stacks {value:+int}").output("MaxChannel", (c) => ({
+    value: c.value,
+  })),
+  t("{value:+int} to max channeled stacks").output("MaxChannel", (c) => ({
     value: c.value,
   })),
   t("has hasten").output("HasHasten", () => ({})),

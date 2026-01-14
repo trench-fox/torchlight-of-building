@@ -16,7 +16,7 @@ export const CoreTalents = [
     name: "Tenacity",
     tree: "God of Might",
     affix:
-      "+100% chance to gain 1 stack(s) of Tenacity Blessing when hitting an enemy\nMax Tenacity Blessing Stacks +1",
+      "+100% chance to gain 1 stack(s) of Tenacity Blessing when hitting an enemy\n+1 to Max Tenacity Blessing Stacks",
   },
   {
     name: "Great Strength",
@@ -84,7 +84,8 @@ export const CoreTalents = [
   {
     name: "Starfire",
     tree: "Warlord",
-    affix: "+1 Ignite limit\n+30% Ignite Duration",
+    affix:
+      "+1 Ignite limit\nWhen Ignite is inflicted, it spreads to enemies within 10m. Interval: 0.3s",
   },
   {
     name: "Fueling",
@@ -95,7 +96,7 @@ export const CoreTalents = [
     name: "Rock",
     tree: "Warlord",
     affix:
-      "Converts 3% of Physical Damage taken to Fire Damage for every stack of Tenacity Blessing you have",
+      "Converts 5% of Physical Damage taken to Fire Damage for every stack of Tenacity Blessing you have",
   },
   {
     name: "True Flame",
@@ -109,7 +110,7 @@ export const CoreTalents = [
     affix: "Converts 100% of Mana Cost to Life Cost\n+25% additional Max Life",
   },
   {
-    name: "No Lose Ends",
+    name: "No Loose Ends",
     tree: "Warrior",
     affix:
       "+50% additional Attack Damage at Low Life\nYour Max Energy Shield is fixed at 0",
@@ -130,19 +131,19 @@ export const CoreTalents = [
     name: "Perception",
     tree: "Goddess of Hunting",
     affix:
-      "+100% chance to gain 1 stacks of Agility Blessing on hit\nMax Agility Blessing Stacks +1",
+      "+100% chance to gain 1 stacks of Agility Blessing on hit\n+1 to Max Agility Blessing Stacks",
   },
   {
     name: "Third time's a charm",
     tree: "Goddess of Hunting",
     affix:
-      "+45% Attack and Cast Speed after using the Main Skill 3 consecutive times. Lasts for 2 s",
+      "Has Hasten\nWhen you have Hasten, +7% Attack Speed and Cast Speed for every 3m of movement made recently. Stacks up to 3 time(s)",
   },
   {
     name: "Impermanence",
     tree: "Goddess of Hunting",
     affix:
-      "-90% additional Min Physical Damage, and +80% additional Max Physical Damage\n-40% additional min damage\n+40% additional max damage",
+      "-90% additional Min Physical Damage, and +80% additional Max Physical Damage\n-32% additional min damage\n+32% additional Max Damage",
   },
   {
     name: "Rushed",
@@ -153,13 +154,12 @@ export const CoreTalents = [
     name: "Three Birds with One Stone",
     tree: "Goddess of Hunting",
     affix:
-      "Projectile Quantity +2\nParabolic Projectile Splits quantity +2\n+10% additional Projectile Damage",
+      "Projectile Quantity +2\n+2 to Parabolic Projectile Splits quantity\n+10% additional Projectile Damage",
   },
   {
     name: "Steady Accumulation",
     tree: "Goddess of Hunting",
-    affix:
-      "+15% Combo Finisher Amplification\n+1 Combo Points gained from Combo Starters",
+    affix: "+40% additional Hit Damage\nAdditional -30% Skill Effect Duration",
   },
   {
     name: "Gale",
@@ -211,13 +211,13 @@ export const CoreTalents = [
     name: "Cultivation",
     tree: "Druid",
     affix:
-      "+4% Cast Speed for each skill recently used, stacking up to 15 times",
+      "+8% Attack Speed and Cast Speed for each time you have Regained in the last 8s. Stacks up to 8 time(s)",
   },
   {
-    name: "Acquaintance",
+    name: "Full Load",
     tree: "Druid",
     affix:
-      "+30% chance to trigger the Main Spell Skill 1 additional time when using it",
+      "Doubles Life Regain and Shield Regain for 6 s when casting an Empower Skill or Defensive Skill. Interval: 8 s",
   },
   {
     name: "Rebirth",
@@ -228,7 +228,7 @@ export const CoreTalents = [
   {
     name: "Poisoned Relief",
     tree: "Druid",
-    affix: "+25% injury buffer\n-15% additional damage taken at Low Life",
+    affix: "+25% Injury Buffer\n-15% additional damage taken at Low Life",
   },
   {
     name: "Conductive",
@@ -251,20 +251,20 @@ export const CoreTalents = [
     name: "Thunderclap",
     tree: "Assassin",
     affix:
-      "If you have Agility Blessing stacks when casting the Main Skill, consumes 1 stack(s) of Agility Blessing to make this skill deal +30% additional Lightning Damage",
+      "If you have Agility Blessing stacks when casting the Main Skill, consumes 1 stack(s) of Agility Blessing to make this skill deal +35% additional Lightning Damage",
   },
   { name: "Beacon", tree: "Goddess of Knowledge", affix: "+2 Max Spell Burst" },
   {
     name: "Chilly",
     tree: "Goddess of Knowledge",
     affix:
-      "+100% chance to gain 1 stack of Focus Blessing on hit\nMax Focus Blessing Stacks +1",
+      "+100% chance to gain 1 stack of Focus Blessing on hit\n+1 to Max Focus Blessing Stacks",
   },
   {
     name: "Peculiar Vibe",
     tree: "Goddess of Knowledge",
     affix:
-      "+50% chance to inflict Elemental Ailments\n+25% additional damage against enemies with Elemental Ailments",
+      "You can apply 1 additional Tangle(s) to enemies\n-30% additional Tangle Skill Area",
   },
   {
     name: "Insight",
@@ -278,22 +278,22 @@ export const CoreTalents = [
       "Has Spell Aggression\n+10% Spell Aggression Effect for every Main Spell Skill cast recently. Stacks up to 10 times",
   },
   {
-    name: "Winter",
+    name: "Quick Wits",
     tree: "Goddess of Knowledge",
     affix:
-      "Deals +1% additional damage to an enemy for every 2 points of Frostbite Rating the enemy has",
+      "+25% additional Spell Damage when the Energy Shield is not low\n-20% additional damage taken at Low Energy Shield",
   },
   {
     name: "Bunch",
     tree: "Magister",
     affix:
-      "Max Focus Blessing Stacks +1\n+3% additional Spell Damage per stack of Focus Blessing owned",
+      "+1 to Max Focus Blessing Stacks\n+3% additional Spell Damage per stack of Focus Blessing owned",
   },
   {
     name: "Play Safe",
     tree: "Magister",
     affix:
-      "100% of the bonuses and additional bonuses to Cast Speed is also applied to Spell Burst Charge Speed",
+      "100% of the bonuses and additional bonuses to Cast Speed is also applied to Spell Burst Charge Speed\n-33% additional Spell Burst Charge Speed\n+40% additional Hit Damage for skills cast by Spell Burst",
   },
   {
     name: "Shell",
@@ -319,10 +319,9 @@ export const CoreTalents = [
       "Changes the base effect of Focus Blessing to: Adds Physical Damage equal to 1% of Max Mana to Attacks and Spells",
   },
   {
-    name: "Full Load",
+    name: "Acquaintance",
     tree: "Arcanist",
-    affix:
-      "+40% additional damage for the next skill when Mana reaches the max",
+    affix: "Has Dormant Entanglement\n+1 Max Tangle Quantity",
   },
   {
     name: "Preparation",
@@ -339,30 +338,29 @@ export const CoreTalents = [
     name: "Penetrating",
     tree: "Elementalist",
     affix:
-      "When inflicting Ignite, Numbed, Frostbite/Freeze, inflicts Fire Infiltration, Lightning Infiltration, or Cold Infiltration respectively.\nUpon inflicting damage, +8% additional Elemental Damage for each type of Infiltration Effect the enemy has",
+      "When dealing Fire, Lightning, or Cold Damage, inflicts Fire Infiltration, Lightning Infiltration, or Cold Infiltration respectively.\nUpon inflicting damage, +8% additional Elemental Damage for each type of Infiltration Effect the enemy has",
   },
   {
     name: "Focus",
     tree: "Elementalist",
     affix:
-      "Max Channeled Stacks +1\n+6% additional damage for every +1 additional Max Channeled Stack(s)",
+      "+1 to Max Channeled Stacks\n+6% additional damage for every +1 additional Max Channeled Stack(s)",
   },
   {
     name: "Quick Ritual",
     tree: "Elementalist",
-    affix: "Min Channeled Stacks +1\n+20% additional damage Channeled Skills",
+    affix: "Min Channeled Stacks +1\n+20% additional Channeled Skill damage",
   },
   {
     name: "Frostbitten",
     tree: "Prophet",
     affix:
-      "+25% additional damage against Frozen enemies\nInflicts Frostbite and 100 Frostbite Rating when dealing Cold Damage to an enemy for the first time",
+      "Inflicts Frostbite when dealing Hit Cold Damage\n+50% Frostbite Effect",
   },
   {
     name: "Extreme Coldness",
     tree: "Prophet",
-    affix:
-      "Frostbite and Frostbite Rating will continue to be inflicted on Frozen enemies\nAfter Freeze ends, Frostbite and all Frostbite Rating will no longer be removed. +20% of the retained Frostbite Rating\n+25% additional Freeze Duration when an Elite is nearby",
+    affix: "+50 to Max Frostbite Rating\nYou can only deal Cold Damage",
   },
   {
     name: "Mind Blade",
@@ -414,7 +412,7 @@ export const CoreTalents = [
     name: "Brutality",
     tree: "Shadowdancer",
     affix:
-      "+33% additional Physical Damage\n+30% additional Minion Physical Damage\n-1% additional Elemental Damage for every 3 level(s).",
+      "+30% additional Physical Damage\n+30% additional Minion Physical Damage\n-1% additional Elemental Damage for every 3 level(s).",
   },
   {
     name: "Hair-trigger",
@@ -425,13 +423,13 @@ export const CoreTalents = [
   {
     name: "Instant Smash",
     tree: "Shadowdancer",
-    affix: "+80% additional Trauma Damage dealt by Critical Strikes",
+    affix: "+1% additional Trauma Damage for every +2% Critical Strike Damage",
   },
   {
     name: "Open Wounds",
     tree: "Shadowdancer",
     affix:
-      "+50% Trauma Duration when inflicting Trauma on Trauma enemies\n+125% Critical Strike Damage against Traumatized enemies\nMinions +125% Critical Strike Damage against Traumatized enemies",
+      "Refreshes Trauma Duration on hit\nUpon inflicting damage, +8% additional Hit Physical Damage for each second of Trauma remaining on the enemy",
   },
   {
     name: "Falling Leaves",
@@ -530,19 +528,19 @@ export const CoreTalents = [
     name: "Dirt",
     tree: "Shadowmaster",
     affix:
-      "+15% additional Erosion Damage\n15% additional damage applied to Life",
+      "+15% additional Erosion Damage\n10% additional damage applied to Life",
   },
   {
     name: "Stealth Stab",
     tree: "Shadowmaster",
     affix:
-      "-25% additional damage taken while Blur is active\n+25% additional damage for 3 s after Blur ends",
+      "-15% additional damage taken while Blur is active\n+25% additional damage for 3 s after Blur ends",
   },
   {
     name: "Beyond Cure",
     tree: "Shadowmaster",
     affix:
-      "Upon inflicting damage, +6% additional Erosion Damage for every stack of Wilt or Deterioration the enemy has, up to an additional +30%",
+      "Deals more Wilt Damage to enemies with more Life, up to +60% additional Wilt Damage",
   },
   {
     name: "Twisted Belief",
@@ -553,13 +551,13 @@ export const CoreTalents = [
     name: "Windwalk",
     tree: "Psychic",
     affix:
-      "+80% additional Reaping Duration against enemies with Max Affliction. Lasts for 4 s. Only takes effect once on each enemy",
+      "+60% additional Reaping Duration against enemies with Max Affliction. Lasts for 4 s. Only takes effect once on each enemy",
   },
   {
     name: "Holiness",
     tree: "Psychic",
     affix:
-      "-95% Cursed Effect\n-25% additional damage taken from Cursed enemies",
+      "-95% Curse effect against you\n-15% additional damage taken from Cursed enemies",
   },
   {
     name: "More With Less",
@@ -576,19 +574,19 @@ export const CoreTalents = [
   {
     name: "Verbal Abuse",
     tree: "Warlock",
-    affix: "You can cast 1 additional Curses\n+10% curse effect",
+    affix: "You can cast 1 additional Curses\n+10% Curse Effect",
   },
   {
     name: "Vile",
     tree: "Warlock",
     affix:
-      "Duration of Ailments caused by Critical Strikes is doubled\nFor every +3% Critical Strike Damage, +1% additional Ailment Damage",
+      "When Reaping, +10% additional Reaping Duration for each type of Damaging Ailment the enemy has",
   },
   {
     name: "Dirty Tricks",
     tree: "Warlock",
     affix:
-      "Guaranteed to inflict all types of Ailment on hit\nUpon inflicting damage, +6% additional damage for every type of Ailment the enemy has (multiplies)\nWhen Minions deal damage, +6% additional damage for every type of Ailment the enemy has (multiplies)",
+      "Upon inflicting damage, +12% additional Hit Damage (multiplies) for every type of Ailment the enemy has\nWhen Minions deal damage, +12% additional Hit Damage (multiplies) for every type of Ailment the enemy has",
   },
   {
     name: "Daze",
@@ -618,7 +616,7 @@ export const CoreTalents = [
     name: "Stab In The Back",
     tree: "Lich",
     affix:
-      "While Blur is active, loses Blur after casting a Main Skill, and the skill deals +35% additional damage",
+      "While Blur is active, loses Blur after casting a Main Skill, and the skill deals +40% additional damage",
   },
   {
     name: "Orders",
@@ -700,7 +698,7 @@ export const CoreTalents = [
     name: "Panacea",
     tree: "Steel Vanguard",
     affix:
-      "Restoration Skills: +100% restoration effect\nRestoration Effect from Restoration Skills cannot be removed",
+      "Restoration Skills: +100% Restoration Effect\nRestoration Effect from Restoration Skills cannot be removed",
   },
   {
     name: "Source",
@@ -718,7 +716,7 @@ export const CoreTalents = [
     name: "Battle Trumpet",
     tree: "Alchemist",
     affix:
-      "-10% additional Minion Attack and Cast Speed\nSpirit Magi +50% chance to use an Enhanced Skill",
+      "-10% additional Minion Attack and Cast Speed\n+50% chance for Spirit Magi to use an Enhanced Skill",
   },
   {
     name: "Talons of Abyss",
