@@ -39,46 +39,6 @@ msgid "Select equipment type..."
 msgstr "Select equipment type..."
 
 #. js-lingui-explicit-id
-#: src/data/translate/translate-tab.ts:4
-msgid "Equipment"
-msgstr "Equipment"
-
-#. js-lingui-explicit-id
-#: src/data/translate/translate-tab.ts:5
-msgid "Talents"
-msgstr "Talents"
-
-#. js-lingui-explicit-id
-#: src/data/translate/translate-tab.ts:6
-msgid "Skills"
-msgstr "Skills"
-
-#. js-lingui-explicit-id
-#: src/data/translate/translate-tab.ts:7
-msgid "Hero"
-msgstr "Hero"
-
-#. js-lingui-explicit-id
-#: src/data/translate/translate-tab.ts:8
-msgid "Pactspirit"
-msgstr "Pactspirit"
-
-#. js-lingui-explicit-id
-#: src/data/translate/translate-tab.ts:9
-msgid "Divinity"
-msgstr "Divinity"
-
-#. js-lingui-explicit-id
-#: src/data/translate/translate-tab.ts:10
-msgid "Configuration"
-msgstr "Configuration"
-
-#. js-lingui-explicit-id
-#: src/data/translate/translate-tab.ts:11
-msgid "Calculations"
-msgstr "Calculations"
-
-#. js-lingui-explicit-id
 #: src/data/translate/equipment-types.ts:4
 #: src/data/translate/equipment-types.ts:5
 msgid "Belt"
@@ -315,14 +275,44 @@ msgid "Wand"
 msgstr "Wand"
 
 #. js-lingui-explicit-id
-#: src/components/talents/PrismCrafter.tsx:149
-msgid "Edit Prism"
-msgstr "Edit Prism"
+#: src/data/translate/translate-tab.ts:4
+msgid "Equipment"
+msgstr "Equipment"
 
 #. js-lingui-explicit-id
-#: src/components/talents/PrismCrafter.tsx:149
-msgid "Craft Prism"
-msgstr "Craft Prism"
+#: src/data/translate/translate-tab.ts:5
+msgid "Talents"
+msgstr "Talents"
+
+#. js-lingui-explicit-id
+#: src/data/translate/translate-tab.ts:6
+msgid "Skills"
+msgstr "Skills"
+
+#. js-lingui-explicit-id
+#: src/data/translate/translate-tab.ts:7
+msgid "Hero"
+msgstr "Hero"
+
+#. js-lingui-explicit-id
+#: src/data/translate/translate-tab.ts:8
+msgid "Pactspirit"
+msgstr "Pactspirit"
+
+#. js-lingui-explicit-id
+#: src/data/translate/translate-tab.ts:9
+msgid "Divinity"
+msgstr "Divinity"
+
+#. js-lingui-explicit-id
+#: src/data/translate/translate-tab.ts:10
+msgid "Configuration"
+msgstr "Configuration"
+
+#. js-lingui-explicit-id
+#: src/data/translate/translate-tab.ts:11
+msgid "Calculations"
+msgstr "Calculations"
 
 #. js-lingui-explicit-id
 #: src/components/talents/TalentNodeDisplay.tsx:81
@@ -338,6 +328,16 @@ msgstr "Medium Talent"
 #: src/components/talents/TalentNodeDisplay.tsx:84
 msgid "Legendary Talent"
 msgstr "Legendary Talent"
+
+#. js-lingui-explicit-id
+#: src/components/talents/PrismCrafter.tsx:149
+msgid "Edit Prism"
+msgstr "Edit Prism"
+
+#. js-lingui-explicit-id
+#: src/components/talents/PrismCrafter.tsx:149
+msgid "Craft Prism"
+msgstr "Craft Prism"
 
 #. js-lingui-explicit-id
 #: src/components/talents/CoreTalentSelector.tsx:56
@@ -495,7 +495,7 @@ msgstr "Select Legendary"
 msgid "Select Tree for {0}"
 msgstr "Select Tree for {0}"
 
-#: src/routes/builder/equipment.tsx:593
+#: src/routes/builder/equipment.tsx:596
 msgid "Suffixes (3 max)"
 msgstr "Suffixes (3 max)"
 
