@@ -330,16 +330,6 @@ msgid "Legendary Talent"
 msgstr "传奇天赋"
 
 #. js-lingui-explicit-id
-#: src/components/talents/PrismCrafter.tsx:149
-msgid "Edit Prism"
-msgstr "编辑棱镜"
-
-#. js-lingui-explicit-id
-#: src/components/talents/PrismCrafter.tsx:149
-msgid "Craft Prism"
-msgstr "制作棱镜"
-
-#. js-lingui-explicit-id
 #: src/components/talents/CoreTalentSelector.tsx:56
 msgid "Core Talent 1"
 msgstr ""
@@ -348,6 +338,16 @@ msgstr ""
 #: src/components/talents/CoreTalentSelector.tsx:63
 msgid "Core Talent 2"
 msgstr ""
+
+#. js-lingui-explicit-id
+#: src/components/talents/PrismCrafter.tsx:149
+msgid "Edit Prism"
+msgstr "编辑棱镜"
+
+#. js-lingui-explicit-id
+#: src/components/talents/PrismCrafter.tsx:149
+msgid "Craft Prism"
+msgstr "制作棱镜"
 
 #: src/components/calculations/SkillSelector.tsx:45
 msgid "Active Skill"

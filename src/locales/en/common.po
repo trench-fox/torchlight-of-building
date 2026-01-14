@@ -330,16 +330,6 @@ msgid "Legendary Talent"
 msgstr "Legendary Talent"
 
 #. js-lingui-explicit-id
-#: src/components/talents/PrismCrafter.tsx:149
-msgid "Edit Prism"
-msgstr "Edit Prism"
-
-#. js-lingui-explicit-id
-#: src/components/talents/PrismCrafter.tsx:149
-msgid "Craft Prism"
-msgstr "Craft Prism"
-
-#. js-lingui-explicit-id
 #: src/components/talents/CoreTalentSelector.tsx:56
 msgid "Core Talent 1"
 msgstr "Core Talent 1"
@@ -348,6 +338,16 @@ msgstr "Core Talent 1"
 #: src/components/talents/CoreTalentSelector.tsx:63
 msgid "Core Talent 2"
 msgstr "Core Talent 2"
+
+#. js-lingui-explicit-id
+#: src/components/talents/PrismCrafter.tsx:149
+msgid "Edit Prism"
+msgstr "Edit Prism"
+
+#. js-lingui-explicit-id
+#: src/components/talents/PrismCrafter.tsx:149
+msgid "Craft Prism"
+msgstr "Craft Prism"
 
 #: src/components/calculations/SkillSelector.tsx:45
 msgid "Active Skill"
