@@ -19,6 +19,11 @@ msgid "Active Skills"
 msgstr "主动技能"
 
 #. js-lingui-explicit-id
+#: src/routes/builder/equipment.tsx:437
+msgid "Select equipment type..."
+msgstr "选择装备类型..."
+
+#. js-lingui-explicit-id
 #: src/routes/builder/talents/$slot.tsx:333
 msgid "Slot 1 (God/Goddess)"
 msgstr ""
@@ -34,9 +39,44 @@ msgid "Slot"
 msgstr ""
 
 #. js-lingui-explicit-id
-#: src/routes/builder/equipment.tsx:437
-msgid "Select equipment type..."
-msgstr "选择装备类型..."
+#: src/data/translate/translate-tab.ts:4
+msgid "Equipment"
+msgstr "装备"
+
+#. js-lingui-explicit-id
+#: src/data/translate/translate-tab.ts:5
+msgid "Talents"
+msgstr "天赋"
+
+#. js-lingui-explicit-id
+#: src/data/translate/translate-tab.ts:6
+msgid "Skills"
+msgstr "技能"
+
+#. js-lingui-explicit-id
+#: src/data/translate/translate-tab.ts:7
+msgid "Hero"
+msgstr "英雄"
+
+#. js-lingui-explicit-id
+#: src/data/translate/translate-tab.ts:8
+msgid "Pactspirit"
+msgstr "契灵"
+
+#. js-lingui-explicit-id
+#: src/data/translate/translate-tab.ts:9
+msgid "Divinity"
+msgstr "神格石板"
+
+#. js-lingui-explicit-id
+#: src/data/translate/translate-tab.ts:10
+msgid "Configuration"
+msgstr "配置"
+
+#. js-lingui-explicit-id
+#: src/data/translate/translate-tab.ts:11
+msgid "Calculations"
+msgstr "计算"
 
 #. js-lingui-explicit-id
 #: src/data/translate/equipment-types.ts:4
@@ -273,46 +313,6 @@ msgstr "双手剑"
 #: src/data/translate/equipment-types.ts:51
 msgid "Wand"
 msgstr "法杖"
-
-#. js-lingui-explicit-id
-#: src/data/translate/translate-tab.ts:4
-msgid "Equipment"
-msgstr "装备"
-
-#. js-lingui-explicit-id
-#: src/data/translate/translate-tab.ts:5
-msgid "Talents"
-msgstr "天赋"
-
-#. js-lingui-explicit-id
-#: src/data/translate/translate-tab.ts:6
-msgid "Skills"
-msgstr "技能"
-
-#. js-lingui-explicit-id
-#: src/data/translate/translate-tab.ts:7
-msgid "Hero"
-msgstr "英雄"
-
-#. js-lingui-explicit-id
-#: src/data/translate/translate-tab.ts:8
-msgid "Pactspirit"
-msgstr "契灵"
-
-#. js-lingui-explicit-id
-#: src/data/translate/translate-tab.ts:9
-msgid "Divinity"
-msgstr "神格石板"
-
-#. js-lingui-explicit-id
-#: src/data/translate/translate-tab.ts:10
-msgid "Configuration"
-msgstr "配置"
-
-#. js-lingui-explicit-id
-#: src/data/translate/translate-tab.ts:11
-msgid "Calculations"
-msgstr "计算"
 
 #. js-lingui-explicit-id
 #: src/components/talents/TalentNodeDisplay.tsx:81
