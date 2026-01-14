@@ -240,7 +240,7 @@ const calculateDefenseStat = (
 
   const finalMultPct = calcEffMult(mods, modTypes.finalMultPct);
 
-  return totalFlat * finalMultPct;
+  return Math.round(totalFlat * finalMultPct);
 };
 
 // === Resource Pool Types ===
@@ -1797,6 +1797,26 @@ const resolveModsForOffenseSkill = (
     });
     mods.push(...normalizeStackables(prenormMods, "stalker", stacks));
   };
+  const pushYouga2 = (): void => {
+    if (!modExists(mods, "HasSpacetimeElapse")) {
+      return;
+    }
+
+    normalize("twisted_spacetime", config.twistedSpacetimeStacks ?? 5);
+
+    const baseRecordPct = calcEffMult(filterMods(mods, "HasSpacetimeElapse"));
+    const recordedDmgMoreMods = filterMods(mods, "SpacetimeRecordedDmgMore");
+    const recordedDmgMoreMult = calcEffMult(recordedDmgMoreMods);
+    const finalDamagePct = (baseRecordPct - 1) * recordedDmgMoreMult * 100;
+
+    mods.push({
+      type: "DmgPct",
+      dmgModType: "damage_over_time",
+      addn: true,
+      value: finalDamagePct,
+      src: "Spacetime Turbulence",
+    });
+  };
   const pushMultistrike = () => {
     step("multistrike");
     const multistrikeChancePct = sumByValue(
@@ -1922,6 +1942,7 @@ const resolveModsForOffenseSkill = (
 
   pushChainLightning(mods, config, jumps);
   pushFrail(mods, config);
+  pushYouga2();
 
   // must happen after movement_speed_bonus_pct normalization
   const maxSpellBurst = sumByValue(filterMods(mods, "MaxSpellBurst"));

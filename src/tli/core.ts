@@ -202,6 +202,8 @@ export interface Configuration {
   hasPureHeart: boolean;
   // default to 6
   pureHeartStacks?: number;
+  // defaults to max of 5
+  twistedSpacetimeStacks?: number;
 
   // custom affix lines for injecting arbitrary mods
   customAffixLines?: string[];
@@ -280,6 +282,7 @@ export const DEFAULT_CONFIGURATION: Configuration = {
   enemyArmor: undefined,
   hasPureHeart: false,
   pureHeartStacks: undefined,
+  twistedSpacetimeStacks: undefined,
   customAffixLines: undefined,
 };
 

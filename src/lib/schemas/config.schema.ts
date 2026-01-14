@@ -105,6 +105,10 @@ export const ConfigurationPageSchema = z
     enemyArmor: z.number().optional().catch(d.enemyArmor),
     hasPureHeart: z.boolean().catch(d.hasPureHeart),
     pureHeartStacks: z.number().optional().catch(d.pureHeartStacks),
+    twistedSpacetimeStacks: z
+      .number()
+      .optional()
+      .catch(d.twistedSpacetimeStacks),
     customAffixLines: z.array(z.string()).optional().catch(d.customAffixLines),
   })
   .catch(DEFAULT_CONFIGURATION) satisfies z.ZodType<Configuration>;
