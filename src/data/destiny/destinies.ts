@@ -9,6 +9,12 @@ export const Destinies: readonly Destiny[] = [
   },
   {
     type: "Dual Kismet",
+    name: "Bitterbond",
+    affix:
+      "Activates the following effects when there are 2 of this Kismet on the same pact page:\n+3% Max Elemental Resistance for each inactivated Tangle\n+25% Spell Aggression Effect for each activated Tangle",
+  },
+  {
+    type: "Dual Kismet",
     name: "Bounded Holy Maiden",
     affix:
       "Activates the following effects when there are 2 of this Kismet on the same pact page:\nUnable to inflict Ignite, Numbed, Wilt, and Trauma\nInflicts Paralysis, Blind, Weaken, Slow, Taunt, and Frostbite on hit\n-60% Crowd Control Effect",
@@ -35,13 +41,13 @@ export const Destinies: readonly Destiny[] = [
     type: "Dual Kismet",
     name: "Echidna",
     affix:
-      "Activates the following effects when there are 2 of this Kismet on the same pact page:\nGains Lv. 20 Precise: Acuteness Focus\n+60% Focus Buff Effect",
+      "Activates the following effects when there are 2 of this Kismet on the same pact page:\nGains Lv. 20 Precise: Acuteness Focus Buff\n+60% Focus Buff Effect",
   },
   {
     type: "Dual Kismet",
     name: "Evil Flame",
     affix:
-      "Activates the following effects when there are 2 of this Kismet on the same pact page:\n15% chance to cause an explosion when defeating a Cursed enemy with an Attack or Spell, dealing Physical Damage equal to 25% of its Max Life\n+15% Skill Area",
+      "Activates the following effects when there are 2 of this Kismet on the same pact page:\n15% chance to cause an explosion when defeating a Cursed enemy with an Attack or Spell, dealing True Damage equal to 250% of the defeated enemy's Max Life to enemies within a 5m radius\n+15% Skill Area",
   },
   {
     type: "Dual Kismet",
@@ -71,7 +77,7 @@ export const Destinies: readonly Destiny[] = [
     type: "Dual Kismet",
     name: "Ghost Bee",
     affix:
-      "Activates the following effects when there are 2 of this Kismet on the same pact page:\n+96% Shadow Tracking Area\n+96% Shadow Strike Skill Area",
+      "Activates the following effects when there are 2 of this Kismet on the same pact page:\n+50% Shadow Tracking Area\n+50% Shadow Strike Skill Area",
   },
   {
     type: "Dual Kismet",
@@ -89,7 +95,7 @@ export const Destinies: readonly Destiny[] = [
     type: "Dual Kismet",
     name: "Hanging Bird",
     affix:
-      "Activates the following effects when there are 2 of this Kismet on the same pact page:\nEvading has the Lucky effect when having at least 3 stacks of Deflection\n-50% additional Evasion",
+      "Activates the following effects when there are 2 of this Kismet on the same pact page:\nEvading has the Lucky effect when you have at least 3 stacks of Deflection\n-50% additional Evasion",
   },
   {
     type: "Dual Kismet",
@@ -113,7 +119,7 @@ export const Destinies: readonly Destiny[] = [
     type: "Dual Kismet",
     name: "Hot Ice",
     affix:
-      "Activates the following effects when there are 2 of this Kismet on the same pact page:\nUnable to Freeze\n-75% inflicted Frostbite Rating",
+      "Activates the following effects when there are 2 of this Kismet on the same pact page:\n-2% Max Cold Resistance and +35 to Max Frostbite Rating",
   },
   {
     type: "Dual Kismet",
@@ -131,7 +137,7 @@ export const Destinies: readonly Destiny[] = [
     type: "Dual Kismet",
     name: "Iron Wall",
     affix:
-      "Activates the following effects when there are 2 of this Kismet on the same pact page:\nDual Wielding provides 30% Block Ratio instead of 30% Attack Block Chance",
+      "Activates the following effects when there are 2 of this Kismet on the same pact page:\n-30% Attack Block Chance and +30% Block Ratio while Dual Wielding",
   },
   {
     type: "Dual Kismet",
@@ -207,6 +213,12 @@ export const Destinies: readonly Destiny[] = [
   },
   {
     type: "Dual Kismet",
+    name: "Resentful Maiden",
+    affix:
+      "Activates the following effects when there are 2 of this Kismet on the same pact page:\n+1 Max Tangle Quantity\n+10% Tangle Duration",
+  },
+  {
+    type: "Dual Kismet",
     name: "Rock Core",
     affix:
       "Activates the following effects when there are 2 of this Kismet on the same pact page:\nGains the Origin of Spirit Magus Effect of a Lv. 20 Rock Magus\n+30% Origin of Spirit Magus Effect",
@@ -221,7 +233,7 @@ export const Destinies: readonly Destiny[] = [
     type: "Dual Kismet",
     name: "Sky Piercer",
     affix:
-      "Activates the following effects when there are 2 of this Kismet on the same pact page:\n+50% Attack Horizontal Projectile Speed and +10% additional Attack Horizontal Projectile Damage within 3s after using a Mobility Skill",
+      "如果契约板上存在两个该天命，激活以下效果：\n使用位移技能后 5 秒内 ，+20% 攻击直射投射物速度，额外 +15% 攻击直射投射物伤害",
   },
   {
     type: "Dual Kismet",
@@ -245,7 +257,7 @@ export const Destinies: readonly Destiny[] = [
     type: "Dual Kismet",
     name: "Star-Chasing Arrow",
     affix:
-      "Activates the following effects when there are 2 of this Kismet on the same pact page:\n+15% additional damage for Attack Horizontal Projectiles\nUpon inflicting damage to distant enemies, Attack Horizontal Projectiles have a 30% chance to refresh the cooldown of Mobility Skills. Interval: 0.5s",
+      "如果契约板上存在两个该天命，激活以下效果：\n攻击直射投射物额外 +15%伤害\n若最近攻击直射投射物对远处敌人造成伤害，位移技能额外 +5% 攻击速度",
   },
   {
     type: "Dual Kismet",
@@ -287,7 +299,7 @@ export const Destinies: readonly Destiny[] = [
     type: "Dual Kismet",
     name: "Viper",
     affix:
-      "Activates the following effects when there are 2 of this Kismet on the same pact page:\nGains Lv. 20 Precise: Corrosion Focus\n+60% Focus Buff Effect",
+      "Activates the following effects when there are 2 of this Kismet on the same pact page:\nGains Lv. 20 Precise: Corrosion Focus Buff\n+60% Focus Buff Effect",
   },
   {
     type: "Dual Kismet",
@@ -311,7 +323,7 @@ export const Destinies: readonly Destiny[] = [
     type: "Kismet",
     name: "Ashes",
     affix:
-      "+(10-12)% additional Fire Damage against Ignited enemies\n-50% chance to Ignite targets",
+      "+(10-12)% additional Fire Damage against Ignited enemies\n-30% chance to Ignite targets",
   },
   {
     type: "Kismet",
@@ -453,7 +465,7 @@ export const Destinies: readonly Destiny[] = [
     type: "Kismet",
     name: "Red Leech",
     affix:
-      "+(100-150)% Critical Strike Rating against Traumatized enemies\n-30% Critical Strike Damage against Traumatized enemies",
+      "+(100-150)% Critical Strike Rating against Traumatized enemies\n-20% Critical Strike Damage against Traumatized enemies",
   },
   {
     type: "Kismet",
@@ -461,7 +473,11 @@ export const Destinies: readonly Destiny[] = [
     affix:
       "When activating Spell Burst, +(8-10)% Skill Area for each time Spell Burst is activated",
   },
-  { type: "Kismet", name: "Sacred Crest", affix: "(-60--40)% Cursed Effect" },
+  {
+    type: "Kismet",
+    name: "Sacred Crest",
+    affix: "(-60--40)% Curse effect against you",
+  },
   {
     type: "Kismet",
     name: "Scale",
@@ -472,7 +488,7 @@ export const Destinies: readonly Destiny[] = [
     type: "Kismet",
     name: "Scorpion Stinger",
     affix:
-      "+(3-5)% Skill Effect Duration\n+2% Reaping Cooldown Recovery Speed for each Reap dealt recently, up to 20%",
+      "+(3-5)% Skill Effect Duration\n+2% Reaping Recovery Speed for each Reap dealt recently, up to 20%",
   },
   {
     type: "Kismet",
@@ -484,7 +500,7 @@ export const Destinies: readonly Destiny[] = [
     type: "Kismet",
     name: "Shackles",
     affix:
-      "Gains (40-45)% Movement Speed when consuming Demolisher Charge. The effect gradually falls off to 0 within 1 s.",
+      "Gains (30-35)% Movement Speed when consuming Demolisher Charge. The effect gradually falls off to 0 within 1 s.",
   },
   {
     type: "Kismet",
@@ -496,7 +512,7 @@ export const Destinies: readonly Destiny[] = [
     type: "Kismet",
     name: "Shield",
     affix:
-      "+(16-20)% Defense when holding a Shield\n+(4-5)% Movement Speed when holding a Shield",
+      "+(12-15)% Defense when holding a Shield\n+3% Movement Speed when holding a Shield",
   },
   {
     type: "Kismet",
@@ -508,12 +524,12 @@ export const Destinies: readonly Destiny[] = [
     type: "Kismet",
     name: "Spider Fluid",
     affix:
-      "+1% damage per stack of Wilt inflicted recently. Stacks up to 80 time(s)\nAdds 5 Base Wilt Damage",
+      "+1% damage per stack of Wilt inflicted recently. Stacks up to 100 time(s)\nAdds 5 - 5 Base Wilt Damage",
   },
   {
     type: "Kismet",
     name: "Star Trail",
-    affix: "+45% for the effects of Micro Fates in all Pact Branches",
+    affix: "+45% for the effects of Micro Fates in the same Pact Branch",
   },
   {
     type: "Kismet",
@@ -541,7 +557,7 @@ export const Destinies: readonly Destiny[] = [
     type: "Kismet",
     name: "Volcano",
     affix:
-      "-15% chance to Ignite targets\nWhen Ignite is inflicted, Ignite spreads and +(10-12)% additional Ignite Damage taken by Nearby enemies",
+      "(-25--20)% chance to Ignite targets\n(-25--20)% additional Ignite Duration\n+1 Ignite limit",
   },
   {
     type: "Kismet",
@@ -552,7 +568,7 @@ export const Destinies: readonly Destiny[] = [
   {
     type: "Kismet",
     name: "Wind Chime",
-    affix: "Spirit Magi +(12-15)% chance to use an Enhanced Skill",
+    affix: "+(12-15)% chance for Spirit Magi to use an Enhanced Skill",
   },
   {
     type: "Kismet",
@@ -601,7 +617,7 @@ export const Destinies: readonly Destiny[] = [
     affix:
       "+(48-60)% Critical Strike Rating\n+(48-60)% Minion Critical Strike Rating",
   },
-  { type: "Medium Fate", name: "Curse Effect", affix: "+(4-6)% curse effect" },
+  { type: "Medium Fate", name: "Curse Effect", affix: "+(4-6)% Curse Effect" },
   { type: "Medium Fate", name: "Dexterity", affix: "+(24-30) Dexterity" },
   {
     type: "Medium Fate",
@@ -695,8 +711,8 @@ export const Destinies: readonly Destiny[] = [
   },
   {
     type: "Medium Fate",
-    name: "Numbed Chance and Effect",
-    affix: "+(10-12)% Numbed chance\n+(10-12)% Numbed Effect",
+    name: "Numbed Effect",
+    affix: "+(14-16)% Numbed Effect",
   },
   {
     type: "Medium Fate",
@@ -766,7 +782,7 @@ export const Destinies: readonly Destiny[] = [
     affix:
       "+(24-30)% Critical Strike Rating\n+(24-30)% Minion Critical Strike Rating",
   },
-  { type: "Micro Fate", name: "Curse Effect", affix: "+(1-3)% curse effect" },
+  { type: "Micro Fate", name: "Curse Effect", affix: "+(1-3)% Curse Effect" },
   {
     type: "Micro Fate",
     name: "Deterioration Chance",
@@ -874,11 +890,7 @@ export const Destinies: readonly Destiny[] = [
     name: "Multistrike Increment",
     affix: "Multistrikes deal (4-6)% increasing damage",
   },
-  {
-    type: "Micro Fate",
-    name: "Numbed Chance and Effect",
-    affix: "+(4-6)% Numbed chance\n+(4-6)% Numbed Effect",
-  },
+  { type: "Micro Fate", name: "Numbed Effect", affix: "+(6-8)% Numbed Effect" },
   {
     type: "Micro Fate",
     name: "Numbed Effect Mitigation",
