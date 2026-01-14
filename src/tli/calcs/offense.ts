@@ -474,15 +474,6 @@ const calculateImplicitMods = (): Mod[] => {
       src: "Additional Damage over TIme from desecration (15% per stack)",
     },
     {
-      type: "DmgPct",
-      value: 5,
-      dmgModType: "global",
-      addn: true,
-      per: { stackable: "pure_heart" },
-      cond: "has_pure_heart",
-      src: "Additional Damage from Pure Heart (5% per stack)",
-    },
-    {
       type: "AspdPct",
       value: 2,
       addn: true,
@@ -1878,6 +1869,18 @@ const resolveModsForOffenseSkill = (
     );
     return { spellBurstChargeSpeedBonusPct };
   };
+  const pushAzureGunslingerPureHeart = (mods: Mod[], config: Configuration) => {
+    if (hasPactspirit("Azure Gunslinger", loadout)) {
+      const pureHeartStacks = config.pureHeartStacks ?? 6;
+      mods.push({
+        type: "DmgPct",
+        value: 5 * pureHeartStacks,
+        dmgModType: "global",
+        addn: true,
+        src: "Additional Damage from Pure Heart (5% per stack)",
+      });
+    }
+  };
 
   const totalMainStats = calculateTotalMainStats(skill, stats);
   const highestStat = Math.max(stats.dex, stats.int, stats.str);
@@ -1916,6 +1919,7 @@ const resolveModsForOffenseSkill = (
   pushInfiltrations(mods, config);
   pushNumbed(mods, config);
   pushSquidnova(mods, config);
+  pushAzureGunslingerPureHeart(mods, config);
 
   const jumps = sumByValue(filterMods(mods, "Jump"));
   normalize("jump", jumps);
@@ -1958,11 +1962,6 @@ const resolveModsForOffenseSkill = (
   );
   normalize("willpower", willpowerStacks);
   normalize("frostbite_rating", frostbitten.points);
-
-  normalize(
-    "pure_heart",
-    config.hasPureHeart ? (config.pureHeartStacks ?? 5) : 0,
-  );
 
   pushProjectiles();
   pushFervor();
