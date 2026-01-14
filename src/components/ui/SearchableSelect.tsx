@@ -209,7 +209,7 @@ export const SearchableSelect = <T extends string | number>({
         </div>
 
         <ComboboxOptions
-          anchor="bottom start"
+          anchor={{ to: "bottom start", padding: 64 }}
           className="
             w-[var(--input-width)] z-50 mt-1 max-h-60 overflow-auto rounded
             bg-zinc-800 border border-zinc-700 shadow-lg
