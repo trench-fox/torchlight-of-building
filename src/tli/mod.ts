@@ -128,7 +128,8 @@ export type Stackable =
   | "stalker"
   | "twisted_spacetime"
   // pactspirit-specific
-  | "repentance";
+  | "repentance"
+  | "pure_heart";
 
 export type StatType = "str" | "dex" | "int";
 

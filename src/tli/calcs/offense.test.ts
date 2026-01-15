@@ -1,5 +1,4 @@
 import { describe, expect, test } from "vitest";
-
 import type { ImplementedActiveSkillName } from "../../data/skill";
 import {
   type Affix,
@@ -6172,5 +6171,63 @@ describe("step dependency resolution", () => {
       configuration: createDefaultConfiguration(),
     });
     expect(errors).toStrictEqual([]);
+  });
+});
+
+describe("Pactspirits", () => {
+  describe("Azure Gunslinger", () => {
+    const skillName = "[Test] Simple Attack" as const;
+
+    // Bespoke helper: 100 phys weapon + custom mods
+    const createModsInput = (
+      mods: AffixLine[],
+      loadoutOverrides?: Partial<Loadout>,
+      configOverride?: Partial<Configuration>,
+    ) => ({
+      loadout: initLoadout({
+        gearPage: { equippedGear: { mainHand: baseWeapon }, inventory: [] },
+        customAffixLines: mods,
+        skillPage: simpleAttackSkillPage(),
+        ...loadoutOverrides,
+      }),
+      configuration: { ...defaultConfiguration, ...configOverride },
+    });
+
+    test.each([
+      0, 1, 2, 3, 4, 5, 6,
+    ])("Pure heart properly calculates with (%s) stacks", (stacks) => {
+      // base * bonusdmg
+      // 100 * 2 = 200
+      // 200 * (a * 5% Pure Heart) = 200 * (1 + a * 0.05)
+      const input = createModsInput(
+        affixLines([
+          { type: "DmgPct", value: 100, dmgModType: "global", addn: false },
+        ]),
+        {
+          pactspiritPage: {
+            slot1: {
+              pactspiritName: "Azure Gunslinger",
+              level: 6,
+              mainAffix: emptyAffix(),
+              rings: {
+                innerRing1: emptyRingSlotState(),
+                innerRing2: emptyRingSlotState(),
+                innerRing3: emptyRingSlotState(),
+                innerRing4: emptyRingSlotState(),
+                innerRing5: emptyRingSlotState(),
+                innerRing6: emptyRingSlotState(),
+                midRing1: emptyRingSlotState(),
+                midRing2: emptyRingSlotState(),
+                midRing3: emptyRingSlotState(),
+              },
+            },
+          },
+        },
+        { hasPureHeart: true, pureHeartStacks: stacks },
+      );
+      const results = calculateOffense(input);
+      const expectedAvgHit = 200 * 1.05 ** stacks;
+      validate(results, skillName, { avgHit: expectedAvgHit });
+    });
   });
 });
