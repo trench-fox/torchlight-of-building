@@ -19,6 +19,11 @@ msgid "Active Skills"
 msgstr "主动技能"
 
 #. js-lingui-explicit-id
+#: src/routes/builder/equipment.tsx:437
+msgid "Select equipment type..."
+msgstr "选择装备类型..."
+
+#. js-lingui-explicit-id
 #: src/routes/builder/talents/$slot.tsx:333
 msgid "Slot 1 (God/Goddess)"
 msgstr ""
@@ -32,11 +37,6 @@ msgstr ""
 #: src/routes/builder/talents/$slot.tsx:355
 msgid "Slot"
 msgstr ""
-
-#. js-lingui-explicit-id
-#: src/routes/builder/equipment.tsx:437
-msgid "Select equipment type..."
-msgstr "选择装备类型..."
 
 #. js-lingui-explicit-id
 #: src/data/translate/translate-tab.ts:4

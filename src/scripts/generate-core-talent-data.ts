@@ -2,16 +2,54 @@ import { execSync } from "node:child_process";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { join } from "node:path";
 import * as cheerio from "cheerio";
+import { program } from "commander";
 import type { BaseCoreTalent } from "../data/core-talent/types";
 import { isTree } from "../data/talent";
 import type { Affix, AffixLine } from "../tli/core";
 import { parseMod } from "../tli/mod-parser";
 
+// ============================================================================
+// Fetching
+// ============================================================================
+
+const BASE_URL = "https://tlidb.com/en";
+const CORE_TALENT_URL = `${BASE_URL}/Talent#CoreTalentNode`;
+const CORE_TALENT_DIR = join(process.cwd(), ".garbage", "tlidb", "core_talent");
+const CORE_TALENT_FILE = "core_talent_node.html";
+
+const fetchPage = async (url: string): Promise<string> => {
+  console.log(`Fetching: ${url}`);
+  const response = await fetch(url);
+  if (!response.ok) {
+    throw new Error(`Failed to fetch ${url}: ${response.status}`);
+  }
+  return response.text();
+};
+
+const fetchCoreTalentPage = async (): Promise<void> => {
+  await mkdir(CORE_TALENT_DIR, { recursive: true });
+
+  const html = await fetchPage(CORE_TALENT_URL);
+  const filepath = join(CORE_TALENT_DIR, CORE_TALENT_FILE);
+  await writeFile(filepath, html);
+  console.log(`Saved: ${filepath}`);
+  console.log("Fetching complete!");
+};
+
+// ============================================================================
+// Parsing
+// ============================================================================
+
+const TLIDB_HTML_PATH = join(CORE_TALENT_DIR, CORE_TALENT_FILE);
+
 const cleanAffixText = (html: string): string => {
   const NEWLINE_PLACEHOLDER = "\x00";
 
+  // Remove data-bs-title attributes (tooltip content we don't want)
+  let text = html.replace(/\s*data-bs-title="[^"]*"/g, "");
+
   // Replace <br> tags with placeholder
-  let text = html.replace(/<br\s*\/?>/gi, NEWLINE_PLACEHOLDER);
+  text = text.replace(/<br\s*\/?>/gi, NEWLINE_PLACEHOLDER);
 
   // Remove all HTML tags but keep content
   text = text.replace(/<[^>]+>/g, "");
@@ -105,18 +143,21 @@ ${entries.join(",\n")}
 `;
 };
 
-const main = async (): Promise<void> => {
-  const inputPath = join(
-    process.cwd(),
-    ".garbage",
-    "tlidb",
-    "talent",
-    "core_talent_node.html",
-  );
+interface Options {
+  refetch: boolean;
+}
+
+const main = async (options: Options): Promise<void> => {
+  if (options.refetch) {
+    console.log("Refetching core talent page from tlidb...\n");
+    await fetchCoreTalentPage();
+    console.log("");
+  }
+
   const outDir = join(process.cwd(), "src", "data", "core-talent");
 
-  console.log("Reading HTML file from:", inputPath);
-  const html = await readFile(inputPath, "utf-8");
+  console.log("Reading HTML file from:", TLIDB_HTML_PATH);
+  const html = await readFile(TLIDB_HTML_PATH, "utf-8");
   const $ = cheerio.load(html);
 
   const talents = extractCoreTalents($);
@@ -137,11 +178,15 @@ const main = async (): Promise<void> => {
   execSync("pnpm format", { stdio: "inherit" });
 };
 
-main()
-  .then(() => process.exit(0))
-  .catch((error) => {
-    console.error("Script failed:", error);
-    process.exit(1);
-  });
-
-export { main as generateCoreTalentData };
+program
+  .description("Generate core talent data from cached HTML pages")
+  .option("--refetch", "Refetch HTML pages from tlidb before generating")
+  .action((options: Options) => {
+    main(options)
+      .then(() => process.exit(0))
+      .catch((error) => {
+        console.error("Script failed:", error);
+        process.exit(1);
+      });
+  })
+  .parse();
