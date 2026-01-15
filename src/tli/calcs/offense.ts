@@ -407,7 +407,7 @@ const calculatePactspiritMods = (
       type: "DmgPct",
       value: 5,
       dmgModType: "global",
-      per: { stackable: "pure_heart", multiplicative: true, limit: 6 },
+      per: { stackable: "pure_heart", multiplicative: true },
       addn: true,
       src: "Pure Heart",
     });
@@ -1903,6 +1903,14 @@ const resolveModsForOffenseSkill = (
     return { spellBurstChargeSpeedBonusPct };
   };
 
+  const pushPactspirits = () => {
+    // Azure Gunslinger
+    const addedMaxStacks = sumByValue(filterMods(mods, "MaxPureHeartStacks"));
+    const maxStacks = 5 + addedMaxStacks;
+    const stacks = config.pureHeartStacks ?? maxStacks;
+    normalize("pure_heart", stacks);
+  };
+
   const totalMainStats = calculateTotalMainStats(skill, stats);
   const highestStat = Math.max(stats.dex, stats.int, stats.str);
   const sumStats = stats.dex + stats.int + stats.str;
@@ -1999,7 +2007,8 @@ const resolveModsForOffenseSkill = (
     "num_enemies_affected_by_warcry",
     config.numEnemiesAffectedByWarcry,
   );
-  normalize("pure_heart", config.pureHeartStacks ?? 6);
+
+  pushPactspirits();
 
   // must happen after spell aggression and any other normalizations that can
   // affect cast speed
