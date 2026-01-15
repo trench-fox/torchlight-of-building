@@ -18,7 +18,7 @@ export const CoreTalentMods: Record<CoreTalentName, Affix> = {
         text: "+100% chance to gain 1 stack(s) of Tenacity Blessing when hitting an enemy",
       },
       {
-        text: "Max Tenacity Blessing Stacks +1",
+        text: "+1 to Max Tenacity Blessing Stacks",
         mods: [{ type: "MaxTenacityBlessing", value: 1 }],
       },
     ],
@@ -120,7 +120,12 @@ export const CoreTalentMods: Record<CoreTalentName, Affix> = {
     ],
   },
   Starfire: {
-    affixLines: [{ text: "+1 Ignite limit" }, { text: "+30% Ignite Duration" }],
+    affixLines: [
+      { text: "+1 Ignite limit" },
+      {
+        text: "When Ignite is inflicted, it spreads to enemies within 10m. Interval: 0.3s",
+      },
+    ],
   },
   Fueling: {
     affixLines: [
@@ -130,7 +135,7 @@ export const CoreTalentMods: Record<CoreTalentName, Affix> = {
   Rock: {
     affixLines: [
       {
-        text: "Converts 3% of Physical Damage taken to Fire Damage for every stack of Tenacity Blessing you have",
+        text: "Converts 5% of Physical Damage taken to Fire Damage for every stack of Tenacity Blessing you have",
       },
     ],
   },
@@ -150,7 +155,7 @@ export const CoreTalentMods: Record<CoreTalentName, Affix> = {
       },
     ],
   },
-  "No Lose Ends": {
+  "No Loose Ends": {
     affixLines: [
       { text: "+50% additional Attack Damage at Low Life" },
       { text: "Your Max Energy Shield is fixed at 0" },
@@ -172,15 +177,16 @@ export const CoreTalentMods: Record<CoreTalentName, Affix> = {
     affixLines: [
       { text: "+100% chance to gain 1 stacks of Agility Blessing on hit" },
       {
-        text: "Max Agility Blessing Stacks +1",
+        text: "+1 to Max Agility Blessing Stacks",
         mods: [{ type: "MaxAgilityBlessing", value: 1 }],
       },
     ],
   },
   "Third time's a charm": {
     affixLines: [
+      { text: "Has Hasten", mods: [{ type: "HasHasten" }] },
       {
-        text: "+45% Attack and Cast Speed after using the Main Skill 3 consecutive times. Lasts for 2 s",
+        text: "When you have Hasten, +7% Attack Speed and Cast Speed for every 3m of movement made recently. Stacks up to 3 time(s)",
       },
     ],
   },
@@ -189,17 +195,22 @@ export const CoreTalentMods: Record<CoreTalentName, Affix> = {
       {
         text: "-90% additional Min Physical Damage, and +80% additional Max Physical Damage",
         mods: [
-          { type: "AddnMinDmgPct", value: -90, addn: true },
-          { type: "AddnMaxDmgPct", value: 80, addn: true },
+          {
+            type: "AddnMinDmgPct",
+            value: -90,
+            addn: true,
+            dmgType: "physical",
+          },
+          { type: "AddnMaxDmgPct", value: 80, addn: true, dmgType: "physical" },
         ],
       },
       {
-        text: "-40% additional min damage",
-        mods: [{ type: "AddnMinDmgPct", value: -40, addn: true }],
+        text: "-32% additional min damage",
+        mods: [{ type: "AddnMinDmgPct", value: -32, addn: true }],
       },
       {
-        text: "+40% additional max damage",
-        mods: [{ type: "AddnMaxDmgPct", value: 40, addn: true }],
+        text: "+32% additional Max Damage",
+        mods: [{ type: "AddnMaxDmgPct", value: 32, addn: true }],
       },
     ],
   },
@@ -222,14 +233,17 @@ export const CoreTalentMods: Record<CoreTalentName, Affix> = {
   "Three Birds with One Stone": {
     affixLines: [
       { text: "Projectile Quantity +2" },
-      { text: "Parabolic Projectile Splits quantity +2" },
+      { text: "+2 to Parabolic Projectile Splits quantity" },
       { text: "+10% additional Projectile Damage" },
     ],
   },
   "Steady Accumulation": {
     affixLines: [
-      { text: "+15% Combo Finisher Amplification" },
-      { text: "+1 Combo Points gained from Combo Starters" },
+      {
+        text: "+40% additional Hit Damage",
+        mods: [{ type: "DmgPct", value: 40, dmgModType: "hit", addn: true }],
+      },
+      { text: "Additional -30% Skill Effect Duration" },
     ],
   },
   Gale: {
@@ -294,14 +308,14 @@ export const CoreTalentMods: Record<CoreTalentName, Affix> = {
   Cultivation: {
     affixLines: [
       {
-        text: "+4% Cast Speed for each skill recently used, stacking up to 15 times",
+        text: "+8% Attack Speed and Cast Speed for each time you have Regained in the last 8s. Stacks up to 8 time(s)",
       },
     ],
   },
-  Acquaintance: {
+  "Full Load": {
     affixLines: [
       {
-        text: "+30% chance to trigger the Main Spell Skill 1 additional time when using it",
+        text: "Doubles Life Regain and Shield Regain for 6 s when casting an Empower Skill or Defensive Skill. Interval: 8 s",
       },
     ],
   },
@@ -315,7 +329,7 @@ export const CoreTalentMods: Record<CoreTalentName, Affix> = {
   },
   "Poisoned Relief": {
     affixLines: [
-      { text: "+25% injury buffer" },
+      { text: "+25% Injury Buffer" },
       { text: "-15% additional damage taken at Low Life" },
     ],
   },
@@ -351,7 +365,7 @@ export const CoreTalentMods: Record<CoreTalentName, Affix> = {
   Thunderclap: {
     affixLines: [
       {
-        text: "If you have Agility Blessing stacks when casting the Main Skill, consumes 1 stack(s) of Agility Blessing to make this skill deal +30% additional Lightning Damage",
+        text: "If you have Agility Blessing stacks when casting the Main Skill, consumes 1 stack(s) of Agility Blessing to make this skill deal +35% additional Lightning Damage",
       },
     ],
   },
@@ -367,26 +381,15 @@ export const CoreTalentMods: Record<CoreTalentName, Affix> = {
     affixLines: [
       { text: "+100% chance to gain 1 stack of Focus Blessing on hit" },
       {
-        text: "Max Focus Blessing Stacks +1",
+        text: "+1 to Max Focus Blessing Stacks",
         mods: [{ type: "MaxFocusBlessing", value: 1 }],
       },
     ],
   },
   "Peculiar Vibe": {
     affixLines: [
-      { text: "+50% chance to inflict Elemental Ailments" },
-      {
-        text: "+25% additional damage against enemies with Elemental Ailments",
-        mods: [
-          {
-            type: "DmgPct",
-            value: 25,
-            dmgModType: "global",
-            addn: true,
-            cond: "enemy_has_ailment",
-          },
-        ],
-      },
+      { text: "You can apply 1 additional Tangle(s) to enemies" },
+      { text: "-30% additional Tangle Skill Area" },
     ],
   },
   Insight: {
@@ -409,26 +412,18 @@ export const CoreTalentMods: Record<CoreTalentName, Affix> = {
       },
     ],
   },
-  Winter: {
+  "Quick Wits": {
     affixLines: [
       {
-        text: "Deals +1% additional damage to an enemy for every 2 points of Frostbite Rating the enemy has",
-        mods: [
-          {
-            type: "DmgPct",
-            value: 1,
-            dmgModType: "global",
-            addn: true,
-            per: { stackable: "frostbite_rating", amt: 2 },
-          },
-        ],
+        text: "+25% additional Spell Damage when the Energy Shield is not low",
       },
+      { text: "-20% additional damage taken at Low Energy Shield" },
     ],
   },
   Bunch: {
     affixLines: [
       {
-        text: "Max Focus Blessing Stacks +1",
+        text: "+1 to Max Focus Blessing Stacks",
         mods: [{ type: "MaxFocusBlessing", value: 1 }],
       },
       {
@@ -450,6 +445,14 @@ export const CoreTalentMods: Record<CoreTalentName, Affix> = {
       {
         text: "100% of the bonuses and additional bonuses to Cast Speed is also applied to Spell Burst Charge Speed",
         mods: [{ type: "PlaySafe", value: 100 }],
+      },
+      {
+        text: "-33% additional Spell Burst Charge Speed",
+        mods: [{ type: "SpellBurstChargeSpeedPct", value: -33, addn: true }],
+      },
+      {
+        text: "+40% additional Hit Damage for skills cast by Spell Burst",
+        mods: [{ type: "SpellBurstAdditionalDmgPct", value: 40, addn: true }],
       },
     ],
   },
@@ -489,20 +492,10 @@ export const CoreTalentMods: Record<CoreTalentName, Affix> = {
       },
     ],
   },
-  "Full Load": {
+  Acquaintance: {
     affixLines: [
-      {
-        text: "+40% additional damage for the next skill when Mana reaches the max",
-        mods: [
-          {
-            type: "DmgPct",
-            value: 40,
-            dmgModType: "global",
-            addn: true,
-            cond: "has_full_mana",
-          },
-        ],
-      },
+      { text: "Has Dormant Entanglement" },
+      { text: "+1 Max Tangle Quantity" },
     ],
   },
   Preparation: {
@@ -526,7 +519,7 @@ export const CoreTalentMods: Record<CoreTalentName, Affix> = {
   Penetrating: {
     affixLines: [
       {
-        text: "When inflicting Ignite, Numbed, Frostbite/Freeze, inflicts Fire Infiltration, Lightning Infiltration, or Cold Infiltration respectively.",
+        text: "When dealing Fire, Lightning, or Cold Damage, inflicts Fire Infiltration, Lightning Infiltration, or Cold Infiltration respectively.",
       },
       {
         text: "Upon inflicting damage, +8% additional Elemental Damage for each type of Infiltration Effect the enemy has",
@@ -536,7 +529,7 @@ export const CoreTalentMods: Record<CoreTalentName, Affix> = {
   Focus: {
     affixLines: [
       {
-        text: "Max Channeled Stacks +1",
+        text: "+1 to Max Channeled Stacks",
         mods: [{ type: "MaxChannel", value: 1 }],
       },
       {
@@ -556,26 +549,19 @@ export const CoreTalentMods: Record<CoreTalentName, Affix> = {
   "Quick Ritual": {
     affixLines: [
       { text: "Min Channeled Stacks +1" },
-      { text: "+20% additional damage Channeled Skills" },
+      { text: "+20% additional Channeled Skill damage" },
     ],
   },
   Frostbitten: {
     affixLines: [
-      { text: "+25% additional damage against Frozen enemies" },
-      {
-        text: "Inflicts Frostbite and 100 Frostbite Rating when dealing Cold Damage to an enemy for the first time",
-      },
+      { text: "Inflicts Frostbite when dealing Hit Cold Damage" },
+      { text: "+50% Frostbite Effect" },
     ],
   },
   "Extreme Coldness": {
     affixLines: [
-      {
-        text: "Frostbite and Frostbite Rating will continue to be inflicted on Frozen enemies",
-      },
-      {
-        text: "After Freeze ends, Frostbite and all Frostbite Rating will no longer be removed. +20% of the retained Frostbite Rating",
-      },
-      { text: "+25% additional Freeze Duration when an Elite is nearby" },
+      { text: "+50 to Max Frostbite Rating" },
+      { text: "You can only deal Cold Damage" },
     ],
   },
   "Mind Blade": {
@@ -655,9 +641,9 @@ export const CoreTalentMods: Record<CoreTalentName, Affix> = {
   Brutality: {
     affixLines: [
       {
-        text: "+33% additional Physical Damage",
+        text: "+30% additional Physical Damage",
         mods: [
-          { type: "DmgPct", value: 33, dmgModType: "physical", addn: true },
+          { type: "DmgPct", value: 30, dmgModType: "physical", addn: true },
         ],
       },
       {
@@ -683,15 +669,16 @@ export const CoreTalentMods: Record<CoreTalentName, Affix> = {
   },
   "Instant Smash": {
     affixLines: [
-      { text: "+80% additional Trauma Damage dealt by Critical Strikes" },
+      {
+        text: "+1% additional Trauma Damage for every +2% Critical Strike Damage",
+      },
     ],
   },
   "Open Wounds": {
     affixLines: [
-      { text: "+50% Trauma Duration when inflicting Trauma on Trauma enemies" },
-      { text: "+125% Critical Strike Damage against Traumatized enemies" },
+      { text: "Refreshes Trauma Duration on hit" },
       {
-        text: "Minions +125% Critical Strike Damage against Traumatized enemies",
+        text: "Upon inflicting damage, +8% additional Hit Physical Damage for each second of Trauma remaining on the enemy",
       },
     ],
   },
@@ -861,14 +848,14 @@ export const CoreTalentMods: Record<CoreTalentName, Affix> = {
         ],
       },
       {
-        text: "15% additional damage applied to Life",
-        mods: [{ type: "DmgPct", value: 15, dmgModType: "global", addn: true }],
+        text: "10% additional damage applied to Life",
+        mods: [{ type: "DmgPct", value: 10, dmgModType: "global", addn: true }],
       },
     ],
   },
   "Stealth Stab": {
     affixLines: [
-      { text: "-25% additional damage taken while Blur is active" },
+      { text: "-15% additional damage taken while Blur is active" },
       {
         text: "+25% additional damage for 3 s after Blur ends",
         mods: [
@@ -886,7 +873,7 @@ export const CoreTalentMods: Record<CoreTalentName, Affix> = {
   "Beyond Cure": {
     affixLines: [
       {
-        text: "Upon inflicting damage, +6% additional Erosion Damage for every stack of Wilt or Deterioration the enemy has, up to an additional +30%",
+        text: "Deals more Wilt Damage to enemies with more Life, up to +60% additional Wilt Damage",
       },
     ],
   },
@@ -905,16 +892,16 @@ export const CoreTalentMods: Record<CoreTalentName, Affix> = {
   Windwalk: {
     affixLines: [
       {
-        text: "+80% additional Reaping Duration against enemies with Max Affliction. Lasts for 4 s. Only takes effect once on each enemy",
+        text: "+60% additional Reaping Duration against enemies with Max Affliction. Lasts for 4 s. Only takes effect once on each enemy",
       },
     ],
   },
   Holiness: {
     affixLines: [
-      { text: "-95% Cursed Effect" },
+      { text: "-95% Curse effect against you" },
       {
-        text: "-25% additional damage taken from Cursed enemies",
-        mods: [{ type: "DmgTakenPct", value: -25, cond: "enemy_is_cursed" }],
+        text: "-15% additional damage taken from Cursed enemies",
+        mods: [{ type: "DmgTakenPct", value: -15, cond: "enemy_is_cursed" }],
       },
     ],
   },
@@ -946,27 +933,25 @@ export const CoreTalentMods: Record<CoreTalentName, Affix> = {
     affixLines: [
       { text: "You can cast 1 additional Curses" },
       {
-        text: "+10% curse effect",
+        text: "+10% Curse Effect",
         mods: [{ type: "CurseEffPct", value: 10, addn: false }],
       },
     ],
   },
   Vile: {
     affixLines: [
-      { text: "Duration of Ailments caused by Critical Strikes is doubled" },
       {
-        text: "For every +3% Critical Strike Damage, +1% additional Ailment Damage",
+        text: "When Reaping, +10% additional Reaping Duration for each type of Damaging Ailment the enemy has",
       },
     ],
   },
   "Dirty Tricks": {
     affixLines: [
-      { text: "Guaranteed to inflict all types of Ailment on hit" },
       {
-        text: "Upon inflicting damage, +6% additional damage for every type of Ailment the enemy has (multiplies)",
+        text: "Upon inflicting damage, +12% additional Hit Damage (multiplies) for every type of Ailment the enemy has",
       },
       {
-        text: "When Minions deal damage, +6% additional damage for every type of Ailment the enemy has (multiplies)",
+        text: "When Minions deal damage, +12% additional Hit Damage (multiplies) for every type of Ailment the enemy has",
       },
     ],
   },
@@ -1002,7 +987,7 @@ export const CoreTalentMods: Record<CoreTalentName, Affix> = {
   "Stab In The Back": {
     affixLines: [
       {
-        text: "While Blur is active, loses Blur after casting a Main Skill, and the skill deals +35% additional damage",
+        text: "While Blur is active, loses Blur after casting a Main Skill, and the skill deals +40% additional damage",
       },
     ],
   },
@@ -1108,7 +1093,7 @@ export const CoreTalentMods: Record<CoreTalentName, Affix> = {
   },
   Panacea: {
     affixLines: [
-      { text: "Restoration Skills: +100% restoration effect" },
+      { text: "Restoration Skills: +100% Restoration Effect" },
       { text: "Restoration Effect from Restoration Skills cannot be removed" },
     ],
   },
@@ -1137,7 +1122,7 @@ export const CoreTalentMods: Record<CoreTalentName, Affix> = {
           { type: "MinionCspdPct", value: -10, addn: true },
         ],
       },
-      { text: "Spirit Magi +50% chance to use an Enhanced Skill" },
+      { text: "+50% chance for Spirit Magi to use an Enhanced Skill" },
     ],
   },
   "Talons of Abyss": {
