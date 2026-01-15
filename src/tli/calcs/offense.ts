@@ -407,7 +407,7 @@ const calculatePactspiritMods = (
       type: "DmgPct",
       value: 5,
       dmgModType: "global",
-      per: { stackable: "pure_heart", multiplicative: true },
+      per: { stackable: "pure_heart", multiplicative: true, limit: 6 },
       addn: true,
       src: "Pure Heart",
     });
